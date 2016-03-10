@@ -6,8 +6,10 @@ package no.ntnu.iie.stud.cateringstorm.gui;
 public class GuiTest {
     public static void main(String[] args) {
         //LoginWindow loginWindowOld = new LoginWindow();
-        Login loginWindow = new Login();
+        //Login loginWindow = new Login();
         //loginWindowOld.setVisible(true);
-        loginWindow.setVisible(true);
+        //loginWindow.setVisible(true);
+        ChefOrderOverview orderOverview = new ChefOrderOverview();
+        orderOverview.setVisible(true);
     }
 }
