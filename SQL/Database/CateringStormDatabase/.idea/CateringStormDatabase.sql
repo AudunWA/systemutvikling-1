@@ -38,6 +38,7 @@ address VARCHAR(30) NOT NULL,
 phone VARCHAR(10) NOT NULL,
 email VARCHAR(50) NOT NULL,
 e_type_id INTEGER NOT NULL,
+active BOOL NOT NULL,
 password VARCHAR(64) NOT NULL,
 salt VARCHAR(32) NOT NULL,
 FOREIGN KEY (e_type_id) REFERENCES employee_type(e_type_id) ON UPDATE CASCADE,
@@ -97,6 +98,7 @@ name VARCHAR(20) NOT NULL,
 description VARCHAR(50),
 vegetarian BOOLEAN NOT NULL,
 expire_date DATE NOT NULL,
+edible BOOL NOT NULL,
 PRIMARY KEY (ingredient_id)
 );
 CREATE TABLE dish_type(
@@ -110,6 +112,7 @@ dish_id INTEGER AUTO_INCREMENT,
 name VARCHAR(30) NOT NULL,
 description VARCHAR(200),
 dish_type_id INTEGER NOT NULL,
+active BOOL NOT NULL,
 FOREIGN KEY (dish_type_id) REFERENCES dish_type (dish_type_id) ON UPDATE CASCADE,
 PRIMARY KEY(dish_id)
 );
@@ -128,6 +131,7 @@ CREATE TABLE _package(
 _package_id INTEGER AUTO_INCREMENT,
 name VARCHAR(20) NOT NULL,
 cost INTEGER NOT NULL,
+active bool NOT NULL,
 PRIMARY KEY (_package_id)
 );
 
@@ -150,16 +154,19 @@ customer_id INTEGER AUTO_INCREMENT,
 surname VARCHAR(20) NOT NULL,
 forename VARCHAR(20) NOT NULL,
 address VARCHAR(20) NOT NULL,
+active BOOL NOT NULL,
 area_id INTEGER NOT NULL,
 FOREIGN KEY (area_id) REFERENCES area(area_id) ON UPDATE CASCADE,
 PRIMARY KEY (customer_id)
 );
+
 CREATE TABLE subscription(
 subscription_id INTEGER AUTO_INCREMENT,
 start_date DATE NOT NULL,
 end_date DATE NOT NULL,
 cost INTEGER NOT NULL,
 customer_id INTEGER NOT NULL,
+active BOOLEAN NOT NULL,
 FOREIGN KEY(customer_id) REFERENCES customer (customer_id),
 PRIMARY KEY (subscription_id)
 );
@@ -185,6 +192,7 @@ priority BOOLEAN NOT NULL,
 employee_id INTEGER,
 customer_id INTEGER NOT NULL,
 rec_order_id INTEGER,
+delivered BOOL NOT NULL,
 FOREIGN KEY (rec_order_id) REFERENCES recurring_order(rec_order_id) ON UPDATE CASCADE,
 FOREIGN KEY (employee_id) REFERENCES salesperson(employee_id) ON UPDATE CASCADE,
 FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON UPDATE CASCADE,
