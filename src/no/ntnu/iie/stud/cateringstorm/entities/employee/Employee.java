@@ -5,7 +5,7 @@ package no.ntnu.iie.stud.cateringstorm.entities.employee;
  * Created by Audun on 10.03.2016.
  */
 public class Employee {
-    private int employeeId;
+    private final int employeeId;
     private String username;
     private String forename;
     private String surname;
