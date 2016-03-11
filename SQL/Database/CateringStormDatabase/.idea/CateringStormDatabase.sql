@@ -1,8 +1,10 @@
+--Sjekk create recurring_order og subsciption--
 DROP TABLE IF EXISTS _order_package;
 DROP TABLE IF EXISTS _order;
+DROP TABLE IF EXISTS recurring_order;
+DROP TABLE IF EXISTS subscription;
 DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS area;
-DROP TABLE IF EXISTS subscription;
 DROP TABLE IF EXISTS dish_package;
 DROP TABLE IF EXISTS _package;
 DROP TABLE IF EXISTS ingredient_dish;
@@ -69,6 +71,7 @@ employee_id INTEGER,
 FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
 PRIMARY KEY (employee_id)
 );
+
 CREATE TABLE hours(
 hours_id INTEGER AUTO_INCREMENT,
 _date DATE NOT NULL,
@@ -134,14 +137,6 @@ FOREIGN KEY (_package_id) REFERENCES _package(_package_id) ON UPDATE CASCADE,
 PRIMARY KEY (dish_id, _package_id)
 );
 
-CREATE TABLE subscription(
-subscribe_id INTEGER,
-start_date DATE NOT NULL,
-end_date DATE NOT NULL,
-cost INTEGER NOT NULL,
-PRIMARY KEY (subscribe_id)
-);
-
 CREATE TABLE area(
 area_id INTEGER AUTO_INCREMENT,
 area_name VARCHAR(50),
@@ -157,6 +152,26 @@ area_id INTEGER NOT NULL,
 FOREIGN KEY (area_id) REFERENCES area(area_id) ON UPDATE CASCADE,
 PRIMARY KEY (customer_id)
 );
+CREATE TABLE subscription(
+subscription_id INTEGER,
+start_date DATE NOT NULL,
+end_date DATE NOT NULL,
+cost INTEGER NOT NULL,
+customer_id INTEGER NOT NULL,
+FOREIGN KEY(customer_id) REFERENCES customer (customer_id),
+PRIMARY KEY (subscription_id)
+);
+
+CREATE TABLE recurring_order(
+	rec_order_id INTEGER AUTO_INCREMENT,
+	week_day INTEGER NOT NULL,
+	relative_time INTEGER NOT NULL,
+	subscription_id INTEGER NOT NULL,
+	FOREIGN KEY (subscription_id) REFERENCES subscription(subscription_id),
+	PRIMARY KEY (rec_order_id)
+);
+
+
 
 CREATE TABLE _order(
 _order_id INTEGER AUTO_INCREMENT,
@@ -166,9 +181,9 @@ _order_date DATE NOT NULL,
 portions INTEGER NOT NULL,
 priority BOOLEAN NOT NULL,
 employee_id INTEGER,
-subscribe_id INTEGER,
 customer_id INTEGER NOT NULL,
-FOREIGN KEY (subscribe_id) REFERENCES subscription(subscribe_id) ON UPDATE CASCADE,
+rec_order_id INTEGER,
+FOREIGN KEY (rec_order_id) REFERENCES recurring_order(rec_order_id) ON UPDATE CASCADE,
 FOREIGN KEY (employee_id) REFERENCES salesperson(employee_id) ON UPDATE CASCADE,
 FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON UPDATE CASCADE,
 PRIMARY KEY (_order_id)
@@ -181,5 +196,6 @@ FOREIGN KEY (_order_id) REFERENCES _order(_order_id) ON UPDATE CASCADE,
 FOREIGN KEY (_package_id) REFERENCES _package(_package_id) ON UPDATE CASCADE,
 PRIMARY KEY _order_pk (_order_id, _package_id)
 );
+
 
 
