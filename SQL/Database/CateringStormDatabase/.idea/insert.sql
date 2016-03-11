@@ -128,7 +128,7 @@ INSERT INTO subscription VALUES (default, DATE('2016-03-10'), DATE('2016-03-30')
 
 -- (order) --
 
-INSERT INTO _order VALUES (default, 'sunn ordre', DATE('2016-03-12'), DATE('2016-03-10'), 3, false,  6, 1,null,true);
+INSERT INTO _order VALUES (default, 'sunn ordre', DATE('2016-03-12'), DATE('2016-03-10'), 3, false,  6, 1,null,false);
 INSERT INTO _order VALUES (default, 'kenans spesial', DATE('2016-03-17'), DATE('2016-03-09'), 3, false,  6,2,null,true);
 INSERT INTO _order VALUES (default, 'balansert ordre', DATE('2016-03-12'), DATE('2016-03-09'), 3, false,  6, 3, null,true);
 INSERT INTO _order VALUES (default, 'ekstra sunn ordre', DATE('2016-03-17'), DATE('2016-03-08'), 3, false,  6, 4, null,true);
