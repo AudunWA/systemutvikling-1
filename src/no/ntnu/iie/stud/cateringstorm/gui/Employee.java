@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.TableColumn;
 
 /**
- * Control panel UI for all employees
+ * Control panel UI for all employee
  * Created by Audun on 09.03.2016.
  */
 public class Employee extends JFrame {
