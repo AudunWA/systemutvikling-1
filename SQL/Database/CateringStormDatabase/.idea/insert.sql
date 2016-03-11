@@ -16,6 +16,7 @@ INSERT INTO employee VALUES (default, 'drammen', 'Håvard', 'Høydalsnes', 'Dram
 '87654321', 'rave@ravemail.com', 5);
 
 -- (employee types - includes all employee specialty tables) --
+INSERT INTO employee VALUES (1);
 INSERT INTO chef VALUES (2);
 INSERT INTO administrator VALUES (3);
 INSERT INTO nutrition_exp VALUES (4);
@@ -105,9 +106,6 @@ INSERT INTO dish_package VALUES (1,3);
 INSERT INTO dish_package VALUES (3,3);
 INSERT INTO dish_package VALUES (6,3);
 
--- (subscription) --
-
-
 -- (area) --
 INSERT INTO area VALUES (default, 'Kolstad');
 INSERT INTO area VALUES (default, 'Byåsen');
@@ -125,14 +123,21 @@ INSERT INTO customer VALUES (default, 'Berntsen', 'Bernt', 'Byåsvegen 4', 2);
 INSERT INTO customer VALUES (default, 'Arnsen', 'Gustaff', 'Kolstadvegen 3', 1);
 INSERT INTO customer VALUES (default, 'Olafdottir', 'Fredrikke', 'Hormonvegen 2', 1);
 
+
+-- (subscription) --
+INSERT INTO subcsription VALUES (default
+
+-- (recurring_order) --
+INSERT INTO recurring_order VALUES(default, 2, 36000, 1);
+
 -- (order) --
 
-INSERT INTO _order VALUES (default, 'sunn ordre', 2016-03-12, 2016-03-10, 3, false,  6, null, 1);
-INSERT INTO _order VALUES (default, 'kenans spesial', 2016-03-17, 2016-03-09, 3, false,  6, null, 2);
-INSERT INTO _order VALUES (default, 'balansert ordre', 2016-03-12, 2016-03-09, 3, false,  6, null, 3);
-INSERT INTO _order VALUES (default, 'ekstra sunn ordre', 2016-03-17, 2016-03-08, 3, false,  6, null, 4);
-INSERT INTO _order VALUES (default, 'pølsefest', 2016-03-11, 2016-03-10, 3, false,  6, null, 5);
-INSERT INTO _order VALUES (default, 'helt super ordre', 2016-03-22, 2016-02-10, 3, false,  6, null, 6);
+INSERT INTO _order VALUES (default, 'sunn ordre', 2016-03-12, 2016-03-10, 3, false,  6, 1,null);
+INSERT INTO _order VALUES (default, 'kenans spesial', 2016-03-17, 2016-03-09, 3, false,  6,2,null);
+INSERT INTO _order VALUES (default, 'balansert ordre', 2016-03-12, 2016-03-09, 3, false,  6, 3, null);
+INSERT INTO _order VALUES (default, 'ekstra sunn ordre', 2016-03-17, 2016-03-08, 3, false,  6, 4, null);
+INSERT INTO _order VALUES (default, 'pølsefest', 2016-03-11, 2016-03-10, 3, false,  6, 5, null);
+INSERT INTO _order VALUES (default, 'helt super ordre', 2016-03-22, 2016-02-10, 3, false,  6, 6, null);
 
 -- (_order_package) --
 
@@ -145,6 +150,8 @@ INSERT INTO _order_package VALUES(5,1);
 INSERT INTO _order_package VALUES(6,1);
 INSERT INTO _order_package VALUES(6,2);
 INSERT INTO _order_package VALUES(6,3);
+
+
 
 
 
