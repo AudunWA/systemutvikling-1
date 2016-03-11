@@ -14,9 +14,9 @@ public class Order {
     private Timestamp deliveryDate;
     private Timestamp orderDate;
     private int portions;
-    private boolean isPriority;
+    private boolean priority;
 
-    public Order(int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean isPriority) {
+    public Order(int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority) {
         this.orderId = orderId;
         this.employeeId = employeeId;
         this.customerId = customerId;
@@ -25,7 +25,7 @@ public class Order {
         this.deliveryDate = deliveryDate;
         this.orderDate = orderDate;
         this.portions = portions;
-        this.isPriority = isPriority;
+        this.priority = priority;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Order {
                 ", deliveryDate=" + deliveryDate +
                 ", orderDate=" + orderDate +
                 ", portions=" + portions +
-                ", isPriority=" + isPriority +
+                ", priority=" + priority +
                 '}';
     }
 }

@@ -31,8 +31,23 @@ public class Employee {
 
     @Override
     public String toString() {
+        return "Employee{" +
+                "employeeId=" + employeeId +
+                ", username='" + username + '\'' +
+                ", forename='" + forename + '\'' +
+                ", surname='" + surname + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", employeeType=" + employeeType +
+                '}';
+    }
+
+    // Old toString (manually made)
+    /*@Override
+    public String toString() {
         return "Employee ID: " + employeeId + "\nUsername: " + username + "\nForename: " + forename
                 + "\nSurname: " + surname + "\nAddress: " + address + "\nPhone number: " + phoneNumber + "\nEmail: " + email
                 + "\nType: " + employeeType;
-    }
+    }*/
 }
