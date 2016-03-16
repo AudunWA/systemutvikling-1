@@ -5,12 +5,12 @@ package no.ntnu.iie.stud.cateringstorm.entities.dish;
  */
 public class Dish {
     private final int dishId;
-    private DishType dishType;
+    private int dishType;
     private String name;
     private String description;
     private boolean active;
 
-    public Dish(int dishId, DishType dishType, String name, String description, boolean active) {
+    public Dish(int dishId, String name, String description, int dishType, boolean active) {
         this.dishId = dishId;
         this.dishType = dishType;
         this.name = name;
