@@ -10,6 +10,12 @@ public class GuiTest {
         //loginWindowOld.setVisible(true);
         //loginWindow.setVisible(true);
         ChefOrderOverview orderOverview = new ChefOrderOverview();
-        orderOverview.setVisible(true);
+        orderOverview.setVisible(false);
+        Employee empl = new Employee();
+        empl.setVisible(false);
+        OrderInfo ordInf = new OrderInfo();
+        ordInf.setVisible(true);
+        DishInfo dishInf = new DishInfo();
+        dishInf.setVisible(true);
     }
 }

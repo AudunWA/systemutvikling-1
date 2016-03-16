@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="no.ntnu.iie.stud.cateringstorm.gui.DishInfo">
+  <grid id="27dc6" binding="mainPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="5221f" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="228c4" class="javax.swing.JButton" binding="addRowButton">
+            <constraints/>
+            <properties>
+              <text value="Add Row"/>
+            </properties>
+          </component>
+          <component id="baa5" class="javax.swing.JButton" binding="editRowButton">
+            <constraints/>
+            <properties>
+              <enabled value="true"/>
+              <text value="Edit row"/>
+            </properties>
+          </component>
+          <component id="df670" class="javax.swing.JButton" binding="saveButton">
+            <constraints/>
+            <properties>
+              <text value="Save changes"/>
+            </properties>
+          </component>
+          <component id="ec3ed" class="javax.swing.JButton" binding="exitButton">
+            <constraints/>
+            <properties>
+              <text value="Exit"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <scrollpane id="67179" binding="tablePane">
+        <constraints/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="5940a" class="javax.swing.JTable" binding="ingredientTable" custom-create="true">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+    </children>
+  </grid>
+</form>
