@@ -29,6 +29,10 @@ public class Employee {
         return employeeId;
     }
 
+    public String getFullName() {
+        return forename + " " + surname;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
