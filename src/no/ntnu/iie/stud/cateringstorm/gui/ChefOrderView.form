@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="no.ntnu.iie.stud.cateringstorm.gui.ChefOrderView">
+  <grid id="27dc6" binding="mainPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <scrollpane id="4ea5" binding="orderPane">
+        <constraints/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="85bb3" class="javax.swing.JTable" binding="orderTable" custom-create="true">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <grid id="a8d18" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="f6285" class="javax.swing.JButton" binding="viewButton">
+            <constraints/>
+            <properties>
+              <text value="View Info"/>
+            </properties>
+          </component>
+          <component id="12249" class="javax.swing.JButton" binding="editButton">
+            <constraints/>
+            <properties>
+              <text value="Edit"/>
+            </properties>
+          </component>
+          <component id="f5a4b" class="javax.swing.JButton" binding="exitButton">
+            <constraints/>
+            <properties>
+              <text value="Exit"/>
+            </properties>
+          </component>
+          <component id="c2938" class="javax.swing.JButton" binding="saveButton">
+            <constraints/>
+            <properties>
+              <text value="Save Changes"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
