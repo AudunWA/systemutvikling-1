@@ -1,5 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.entities.employee;
 
+import no.ntnu.iie.stud.cateringstorm.gui.EmployeeView;
+
 /**
  * Contains the basic information about an employee
  * Created by Audun on 10.03.2016.
@@ -56,6 +58,18 @@ public class Employee {
 
     public int getEmployeeId() {
         return employeeId;
+    }
+
+    public String getFullName() {
+        return forename + " " + surname;
+    }
+
+    /**
+     * Called on successful login attempt.
+     */
+    public void onSuccessfulLogin() {
+        EmployeeView employeeView = new EmployeeView(this);
+        employeeView.setVisible(true);
     }
 
     @Override
