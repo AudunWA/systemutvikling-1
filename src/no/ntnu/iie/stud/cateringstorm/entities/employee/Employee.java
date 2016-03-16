@@ -7,6 +7,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.EmployeeView;
  * Created by Audun on 10.03.2016.
  */
 public class Employee {
+
     private final int employeeId;
     private String username;
     private String forename;
@@ -25,6 +26,34 @@ public class Employee {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.employeeType = employeeType;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getForename() {
+        return forename;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public EmployeeType getEmployeeType() {
+        return employeeType;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public int getEmployeeId() {

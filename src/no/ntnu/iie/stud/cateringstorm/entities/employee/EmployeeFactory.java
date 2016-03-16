@@ -90,4 +90,45 @@ public final class EmployeeFactory {
         EmployeeType employeeType = EmployeeType.getEmployeeType(employeeTypeId);
         return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType);
     }
+
+    public static Employee createEmployee(Employee newEmployee){
+
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO employee VALUES(?, ?, ?, ?, ?, ?, ?, ?, 1, ' ', ' ')")) {
+
+                statement.setInt(1, newEmployee.getEmployeeId());
+                statement.setString(2, newEmployee.getUsername());
+                statement.setString(3, newEmployee.getForename());
+                statement.setString(4, newEmployee.getSurname());
+                statement.setString(5, newEmployee.getAddress());
+                statement.setString(6, newEmployee.getPhoneNumber());
+                statement.setString(7, newEmployee.getEmail());
+                statement.setInt(8, newEmployee.getEmployeeType().getType());
+
+                statement.execute();
+                return newEmployee;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static int editEmployeeStatus(int employeeId, boolean active){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.employee SET active = ? WHERE employee.employee_id = ?")) {
+
+                statement.setBoolean(1, active);
+                statement.setInt(2, employeeId);
+
+                statement.execute();
+                return employeeId;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }
