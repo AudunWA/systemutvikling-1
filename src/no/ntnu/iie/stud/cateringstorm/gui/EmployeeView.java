@@ -1,5 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui;
 
+import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
+
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 
@@ -8,7 +10,7 @@ import javax.swing.table.TableColumn;
  * Created by Audun on 09.03.2016.
  */
 public class EmployeeView extends JFrame {
-    private static final String WINDOW_TITLE = "LoginView";
+    private static final String WINDOW_TITLE = "Employee";
 
     // Window dimensions
     private static final int WIDTH = 300;
@@ -17,7 +19,12 @@ public class EmployeeView extends JFrame {
     private JButton absenceButton;
     private JTable timeTable;
 
-    public EmployeeView() {
+    // Data
+    private Employee employee;
+
+    public EmployeeView(Employee employee) {
+        this.employee = employee;
+
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
