@@ -105,9 +105,6 @@ INSERT INTO dish_package VALUES (1,3);
 INSERT INTO dish_package VALUES (3,3);
 INSERT INTO dish_package VALUES (6,3);
 
--- (subscription) --
-
-
 -- (area) --
 INSERT INTO area VALUES (default, 'Kolstad');
 INSERT INTO area VALUES (default, 'Byåsen');
@@ -116,7 +113,6 @@ INSERT INTO area VALUES (default, 'Malvik');
 INSERT INTO area VALUES (default, 'Klæbu');
 
 -- (customer) --
-
 INSERT INTO customer VALUES (default, 'Gates', 'Bill', 'Rikmannsvegen 2', true,2);
 INSERT INTO customer VALUES (default, 'Zuckerberg', 'Mark', 'Rikmannsvegen 3',true, 2);
 INSERT INTO customer VALUES (default, 'Smith', 'Will', 'lerkendalvegen 5', true,3);

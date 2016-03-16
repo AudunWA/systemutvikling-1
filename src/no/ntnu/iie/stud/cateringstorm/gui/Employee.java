@@ -7,8 +7,8 @@ import javax.swing.table.TableColumn;
  * Control panel UI for all employee
  * Created by Audun on 09.03.2016.
  */
-public class EmployeeView extends JFrame {
-    private static final String WINDOW_TITLE = "LoginView";
+public class Employee extends JFrame {
+    private static final String WINDOW_TITLE = "Login";
 
     // Window dimensions
     private static final int WIDTH = 300;
@@ -17,13 +17,15 @@ public class EmployeeView extends JFrame {
     private JButton absenceButton;
     private JTable timeTable;
 
-    public EmployeeView() {
+    public Employee() {
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(mainPanel);
     }
+    private void createUIComponents(){
 
+    }
     private void fillTimetable() {
 
     }
