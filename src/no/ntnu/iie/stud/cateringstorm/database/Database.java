@@ -1,8 +1,8 @@
 package no.ntnu.iie.stud.cateringstorm.database;
 
-import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -24,6 +24,6 @@ public final class Database {
      * @throws SQLException
      */
     public static Connection getConnection() throws SQLException {
-        return (Connection)dataSource.getConnection();
+        return dataSource.getConnection();
     }
 }
