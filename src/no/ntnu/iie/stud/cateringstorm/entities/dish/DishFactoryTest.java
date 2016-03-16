@@ -12,7 +12,19 @@ public class DishFactoryTest {
     @Test
     public void testViewDish() throws Exception {
 
-        System.out.println(DishFactory.viewDish(1));
+        for (int i = 0; i < 10; i++) {
+            System.out.println(DishFactory.viewDish(i));
+        }
+
+    }
+
+    @Test
+    public void testGetAllDishes() throws Exception {
+
+        for (Dish dish :  DishFactory.getAllDishes()) {
+            System.out.println(dish);
+        }
+
 
     }
 }

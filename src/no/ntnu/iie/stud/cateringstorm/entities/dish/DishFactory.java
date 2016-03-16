@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by Chris on 16.03.2016.
@@ -35,6 +36,29 @@ public final class DishFactory {
                     }
 
                 }
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Dish> getAllDishes(){
+        ArrayList<Dish> dishes = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish")){
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()) {
+
+                        dishes.add(createDishFromResultSet(result));
+                    }
+
+                }
+                return dishes;
 
             }
         } catch (SQLException e){
