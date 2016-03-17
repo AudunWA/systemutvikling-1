@@ -88,4 +88,25 @@ public final class DishFactory {
         }
         return null;
     }
+
+    public static int editDish(int dishId, boolean active){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.dish SET active = ? WHERE dish.dish_id = ?")) {
+
+                statement.setBoolean(1, active);
+                statement.setInt(2, dishId);
+
+                statement.execute();
+                return dishId;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return -1;
+        }
+
+
+
+
+    }
 }

@@ -32,4 +32,11 @@ public class DishFactoryTest {
         DishFactory.createDish(knutSpesial);
 
     }
+
+    @Test
+    public void testEditDish() throws Exception {
+
+        DishFactory.editDish(7, true);
+
+    }
 }
