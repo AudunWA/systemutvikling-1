@@ -15,4 +15,30 @@ public class CustomerFactoryTest {
         System.out.println(CustomerFactory.viewSingleCustomer(1));
 
     }
+
+    @Test
+    public void testGetAllCustomers() throws Exception {
+
+        for (Customer customer : CustomerFactory.getAllCustomers()){
+
+            System.out.println(customer);
+
+        }
+    }
+
+    @Test
+    public void testCreateCustomer() throws Exception {
+
+        Customer knut = new Customer(0, "Kirkhorn", "Knut",  "Hornindal", true, 2);
+
+        CustomerFactory.createCustomer(knut);
+
+    }
+
+    @Test
+    public void testEditCustomer() throws Exception {
+
+        CustomerFactory.editCustomer(9,false);
+
+    }
 }

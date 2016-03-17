@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by Chris on 17.03.2016.
@@ -43,6 +44,65 @@ public final class CustomerFactory {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static ArrayList<Customer> getAllCustomers(){
+        ArrayList<Customer> customers = new ArrayList<>();
+        try (Connection connection = Database.getConnection()){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customer")){
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()){
+
+                        customers.add(createCustomerFromResultSet(result));
+                    }
+                    return customers;
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public static Customer createCustomer(Customer newCustomer){
+
+        try (Connection connection = Database.getConnection()){
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?)")){
+
+                statement.setInt(1, newCustomer.getCustomerId());
+                statement.setString(2, newCustomer.getSurname());
+                statement.setString(3, newCustomer.getForename());
+                statement.setString(4, newCustomer.getAddress());
+                statement.setBoolean(5, newCustomer.isActive());
+                statement.setInt(6, newCustomer.getAreaId());
+
+                statement.execute();
+                return newCustomer;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static int editCustomer(int customerId, boolean active){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.customer SET active = ? WHERE customer.customer_id = ?")) {
+
+                statement.setBoolean(1, active);
+                statement.setInt(2, customerId);
+
+                statement.execute();
+                return customerId;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return -1;
+        }
     }
 
 }
