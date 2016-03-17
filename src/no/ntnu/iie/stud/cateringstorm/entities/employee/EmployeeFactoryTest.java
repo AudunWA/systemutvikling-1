@@ -21,6 +21,7 @@ public class EmployeeFactoryTest {
         // Non-existing employee
         employee = EmployeeFactory.newEmployee("nonexisting");
         Assert.assertNull(employee);
+        System.out.println(employee);
     }
 
     @Test

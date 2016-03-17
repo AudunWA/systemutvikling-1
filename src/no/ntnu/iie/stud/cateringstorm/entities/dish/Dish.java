@@ -18,6 +18,26 @@ public class Dish {
         this.active = active;
     }
 
+    public int getDishId() {
+        return dishId;
+    }
+
+    public int getDishType() {
+        return dishType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
     @Override
     public String toString() {
         return "Dish{" +

@@ -10,11 +10,9 @@ import static org.junit.Assert.*;
 public class DishFactoryTest {
 
     @Test
-    public void testViewDish() throws Exception {
+    public void testViewSingleDish() throws Exception {
 
-        for (int i = 0; i < 10; i++) {
-            System.out.println(DishFactory.viewDish(i));
-        }
+        System.out.println(DishFactory.viewSingleDish(1));
 
     }
 
@@ -24,7 +22,14 @@ public class DishFactoryTest {
         for (Dish dish :  DishFactory.getAllDishes()) {
             System.out.println(dish);
         }
+    }
 
+    @Test
+    public void testCreateDish() throws Exception {
+
+        Dish knutSpesial = new Dish(0, "Penguin", "NOOOOOT NOOOOOOOT!!!", 2, true);
+
+        DishFactory.createDish(knutSpesial);
 
     }
 }

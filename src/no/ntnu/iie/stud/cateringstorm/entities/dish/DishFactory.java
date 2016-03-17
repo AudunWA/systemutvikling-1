@@ -22,7 +22,7 @@ public final class DishFactory {
         return new Dish(dishId, name, desc, type, active);
     }
 
-    public static Dish viewDish(int dishId){
+    public static Dish viewSingleDish(int dishId){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE dish_id = ?")){
 
@@ -65,6 +65,27 @@ public final class DishFactory {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    public static Dish createDish(Dish newDish){
+
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish VALUES(?,?,?,?,?)")){
+
+                statement.setInt(1, newDish.getDishId());
+                statement.setString(2, newDish.getName());
+                statement.setString(3, newDish.getDescription());
+                statement.setInt(4, newDish.getDishType());
+                statement.setBoolean(5, newDish.isActive());
+
+                statement.execute();
+                return newDish;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
         return null;
     }
 }
