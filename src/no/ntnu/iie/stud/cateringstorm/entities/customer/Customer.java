@@ -11,7 +11,7 @@ public class Customer {
     private String address;
     private boolean active;
 
-    public Customer(int customerId, int areaId, String forename, String surname, String address, boolean active) {
+    public Customer(int customerId, String forename, String surname, String address, boolean active, int areaId) {
         this.customerId = customerId;
         this.areaId = areaId;
         this.forename = forename;
