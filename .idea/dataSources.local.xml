@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="MySQL - g_tdat1006_t6@mysql.stud.iie.ntnu.no" uuid="8b39e128-380c-4719-a361-a1f7d4f7f7a4">
-      <secret-storage>master_key</secret-storage>
-      <user-name>g_tdat1006_t6</user-name>
-      <schema-pattern>g_tdat1006_t6.*</schema-pattern>
-      <default-schemas>g_tdat1006_t6.*</default-schemas>
-    </data-source>
+    <data-source name="MySQL - g_tdat1006_t6@mysql.stud.iie.ntnu.no" uuid="8b39e128-380c-4719-a361-a1f7d4f7f7a4" />
   </component>
 </project>

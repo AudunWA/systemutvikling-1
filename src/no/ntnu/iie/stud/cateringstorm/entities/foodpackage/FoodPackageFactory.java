@@ -12,6 +12,11 @@ import java.util.ArrayList;
  * Created by Audun on 16.03.2016.
  */
 public final class FoodPackageFactory {
+    /**
+     * Shows a single _package object given the id
+     * @param foodPackageId
+     * @return FoodPackage if foodPackageID matches
+     */
     public static FoodPackage getFoodPackage(int foodPackageId) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `food_package` WHERE `food_package_id` = ?")) {
@@ -30,6 +35,10 @@ public final class FoodPackageFactory {
         return null;
     }
 
+    /**
+     * Creates an arraylist of all the _package objects in the SQL table _package
+     * @return arraylist of all the packages
+     */
     public static ArrayList<FoodPackage> getAllFoodPackages() {
         ArrayList<FoodPackage> foodPackages = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -76,6 +85,12 @@ public final class FoodPackageFactory {
         return null;
     }
 
+    /**
+     * Creates a FoodPackage object from result
+     * @param result
+     * @return FoodPackage
+     * @throws SQLException
+     */
     private static FoodPackage createFoodPackageFromResultSet(ResultSet result) throws SQLException {
         int foodPackageId = result.getInt("food_package_id");
         String name = result.getString("name");
