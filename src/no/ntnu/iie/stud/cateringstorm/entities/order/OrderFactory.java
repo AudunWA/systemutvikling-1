@@ -59,8 +59,20 @@ public final class OrderFactory {
 
         return new Order(orderId, employeeId, customerId, recurringOrderId, description, deliveryDate, orderDate, portions, priority);
     }
-    public static boolean setOrderState(int orderID,boolean delivered ){
-        // TODO: Implement order change to database. This method is used by the Chauffeur, through ChaufferOrderView
-        return true;
+    public static boolean setOrderState(int orderID, boolean delivered){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6._order SET delivered = ? WHERE _order._order_id = ?")) {
+
+                statement.setBoolean(1, delivered);
+                statement.setInt(2, orderID);
+
+                statement.execute();
+                return true;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

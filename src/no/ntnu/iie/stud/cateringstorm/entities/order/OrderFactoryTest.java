@@ -1,5 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.entities.order;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,11 +19,17 @@ public class OrderFactoryTest {
     }
 
     @Test
-    public void testGetAllEmployees() throws Exception {
+    public void testGetAllOrders() throws Exception {
         ArrayList<Order> orders = OrderFactory.getAllOrders();
         Assert.assertNotNull(orders);
         for (Order order : orders) {
             System.out.println(order);
         }
+    }
+
+    @Test
+    public void testSetOrderState() throws Exception {
+        OrderFactory.setOrderState(1, true);
+
     }
 }
