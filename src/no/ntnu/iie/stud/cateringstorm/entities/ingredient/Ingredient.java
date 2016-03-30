@@ -47,26 +47,6 @@ public class Ingredient {
         this.expireDate = expireDate;
     }
 
-    public int getIngredientId() {
-        return ingredientId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public boolean isVegetarian() {
-        return vegetarian;
-    }
-
-    public Timestamp getArrivalDate() {
-        return arrivalDate;
-    }
-
     @Override
     public String toString() {
         return "Ingredient{" +
