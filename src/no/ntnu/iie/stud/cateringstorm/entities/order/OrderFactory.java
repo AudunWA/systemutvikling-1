@@ -57,7 +57,7 @@ public final class OrderFactory {
         int portions = result.getInt("portions");
         boolean priority = result.getBoolean("priority");
 
-        return new Order(orderId, employeeId, customerId, recurringOrderId, description, deliveryDate, orderDate, portions, priority);
+        return new Order(orderId, employeeId, customerId, recurringOrderId, description, deliveryDate, orderDate, portions, priority, false);
     }
 
     //This method is used by the Chauffeur, through ChaufferOrderView
@@ -84,5 +84,6 @@ public final class OrderFactory {
     }
     public static String getCustomerAddress(int customerId){
         // TODO: Implement sql query to get customr address
+        return "";
     }
 }

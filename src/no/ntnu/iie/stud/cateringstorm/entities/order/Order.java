@@ -65,8 +65,9 @@ public class Order {
     public boolean isPriority() {
         return priority;
     }
+
     public boolean isDelivered(){
-        return delivered
+        return delivered;
     }
 
     public void setDeliveryDate(Timestamp deliveryDate) {

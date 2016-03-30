@@ -39,11 +39,8 @@ public class OrderTableModel extends AbstractTableModel {
     public Class getColumnClass(int column){
         switch (column){
             case 0: return Integer.class;
-            break;
             case 2: return Integer.class;
-            break;
             case 3: return Timestamp.class;
-            break;
             default: return String.class;
         }
     }
@@ -62,12 +59,12 @@ public class OrderTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int column){
         Order order = getOrder(row);
         switch (column){
-            case 0: return order.getOrderId();break;
-            case 1: return order.findCustomerName();break;
-            case 2: return order.getPortions();break;
-            case 3: return order.getDeliveryDate();break;
-            case 4: return order.findCustomerAdress();break;
-            case 5: return order.isDelivered();break;
+            case 0: return order.getOrderId();
+            case 1: return order.findCustomerName();
+            case 2: return order.getPortions();
+            case 3: return order.getDeliveryDate();
+            case 4: return order.findCustomerAdress();
+            case 5: return order.isDelivered();
             default: return null;
         }
     }
@@ -76,7 +73,7 @@ public class OrderTableModel extends AbstractTableModel {
         Order order = getOrder(row);
         switch (column){
             case 5:
-                if(value instanceof Boolean)order.setDelivered(value);break;
+                if(value instanceof Boolean)order.setDelivered((boolean)value); break;
         }
         fireTableCellUpdated(row, column);
     }
