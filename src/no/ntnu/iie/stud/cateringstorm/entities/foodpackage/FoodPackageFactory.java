@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public final class FoodPackageFactory {
     public static FoodPackage getFoodPackage(int foodPackageId) {
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_package` WHERE `_package_id` = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `food_package` WHERE `food_package_id` = ?")) {
                 statement.setInt(1, foodPackageId);
                 statement.executeQuery();
 
@@ -33,7 +33,7 @@ public final class FoodPackageFactory {
     public static ArrayList<FoodPackage> getAllFoodPackages() {
         ArrayList<FoodPackage> foodPackages = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_package`")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `food_package`")) {
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {
@@ -57,8 +57,8 @@ public final class FoodPackageFactory {
     public static ArrayList<FoodPackage> getFoodPackages(int orderId) {
         ArrayList<FoodPackage> foodPackages = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT `_package`.* FROM `_order_package`" +
-                    " NATURAL JOIN `_package`" +
+            try (PreparedStatement statement = connection.prepareStatement("SELECT `food_package`.* FROM `_order_food_package`" +
+                    " NATURAL JOIN `food_package`" +
                     " WHERE `_order_id` = ?")) {
                 statement.setInt(1, orderId);
                 statement.executeQuery();
@@ -77,7 +77,7 @@ public final class FoodPackageFactory {
     }
 
     private static FoodPackage createFoodPackageFromResultSet(ResultSet result) throws SQLException {
-        int foodPackageId = result.getInt("_package_id");
+        int foodPackageId = result.getInt("food_package_id");
         String name = result.getString("name");
         double cost = result.getDouble("cost");
         boolean active = result.getBoolean("active");

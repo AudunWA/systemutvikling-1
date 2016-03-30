@@ -1,11 +1,14 @@
 DROP TABLE IF EXISTS _order_package;
+DROP TABLE IF EXISTS _order_food_package;
 DROP TABLE IF EXISTS _order;
 DROP TABLE IF EXISTS recurring_order;
 DROP TABLE IF EXISTS subscription;
 DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS area;
 DROP TABLE IF EXISTS dish_package;
+DROP TABLE IF EXISTS dish_food_package;
 DROP TABLE IF EXISTS _package;
+DROP TABLE IF EXISTS food_package;
 DROP TABLE IF EXISTS ingredient_dish;
 DROP TABLE IF EXISTS dish;
 DROP TABLE IF EXISTS dish_type;
@@ -125,20 +128,20 @@ FOREIGN KEY (dish_id) REFERENCES dish(dish_id) ON UPDATE CASCADE,
 PRIMARY KEY (ingredient_id, dish_id)
 );
 
-CREATE TABLE _package(
-_package_id INTEGER AUTO_INCREMENT,
+CREATE TABLE food_package(
+  food_package_id INTEGER AUTO_INCREMENT,
 name VARCHAR(20) NOT NULL,
 cost DOUBLE NOT NULL,
 active BOOLEAN NOT NULL,
-PRIMARY KEY (_package_id)
+PRIMARY KEY (food_package_id)
 );
 
-CREATE TABLE dish_package(
+CREATE TABLE dish_food_package(
 dish_id INTEGER,
-_package_id INTEGER,
+food_package_id INTEGER,
 FOREIGN KEY (dish_id) REFERENCES dish(dish_id) ON UPDATE CASCADE,
-FOREIGN KEY (_package_id) REFERENCES _package(_package_id) ON UPDATE CASCADE,
-PRIMARY KEY (dish_id, _package_id)
+FOREIGN KEY (food_package_id) REFERENCES food_package(food_package_id) ON UPDATE CASCADE,
+PRIMARY KEY (dish_id, food_package_id)
 );
 
 CREATE TABLE area(
@@ -197,12 +200,12 @@ FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON UPDATE CASCADE,
 PRIMARY KEY (_order_id)
 );
 
-CREATE TABLE _order_package(
+CREATE TABLE _order_food_package(
 _order_id INTEGER,
-_package_id INTEGER,
+food_package_id INTEGER,
 FOREIGN KEY (_order_id) REFERENCES _order(_order_id) ON UPDATE CASCADE,
-FOREIGN KEY (_package_id) REFERENCES _package(_package_id) ON UPDATE CASCADE,
-PRIMARY KEY _order_pk (_order_id, _package_id)
+FOREIGN KEY (food_package_id) REFERENCES food_package(food_package_id) ON UPDATE CASCADE,
+PRIMARY KEY _order_pk (_order_id, food_package_id)
 );
 
 

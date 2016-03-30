@@ -86,24 +86,24 @@ INSERT INTO ingredient_dish VALUES (5,4,100,'g');
 INSERT INTO ingredient_dish VALUES (1,5,100,'g');
 INSERT INTO ingredient_dish VALUES (1,6,50,'g');
 
--- (package) --
+-- (food_package) --
 
-INSERT INTO _package VALUES (default, 'Kenan special', 100,true);
-INSERT INTO _package VALUES (default, 'Balansert', 150,true);
-INSERT INTO _package VALUES (default, 'Variert', 200,true);
+INSERT INTO food_package VALUES (default, 'Kenan special', 100,true);
+INSERT INTO food_package VALUES (default, 'Balansert', 150,true);
+INSERT INTO food_package VALUES (default, 'Variert', 200,true);
 
--- (dish_package) --
-INSERT INTO dish_package VALUES (3,1);
-INSERT INTO dish_package VALUES (5,1);
-INSERT INTO dish_package VALUES (6,1);
+-- (dish_food_package) --
+INSERT INTO dish_food_package VALUES (3,1);
+INSERT INTO dish_food_package VALUES (5,1);
+INSERT INTO dish_food_package VALUES (6,1);
 
-INSERT INTO dish_package VALUES (1,2);
-INSERT INTO dish_package VALUES (2,2);
-INSERT INTO dish_package VALUES (4,2);
+INSERT INTO dish_food_package VALUES (1,2);
+INSERT INTO dish_food_package VALUES (2,2);
+INSERT INTO dish_food_package VALUES (4,2);
 
-INSERT INTO dish_package VALUES (1,3);
-INSERT INTO dish_package VALUES (3,3);
-INSERT INTO dish_package VALUES (6,3);
+INSERT INTO dish_food_package VALUES (1,3);
+INSERT INTO dish_food_package VALUES (3,3);
+INSERT INTO dish_food_package VALUES (6,3);
 
 -- (area) --
 INSERT INTO area VALUES (default, 'Kolstad');
@@ -135,17 +135,17 @@ INSERT INTO _order VALUES (default, 'ekstra sunn ordre', TIMESTAMP('2016-03-17')
 INSERT INTO _order VALUES (default, 'pølsefest', TIMESTAMP('2016-03-11'), TIMESTAMP('2016-03-10'), 3, false,  6, 5, null,true);
 INSERT INTO _order VALUES (default, 'helt super ordre', TIMESTAMP('2016-03-22'), TIMESTAMP('2016-02-10'), 3, false,  6, 6, null,true);
 
--- (_order_package) --
+-- (_order_food_package) --
 
-INSERT INTO _order_package VALUES(1,2);
-INSERT INTO _order_package VALUES(2,1);
-INSERT INTO _order_package VALUES(3,3);
-INSERT INTO _order_package VALUES(3,2);
-INSERT INTO _order_package VALUES(4,2);
-INSERT INTO _order_package VALUES(5,1);
-INSERT INTO _order_package VALUES(6,1);
-INSERT INTO _order_package VALUES(6,2);
-INSERT INTO _order_package VALUES(6,3);
+INSERT INTO _order_food_package VALUES(1,2);
+INSERT INTO _order_food_package VALUES(2,1);
+INSERT INTO _order_food_package VALUES(3,3);
+INSERT INTO _order_food_package VALUES(3,2);
+INSERT INTO _order_food_package VALUES(4,2);
+INSERT INTO _order_food_package VALUES(5,1);
+INSERT INTO _order_food_package VALUES(6,1);
+INSERT INTO _order_food_package VALUES(6,2);
+INSERT INTO _order_food_package VALUES(6,3);
 
 
 
