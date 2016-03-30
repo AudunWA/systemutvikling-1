@@ -59,4 +59,8 @@ public final class OrderFactory {
 
         return new Order(orderId, employeeId, customerId, recurringOrderId, description, deliveryDate, orderDate, portions, priority);
     }
+    public static boolean setOrderState(int orderID,boolean delivered ){
+        // TODO: Implement order change to database. This method is used by the Chauffeur, through ChaufferOrderView
+        return true;
+    }
 }

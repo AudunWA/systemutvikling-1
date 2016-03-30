@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 /**
  * Information panel for chefs
@@ -24,19 +25,23 @@ public class OrderInfo extends JFrame {
     private JButton exitButton;
     private JScrollPane tablePane;
     private JButton saveButton;
+    private final DefaultTableModel model = new DefaultTableModel(0, 1);
 
     public OrderInfo() {
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(mainPanel);
+        addRowButton.addActionListener(e-> {
+            addRow();
+        });
     }
 
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
         // Fill table with dummy data
-        Object[] columnNames = new Object[]{"Ingredient ID","Name", "Course", "Portions", "Preparation Time"};
+        Object[] columnNames = new Object[]{"Dish_ID","Name", "Course", "Portions", "Preparation Time"};
         Object[][] data = new Object[][]{
                 {1, "Happy hour soup","Appetizer", 9,"15 min" },
                 {2, "Kentucky Chicken Nuggets","Main", 10,"30 min"},
@@ -46,6 +51,13 @@ public class OrderInfo extends JFrame {
         ingredientTable = new JTable(data, columnNames);
         ingredientTable.setFillsViewportHeight(true);
 
+    }
+    private void addRow(){
+        //Add a table row
+    }
+    public static void main(String[]args){
+        OrderInfo oi = new OrderInfo();
+        oi.setVisible(true);
     }
 }
 

@@ -27,6 +27,9 @@ public class DishInfo extends JFrame{
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(mainPanel);
+        addRowButton.addActionListener(e-> {
+            //Add a table row
+        });
     }
 
 
@@ -45,5 +48,12 @@ public class DishInfo extends JFrame{
         ingredientTable = new JTable(data, columnNames);
         ingredientTable.setFillsViewportHeight(true);
 
+    }
+
+
+
+    public static void main(String[]args){
+        DishInfo di = new DishInfo();
+        di.setVisible(true);
     }
 }

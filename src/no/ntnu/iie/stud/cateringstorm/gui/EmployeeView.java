@@ -9,6 +9,7 @@ import javax.swing.table.TableColumn;
  * Control panel UI for all employee
  * Created by Audun on 09.03.2016.
  */
+
 public class EmployeeView extends JFrame {
     private static final String WINDOW_TITLE = "Employee";
 
@@ -30,7 +31,9 @@ public class EmployeeView extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(mainPanel);
     }
+    private void createUIComponents(){
 
+    }
     private void fillTimetable() {
 
     }
