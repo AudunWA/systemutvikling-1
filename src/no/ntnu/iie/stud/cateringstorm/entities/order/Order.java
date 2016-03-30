@@ -15,8 +15,9 @@ public class Order {
     private Timestamp orderDate;
     private int portions;
     private boolean priority;
+    private boolean delivered;
 
-    public Order(int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority) {
+    public Order(int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered) {
         this.orderId = orderId;
         this.employeeId = employeeId;
         this.customerId = customerId;
@@ -26,8 +27,65 @@ public class Order {
         this.orderDate = orderDate;
         this.portions = portions;
         this.priority = priority;
+        this.delivered = delivered;
     }
 
+    public int getOrderId() {
+        return orderId;
+    }
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+
+    public int getRecurringOrderId() {
+        return recurringOrderId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Timestamp getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public Timestamp getOrderDate() {
+        return orderDate;
+    }
+
+    public int getPortions() {
+        return portions;
+    }
+
+    public boolean isPriority() {
+        return priority;
+    }
+    public boolean isDelivered(){
+        return delivered
+    }
+
+    public void setDeliveryDate(Timestamp deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public void setPortions(int portions) {
+        this.portions = portions;
+    }
+    public void setDelivered(boolean delivered){
+        this.delivered = delivered;
+        OrderFactory.setOrderState(orderId,delivered);
+    }
+    public String findCustomerName(){
+        return OrderFactory.getCustomerName(customerId);
+    }
+    public String findCustomerAdress(){
+        return OrderFactory.getCustomerAddress(customerId);
+    }
     @Override
     public String toString() {
         return "Order{" +
@@ -42,4 +100,5 @@ public class Order {
                 ", priority=" + priority +
                 '}';
     }
+
 }

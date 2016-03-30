@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 /**
@@ -59,5 +60,6 @@ public class OrderInfo extends JFrame {
         OrderInfo oi = new OrderInfo();
         oi.setVisible(true);
     }
+
 }
 

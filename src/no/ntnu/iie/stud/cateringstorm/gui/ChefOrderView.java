@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.time.LocalDate;
 
 /**
+ * Orderview for chefs. Chefs are able to edit contents of the order.
  * Created by Audun on 10.03.2016.
  */
 public class ChefOrderView extends JFrame {
@@ -65,7 +66,7 @@ public class ChefOrderView extends JFrame {
 
     }
     public static void main(String[] args){
-        ChauffeurOrderView coo = new ChauffeurOrderView();
-        coo.setVisible(true);
+        ChauffeurOrderView cov = new ChauffeurOrderView();
+        cov.setVisible(true);
     }
 }
