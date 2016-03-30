@@ -27,7 +27,7 @@ public final class EmployeeFactory {
 
                         // Check if the password is correct
                         Boolean correct = PasswordUtil.verifyPassword(password, salt, correctPassword);
-                        if(correct) {
+                        if (correct) {
                             return createEmployeeFromResultSet(result);
                         } else {
                             return null;
@@ -91,33 +91,51 @@ public final class EmployeeFactory {
         return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType);
     }
 
-    public static Employee createEmployee(Employee newEmployee){
+    public static Employee createEmployee(String username, String password, String forename,
+                                          String surname, String address, String phoneNumber,
+                                          String email, EmployeeType type) {
+
+        String salt = PasswordUtil.generateSalt();
+        String hashedPassword = PasswordUtil.generatePasswordHash(password, salt);
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO employee VALUES(?, ?, ?, ?, ?, ?, ?, ?, 1, ' ', ' ')")) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO employee VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, TRUE, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                statement.setString(1, username);
+                statement.setString(2, forename);
+                statement.setString(3, surname);
+                statement.setString(4, address);
+                statement.setString(5, phoneNumber);
+                statement.setString(6, email);
+                statement.setInt(7, type.getType());
+                statement.setString(8, hashedPassword);
+                statement.setString(9, salt);
 
-                statement.setInt(1, newEmployee.getEmployeeId());
-                statement.setString(2, newEmployee.getUsername());
-                statement.setString(3, newEmployee.getForename());
-                statement.setString(4, newEmployee.getSurname());
-                statement.setString(5, newEmployee.getAddress());
-                statement.setString(6, newEmployee.getPhoneNumber());
-                statement.setString(7, newEmployee.getEmail());
-                statement.setInt(8, newEmployee.getEmployeeType().getType());
+                int affectedRows = statement.executeUpdate();
+                if (affectedRows == 0) {
+                    return null;
+                }
 
-                statement.execute();
-                return newEmployee;
+                int generatedID;
+                try (ResultSet result = statement.getGeneratedKeys()) {
+                    if (result.next()) {
+                        generatedID = result.getInt(1);
+                    } else {
+                        return null; // No ID?
+                    }
+                }
 
+                Employee employee = new Employee(generatedID, username, forename, surname, address, phoneNumber, email, type);
+                return employee;
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static int editEmployeeStatus(int employeeId, boolean active){
+    public static int editEmployeeStatus(int employeeId, boolean active) {
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.employee SET active = ? WHERE employee.employee_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE employee SET active = ? WHERE employee.employee_id = ?")) {
 
                 statement.setBoolean(1, active);
                 statement.setInt(2, employeeId);
@@ -126,7 +144,7 @@ public final class EmployeeFactory {
                 return employeeId;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         }

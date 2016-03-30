@@ -44,7 +44,8 @@ active BOOLEAN NOT NULL,
 password VARCHAR(64) NOT NULL,
 salt VARCHAR(32) NOT NULL,
 FOREIGN KEY (e_type_id) REFERENCES employee_type(e_type_id) ON UPDATE CASCADE,
-PRIMARY KEY (employee_id)
+PRIMARY KEY (employee_id),
+UNIQUE KEY (username)
 );
 
 CREATE TABLE salesperson(

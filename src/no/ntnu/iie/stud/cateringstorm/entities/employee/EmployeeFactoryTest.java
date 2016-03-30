@@ -1,5 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.entities.employee;
 
+import no.ntnu.iie.stud.cateringstorm.encryption.PasswordUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -45,13 +46,15 @@ public class EmployeeFactoryTest {
         }
     }
 
+
+    /**
+     * Generates a new employee with a random username
+     * @throws Exception
+     */
     @Test
     public void testCreateEmployee() throws Exception {
-
-        Employee test = new Employee(0, "KersjnRobaat", "kristoffer", "aas", "Mo", "99999999", "Kersjn@robåtmail.com", EmployeeType.NUTRITION_EXPERT);
-
-        EmployeeFactory.createEmployee(test);
-
+        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT);
+        Assert.assertNotNull(test);
     }
 
     @Test
