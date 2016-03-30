@@ -1,7 +1,5 @@
 package no.ntnu.iie.stud.cateringstorm.entities.ingredient;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.BooleanDV;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 
 import java.sql.*;
@@ -12,6 +10,12 @@ import java.util.ArrayList;
  */
 public final class IngredientFactory {
 
+    /**
+     * result set - used for creating an ingredient object from result.
+     * @param result
+     * @return an ingredient object
+     * @throws SQLException
+     */
     private static Ingredient createIngredientFromResultSet(ResultSet result) throws SQLException{
 
         int ingredient_id = result.getInt("ingredient_id");
@@ -24,6 +28,11 @@ public final class IngredientFactory {
         return new Ingredient(ingredient_id, arrival_date, name, description, vegatarian, expire_date);
     }
 
+    /**
+     * Shows a single ingredient from the SQL table ingredient given an ID
+     * @param ingredient_id
+     * @return An ingredient
+     */
     public static Ingredient viewSingleIngredient(int ingredient_id){
 
         try (Connection connection = Database.getConnection()){
@@ -45,6 +54,10 @@ public final class IngredientFactory {
         return null;
     }
 
+    /**
+     * Creates a list of ingredients
+     * @return an arrayylist containing all ingredients in the SQL table ingrdient
+     */
     public static ArrayList<Ingredient> viewAllIngredient(){
 
         ArrayList<Ingredient> temp = new ArrayList<>();
@@ -67,6 +80,11 @@ public final class IngredientFactory {
         return temp;
     }
 
+    /**
+     * Inserts an ingredient into SQL table ingredient given an ingredient object
+     * @param ingredient
+     * @return returns the ingredient added or null
+     */
     public static Ingredient createIngredient(Ingredient ingredient){
 
         try (Connection connection = Database.getConnection()){
@@ -88,6 +106,10 @@ public final class IngredientFactory {
         return null;
     }
 
+    /**
+     * Shows expired ingredients
+     * @return Arraylist containing the expired ingredients
+     */
     public static ArrayList<Ingredient> showExpired(){
 
         Timestamp nowTime = new Timestamp(System.currentTimeMillis());
