@@ -14,6 +14,13 @@ import java.util.ArrayList;
  * Created by Audun on 10.03.2016.
  */
 public final class EmployeeFactory {
+
+    /**
+     * Finds an employee given username and password.
+     * @param username
+     * @param password
+     * @return Employee. if matching username and password
+     */
     public static Employee newEmployee(String username, String password) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM employee WHERE username = ?")) {
@@ -41,6 +48,11 @@ public final class EmployeeFactory {
         return null;
     }
 
+    /**
+     * Shows an employee given a username
+     * @param username
+     * @return Employee
+     */
     public static Employee newEmployee(String username) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM employee WHERE username = ?")) {
@@ -59,6 +71,10 @@ public final class EmployeeFactory {
         return null;
     }
 
+    /**
+     * Creates an arraylist containing all employees from the SQL table employee
+     * @return Arraylist<Employee>
+     */
     public static ArrayList<Employee> getAllEmployees() {
         ArrayList<Employee> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -78,6 +94,12 @@ public final class EmployeeFactory {
         return null;
     }
 
+    /**
+     * Creates an employee from result
+     * @param result
+     * @return Employee
+     * @throws SQLException
+     */
     private static Employee createEmployeeFromResultSet(ResultSet result) throws SQLException {
         int employeeId = result.getInt("employee_id");
         int employeeTypeId = result.getInt("e_type_id");
@@ -91,6 +113,11 @@ public final class EmployeeFactory {
         return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType);
     }
 
+    /**
+     * Inserts an employee into the SQL table employee given an employee object
+     * @param newEmployee
+     * @return Employee
+     */
     public static Employee createEmployee(Employee newEmployee){
 
         try (Connection connection = Database.getConnection()) {
@@ -115,6 +142,12 @@ public final class EmployeeFactory {
         }
     }
 
+    /**
+     * Edits the status of an employee given the employeeID (if the employee is active or not)
+     * @param employeeId
+     * @param active
+     * @return int
+     */
     public static int editEmployeeStatus(int employeeId, boolean active){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.employee SET active = ? WHERE employee.employee_id = ?")) {
