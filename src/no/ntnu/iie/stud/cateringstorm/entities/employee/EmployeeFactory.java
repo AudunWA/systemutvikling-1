@@ -137,7 +137,7 @@ public final class EmployeeFactory {
 
                 int affectedRows = statement.executeUpdate();
                 if (affectedRows == 0) {
-                    return null;
+                    return null; // No rows inserted
                 }
 
                 int generatedID;
