@@ -52,8 +52,8 @@ public final class OrderFactory {
         int customerId = result.getInt("customer_id");
         int recurringOrderId = result.getInt("rec_order_id");
         String description = result.getString("description");
-        Timestamp deliveryDate = result.getTimestamp("delivery_date");
-        Timestamp orderDate = result.getTimestamp("_order_date");
+        Timestamp deliveryDate = result.getTimestamp("delivery_time");
+        Timestamp orderDate = result.getTimestamp("_order_time");
         int portions = result.getInt("portions");
         boolean priority = result.getBoolean("priority");
 

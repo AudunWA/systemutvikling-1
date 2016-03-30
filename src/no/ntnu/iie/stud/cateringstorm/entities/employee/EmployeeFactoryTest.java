@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class EmployeeFactoryTest {
 
+
     @Test
     public void testNewEmployee() throws Exception {
         // Existing employee
@@ -41,5 +42,20 @@ public class EmployeeFactoryTest {
         for (Employee employee : employees) {
             System.out.println(employee);
         }
+    }
+
+    @Test
+    public void testCreateEmployee() throws Exception {
+
+        Employee test = new Employee(0, "KersjnRobaat", "kristoffer", "aas", "Mo", "99999999", "Kersjn@robåtmail.com", EmployeeType.NUTRITION_EXPERT);
+
+        EmployeeFactory.createEmployee(test);
+
+    }
+
+    @Test
+    public void testEditEmployeeStatus() throws Exception {
+
+        EmployeeFactory.editEmployeeStatus(1, false);
     }
 }
