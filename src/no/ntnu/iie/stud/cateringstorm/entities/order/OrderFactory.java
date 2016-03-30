@@ -59,8 +59,17 @@ public final class OrderFactory {
 
         return new Order(orderId, employeeId, customerId, recurringOrderId, description, deliveryDate, orderDate, portions, priority);
     }
+    //This method is used by the Chauffeur, through ChaufferOrderView
     public static boolean setOrderState(int orderID,boolean delivered ){
-        // TODO: Implement order change to database. This method is used by the Chauffeur, through ChaufferOrderView
+        // TODO: Implement order change to database.
         return true;
+    }
+    //This method is currently used by OrderTableModel
+    public static String getCustomerName(int customerId){
+        // TODO: Implement sql query to get a customer's name from the database
+        return "";
+    }
+    public static String getCustomerAddress(int customerId){
+        // TODO: Implement sql query to get customr address
     }
 }

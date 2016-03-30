@@ -7,15 +7,6 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="4f59c" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.75" weighty="0.25"/>
-        </constraints>
-        <properties>
-          <text value="With selected:"/>
-        </properties>
-      </component>
       <scrollpane id="ae4a4" binding="orderPane" custom-create="true">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -26,7 +17,9 @@
         <children>
           <component id="6c3bb" class="javax.swing.JTable" binding="orderTable" custom-create="true">
             <constraints/>
-            <properties/>
+            <properties>
+              <enabled value="true"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
@@ -50,15 +43,6 @@
         </constraints>
         <properties>
           <text value="Exit"/>
-        </properties>
-      </component>
-      <component id="109e" class="javax.swing.JButton" binding="viewButton" default-binding="true">
-        <constraints>
-          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.25" weighty="0.25"/>
-        </constraints>
-        <properties>
-          <text value="View"/>
         </properties>
       </component>
     </children>

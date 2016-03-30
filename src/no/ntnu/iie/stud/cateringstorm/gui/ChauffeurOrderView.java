@@ -13,19 +13,19 @@ public class ChauffeurOrderView extends JFrame {
     private static final String WINDOW_TITLE = "Active orders";
 
     // Window dimensions
-    private static final int WIDTH = 500;
+    private static final int WIDTH = 700;
     private static final int HEIGHT = 400;
     private static Object[][] data = new Object[][] {
-            {1, "Dummy package 1", 4, LocalDate.now().plusDays(1),"Delivered"},
-            {2, "Dummy package 2", 20, LocalDate.now().plusDays(2),"Not delivered"},
-            {3, "Dummy package 3", 10, LocalDate.now().plusDays(3),"Not delivered"},
-            {4, "Dummy package 4", 50, LocalDate.now().plusDays(4),"Not delivered"},
-            {5, "Dummy package 5", 50, LocalDate.now().plusDays(5),"Not delivered"}
+            {1, "Nils Nilsen", 4, LocalDate.now().plusDays(1),"Kongens gate 2","Delivered"},
+            {2, "Kenan Mahic", 20, LocalDate.now().plusDays(2),"Aksel Nilsen veg 8","Not delivered"},
+            {3, "Kat", 10, LocalDate.now().plusDays(3),"Leirfossvegen 47","Not delivered"},
+            {4, "Awa 500", 50, LocalDate.now().plusDays(4),"Ratesvingen 8","Not delivered"},
+            {5, "Håvard", 50, LocalDate.now().plusDays(5),"Kroppanmarka 10","Not delivered"}
     };
     private JPanel mainPanel;
     private JScrollPane orderPane;
     private JTable orderTable;
-    private JButton viewButton;
+
     private JButton exitButton;
     private JComboBox statusBox;
     private ComboBoxModel cbModel;
@@ -55,7 +55,7 @@ public class ChauffeurOrderView extends JFrame {
     }
     private void createTable(){
         // Fill table with dummy data
-        Object[] columnNames = {"Order ID", "Package", "Portions", "Delivery date","Status"};
+        Object[] columnNames = {"Order ID", "Customer", "Portions", "Delivery date","Location","Status"};
 
         orderTable = new JTable(data, columnNames);
 
@@ -70,15 +70,16 @@ public class ChauffeurOrderView extends JFrame {
         statusBox.setSelectedIndex(0);
 
     }
-    //Sets status as delivered
+    //Sets order status as delivered/not delivered
     private void setStatus(){
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
         boolean delivered = choice > 0;
+        int arrLength = data[0].length-1;
         orderTable.clearSelection();
         //To update database
         OrderFactory.setOrderState(Integer.parseInt(data[selectedRow][0].toString()),delivered);
-        data[selectedRow][4] = (delivered)?"Delivered":"Not delivered";
+        data[selectedRow][arrLength] = (delivered)?"Delivered":"Not delivered";
     }
     //Test method
     public static void main(String[] args){
