@@ -11,13 +11,37 @@ public class Customer {
     private String address;
     private boolean active;
 
-    public Customer(int customerId, int areaId, String forename, String surname, String address, boolean active) {
+    public Customer(int customerId, String surname, String forename, String address, boolean active, int areaId) {
         this.customerId = customerId;
         this.areaId = areaId;
         this.forename = forename;
         this.surname = surname;
         this.address = address;
         this.active = active;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public int getAreaId() {
+        return areaId;
+    }
+
+    public String getForename() {
+        return forename;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     @Override
