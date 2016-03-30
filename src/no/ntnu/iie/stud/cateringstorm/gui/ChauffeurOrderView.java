@@ -77,7 +77,7 @@ public class ChauffeurOrderView extends JFrame {
         boolean delivered = choice > 0;
         orderTable.clearSelection();
         //To update database
-        OrderFactory.setOrderState(data[selectedRow][0],delivered);
+        OrderFactory.setOrderState(Integer.parseInt(data[selectedRow][0].toString()),delivered);
         data[selectedRow][4] = (delivered)?"Delivered":"Not delivered";
     }
     //Test method
