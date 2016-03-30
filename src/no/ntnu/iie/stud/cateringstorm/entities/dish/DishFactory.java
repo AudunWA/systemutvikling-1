@@ -12,6 +12,12 @@ import java.util.ArrayList;
  */
 public final class DishFactory {
 
+    /**
+     * Creates a Dish object from result
+     * @param result
+     * @return Dish
+     * @throws SQLException
+     */
     private static Dish createDishFromResultSet(ResultSet result) throws SQLException{
         int dishId = result.getInt("dish_id");
         String name = result.getString("name");
@@ -22,6 +28,11 @@ public final class DishFactory {
         return new Dish(dishId, name, desc, type, active);
     }
 
+    /**
+     * View a single dish from the SQL table dish by giving its dishID
+     * @param dishId
+     * @return Dish
+     */
     public static Dish viewSingleDish(int dishId){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE dish_id = ?")){
@@ -45,6 +56,10 @@ public final class DishFactory {
         return null;
     }
 
+    /**
+     * Creates an arraylist of all the dishes in the SQL table dish
+     * @return ArrayList<Dish>
+     */
     public static ArrayList<Dish> getAllDishes(){
         ArrayList<Dish> dishes = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -68,6 +83,11 @@ public final class DishFactory {
         return null;
     }
 
+    /**
+     * takes a dish and inserts it into the SQL table dish
+     * @param newDish
+     * @return Dish
+     */
     public static Dish createDish(Dish newDish){
 
         try (Connection connection = Database.getConnection()) {
@@ -89,6 +109,12 @@ public final class DishFactory {
         return null;
     }
 
+    /**
+     * Edits the status of a dish (If the dish is active or not)
+     * @param dishId
+     * @param active
+     * @return int
+     */
     public static int editDish(int dishId, boolean active){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.dish SET active = ? WHERE dish.dish_id = ?")) {

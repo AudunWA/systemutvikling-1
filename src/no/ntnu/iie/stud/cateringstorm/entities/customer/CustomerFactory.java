@@ -13,6 +13,13 @@ import java.util.ArrayList;
  */
 public final class CustomerFactory {
 
+
+    /**
+     * Creates customer from result.
+     * @param result
+     * @return Customer
+     * @throws SQLException
+     */
     private static Customer createCustomerFromResultSet(ResultSet result) throws SQLException{
 
         int customer_id = result.getInt("customer_id");
@@ -26,6 +33,11 @@ public final class CustomerFactory {
 
     }
 
+    /**
+     * Shows a single customer by customerID
+     * @param customerId
+     * @return Customer
+     */
     public static Customer viewSingleCustomer(int customerId){
         try (Connection connection = Database.getConnection()){
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customer WHERE customer_id = ?")){
@@ -46,6 +58,10 @@ public final class CustomerFactory {
         return null;
     }
 
+    /**
+     * Creates an Arraylist containing all customers
+     * @return ArrayList<Customer>
+     */
     public static ArrayList<Customer> getAllCustomers(){
         ArrayList<Customer> customers = new ArrayList<>();
         try (Connection connection = Database.getConnection()){
@@ -67,6 +83,11 @@ public final class CustomerFactory {
 
     }
 
+    /**
+     * Inserts a customer into the SQL table customer. Takes a Customer object as arguement
+     * @param newCustomer
+     * @return Customer
+     */
     public static Customer createCustomer(Customer newCustomer){
 
         try (Connection connection = Database.getConnection()){
@@ -88,6 +109,12 @@ public final class CustomerFactory {
         return null;
     }
 
+    /**
+     * Edits the status of a customer (if the customer is active or not)
+     * @param customerId
+     * @param active
+     * @return int
+     */
     public static int editCustomer(int customerId, boolean active){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.customer SET active = ? WHERE customer.customer_id = ?")) {
@@ -104,5 +131,4 @@ public final class CustomerFactory {
             return -1;
         }
     }
-
 }
