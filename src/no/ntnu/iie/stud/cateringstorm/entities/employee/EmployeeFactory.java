@@ -120,6 +120,7 @@ public final class EmployeeFactory {
     public static Employee createEmployee(String username, String password, String forename,
                                           String surname, String address, String phoneNumber,
                                           String email, EmployeeType type) {
+
         String salt = PasswordUtil.generateSalt();
         String hashedPassword = PasswordUtil.generatePasswordHash(password, salt);
 
