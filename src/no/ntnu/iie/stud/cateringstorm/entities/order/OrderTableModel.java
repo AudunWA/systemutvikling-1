@@ -10,6 +10,7 @@ import java.util.List;
  * Table model for use in GUI for chauffeurs and/or chefs
  * Created by EliasBrattli on 30/03/2016.
  */
+//int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered
 public class OrderTableModel extends AbstractTableModel {
     private String[] columnNames ={
             "Order ID", "Customer", "Portions", "Delivery date","Location","Status"
@@ -76,5 +77,16 @@ public class OrderTableModel extends AbstractTableModel {
                 if(value instanceof Boolean)order.setDelivered((boolean)value); break;
         }
         fireTableCellUpdated(row, column);
+    }
+    public void addOrder(Order order){
+        insertOrdert(getRowCount(),order);
+    }
+    public void insertOrdert(int row, Order order){
+        orderList.add(row,order);
+        fireTableRowsInserted(row,row);
+    }
+    public void removeOrder(int row){
+        orderList.remove(row);
+        fireTableRowsDeleted(row,row);
     }
 }
