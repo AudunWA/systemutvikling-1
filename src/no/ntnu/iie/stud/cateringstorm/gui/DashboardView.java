@@ -1,5 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui;
 
+import no.ntnu.iie.stud.cateringstorm.gui.tabs.ChauffeurOrderView;
+
 import javax.swing.*;
 
 /**

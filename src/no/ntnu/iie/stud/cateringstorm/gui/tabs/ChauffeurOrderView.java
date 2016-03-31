@@ -1,11 +1,10 @@
-package no.ntnu.iie.stud.cateringstorm.gui;
+package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderTableModel;
 import javax.swing.*;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
