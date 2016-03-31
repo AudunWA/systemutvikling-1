@@ -77,4 +77,15 @@ public class OrderTableModel extends AbstractTableModel {
         }
         fireTableCellUpdated(row, column);
     }
+    public void addOrder(Order order){
+        insertOrdert(getRowCount(),order);
+    }
+    public void insertOrdert(int row, Order order){
+        orderList.add(row,order);
+        fireTableRowsInserted(row,row);
+    }
+    public void removeOrder(int row){
+        orderList.remove(row);
+        fireTableRowsDeleted(row,row);
+    }
 }

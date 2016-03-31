@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui;
 
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.order.OrderTableModel;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -25,10 +26,10 @@ public class ChauffeurOrderView extends JFrame {
     private JPanel mainPanel;
     private JScrollPane orderPane;
     private JTable orderTable;
-
     private JButton exitButton;
     private JComboBox statusBox;
     private ComboBoxModel cbModel;
+    private OrderTableModel otm;
 
     public ChauffeurOrderView() {
         setTitle(WINDOW_TITLE);
