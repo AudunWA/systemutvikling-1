@@ -9,7 +9,7 @@ import java.time.LocalDate;
  * Enables possibility to view and edit detail considering each order
  * Created by EliasBrattli on 16/03/2016.
  */
-public class OrderInfo extends JFrame {
+public class OrderInfo extends JPanel {
     private static final String WINDOW_TITLE = "Information";
 
     //Window dimensions
@@ -29,10 +29,11 @@ public class OrderInfo extends JFrame {
     private final DefaultTableModel model = new DefaultTableModel(0, 1);
 
     public OrderInfo() {
-        setTitle(WINDOW_TITLE);
-        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setContentPane(mainPanel);
+        //setTitle(WINDOW_TITLE);
+        //setSize(WIDTH, HEIGHT);
+        //setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setContentPane(mainPanel);
+        add(mainPanel);
         addRowButton.addActionListener(e-> {
             addRow();
         });

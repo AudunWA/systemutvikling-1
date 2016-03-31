@@ -9,7 +9,7 @@ import java.time.LocalDate;
  * Represents GUI with overview of orders for the chauffeur
  * Created by Audun on 10.03.2016.
  */
-public class ChauffeurOrderView extends JFrame {
+public class ChauffeurOrderView extends JPanel {
     private static final String WINDOW_TITLE = "Active orders";
 
     // Window dimensions
@@ -31,10 +31,12 @@ public class ChauffeurOrderView extends JFrame {
     private ComboBoxModel cbModel;
 
     public ChauffeurOrderView() {
-        setTitle(WINDOW_TITLE);
+        super(false);
+        //setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setContentPane(mainPanel);
+        //setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setContentPane(mainPanel);
+        add(mainPanel);
         exitButton.addActionListener(e-> {
             //Change window
         });
