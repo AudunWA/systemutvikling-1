@@ -121,4 +121,43 @@ public final class OrderFactory {
         }
         return null;
     }
+
+    public static Order createOrder(String description, Timestamp deliveryTime, int portions, boolean priority,
+                                    int salespersonId, int customerId, int chauffeurId) {
+
+        Timestamp orderTime = new Timestamp(System.currentTimeMillis());
+
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, null, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+                statement.setString(1, description);
+                statement.setTimestamp(2, deliveryTime);
+                statement.setTimestamp(3, orderTime);
+                statement.setInt(4, portions);
+                statement.setBoolean(5, priority);
+                statement.setInt(6, salespersonId);
+                statement.setInt(7, customerId);
+                statement.setInt(8, 1);
+                statement.setInt(9, chauffeurId);
+
+                statement.execute();
+
+                int generatedId;
+                try (ResultSet result = statement.getGeneratedKeys()) {
+                    if (result.next()) {
+                        generatedId = result.getInt(1);
+                    } else {
+                        return null; // No ID?
+                    }
+                }
+
+                Order order = new Order(generatedId, description, deliveryTime, orderTime, portions, priority, salespersonId, customerId, 0, 1, chauffeurId);
+                return order;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

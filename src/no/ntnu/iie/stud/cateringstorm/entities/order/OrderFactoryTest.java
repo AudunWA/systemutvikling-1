@@ -4,6 +4,7 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -45,6 +46,13 @@ public class OrderFactoryTest {
     @Test
     public void testGetCustomerAddress() throws Exception {
         System.out.println(OrderFactory.getCustomerAddress(5));
+
+    }
+
+    @Test
+    public void testCreateOrder() throws Exception {
+
+        OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5);
 
     }
 }
