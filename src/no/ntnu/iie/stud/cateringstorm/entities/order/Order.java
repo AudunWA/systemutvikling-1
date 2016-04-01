@@ -7,7 +7,8 @@ import java.sql.Timestamp;
  */
 public class Order {
     private final int orderId;
-    private int employeeId;
+    private int sales_id;
+    private int chauffeur_id;
     private int customerId;
     private int recurringOrderId;
     private String description;
@@ -21,7 +22,8 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
-                ", employeeId=" + employeeId +
+                ", sales_id=" + sales_id +
+                ", chauffeur_id=" + chauffeur_id +
                 ", customerId=" + customerId +
                 ", recurringOrderId=" + recurringOrderId +
                 ", description='" + description + '\'' +
@@ -33,9 +35,8 @@ public class Order {
                 '}';
     }
 
-    public Order(int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, int status) {
+    public Order(int orderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, int sales_id, int customerId, int recurringOrderId, int status, int chauffeur_id) {
         this.orderId = orderId;
-        this.employeeId = employeeId;
         this.customerId = customerId;
         this.recurringOrderId = recurringOrderId;
         this.description = description;
@@ -44,13 +45,12 @@ public class Order {
         this.portions = portions;
         this.priority = priority;
         this.status = status;
+        this.chauffeur_id = chauffeur_id;
+        this.sales_id = sales_id;
     }
 
     public int getOrderId() {
         return orderId;
-    }
-    public int getEmployeeId() {
-        return employeeId;
     }
 
     public int getCustomerId() {

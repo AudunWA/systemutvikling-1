@@ -48,17 +48,18 @@ public final class OrderFactory {
 
     private static Order createOrderFromResultSet(ResultSet result) throws SQLException {
         int orderId = result.getInt("_order_id");
-        int employeeId = result.getInt("employee_id");
-        int customerId = result.getInt("customer_id");
-        int recurringOrderId = result.getInt("rec_order_id");
         String description = result.getString("description");
         Timestamp deliveryDate = result.getTimestamp("delivery_time");
         Timestamp orderDate = result.getTimestamp("_order_time");
         int portions = result.getInt("portions");
         boolean priority = result.getBoolean("priority");
+        int sales_id = result.getInt("salesperson_id");
+        int customerId = result.getInt("customer_id");
+        int recurringOrderId = result.getInt("rec_order_id");
         int status = result.getInt("status");
+        int chauffeur_id = result.getInt("chauffeur_id");
 
-        return new Order(orderId, employeeId, customerId, recurringOrderId, description, deliveryDate, orderDate, portions, priority, status);
+        return new Order(orderId, description, deliveryDate, orderDate, portions, priority, sales_id, customerId, recurringOrderId, status, chauffeur_id);
     }
 
     //This method is used by the Chauffeur, through ChaufferOrderView
