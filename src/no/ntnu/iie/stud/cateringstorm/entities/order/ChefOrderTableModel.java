@@ -56,8 +56,9 @@ public class ChefOrderTableModel extends AbstractTableModel {
         }
     }
     public Order getOrder(int row){
-        return orderList.get(row);
-    }
+        boolean valid = row < getRowCount() && row > -1;
+        return (valid)?orderList.get(row):null;
+        }
     @Override
     public Object getValueAt(int row, int column){
         Order order = getOrder(row);
@@ -78,8 +79,11 @@ public class ChefOrderTableModel extends AbstractTableModel {
             case 5:
                 if(value instanceof String){
                     order.setStatus((value.equals("Ready for delivery"))?0:1);
+                }else{
+                    return;
                 }
                 break;
+            default: return;
         }
         fireTableCellUpdated(row, column);
     }
