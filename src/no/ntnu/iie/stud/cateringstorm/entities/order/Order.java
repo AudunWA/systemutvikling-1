@@ -17,6 +17,22 @@ public class Order {
     private boolean priority;
     private boolean delivered;
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", employeeId=" + employeeId +
+                ", customerId=" + customerId +
+                ", recurringOrderId=" + recurringOrderId +
+                ", description='" + description + '\'' +
+                ", deliveryDate=" + deliveryDate +
+                ", orderDate=" + orderDate +
+                ", portions=" + portions +
+                ", priority=" + priority +
+                ", delivered=" + delivered +
+                '}';
+    }
+
     public Order(int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered) {
         this.orderId = orderId;
         this.employeeId = employeeId;
@@ -86,20 +102,6 @@ public class Order {
     }
     public String findCustomerAdress(){
         return OrderFactory.getCustomerAddress(customerId);
-    }
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderId=" + orderId +
-                ", employeeId=" + employeeId +
-                ", customerId=" + customerId +
-                ", recurringOrderId=" + recurringOrderId +
-                ", description='" + description + '\'' +
-                ", deliveryDate=" + deliveryDate +
-                ", orderDate=" + orderDate +
-                ", portions=" + portions +
-                ", priority=" + priority +
-                '}';
     }
 
 }

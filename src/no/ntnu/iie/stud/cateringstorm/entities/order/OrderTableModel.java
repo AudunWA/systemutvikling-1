@@ -36,20 +36,22 @@ public class OrderTableModel extends AbstractTableModel {
     public int getRowCount(){
         return orderList.size();
     }
+
     @Override
     public Class getColumnClass(int column){
         switch (column){
             case 0: return Integer.class;
+            case 1: return String.class;
             case 2: return Integer.class;
             case 3: return Timestamp.class;
+            case 4: return String.class;
+            case 5: return String.class;
             default: return String.class;
         }
     }
     @Override
     public boolean isCellEditable(int row, int column){
-       final int editableRow = 5;//columnNames.length-1
         switch (column){
-            case editableRow: return true;
             default: return false;
         }
     }
