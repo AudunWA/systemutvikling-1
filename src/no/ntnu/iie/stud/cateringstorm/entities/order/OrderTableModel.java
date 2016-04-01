@@ -76,13 +76,17 @@ public class OrderTableModel extends AbstractTableModel {
         Order order = getOrder(row);
         switch (column){
             case 5:
-                if(value instanceof Boolean)order.setDelivered((boolean)value); break;
+                if(value instanceof String){
+                    order.setDelivered(value.equals("Delivered"));
+                }
+                break;
         }
         fireTableCellUpdated(row, column);
     }
     public void addOrder(Order order){
         insertOrdert(getRowCount(),order);
     }
+
     public void insertOrdert(int row, Order order){
         orderList.add(row,order);
         fireTableRowsInserted(row,row);

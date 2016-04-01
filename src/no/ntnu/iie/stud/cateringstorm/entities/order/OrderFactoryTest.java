@@ -35,4 +35,16 @@ public class OrderFactoryTest {
         OrderFactory.setOrderState(4, false);
 
     }
+
+    @Test
+    public void testGetCustomerName() throws Exception {
+        System.out.println(OrderFactory.getCustomerName(5));
+
+    }
+
+    @Test
+    public void testGetCustomerAddress() throws Exception {
+        System.out.println(OrderFactory.getCustomerAddress(5));
+
+    }
 }

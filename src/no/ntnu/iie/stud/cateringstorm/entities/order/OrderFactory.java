@@ -80,11 +80,44 @@ public final class OrderFactory {
     }
     //This method is currently used by OrderTableModel
     public static String getCustomerName(int customerId){
-        // TODO: Implement sql query to get a customer's name from the database
-        return "aa";
+        try (Connection connection = Database.getConnection()){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT surname, forename FROM _order NATURAL JOIN customer WHERE _order.customer_id = ?")){
+
+                statement.setInt(1, customerId);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    if (result.next()) {
+                        String temp = result.getString("surname");
+                        temp += ", " + result.getString("forename");
+                        return temp;
+                    }
+                }
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
     }
     public static String getCustomerAddress(int customerId){
-        // TODO: Implement sql query to get customr address
-        return "ee";
+        try (Connection connection = Database.getConnection()){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM _order NATURAL JOIN customer WHERE _order.customer_id = ?")){
+
+                statement.setInt(1, customerId);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    if (result.next()) {
+                        String temp = result.getString("address");
+                        return temp;
+                    }
+                }
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

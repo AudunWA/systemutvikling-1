@@ -4,7 +4,6 @@ import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderTableModel;
 import javax.swing.*;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -25,8 +24,11 @@ public class ChauffeurOrderView extends JPanel {
     private JPanel mainPanel;
     private JScrollPane orderPane;
     private JTable orderTable;
-    private JButton exitButton;
+    private JButton homeButton;
     private JComboBox statusBox;
+    private JPanel ComboBoxPanel;
+    private JPanel ButtonPanel;
+    private JTextField infoText;
     private ComboBoxModel cbModel;
     private OrderTableModel tableModel;
     private static ArrayList<Order> orderList = new ArrayList<Order>();
@@ -35,7 +37,7 @@ public class ChauffeurOrderView extends JPanel {
     public ChauffeurOrderView() {
 
         add(mainPanel);
-        exitButton.addActionListener(e-> {
+        homeButton.addActionListener(e-> {
             //Change window
         });
 
@@ -90,18 +92,7 @@ public class ChauffeurOrderView extends JPanel {
         OrderFactory.setOrderState(tableModel.getOrder(selectedRow).getOrderId(),delivered);
         tableModel.setValueAt((delivered)?"Delivered":"Not delivered",selectedRow,deliveryRow);
     }
-    //Sets order status as delivered/not delivered
-    /*
-    private void setStatus(){
-        int choice = statusBox.getSelectedIndex();
-        int selectedRow = orderTable.getSelectedRow();
-        boolean delivered = choice > 0;
-        int arrLength = data[0].length-1;
-        orderTable.clearSelection();
-        //To update database
-        OrderFactory.setOrderState(Integer.parseInt(data[selectedRow][0].toString()),delivered);
-        data[selectedRow][arrLength] = (delivered)?"Delivered":"Not delivered";
-    }*/
+
     //Test method
     public static void main(String[] args){
         // Window dimensions
