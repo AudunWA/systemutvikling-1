@@ -7,17 +7,6 @@
     <properties/>
     <border type="none"/>
     <children>
-      <scrollpane id="4ea5" binding="orderPane">
-        <constraints/>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="85bb3" class="javax.swing.JTable" binding="orderTable" custom-create="true">
-            <constraints/>
-            <properties/>
-          </component>
-        </children>
-      </scrollpane>
       <grid id="a8d18" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints/>
         <properties/>
@@ -43,6 +32,28 @@
           </component>
         </children>
       </grid>
+      <grid id="f64d5" binding="cbPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="c94fb" class="javax.swing.JComboBox" binding="statusBox">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </grid>
+      <scrollpane id="4ea5" binding="orderPane">
+        <constraints/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="85bb3" class="javax.swing.JTable" binding="orderTable" custom-create="true">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>
