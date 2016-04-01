@@ -56,8 +56,9 @@ public final class OrderFactory {
         Timestamp orderDate = result.getTimestamp("_order_time");
         int portions = result.getInt("portions");
         boolean priority = result.getBoolean("priority");
+        boolean delivered = result.getBoolean("delivered");
 
-        return new Order(orderId, employeeId, customerId, recurringOrderId, description, deliveryDate, orderDate, portions, priority, false);
+        return new Order(orderId, employeeId, customerId, recurringOrderId, description, deliveryDate, orderDate, portions, priority, delivered);
     }
 
     //This method is used by the Chauffeur, through ChaufferOrderView
@@ -80,10 +81,10 @@ public final class OrderFactory {
     //This method is currently used by OrderTableModel
     public static String getCustomerName(int customerId){
         // TODO: Implement sql query to get a customer's name from the database
-        return "";
+        return "aa";
     }
     public static String getCustomerAddress(int customerId){
         // TODO: Implement sql query to get customr address
-        return "";
+        return "ee";
     }
 }

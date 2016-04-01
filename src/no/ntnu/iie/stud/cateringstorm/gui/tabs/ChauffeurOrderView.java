@@ -14,9 +14,7 @@ import java.util.ArrayList;
 public class ChauffeurOrderView extends JPanel {
     private static final String WINDOW_TITLE = "Active orders";
 
-    // Window dimensions
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 400;
+
    /* private static Object[][] data = new Object[][] {
             {1, "Nils Nilsen", 4, LocalDate.now().plusDays(1),"Kongens gate 2","Delivered"},
             {2, "Kenan Mahic", 20, LocalDate.now().plusDays(2),"Aksel Nilsen veg 8","Not delivered"},
@@ -35,11 +33,7 @@ public class ChauffeurOrderView extends JPanel {
 
 
     public ChauffeurOrderView() {
-        super(false);
-        //setTitle(WINDOW_TITLE);
-        setSize(WIDTH, HEIGHT);
-        //setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //setContentPane(mainPanel);
+
         add(mainPanel);
         exitButton.addActionListener(e-> {
             //Change window
@@ -60,8 +54,7 @@ public class ChauffeurOrderView extends JPanel {
         createComboBox();
     }
     private void createTable(){
-        orderList.add(new Order(1,1,1, 1, "Desc", new Timestamp(30000L), new Timestamp(20000L), 1,false, false
-        ));
+        orderList = OrderFactory.getAllOrders();
 
         tableModel = new OrderTableModel(orderList);
         orderTable = new JTable(tableModel);
@@ -111,7 +104,14 @@ public class ChauffeurOrderView extends JPanel {
     }*/
     //Test method
     public static void main(String[] args){
-        ChauffeurOrderView orderView = new ChauffeurOrderView();
-        orderView.setVisible(true);
+        // Window dimensions
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+        JFrame frame = new JFrame();
+        frame.add(new ChauffeurOrderView());
+        frame.setVisible(true);
+        frame.setTitle(WINDOW_TITLE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
     }
 }
