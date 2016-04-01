@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Table model for use in GUI for chauffeurs and/or chefs
+ * Table model for use in GUI for chauffeurs
  * Created by EliasBrattli on 30/03/2016.
  */
 //int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered
@@ -76,13 +76,17 @@ public class OrderTableModel extends AbstractTableModel {
         Order order = getOrder(row);
         switch (column){
             case 5:
-                if(value instanceof Boolean)order.setDelivered((boolean)value); break;
+                if(value instanceof String){
+                    order.setDelivered(value.equals("Delivered"));
+                }
+                break;
         }
         fireTableCellUpdated(row, column);
     }
     public void addOrder(Order order){
         insertOrdert(getRowCount(),order);
     }
+
     public void insertOrdert(int row, Order order){
         orderList.add(row,order);
         fireTableRowsInserted(row,row);

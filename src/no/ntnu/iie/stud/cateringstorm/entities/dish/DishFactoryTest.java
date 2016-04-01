@@ -1,5 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.entities.dish;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -26,11 +27,10 @@ public class DishFactoryTest {
 
     @Test
     public void testCreateDish() throws Exception {
-
         Dish knutSpesial = new Dish(0, "Penguin", "NOOOOOT NOOOOOOOT!!!", 2, true);
-
-        DishFactory.createDish(knutSpesial);
-
+        knutSpesial = DishFactory.createDish(knutSpesial);
+        Assert.assertNotNull(knutSpesial);
+        System.out.println(knutSpesial);
     }
 
     @Test
