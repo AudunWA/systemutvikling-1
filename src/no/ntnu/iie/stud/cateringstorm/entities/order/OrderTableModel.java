@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Table model for use in GUI for chauffeurs and/or chefs
+ * Table model for use in GUI for chauffeurs
  * Created by EliasBrattli on 30/03/2016.
  */
 //int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered
