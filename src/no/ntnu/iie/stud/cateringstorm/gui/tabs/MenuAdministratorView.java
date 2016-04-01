@@ -1,5 +1,13 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
+import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.DishTableModel;
+import javax.swing.*;
+
+import java.util.ArrayList;
+
+
 import javax.swing.*;
 
 /**
@@ -15,11 +23,50 @@ public class MenuAdministratorView extends JPanel {
     private JButton addDishButton;
     private JButton editDishButton;
     private JButton removeDishButton;
-    private JTable table1;
+    private JTable dishTable;
     private JPanel mainPanel;
+    private JButton exitButton;
+    private JScrollPane dishPane;
+    private DishTableModel tableModel;
+    private static ArrayList<Dish> dishList = new ArrayList<Dish>();
 
     public MenuAdministratorView() {
         add(mainPanel);
+        exitButton.addActionListener(e-> {
+            //Change window
+        });
+        editDishButton.addActionListener(e -> {
+            //setDish();
+        });
+
+        dishTable.getSelectionModel().addListSelectionListener(e -> {
+            //Get index from selected row
+        });
+    }
+
+    private void createUIComponents() {
+        // TODO: Custom initialization of UI components here
+        createTable();
+    }
+    private void createTable(){
+        dishList = DishFactory.getAllDishes();
+
+        tableModel = new DishTableModel(dishList);
+        dishTable = new JTable(tableModel);
+        dishPane = new JScrollPane(dishTable);
+        dishTable.setFillsViewportHeight(true);
+    }
+
+    public static void main(String[] args){
+        // Window dimensions
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+        JFrame frame = new JFrame();
+        frame.add(new MenuAdministratorView());
+        frame.setVisible(true);
+        frame.setTitle(WINDOW_TITLE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
     }
 }
 

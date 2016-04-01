@@ -91,16 +91,28 @@ public final class DishFactory {
     public static Dish createDish(Dish newDish){
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish VALUES(?,?,?,?,?)")){
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish VALUES(DEFAULT, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)){
+                statement.setString(1, newDish.getName());
+                statement.setString(2, newDish.getDescription());
+                statement.setInt(3, newDish.getDishType());
+                statement.setBoolean(4, newDish.isActive());
 
-                statement.setInt(1, newDish.getDishId());
-                statement.setString(2, newDish.getName());
-                statement.setString(3, newDish.getDescription());
-                statement.setInt(4, newDish.getDishType());
-                statement.setBoolean(5, newDish.isActive());
+                int affectedRows = statement.executeUpdate();
+                if (affectedRows == 0) {
+                    return null; // No rows inserted
+                }
 
-                statement.execute();
-                return newDish;
+                int generatedId;
+                try (ResultSet result = statement.getGeneratedKeys()) {
+                    if (result.next()) {
+                        generatedId = result.getInt(1);
+                    } else {
+                        return null; // No ID?
+                    }
+                }
+
+                Dish dish = new Dish(generatedId, newDish.getName(), newDish.getDescription(), newDish.getDishType(), newDish.isActive());
+                return dish;
 
             }
         } catch (SQLException e){
