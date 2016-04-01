@@ -1,8 +1,9 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
+import no.ntnu.iie.stud.cateringstorm.entities.order.ChauffeurOrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
-import no.ntnu.iie.stud.cateringstorm.entities.order.OrderTableModel;
+
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class ChauffeurOrderView extends JPanel {
     private JPanel ButtonPanel;
     private JTextField infoText;
     private ComboBoxModel cbModel;
-    private OrderTableModel tableModel;
+    private ChauffeurOrderTableModel tableModel;
     private static ArrayList<Order> orderList = new ArrayList<Order>();
 
 
@@ -58,7 +59,7 @@ public class ChauffeurOrderView extends JPanel {
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
 
-        tableModel = new OrderTableModel(orderList);
+        tableModel = new ChauffeurOrderTableModel(orderList);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);

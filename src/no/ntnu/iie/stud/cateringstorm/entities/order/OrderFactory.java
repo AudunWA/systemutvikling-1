@@ -78,7 +78,7 @@ public final class OrderFactory {
             return false;
         }
     }
-    //This method is currently used by OrderTableModel
+    //This method is currently used by ChauffeurOrderTableModel
     public static String getCustomerName(int customerId){
         try (Connection connection = Database.getConnection()){
             try (PreparedStatement statement = connection.prepareStatement("SELECT surname, forename FROM _order NATURAL JOIN customer WHERE _order.customer_id = ?")){

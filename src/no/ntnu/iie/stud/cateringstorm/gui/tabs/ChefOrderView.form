@@ -35,12 +35,6 @@
               <text value="Edit"/>
             </properties>
           </component>
-          <component id="f5a4b" class="javax.swing.JButton" binding="exitButton">
-            <constraints/>
-            <properties>
-              <text value="Exit"/>
-            </properties>
-          </component>
           <component id="c2938" class="javax.swing.JButton" binding="saveButton">
             <constraints/>
             <properties>

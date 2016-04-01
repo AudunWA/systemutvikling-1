@@ -11,15 +11,15 @@ import java.util.List;
  * Created by EliasBrattli on 30/03/2016.
  */
 //int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered
-public class OrderTableModel extends AbstractTableModel {
+public class ChauffeurOrderTableModel extends AbstractTableModel {
     private String[] columnNames ={
             "Order ID", "Customer", "Portions", "Delivery date","Location","Status"
     };
     private List<Order> orderList;
-    public OrderTableModel(){
+    public ChauffeurOrderTableModel(){
         orderList = new ArrayList<Order>();
     }
-    public OrderTableModel(List<Order> orderList){
+    public ChauffeurOrderTableModel(List<Order> orderList){
         this.orderList = orderList;
     }
 

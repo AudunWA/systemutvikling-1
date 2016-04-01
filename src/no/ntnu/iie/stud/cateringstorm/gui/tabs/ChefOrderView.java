@@ -22,10 +22,8 @@ public class ChefOrderView extends JFrame {
     private JPanel buttonPanel;
     private JButton viewButton;
     private JButton editButton;
-    private JButton exitButton;
     private JButton saveButton;
     private JButton setStateButton;
-    private JComboBox statusBox;
     private ComboBoxModel cbModel;
 
     public ChefOrderView() {
@@ -36,8 +34,8 @@ public class ChefOrderView extends JFrame {
         setStateButton.addActionListener(e-> {
             //Change delivered status to an order by importing data from combobox
         });
-        statusBox.addActionListener(e -> {
-
+        viewButton.addActionListener(e -> {
+            //TODO: Implement method opening a new tab, allowing user to view more information of a single order
         });
     }
 
@@ -47,28 +45,11 @@ public class ChefOrderView extends JFrame {
 
     }
     private void createTable(){
-        // Fill table with dummy data
-        Object[] columnNames = new Object[]{"Order ID", "Package", "Portions", "Delivery time"};
-        Object[][] data = new Object[][]{
-                {1, "Dummy package 1", 4, LocalDate.now().plusDays(1)},
-                {2, "Dummy package 2", 20, LocalDate.now().plusDays(2)},
-                {3, "Dummy package 3", 10, LocalDate.now().plusDays(3)},
-                {4, "Dummy package 4", 50, LocalDate.now().plusDays(4)},
-                {5, "Dummy package 5", 50, LocalDate.now().plusDays(5)}
-        };
-        orderTable = new JTable(data, columnNames);
-
-        orderPane = new JScrollPane(orderTable);
-        orderTable.setFillsViewportHeight(true);
-    }
-    private void createComboBox(){
-        Object[] status = {false,true};
-
-        statusBox = new JComboBox(status);
 
     }
+
     public static void main(String[] args){
-        ChauffeurOrderView cov = new ChauffeurOrderView();
-        cov.setVisible(true);
+        ChefOrderView overView = new ChefOrderView();
+        overView.setVisible(true);
     }
 }
