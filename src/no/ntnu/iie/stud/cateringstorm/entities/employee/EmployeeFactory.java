@@ -140,16 +140,16 @@ public final class EmployeeFactory {
                     return null; // No rows inserted
                 }
 
-                int generatedID;
+                int generatedId;
                 try (ResultSet result = statement.getGeneratedKeys()) {
                     if (result.next()) {
-                        generatedID = result.getInt(1);
+                        generatedId = result.getInt(1);
                     } else {
                         return null; // No ID?
                     }
                 }
 
-                Employee employee = new Employee(generatedID, username, forename, surname, address, phoneNumber, email, type);
+                Employee employee = new Employee(generatedId, username, forename, surname, address, phoneNumber, email, type);
                 return employee;
             }
         } catch (SQLException e) {
