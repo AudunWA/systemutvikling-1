@@ -77,7 +77,7 @@ public class ChefOrderTableModel extends AbstractTableModel {
         switch (column){
             case 5:
                 if(value instanceof String){
-                    order.setDelivered(value.equals("Delivered"));
+                    order.setStatus((value.equals("Delivered"))?2:1);
                 }
                 break;
         }

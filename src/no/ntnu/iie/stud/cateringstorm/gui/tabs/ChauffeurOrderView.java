@@ -15,13 +15,6 @@ public class ChauffeurOrderView extends JPanel {
     private static final String WINDOW_TITLE = "Active orders";
 
 
-   /* private static Object[][] data = new Object[][] {
-            {1, "Nils Nilsen", 4, LocalDate.now().plusDays(1),"Kongens gate 2","Delivered"},
-            {2, "Kenan Mahic", 20, LocalDate.now().plusDays(2),"Aksel Nilsen veg 8","Not delivered"},
-            {3, "Kat", 10, LocalDate.now().plusDays(3),"Leirfossvegen 47","Not delivered"},
-            {4, "Awa 500", 50, LocalDate.now().plusDays(4),"Ratesvingen 8","Not delivered"},
-            {5, "Håvard", 50, LocalDate.now().plusDays(5),"Kroppanmarka 10","Not delivered"}
-    };*/
     private JPanel mainPanel;
     private JScrollPane orderPane;
     private JTable orderTable;
@@ -77,7 +70,7 @@ public class ChauffeurOrderView extends JPanel {
     }*/
 
     private void createComboBox(){
-        Object[] status = {"Not delivered","Delivered"};
+        Object[] status = {"Delivered","Ready for delivery"};
 
         statusBox = new JComboBox(status);
         statusBox.setSelectedIndex(0);
@@ -91,7 +84,7 @@ public class ChauffeurOrderView extends JPanel {
         int arrLength = tableModel.getRowCount()-1;
         orderTable.clearSelection();
         //To update database
-        OrderFactory.setOrderState(tableModel.getOrder(selectedRow).getOrderId(),delivered);
+        //OrderFactory.setOrderState(tableModel.getOrder(selectedRow).getOrderId(),delivered);
         tableModel.setValueAt((delivered)?"Delivered":"Not delivered",selectedRow,deliveryRow);
     }
 

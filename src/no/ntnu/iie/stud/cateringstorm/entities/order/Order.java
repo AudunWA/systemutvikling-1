@@ -102,11 +102,11 @@ public class Order {
     }
     public String deliveryStatus(){
         if (getStatus() == 0){
-            return "Delivered";
+            return "Ready for delivery";
         } else if (getStatus() == 1){
             return "In production";
         } else {
-            return "Ready for delivery";
+            return "Delivered";
         }
     }
 
