@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class DishTableModel extends AbstractTableModel {
     private String[] columnNames ={
-            "Dish ID", "Customer", "Portions", "Delivery date","Location","Status"
+            "Dish ID", "Dish Name", "Description", "Dish Type"
     };
     private List<Dish> dishList;
     public DishTableModel(){
@@ -37,8 +37,9 @@ public class DishTableModel extends AbstractTableModel {
     public Class getColumnClass(int column){
         switch (column){
             case 0: return Integer.class;
-            case 2: return Integer.class;
-            case 3: return Timestamp.class;
+            case 1: return String.class;
+            case 2: return String.class;
+            case 3: return Integer.class;
             default: return String.class;
         }
     }
@@ -58,32 +59,30 @@ public class DishTableModel extends AbstractTableModel {
         Dish dish = getDish(row);
         switch (column){
             case 0: return dish.getDishId();
-            case 1: return order.findCustomerName();
-            case 2: return order.getPortions();
-            case 3: return order.getDeliveryDate();
-            case 4: return order.findCustomerAdress();
-            case 5: return order.isDelivered();
+            case 1: return dish.getName();
+            case 2: return dish.getDescription();
+            case 3: return dish.getDishType();
             default: return null;
         }
     }
     @Override
     public void setValueAt(Object value, int row, int column){
-        Order order = getOrder(row);
+        Dish order = getDish(row);
         switch (column){
             case 5:
-                if(value instanceof Boolean)order.setDelivered((boolean)value); break;
+
         }
         fireTableCellUpdated(row, column);
     }
-    public void addOrder(Order order){
+    public void addOrder(Dish order){
         insertOrdert(getRowCount(),order);
     }
-    public void insertOrdert(int row, Order order){
-        orderList.add(row,order);
+    public void insertOrdert(int row, Dish order){
+        dishList.add(row,order);
         fireTableRowsInserted(row,row);
     }
     public void removeOrder(int row){
-        orderList.remove(row);
+        dishList.remove(row);
         fireTableRowsDeleted(row,row);
     }
 }
