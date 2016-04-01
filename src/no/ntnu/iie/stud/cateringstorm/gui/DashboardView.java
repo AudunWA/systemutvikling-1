@@ -1,6 +1,10 @@
 package no.ntnu.iie.stud.cateringstorm.gui;
 
+import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
+import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.tabs.ChauffeurOrderView;
+import no.ntnu.iie.stud.cateringstorm.gui.tabs.HomeView;
+import no.ntnu.iie.stud.cateringstorm.gui.tabs.MenuAdministratorView;
 
 import javax.swing.*;
 
@@ -16,23 +20,48 @@ public class DashboardView extends JFrame {
     private static final int WIDTH = 300;
     private static final int HEIGHT = 250;
 
+    private Employee employee;
+
     private JTabbedPane tabPane;
     private JPanel mainPanel;
 
-    public DashboardView() {
+    public DashboardView(Employee employee) {
+        super();
+        this.employee = employee;
+
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(mainPanel);
 
         fillTabPane();
-        pack();
+        //pack();
     }
 
     private void fillTabPane() {
+        tabPane.addTab("HomeView", new HomeView());
+
+        switch (employee.getEmployeeType()) {
+            case EMPLOYEE:
+                break;
+            case CHEF:
+                tabPane.addTab("OrderInfo", new OrderInfo());
+                break;
+            case CHAUFFEUR:
+                tabPane.addTab("ChauffeurOrderView", new ChauffeurOrderView());
+                break;
+            case NUTRITION_EXPERT:
+                tabPane.addTab("MenuAdministratorView", new MenuAdministratorView());
+                break;
+            case ADMINISTRATOR:
+                tabPane.addTab("OrderInfo", new OrderInfo());
+                tabPane.addTab("ChauffeurOrderView", new ChauffeurOrderView());
+                tabPane.addTab("MenuAdministratorView", new MenuAdministratorView());
+                break;
+            case SALESPERSON:
+                break;
+        }
         //tabPane.addTab("ChefOrderView", new ChefOrderView());
-        tabPane.addTab("OrderInfo", new OrderInfo());
-        tabPane.addTab("ChauffeurOrderView", new ChauffeurOrderView());
     }
 
     public static void main(String[] args) {
@@ -41,7 +70,8 @@ public class DashboardView extends JFrame {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {}
 
-        DashboardView view = new DashboardView();
+        DashboardView view = new DashboardView(new Employee(-1, "Test", "Forename", "Surname", "Address",
+                "Phone", "Email", EmployeeType.ADMINISTRATOR));
         view.setVisible(true);
     }
 }

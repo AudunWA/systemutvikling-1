@@ -65,7 +65,7 @@ public final class OrderFactory {
     //This method is used by the Chauffeur, through ChaufferOrderView
     public static boolean setOrderState(int orderID, int status){
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6._order SET status = ? WHERE _order._order_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET status = ? WHERE _order_id = ?")) {
 
                 statement.setInt(1, status);
                 statement.setInt(2, orderID);
@@ -82,7 +82,7 @@ public final class OrderFactory {
     //This method is currently used by ChauffeurOrderTableModel
     public static String getCustomerName(int customerId){
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT surname, forename FROM _order NATURAL JOIN customer WHERE _order.customer_id = ?")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT surname, forename FROM customer WHERE customer_id = ?")){
 
                 statement.setInt(1, customerId);
                 statement.executeQuery();
@@ -103,7 +103,7 @@ public final class OrderFactory {
     }
     public static String getCustomerAddress(int customerId){
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM _order NATURAL JOIN customer WHERE _order.customer_id = ?")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM customer WHERE customer_id = ?")){
 
                 statement.setInt(1, customerId);
                 statement.executeQuery();
