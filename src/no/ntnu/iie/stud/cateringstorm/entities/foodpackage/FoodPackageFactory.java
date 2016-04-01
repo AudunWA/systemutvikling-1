@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.entities.foodpackage;
 
 import no.ntnu.iie.stud.cateringstorm.database.Database;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -83,6 +84,75 @@ public final class FoodPackageFactory {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     Inserts a new food package, including its dishes, into the database.
+     * @param name The food package name
+     * @param cost The cost of the food package
+     * @param dishes A list of the dishes
+     * @return A FoodPackage object representing the new food package, or null if an error occurred.
+     */
+    public static FoodPackage insertNewFoodPackage(String name, double cost, ArrayList<Dish> dishes) {
+        if (dishes == null) {
+            throw new IllegalArgumentException("dishes cannot be null.");
+        }
+        int generatedId; // The AUTO_INCREMENT food_package_id from INSERT
+
+        try (Connection connection = Database.getConnection()) {
+            // Start transaction
+            connection.setAutoCommit(false);
+
+            try {
+                // Add the package itself and get ID
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO food_package VALUES(DEFAULT, ?, ?, TRUE)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                    statement.setString(1, name);
+                    statement.setDouble(2, cost);
+
+                    int affectedRows = statement.executeUpdate();
+                    if (affectedRows == 0) {
+                        connection.rollback();
+                        connection.setAutoCommit(true);
+                        return null; // No rows inserted
+                    }
+
+                    try (ResultSet result = statement.getGeneratedKeys()) {
+                        if (result.next()) {
+                            generatedId = result.getInt(1);
+                        } else {
+                            connection.rollback();
+                            connection.setAutoCommit(true);
+                            return null; // No ID?
+                        }
+                    }
+                }
+
+                // Add the dishes to the package
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish_food_package VALUES(?, ?)")) {
+                    for (Dish dish : dishes) {
+                        statement.setInt(1, dish.getDishId());
+                        statement.setInt(2, generatedId);
+                        statement.addBatch();
+                    }
+                    statement.executeBatch();
+                }
+            } catch (SQLException e) {
+                connection.rollback();
+                connection.setAutoCommit(true);
+                throw e;
+            }
+
+            // All good, commit all
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        // Create object and return
+        FoodPackage foodPackage = new FoodPackage(generatedId, name, cost, true);
+        return foodPackage;
     }
 
     /**

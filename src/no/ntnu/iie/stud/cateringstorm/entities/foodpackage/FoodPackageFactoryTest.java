@@ -1,5 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.entities.foodpackage;
 
+import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -40,5 +42,13 @@ public class FoodPackageFactoryTest {
         for (FoodPackage foodPackage : foodPackages) {
             System.out.println(foodPackage);
         }
+    }
+
+    @Test
+    public void testInsertNewFoodPackage() throws Exception {
+        ArrayList<Dish> dishes = DishFactory.getAllDishes();
+        FoodPackage foodPackage = FoodPackageFactory.insertNewFoodPackage("Unit test package", 8008135, dishes);
+        Assert.assertNotNull(foodPackage);
+        System.out.println(foodPackage);
     }
 }
