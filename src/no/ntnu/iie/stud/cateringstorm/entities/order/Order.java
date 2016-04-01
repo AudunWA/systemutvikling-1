@@ -77,13 +77,12 @@ public class Order {
     public int getPortions() {
         return portions;
     }
-
-    public boolean isPriority() {
+    public boolean isPriority(){
         return priority;
     }
 
-    public String isDelivered(){
-        return (delivered)?"Delivered":"Not delivered";
+    public boolean isDelivered(){
+        return delivered;
     }
 
     public void setDeliveryDate(Timestamp deliveryDate) {
@@ -97,6 +96,12 @@ public class Order {
     public void setDelivered(boolean delivered){
         this.delivered = delivered;
         OrderFactory.setOrderState(orderId,delivered);
+    }
+    public String findPriority() {
+        return (isPriority())?"Priority":"Ordinary";
+    }
+    public String deliveryStatus(){
+        return (isDelivered())?"Delivered":"Not delivered";
     }
 
     public String findCustomerName(){

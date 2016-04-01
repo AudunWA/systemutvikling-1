@@ -13,8 +13,8 @@ public class ChefOrderView extends JFrame {
     private static final String WINDOW_TITLE = "Active orders";
 
     // Window dimensions
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 400;
+    private static final int WIDTH = 700;
+    private static final int HEIGHT = 700;
 
     private JPanel mainPanel;
     private JScrollPane orderPane;

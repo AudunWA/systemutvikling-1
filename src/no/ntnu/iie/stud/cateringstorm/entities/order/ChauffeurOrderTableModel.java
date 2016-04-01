@@ -67,7 +67,7 @@ public class ChauffeurOrderTableModel extends AbstractTableModel {
             case 2: return order.getPortions();
             case 3: return order.getDeliveryDate();
             case 4: return order.findCustomerAdress();
-            case 5: return order.isDelivered();
+            case 5: return order.deliveryStatus();
             default: return null;
         }
     }
