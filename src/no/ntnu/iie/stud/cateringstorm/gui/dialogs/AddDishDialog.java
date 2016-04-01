@@ -1,9 +1,9 @@
-package no.ntnu.iie.stud.cateringstorm.gui;
+package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
 import javax.swing.*;
 import java.awt.event.*;
 
-public class AddDish extends JDialog {
+public class AddDishDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -12,7 +12,7 @@ public class AddDish extends JDialog {
     private JComboBox activeStatus;
     private JComboBox dishType;
 
-    public AddDish() {
+    public AddDishDialog() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -56,7 +56,7 @@ public class AddDish extends JDialog {
     }
 
     public static void main(String[] args) {
-        AddDish dialog = new AddDish();
+        AddDishDialog dialog = new AddDishDialog();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
