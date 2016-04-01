@@ -101,7 +101,23 @@ public final class OrderFactory {
         return null;
     }
     public static String getCustomerAddress(int customerId){
-        // TODO: Implement sql query to get customr address
-        return "ee";
+        try (Connection connection = Database.getConnection()){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM _order NATURAL JOIN customer WHERE _order.customer_id = ?")){
+
+                statement.setInt(1, customerId);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    if (result.next()) {
+                        String temp = result.getString("address");
+                        return temp;
+                    }
+                }
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

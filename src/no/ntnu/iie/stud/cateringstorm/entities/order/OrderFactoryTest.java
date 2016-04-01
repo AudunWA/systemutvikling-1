@@ -41,4 +41,10 @@ public class OrderFactoryTest {
         System.out.println(OrderFactory.getCustomerName(5));
 
     }
+
+    @Test
+    public void testGetCustomerAddress() throws Exception {
+        System.out.println(OrderFactory.getCustomerAddress(5));
+
+    }
 }
