@@ -82,8 +82,8 @@ public class Order {
         return priority;
     }
 
-    public boolean isDelivered(){
-        return delivered;
+    public String isDelivered(){
+        return (delivered)?"Delivered":"Not delivered";
     }
 
     public void setDeliveryDate(Timestamp deliveryDate) {
