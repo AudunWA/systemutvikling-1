@@ -74,14 +74,14 @@ public class DishTableModel extends AbstractTableModel {
         }
         fireTableCellUpdated(row, column);
     }
-    public void addOrder(Dish order){
-        insertOrdert(getRowCount(),order);
+    public void addDish(Dish order){
+        insertDish(getRowCount(),order);
     }
-    public void insertOrdert(int row, Dish order){
+    public void insertDish(int row, Dish order){
         dishList.add(row,order);
         fireTableRowsInserted(row,row);
     }
-    public void removeOrder(int row){
+    public void removeDish(int row){
         dishList.remove(row);
         fireTableRowsDeleted(row,row);
     }
