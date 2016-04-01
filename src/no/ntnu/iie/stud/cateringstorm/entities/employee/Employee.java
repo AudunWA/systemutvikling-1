@@ -1,6 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.entities.employee;
 
-import no.ntnu.iie.stud.cateringstorm.gui.EmployeeView;
+import no.ntnu.iie.stud.cateringstorm.gui.DashboardView;
 
 /**
  * Contains the basic information about an employee
@@ -68,8 +68,8 @@ public class Employee {
      * Called on successful login attempt.
      */
     public void onSuccessfulLogin() {
-        EmployeeView employeeView = new EmployeeView(this);
-        employeeView.setVisible(true);
+        DashboardView dashboardView = new DashboardView(this);
+        dashboardView.setVisible(true);
     }
 
     @Override

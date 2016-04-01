@@ -65,7 +65,7 @@ public final class OrderFactory {
     //This method is used by the Chauffeur, through ChaufferOrderView
     public static boolean setOrderState(int orderID, int status){
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6._order SET status = ? WHERE _order._order_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET status = ? WHERE _order_id = ?")) {
 
                 statement.setInt(1, status);
                 statement.setInt(2, orderID);
@@ -82,7 +82,7 @@ public final class OrderFactory {
     //This method is currently used by ChauffeurOrderTableModel
     public static String getCustomerName(int customerId){
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT surname, forename FROM _order NATURAL JOIN customer WHERE _order.customer_id = ?")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT surname, forename FROM customer WHERE customer_id = ?")){
 
                 statement.setInt(1, customerId);
                 statement.executeQuery();
@@ -103,7 +103,7 @@ public final class OrderFactory {
     }
     public static String getCustomerAddress(int customerId){
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM _order NATURAL JOIN customer WHERE _order.customer_id = ?")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM customer WHERE customer_id = ?")){
 
                 statement.setInt(1, customerId);
                 statement.executeQuery();
@@ -123,41 +123,72 @@ public final class OrderFactory {
     }
 
     public static Order createOrder(String description, Timestamp deliveryTime, int portions, boolean priority,
-                                    int salespersonId, int customerId, int chauffeurId) {
+                                    int salespersonId, int customerId, int chauffeurId, ArrayList<Integer> packageId) {
 
         Timestamp orderTime = new Timestamp(System.currentTimeMillis());
+        int generatedId;
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, null, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-                statement.setString(1, description);
-                statement.setTimestamp(2, deliveryTime);
-                statement.setTimestamp(3, orderTime);
-                statement.setInt(4, portions);
-                statement.setBoolean(5, priority);
-                statement.setInt(6, salespersonId);
-                statement.setInt(7, customerId);
-                statement.setInt(8, 1);
-                statement.setInt(9, chauffeurId);
+            try {
 
-                statement.execute();
+                connection.setAutoCommit(false);
 
-                int generatedId;
-                try (ResultSet result = statement.getGeneratedKeys()) {
-                    if (result.next()) {
-                        generatedId = result.getInt(1);
-                    } else {
-                        return null; // No ID?
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, null, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+                    //Insert data
+                    statement.setString(1, description);
+                    statement.setTimestamp(2, deliveryTime);
+                    statement.setTimestamp(3, orderTime);
+                    statement.setInt(4, portions);
+                    statement.setBoolean(5, priority);
+                    statement.setInt(6, salespersonId);
+                    statement.setInt(7, customerId);
+                    statement.setInt(8, 1);
+                    statement.setInt(9, chauffeurId);
+
+                    int affectedRows = statement.executeUpdate();
+
+                    if (affectedRows == 0) {
+                        connection.rollback();
+                        connection.setAutoCommit(true);
+                        return null;
+                    }
+
+                    try (ResultSet result = statement.getGeneratedKeys()) {
+                        if (result.next()) {
+                            generatedId = result.getInt(1);
+                        } else {
+                            return null; // No ID?
+                        }
                     }
                 }
 
-                Order order = new Order(generatedId, description, deliveryTime, orderTime, portions, priority, salespersonId, customerId, 0, 1, chauffeurId);
-                return order;
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order_food_package VALUES(?,?)")) {
+
+                    for (Integer numbers : packageId) {
+                        statement.setInt(1, generatedId);
+                        statement.setInt(2, numbers);
+                        statement.addBatch();
+                    }
+                    statement.executeBatch();
+                }
+            } catch (SQLException e){
+                connection.rollback();
+                connection.setAutoCommit(true);
+                throw e;
             }
+
+            //All good, commence commit
+            connection.commit();
+            connection.setAutoCommit(true);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
+
+        Order order = new Order(generatedId, description, deliveryTime, orderTime, portions, priority, salespersonId, customerId, 0, 1, chauffeurId);
+        return order;
     }
 
 }
