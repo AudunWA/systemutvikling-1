@@ -15,7 +15,7 @@ public class Order {
     private Timestamp orderDate;
     private int portions;
     private boolean priority;
-    private boolean delivered;
+    private int status;
 
     @Override
     public String toString() {
@@ -29,11 +29,11 @@ public class Order {
                 ", orderDate=" + orderDate +
                 ", portions=" + portions +
                 ", priority=" + priority +
-                ", delivered=" + delivered +
+                ", status=" + status +
                 '}';
     }
 
-    public Order(int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered) {
+    public Order(int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, int status) {
         this.orderId = orderId;
         this.employeeId = employeeId;
         this.customerId = customerId;
@@ -43,7 +43,7 @@ public class Order {
         this.orderDate = orderDate;
         this.portions = portions;
         this.priority = priority;
-        this.delivered = delivered;
+        this.status = status;
     }
 
     public int getOrderId() {
@@ -81,8 +81,8 @@ public class Order {
         return priority;
     }
 
-    public boolean isDelivered(){
-        return delivered;
+    public int getStatus(){
+        return status;
     }
 
     public void setDeliveryDate(Timestamp deliveryDate) {
@@ -93,15 +93,21 @@ public class Order {
         this.portions = portions;
     }
 
-    public void setDelivered(boolean delivered){
-        this.delivered = delivered;
-        OrderFactory.setOrderState(orderId,delivered);
+    public void setStatus(int status){
+        this.status = status;
+        OrderFactory.setOrderState(orderId,status);
     }
     public String findPriority() {
         return (isPriority())?"Priority":"Ordinary";
     }
     public String deliveryStatus(){
-        return (isDelivered())?"Delivered":"Not delivered";
+        if (getStatus() == 0){
+            return "Delivered";
+        } else if (getStatus() == 1){
+            return "In production";
+        } else {
+            return "Ready for delivery";
+        }
     }
 
     public String findCustomerName(){
