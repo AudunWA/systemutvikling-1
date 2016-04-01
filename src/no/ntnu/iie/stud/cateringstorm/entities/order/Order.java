@@ -93,10 +93,12 @@ public class Order {
     public void setPortions(int portions) {
         this.portions = portions;
     }
+
     public void setDelivered(boolean delivered){
         this.delivered = delivered;
         OrderFactory.setOrderState(orderId,delivered);
     }
+
     public String findCustomerName(){
         return OrderFactory.getCustomerName(customerId);
     }
