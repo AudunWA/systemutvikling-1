@@ -56,17 +56,17 @@ public final class OrderFactory {
         Timestamp orderDate = result.getTimestamp("_order_time");
         int portions = result.getInt("portions");
         boolean priority = result.getBoolean("priority");
-        boolean delivered = result.getBoolean("delivered");
+        int status = result.getInt("status");
 
-        return new Order(orderId, employeeId, customerId, recurringOrderId, description, deliveryDate, orderDate, portions, priority, delivered);
+        return new Order(orderId, employeeId, customerId, recurringOrderId, description, deliveryDate, orderDate, portions, priority, status);
     }
 
     //This method is used by the Chauffeur, through ChaufferOrderView
-    public static boolean setOrderState(int orderID, boolean delivered){
+    public static boolean setOrderState(int orderID, int status){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6._order SET delivered = ? WHERE _order._order_id = ?")) {
 
-                statement.setBoolean(1, delivered);
+                statement.setInt(1, status);
                 statement.setInt(2, orderID);
 
                 statement.execute();

@@ -15,7 +15,7 @@ public class Order {
     private Timestamp orderDate;
     private int portions;
     private boolean priority;
-    private boolean delivered;
+    private int status;
 
     @Override
     public String toString() {
@@ -29,11 +29,11 @@ public class Order {
                 ", orderDate=" + orderDate +
                 ", portions=" + portions +
                 ", priority=" + priority +
-                ", delivered=" + delivered +
+                ", delivered=" + status +
                 '}';
     }
 
-    public Order(int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered) {
+    public Order(int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, int status) {
         this.orderId = orderId;
         this.employeeId = employeeId;
         this.customerId = customerId;
@@ -43,7 +43,7 @@ public class Order {
         this.orderDate = orderDate;
         this.portions = portions;
         this.priority = priority;
-        this.delivered = delivered;
+        this.status = status;
     }
 
     public int getOrderId() {
@@ -82,8 +82,15 @@ public class Order {
         return priority;
     }
 
-    public String isDelivered(){
-        return (delivered)?"Delivered":"Not delivered";
+    public String getStatus(){
+
+        if (status == 0){
+            return "Delivered";
+        } else if (status == 1){
+            return "Ready to deliver";
+        } else {
+            return "In production";
+        }
     }
 
     public void setDeliveryDate(Timestamp deliveryDate) {
@@ -94,9 +101,9 @@ public class Order {
         this.portions = portions;
     }
 
-    public void setDelivered(boolean delivered){
-        this.delivered = delivered;
-        OrderFactory.setOrderState(orderId,delivered);
+    public void setStatus(int stat){
+        this.status = stat;
+        OrderFactory.setOrderState(orderId, stat);
     }
 
     public String findCustomerName(){

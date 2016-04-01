@@ -29,10 +29,10 @@ public class OrderFactoryTest {
 
     @Test
     public void testSetOrderState() throws Exception {
-        OrderFactory.setOrderState(1, false);
-        OrderFactory.setOrderState(2, false);
-        OrderFactory.setOrderState(3, false);
-        OrderFactory.setOrderState(4, false);
+        OrderFactory.setOrderState(1, 1);
+        OrderFactory.setOrderState(2, 2);
+        OrderFactory.setOrderState(3, 0);
+        OrderFactory.setOrderState(4, 1);
 
     }
 
