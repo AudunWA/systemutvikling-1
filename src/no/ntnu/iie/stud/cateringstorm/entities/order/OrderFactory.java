@@ -80,10 +80,10 @@ public final class OrderFactory {
     //This method is currently used by OrderTableModel
     public static String getCustomerName(int customerId){
         // TODO: Implement sql query to get a customer's name from the database
-        return "";
+        return "aa";
     }
     public static String getCustomerAddress(int customerId){
         // TODO: Implement sql query to get customr address
-        return "";
+        return "ee";
     }
 }
