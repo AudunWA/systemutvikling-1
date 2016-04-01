@@ -14,11 +14,11 @@ import javax.swing.*;
  * Created by Audun on 31.03.2016.
  */
 public class DashboardView extends JFrame {
-    private static final String WINDOW_TITLE = "Dashboard";
+    private static final String WINDOW_TITLE = "Fabulous dashboard \uD83D\uDCA9";
 
     // Window dimensions
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 250;
+    private static final int WIDTH = 600;
+    private static final int HEIGHT = 500;
 
     private Employee employee;
 
@@ -39,7 +39,7 @@ public class DashboardView extends JFrame {
     }
 
     private void fillTabPane() {
-        tabPane.addTab("HomeView", new HomeView());
+        tabPane.addTab("HomeView", new HomeView(employee));
 
         switch (employee.getEmployeeType()) {
             case EMPLOYEE:
