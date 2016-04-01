@@ -60,6 +60,7 @@ public class ChauffeurOrderView extends JPanel {
 
         tableModel = new OrderTableModel(orderList);
         orderTable = new JTable(tableModel);
+        orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
         orderTable.setFillsViewportHeight(true);
     }
