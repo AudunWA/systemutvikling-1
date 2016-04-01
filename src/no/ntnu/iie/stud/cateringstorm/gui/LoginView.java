@@ -48,6 +48,7 @@ public class LoginView extends JFrame {
                 dispose();
             }
         });
+        pack();
     }
 
     private void createUIComponents() {
@@ -59,6 +60,12 @@ public class LoginView extends JFrame {
      * @param args
      */
     public static void main(String[] args) {
+        // Makes the GUI same style as current OS :)
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println("Failed to set OS GUI style, now using default style.");
+        }
         LoginView loginWindow = new LoginView();
         loginWindow.setVisible(true);
     }

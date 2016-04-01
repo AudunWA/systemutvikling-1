@@ -9,7 +9,10 @@
     <children>
       <tabbedpane id="24ec4" binding="tabPane">
         <constraints border-constraint="Center"/>
-        <properties/>
+        <properties>
+          <background color="-2047"/>
+          <foreground color="-65371"/>
+        </properties>
         <border type="none"/>
         <children/>
       </tabbedpane>
