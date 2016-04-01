@@ -101,8 +101,11 @@ name VARCHAR(20) NOT NULL,
 description VARCHAR(50),
 vegetarian BOOLEAN NOT NULL,
 expire_date DATE NOT NULL,
+quantity INT(10),
+unit VARCHAR(10) NOT NULL, 
 PRIMARY KEY (ingredient_id)
 );
+
 CREATE TABLE dish_type(
 dish_type_id INTEGER AUTO_INCREMENT,
 name VARCHAR(30) NOT NULL,
@@ -191,13 +194,15 @@ delivery_time TIMESTAMP NOT NULL,
 _order_time TIMESTAMP NOT NULL,
 portions INTEGER NOT NULL,
 priority BOOLEAN NOT NULL,
-employee_id INTEGER,
+salesperson_id INTEGER,
 customer_id INTEGER NOT NULL,
 rec_order_id INTEGER,
 delivered BOOLEAN NOT NULL,
+chauffeur_id INTEGER,
 FOREIGN KEY (rec_order_id) REFERENCES recurring_order(rec_order_id) ON UPDATE CASCADE,
-FOREIGN KEY (employee_id) REFERENCES salesperson(employee_id) ON UPDATE CASCADE,
+FOREIGN KEY (salesperson_id) REFERENCES salesperson(employee_id) ON UPDATE CASCADE,
 FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON UPDATE CASCADE,
+FOREIGN key (chauffeur_id) REFERENCES chauffeur(employee_id) ON UPDATE CASCADE,
 PRIMARY KEY (_order_id)
 );
 
