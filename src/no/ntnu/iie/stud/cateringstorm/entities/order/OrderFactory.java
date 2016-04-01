@@ -64,7 +64,7 @@ public final class OrderFactory {
     //This method is used by the Chauffeur, through ChaufferOrderView
     public static boolean setOrderState(int orderID, int status){
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6._order SET delivered = ? WHERE _order._order_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6._order SET status = ? WHERE _order._order_id = ?")) {
 
                 statement.setInt(1, status);
                 statement.setInt(2, orderID);
