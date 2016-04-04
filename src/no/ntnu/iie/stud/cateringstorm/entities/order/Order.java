@@ -1,5 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.entities.order;
 
+import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
+
 import java.sql.Timestamp;
 
 /**
@@ -7,9 +9,9 @@ import java.sql.Timestamp;
  */
 public class Order {
     private final int orderId;
-    private int sales_id;
-    private int chauffeur_id;
-    private int customerId;
+    private int salespersonId;
+    private int chauffeurId;
+    private Customer customer;
     private int recurringOrderId;
     private String description;
     private Timestamp deliveryDate;
@@ -22,9 +24,9 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
-                ", sales_id=" + sales_id +
-                ", chauffeur_id=" + chauffeur_id +
-                ", customerId=" + customerId +
+                ", salespersonId=" + salespersonId +
+                ", chauffeurId=" + chauffeurId +
+                ", customer=" + customer +
                 ", recurringOrderId=" + recurringOrderId +
                 ", description='" + description + '\'' +
                 ", deliveryDate=" + deliveryDate +
@@ -35,9 +37,9 @@ public class Order {
                 '}';
     }
 
-    public Order(int orderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, int sales_id, int customerId, int recurringOrderId, int status, int chauffeur_id) {
+    public Order(int orderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, int salespersonId, Customer customer, int recurringOrderId, int status, int chauffeurId) {
         this.orderId = orderId;
-        this.customerId = customerId;
+        this.customer = customer;
         this.recurringOrderId = recurringOrderId;
         this.description = description;
         this.deliveryDate = deliveryDate;
@@ -45,8 +47,8 @@ public class Order {
         this.portions = portions;
         this.priority = priority;
         this.status = status;
-        this.chauffeur_id = chauffeur_id;
-        this.sales_id = sales_id;
+        this.chauffeurId = chauffeurId;
+        this.salespersonId = salespersonId;
     }
 
     public int getOrderId() {
@@ -54,7 +56,7 @@ public class Order {
     }
 
     public int getCustomerId() {
-        return customerId;
+        return customer.getCustomerId();
     }
 
 
@@ -110,11 +112,18 @@ public class Order {
         }
     }
 
-    public String findCustomerName(){
-        return OrderFactory.getCustomerName(customerId);
-    }
-    public String findCustomerAdress(){
-        return OrderFactory.getCustomerAddress(customerId);
+    public String getCustomerName() {
+        return customer.getForename() + " " + customer.getSurname();
     }
 
+    public String getCustomerAddress() {
+        return customer.getAddress();
+    }
+
+    //public String findCustomerName(){
+    //    return OrderFactory.getCustomerName(customerId);
+    //}
+    //public String findCustomerAdress(){
+    //    return OrderFactory.getCustomerAddress(customerId);
+    //}
 }

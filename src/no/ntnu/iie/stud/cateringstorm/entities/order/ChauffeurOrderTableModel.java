@@ -64,10 +64,10 @@ public class ChauffeurOrderTableModel extends AbstractTableModel {
         Order order = getOrder(row);
         switch (column){
             case 0: return order.getOrderId();
-            case 1: return order.findCustomerName();
+            case 1: return order.getCustomerName();
             case 2: return order.getPortions();
             case 3: return order.getDeliveryDate();
-            case 4: return order.findCustomerAdress();
+            case 4: return order.getCustomerAddress();
             case 5: return order.deliveryStatus();
             default: return null;
         }
