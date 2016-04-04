@@ -39,4 +39,15 @@ public class DishFactoryTest {
         DishFactory.editDish(7, true);
 
     }
+
+    @Test
+    public void testEditDishDescription() throws Exception {
+        DishFactory.editDishDescription(1, "Test");
+
+    }
+
+    @Test
+    public void testEditDishName() throws Exception {
+
+    }
 }

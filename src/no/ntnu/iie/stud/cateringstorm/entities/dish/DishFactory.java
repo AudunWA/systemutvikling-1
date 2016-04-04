@@ -143,4 +143,40 @@ public final class DishFactory {
             return -1;
         }
     }
+
+    public static String editDishDescription(int dishId, String text){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.dish SET description = ? WHERE dish.dish_id = ?")) {
+
+                statement.setString(1, text);
+                statement.setInt(2, dishId);
+
+                statement.execute();
+                return text;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static String editDishName(int dishId, String text){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.dish SET name = ? WHERE dish.dish_id = ?")) {
+
+                statement.setString(1, text);
+                statement.setInt(2, dishId);
+
+                statement.execute();
+                return text;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 }

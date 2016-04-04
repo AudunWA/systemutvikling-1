@@ -1,5 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.entities.dish;
 
+
 /**
  * Created by Audun on 11.03.2016.
  */
@@ -47,5 +48,20 @@ public class Dish {
                 ", description='" + description + '\'' +
                 ", active=" + active +
                 '}';
+    }
+
+    public void setName(String newName){
+        this.name = newName;
+        DishFactory.editDishName(dishId, newName);
+    }
+
+    public void setDescription(String newDescription){
+        this.description = newDescription;
+        DishFactory.editDishDescription(dishId, newDescription);
+    }
+
+    public void setActive(Boolean newActive){
+        this.active = newActive;
+        DishFactory.editDish(dishId, active);
     }
 }
