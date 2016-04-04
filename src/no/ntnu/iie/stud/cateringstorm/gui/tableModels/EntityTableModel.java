@@ -13,12 +13,13 @@ import java.util.List;
 abstract class EntityTableModel extends AbstractTableModel{
 
     protected String[] columnNames;
-    protected List<Order> orderList;
+    protected List<Object> entityList;
 
-    public EntityTableModel(){orderList = new ArrayList<Order>();}
+    public EntityTableModel(){
+        entityList = new ArrayList<Object>();}
 
-    public EntityTableModel(List<Order> orderList, String[] columnNames){
-        this.orderList = orderList;
+    public EntityTableModel(List<Object> entityList, String[] columnNames){
+        this.entityList = entityList;
         this.columnNames = columnNames;
     }
 
@@ -33,7 +34,7 @@ abstract class EntityTableModel extends AbstractTableModel{
     }
     @Override
     public int getRowCount(){
-        return orderList.size();
+        return entityList.size();
     }
 
     //Unique
@@ -56,10 +57,8 @@ abstract class EntityTableModel extends AbstractTableModel{
             default: return false;
         }
     }
-    //Make abstract
-    public Order getOrder(int row){
-        return orderList.get(row);
-    }
+
+    public abstract Object getEntity(int row);
 
     @Override
     public abstract Object getValueAt(int row, int column);
@@ -69,16 +68,16 @@ abstract class EntityTableModel extends AbstractTableModel{
     public abstract void setValueAt(Object value, int row, int column);
 
 
-    public void addOrder(Order order){
-        insertOrder(getRowCount(),order);
+    public void addEntity(Order order){
+        insertEntity(getRowCount(),order);
     }
 
-    public void insertOrder(int row, Order order){
-        orderList.add(row,order);
+    public void insertEntity(int row, Order order){
+        entityList.add(row,order);
         fireTableRowsInserted(row,row);
     }
-    public void removeOrder(int row){
-        orderList.remove(row);
+    public void removeEntity(int row){
+        entityList.remove(row);
         fireTableRowsDeleted(row,row);
     }
 

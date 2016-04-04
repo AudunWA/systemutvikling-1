@@ -25,7 +25,7 @@ public class ChefOrderView extends JPanel {
     private JComboBox statusBox;
     private JPanel cbPanel;
     private ChefOrderTableModel tableModel;
-    private ArrayList<Order> orderList = new ArrayList<Order>();
+    private ArrayList<Object> orderList = new ArrayList<Object>();
     private String[] columnNames = {
             "OrderId","Description","Portions","Delivery time","Priority","Status"
     };

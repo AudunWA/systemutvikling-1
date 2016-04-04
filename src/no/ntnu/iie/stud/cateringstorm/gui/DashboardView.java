@@ -5,6 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.tabs.ChauffeurOrderView;
 import no.ntnu.iie.stud.cateringstorm.gui.tabs.HomeView;
 import no.ntnu.iie.stud.cateringstorm.gui.tabs.MenuAdministratorView;
+import no.ntnu.iie.stud.cateringstorm.gui.tabs.StorageView;
 
 import javax.swing.*;
 
@@ -46,17 +47,20 @@ public class DashboardView extends JFrame {
                 break;
             case CHEF:
                 tabPane.addTab("OrderInfo", new OrderInfo());
+                tabPane.addTab("StorageView", new StorageView());
                 break;
             case CHAUFFEUR:
                 tabPane.addTab("ChauffeurOrderView", new ChauffeurOrderView());
                 break;
             case NUTRITION_EXPERT:
                 tabPane.addTab("MenuAdministratorView", new MenuAdministratorView());
+                tabPane.addTab("StorageView", new StorageView());
                 break;
             case ADMINISTRATOR:
                 tabPane.addTab("OrderInfo", new OrderInfo());
                 tabPane.addTab("ChauffeurOrderView", new ChauffeurOrderView());
                 tabPane.addTab("MenuAdministratorView", new MenuAdministratorView());
+                tabPane.addTab("StorageView", new StorageView());
                 break;
             case SALESPERSON:
                 break;

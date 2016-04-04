@@ -12,10 +12,15 @@ import java.util.List;
 //int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered
 public class ChefOrderTableModel extends EntityTableModel {
 
-    public ChefOrderTableModel(){orderList = new ArrayList<Order>();}
+    public ChefOrderTableModel(){entityList = new ArrayList<Object>();}
 
-    public ChefOrderTableModel(List<Order> orderList, String[] columnNames) {
-        super(orderList, columnNames);
+    public ChefOrderTableModel(List<Object> entityList, String[] columnNames) {
+        super(entityList, columnNames);
+    }
+
+    @Override
+    public Object getEntity(int row) {
+        return null;
     }
 
     /*@Override
@@ -46,7 +51,7 @@ public class ChefOrderTableModel extends EntityTableModel {
     
     @Override
     public Object getValueAt(int row, int column){
-        Order order = getOrder(row);
+        Order order = (Order)getEntity(row);
         switch (column){
             case 0: return order.getOrderId();
             case 1: return order.getDescription();
@@ -59,7 +64,7 @@ public class ChefOrderTableModel extends EntityTableModel {
     }
     @Override
     public void setValueAt(Object value, int row, int column){
-        Order order = getOrder(row);
+        Order order = (Order)getEntity(row);
         switch (column){
             case 5:
                 if(value instanceof String){

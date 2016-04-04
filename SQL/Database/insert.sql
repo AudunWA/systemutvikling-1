@@ -53,11 +53,11 @@ INSERT INTO hours_employee VALUES (5,5);
 INSERT INTO hours_employee VALUES (6,5);
 
 -- (ingredient) --
-INSERT INTO ingredient VALUES (default, TIMESTAMP('2016-09-20'), 'Pølse', 'AKA Kenans pølse', false, DATE('2016-10-20'));
-INSERT INTO ingredient VALUES (default, TIMESTAMP('2016-10-05'), 'Ost', 'Det e jo nais da', true, DATE('2016-10-16'));
-INSERT INTO ingredient VALUES (default, TIMESTAMP('2016-10-10'), 'Pizzabolle', 'The real mvp, premium, OG laken', true, DATE('2016-10-19'));
-INSERT INTO ingredient VALUES (default, TIMESTAMP('2016-10-20'), 'Laks', 'fishy fishy', true, DATE('2016-10-24'));
-INSERT INTO ingredient VALUES (default, TIMESTAMP('2016-09-06'), 'Bønner', 'Protein = Gøls', true, DATE('2016-10-26'));
+INSERT INTO ingredient VALUES (default, TIMESTAMP('2016-09-20'), 'Pølse', 'AKA Kenans pølse', false, DATE('2016-10-20'), 5, "units");
+INSERT INTO ingredient VALUES (default, TIMESTAMP('2016-10-05'), 'Ost', 'Det e jo nais da', true, DATE('2016-10-16'), 1, "kg");
+INSERT INTO ingredient VALUES (default, TIMESTAMP('2016-10-10'), 'Pizzabolle', 'The real mvp, premium, OG laken', true, DATE('2016-10-19'), 5, "units");
+INSERT INTO ingredient VALUES (default, TIMESTAMP('2016-10-20'), 'Laks', 'fishy fishy', true, DATE('2016-10-24'), 12, "units");
+INSERT INTO ingredient VALUES (default, TIMESTAMP('2016-09-06'), 'Bønner', 'Protein = Gøls', true, DATE('2016-10-26'), 5, "liters");
 
 -- (dish_type) --
 INSERT INTO dish_type VALUES (default, 'Forrett');
@@ -128,12 +128,12 @@ INSERT INTO subscription VALUES (default, DATE('2016-03-10'), DATE('2016-03-30')
 
 -- (order) --
 
-INSERT INTO _order VALUES (default, 'sunn ordre', TIMESTAMP('2016-03-12'), TIMESTAMP('2016-03-10'), 3, false,  6, 1,null,false);
-INSERT INTO _order VALUES (default, 'kenans spesial', TIMESTAMP('2016-03-17'), TIMESTAMP('2016-03-09'), 3, false,  6,2,null,true);
-INSERT INTO _order VALUES (default, 'balansert ordre', TIMESTAMP('2016-03-12'), TIMESTAMP('2016-03-09'), 3, false,  6, 3, null,true);
-INSERT INTO _order VALUES (default, 'ekstra sunn ordre', TIMESTAMP('2016-03-17'), TIMESTAMP('2016-03-08'), 3, false,  6, 4, null,true);
-INSERT INTO _order VALUES (default, 'pølsefest', TIMESTAMP('2016-03-11'), TIMESTAMP('2016-03-10'), 3, false,  6, 5, null,true);
-INSERT INTO _order VALUES (default, 'helt super ordre', TIMESTAMP('2016-03-22'), TIMESTAMP('2016-02-10'), 3, false,  6, 6, null,true);
+INSERT INTO _order VALUES (default, 'sunn ordre', TIMESTAMP('2016-03-12'), TIMESTAMP('2016-03-10'), 3, false,  6, 1,null, 0, null);
+INSERT INTO _order VALUES (default, 'kenans spesial', TIMESTAMP('2016-03-17'), TIMESTAMP('2016-03-09'), 3, false,  6,2,null,0, null);
+INSERT INTO _order VALUES (default, 'balansert ordre', TIMESTAMP('2016-03-12'), TIMESTAMP('2016-03-09'), 3, false,  6, 3, null,0, null);
+INSERT INTO _order VALUES (default, 'ekstra sunn ordre', TIMESTAMP('2016-03-17'), TIMESTAMP('2016-03-08'), 3, false,  6, 4, null,0, null);
+INSERT INTO _order VALUES (default, 'pølsefest', TIMESTAMP('2016-03-11'), TIMESTAMP('2016-03-10'), 3, false,  6, 5, null,0, null);
+INSERT INTO _order VALUES (default, 'helt super ordre', TIMESTAMP('2016-03-22'), TIMESTAMP('2016-02-10'), 3, false,  6, 6, null,0, null);
 
 -- (_order_food_package) --
 
