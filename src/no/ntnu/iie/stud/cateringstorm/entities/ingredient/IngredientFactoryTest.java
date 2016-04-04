@@ -37,4 +37,14 @@ public class IngredientFactoryTest {
             System.out.println(ingredient);
         }
     }
+
+    @Test
+    public void testViewAllIngredientByDishId() throws Exception {
+
+        for (Ingredient ingredient : IngredientFactory.viewAllIngredientByDishId(1)) {
+
+            System.out.println(ingredient);
+        }
+
+    }
 }
