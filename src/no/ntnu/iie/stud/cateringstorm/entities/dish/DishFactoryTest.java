@@ -48,6 +48,7 @@ public class DishFactoryTest {
 
     @Test
     public void testEditDishName() throws Exception {
+        DishFactory.editDishName(1, "Test Dish");
 
     }
 }

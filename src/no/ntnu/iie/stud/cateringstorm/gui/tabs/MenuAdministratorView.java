@@ -1,8 +1,8 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
-import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+/*import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
-import no.ntnu.iie.stud.cateringstorm.entities.dish.DishTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tableModels.DishTableModel;*/
 import javax.swing.*;
 
 import java.util.ArrayList;
@@ -23,17 +23,19 @@ public class MenuAdministratorView extends JPanel {
     private JButton addDishButton;
     private JButton editDishButton;
     private JButton removeDishButton;
+    //Use DishTableModel
     private JTable dishTable;
     private JPanel mainPanel;
     private JButton exitButton;
     private JScrollPane dishPane;
-    private DishTableModel tableModel;
-    private static ArrayList<Dish> dishList = new ArrayList<Dish>();
+    //private DishTableModel tableModel;
+    private String[] columnNames = new String[6];
+    private static ArrayList<Object> dishList = new ArrayList<Object>();
 
     public MenuAdministratorView() {
         add(mainPanel);
         exitButton.addActionListener(e-> {
-            //Change window
+            //Change window to dishinfo
         });
         editDishButton.addActionListener(e -> {
             //setDish();
@@ -49,12 +51,12 @@ public class MenuAdministratorView extends JPanel {
         createTable();
     }
     private void createTable(){
-        dishList = DishFactory.getAllDishes();
+       // dishList = DishFactory.getAllDishes();
 
-        tableModel = new DishTableModel(dishList);
-        dishTable = new JTable(tableModel);
-        dishPane = new JScrollPane(dishTable);
-        dishTable.setFillsViewportHeight(true);
+        //tableModel = new DishTableModel(dishList,columnNames);
+        //dishTable = new JTable(tableModel);
+        //dishPane = new JScrollPane(dishTable);
+        //dishTable.setFillsViewportHeight(true);
     }
 
     public static void main(String[] args){
