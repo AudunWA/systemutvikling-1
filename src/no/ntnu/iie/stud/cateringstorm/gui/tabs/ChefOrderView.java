@@ -2,13 +2,11 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 //import no.ntnu.iie.stud.cateringstorm.gui.tabs.ChauffeurOrderView;
 
-import no.ntnu.iie.stud.cateringstorm.entities.order.ChauffeurOrderTableModel;
-import no.ntnu.iie.stud.cateringstorm.entities.order.ChefOrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tableModels.ChefOrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 
 import javax.swing.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
