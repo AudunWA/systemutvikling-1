@@ -159,5 +159,29 @@ public final class IngredientFactory {
         Ingredient ingredient = new Ingredient(generatedId, arrivalDate, name, description, vegetarian, expireDate, amount, unit);
         return ingredient;
     }
+
+    public static ArrayList<Ingredient> viewAllIngredientByDishId(int dishId){
+
+        ArrayList<Ingredient> temp = new ArrayList<>();
+
+        try (Connection connection = Database.getConnection()){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM ingredient INNER JOIN ingredient_dish ON (ingredient.ingredient_id = ingredient_dish.ingredient_id) WHERE ingredient_dish.dish_id = ?;")){
+
+
+                statement.setInt(1, dishId);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()){
+
+                        temp.add(createIngredientFromResultSet(result));
+                    }
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return temp;
+    }
 }
 
