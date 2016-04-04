@@ -12,7 +12,7 @@ public class DishTableModel extends EntityTableModel {
     public DishTableModel(List<Object> EntityList, String[] columnNames){
         super(EntityList,columnNames);
     }
-    
+
     //TODO: implement the rest of the methods
 
     @Override

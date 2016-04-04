@@ -26,7 +26,9 @@ public class ChefOrderView extends JPanel {
     private JPanel cbPanel;
     private ChefOrderTableModel tableModel;
     private ArrayList<Order> orderList = new ArrayList<Order>();
-
+    private String[] columnNames = {
+            "OrderId","Description","Portions","Delivery time","Priority","Status"
+    };
     public ChefOrderView() {
         add(mainPanel);
         viewButton.addActionListener(e -> {
@@ -44,7 +46,7 @@ public class ChefOrderView extends JPanel {
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
 
-        tableModel = new ChefOrderTableModel(orderList);
+        tableModel = new ChefOrderTableModel(orderList,columnNames);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
