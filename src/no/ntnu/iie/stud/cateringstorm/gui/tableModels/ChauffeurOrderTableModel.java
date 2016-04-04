@@ -42,7 +42,8 @@ public class ChauffeurOrderTableModel extends TableModel {
     }
 
     public Order getOrder(int row){
-        return orderList.get(row);
+        boolean valid = row < getRowCount() && row > -1;
+        return (valid)?orderList.get(row):null;
     }
     */
 
@@ -51,10 +52,10 @@ public class ChauffeurOrderTableModel extends TableModel {
         Order order = getOrder(row);
         switch (column){
             case 0: return order.getOrderId();
-            case 1: return order.findCustomerName();
+            case 1: return order.getCustomerName();
             case 2: return order.getPortions();
             case 3: return order.getDeliveryDate();
-            case 4: return order.findCustomerAdress();
+            case 4: return order.getCustomerAddress();
             case 5: return order.deliveryStatus();
             default: return null;
         }
@@ -67,8 +68,11 @@ public class ChauffeurOrderTableModel extends TableModel {
             case 5:
                 if(value instanceof String){
                     order.setStatus((value.equals("Delivered"))?2:1);
+                }else{
+                    return;
                 }
                 break;
+            default: return;
         }
         fireTableCellUpdated(row, column);
     }

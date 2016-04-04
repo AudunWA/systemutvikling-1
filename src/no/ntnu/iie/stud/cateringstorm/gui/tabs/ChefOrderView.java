@@ -13,12 +13,8 @@ import java.util.ArrayList;
  * Orderview for chefs. Chefs are able to edit contents of the order.
  * Created by Audun on 10.03.2016.
  */
-public class ChefOrderView extends JFrame {
+public class ChefOrderView extends JPanel {
     private static final String WINDOW_TITLE = "Active orders";
-
-    // Window dimensions
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 700;
 
     private JPanel mainPanel;
     private JScrollPane orderPane;
@@ -26,29 +22,22 @@ public class ChefOrderView extends JFrame {
     private JPanel buttonPanel;
     private JButton viewButton;
     private JButton editButton;
-    private JButton saveButton;
     private JComboBox statusBox;
     private JPanel cbPanel;
-    private ComboBoxModel cbModel;
     private ChefOrderTableModel tableModel;
-    private ArrayList<Order> orderList;
-    public ChefOrderView() {
-        setTitle(WINDOW_TITLE);
-        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setContentPane(mainPanel);
+    private ArrayList<Order> orderList = new ArrayList<Order>();
 
+    public ChefOrderView() {
+        add(mainPanel);
         viewButton.addActionListener(e -> {
             //TODO: Implement method opening a new tab, allowing user to view more information of a single order
         });
         statusBox.addActionListener(e -> {
-            //TODO: Implement method editing status of an order
             setStatus();
         });
     }
-
+    //Custom initialization of UI components
     private void createUIComponents() {
-        // TODO: Custom initialization of UI components here
         createTable();
         createComboBox();
     }
@@ -61,26 +50,32 @@ public class ChefOrderView extends JFrame {
         orderPane = new JScrollPane(orderTable);
         orderTable.setFillsViewportHeight(true);
     }
+
+
     private void createComboBox(){
             Object[] status = {"In production","Ready for delivery"};
-
             statusBox = new JComboBox(status);
             statusBox.setSelectedIndex(0);
-
     }
+    // FIXME: Trouble with wrongly selected indexes. Might be wrong logic i back-end
     private void setStatus(){
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
-        int deliveryRow = 5;
+        int statusColumn = 5;
         boolean delivered = choice > 0;
-        int arrLength = tableModel.getRowCount()-1;
-        orderTable.clearSelection();
-        //To update database
-        //OrderFactory.setOrderState(tableModel.getOrder(selectedRow).getOrderId(),delivered);
-        tableModel.setValueAt((delivered)?"Ready for delivery":"In production",selectedRow,deliveryRow);
+        if(selectedRow > -1) {
+            orderTable.clearSelection();
+            tableModel.setValueAt((delivered) ? "Ready for delivery" : "In production", selectedRow, statusColumn);
+        }
     }
     public static void main(String[] args){
-        ChefOrderView overView = new ChefOrderView();
-        overView.setVisible(true);
+        final int WIDTH = 700;
+        final int HEIGHT = 700;
+        JFrame frame = new JFrame();
+        frame.add(new ChefOrderView());
+        frame.setVisible(true);
+        frame.setTitle(WINDOW_TITLE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
     }
 }

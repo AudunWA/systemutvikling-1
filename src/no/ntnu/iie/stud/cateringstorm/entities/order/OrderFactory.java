@@ -1,6 +1,8 @@
 package no.ntnu.iie.stud.cateringstorm.entities.order;
 
 import no.ntnu.iie.stud.cateringstorm.database.Database;
+import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
+import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -53,13 +55,18 @@ public final class OrderFactory {
         Timestamp orderDate = result.getTimestamp("_order_time");
         int portions = result.getInt("portions");
         boolean priority = result.getBoolean("priority");
-        int sales_id = result.getInt("salesperson_id");
+        int salespersonId = result.getInt("salesperson_id");
         int customerId = result.getInt("customer_id");
         int recurringOrderId = result.getInt("rec_order_id");
         int status = result.getInt("status");
-        int chauffeur_id = result.getInt("chauffeur_id");
+        int chauffeurId = result.getInt("chauffeur_id");
 
-        return new Order(orderId, description, deliveryDate, orderDate, portions, priority, sales_id, customerId, recurringOrderId, status, chauffeur_id);
+        Customer customer = CustomerFactory.viewSingleCustomer(customerId);
+        if(customer == null) {
+            throw new NullPointerException("customer is null, check customerId.");
+        }
+
+        return new Order(orderId, description, deliveryDate, orderDate, portions, priority, salespersonId, customer, recurringOrderId, status, chauffeurId);
     }
 
     //This method is used by the Chauffeur, through ChaufferOrderView
@@ -124,6 +131,10 @@ public final class OrderFactory {
 
     public static Order createOrder(String description, Timestamp deliveryTime, int portions, boolean priority,
                                     int salespersonId, int customerId, int chauffeurId, ArrayList<Integer> packageId) {
+        Customer customer = CustomerFactory.viewSingleCustomer(customerId);
+        if(customer == null) {
+            return null;
+        }
 
         Timestamp orderTime = new Timestamp(System.currentTimeMillis());
         int generatedId;
@@ -187,7 +198,7 @@ public final class OrderFactory {
             return null;
         }
 
-        Order order = new Order(generatedId, description, deliveryTime, orderTime, portions, priority, salespersonId, customerId, 0, 1, chauffeurId);
+        Order order = new Order(generatedId, description, deliveryTime, orderTime, portions, priority, salespersonId, customer, 0, 1, chauffeurId);
         return order;
     }
 

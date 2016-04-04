@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * Created by EliasBrattli on 16/03/2016.
  */
-public class DishInfo extends JFrame{
+public class DishInfoView extends JFrame{
 
     private static final String WINDOW_TITLE = "Information";
 
@@ -22,7 +22,7 @@ public class DishInfo extends JFrame{
     private JButton exitButton;
     private JButton saveButton;
 
-    public DishInfo() {
+    public DishInfoView() {
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -53,7 +53,7 @@ public class DishInfo extends JFrame{
 
 
     public static void main(String[]args){
-        DishInfo di = new DishInfo();
+        DishInfoView di = new DishInfoView();
         di.setVisible(true);
     }
 }

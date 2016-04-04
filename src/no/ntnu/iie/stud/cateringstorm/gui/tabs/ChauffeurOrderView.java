@@ -49,6 +49,7 @@ public class ChauffeurOrderView extends JPanel {
         createTable();
         createComboBox();
     }
+
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
 
@@ -58,37 +59,29 @@ public class ChauffeurOrderView extends JPanel {
         orderPane = new JScrollPane(orderTable);
         orderTable.setFillsViewportHeight(true);
     }
-    /*
-    private void createTable(){
-        // Fill table with dummy data
-        Object[] columnNames = {"Order ID", "Customer", "Portions", "Delivery date","Location","Status"};
 
-        orderTable = new JTable(data, columnNames);
-
-        orderPane = new JScrollPane(orderTable);
-        orderTable.setFillsViewportHeight(true);
-    }*/
 
     private void createComboBox(){
         Object[] status = {"Delivered","Ready for delivery"};
 
         statusBox = new JComboBox(status);
         statusBox.setSelectedIndex(0);
-
     }
+    // FIXME: Check trouble with wrongly selected indexes in combobox
     private void setStatus(){
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
-        int deliveryRow = 5;
+        int statusColumn= 5;
         boolean delivered = choice > 0;
         int arrLength = tableModel.getRowCount()-1;
-        orderTable.clearSelection();
-        //To update database
-        //OrderFactory.setOrderState(tableModel.getOrder(selectedRow).getOrderId(),delivered);
-        tableModel.setValueAt((delivered)?"Delivered":"Not delivered",selectedRow,deliveryRow);
+        if(selectedRow > -1) {
+            orderTable.clearSelection();
+
+            tableModel.setValueAt((delivered) ? "Delivered" : "Not delivered", selectedRow, statusColumn);
+        }
     }
 
-    //Test method
+    // FIXME: Add possibility to expand mainFrame for table
     public static void main(String[] args){
         // Window dimensions
         final int WIDTH = 700;

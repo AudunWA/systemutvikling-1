@@ -1,5 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
+import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
+
 import javax.swing.*;
 
 /**
@@ -8,9 +10,14 @@ import javax.swing.*;
  * Created by Audun on 01.04.2016.
  */
 public class HomeView extends JPanel {
-    private JPanel mainPanel;
+    private Employee employee;
 
-    public HomeView() {
+    private JPanel mainPanel;
+    private JLabel welcomeLabel;
+
+    public HomeView(Employee employee) {
+        this.employee = employee;
         add(mainPanel);
+        welcomeLabel.setText(welcomeLabel.getText().replace("%name%", employee.getForename()) + "\uD83D\uDE17");
     }
 }
