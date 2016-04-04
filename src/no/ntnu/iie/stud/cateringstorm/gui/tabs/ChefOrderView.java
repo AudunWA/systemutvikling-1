@@ -34,13 +34,11 @@ public class ChefOrderView extends JPanel {
             //TODO: Implement method opening a new tab, allowing user to view more information of a single order
         });
         statusBox.addActionListener(e -> {
-            //TODO: Implement method editing status of an order
             setStatus();
         });
     }
-
+    //Custom initialization of UI components
     private void createUIComponents() {
-        // TODO: Custom initialization of UI components here
         createTable();
         createComboBox();
     }
@@ -54,13 +52,13 @@ public class ChefOrderView extends JPanel {
         orderTable.setFillsViewportHeight(true);
     }
 
-    //TODO: Disable combobox unless a row is selected
-    //Can be done by controlling selected index
+
     private void createComboBox(){
             Object[] status = {"In production","Ready for delivery"};
             statusBox = new JComboBox(status);
             statusBox.setSelectedIndex(0);
     }
+    // FIXME: Trouble with wrongly selected indexes
     private void setStatus(){
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();

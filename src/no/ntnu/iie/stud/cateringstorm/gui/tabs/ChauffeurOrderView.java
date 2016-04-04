@@ -49,6 +49,7 @@ public class ChauffeurOrderView extends JPanel {
         createTable();
         createComboBox();
     }
+
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
 
@@ -59,14 +60,14 @@ public class ChauffeurOrderView extends JPanel {
         orderTable.setFillsViewportHeight(true);
     }
 
-    //TODO: Disable combobox unless a row is selected
+
     private void createComboBox(){
         Object[] status = {"Delivered","Ready for delivery"};
 
         statusBox = new JComboBox(status);
         statusBox.setSelectedIndex(0);
     }
-    // TODO: Check trouble with wrongly selected indexes in combobox
+    // FIXME: Check trouble with wrongly selected indexes in combobox
     private void setStatus(){
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
@@ -80,7 +81,7 @@ public class ChauffeurOrderView extends JPanel {
         }
     }
 
-    //Test method
+    // FIXME: Add possibility to expand mainFrame for table
     public static void main(String[] args){
         // Window dimensions
         final int WIDTH = 700;
