@@ -1,8 +1,7 @@
-package no.ntnu.iie.stud.cateringstorm.entities.order;
+package no.ntnu.iie.stud.cateringstorm.gui.tableModels;
 
-import javax.swing.table.AbstractTableModel;
-import java.security.Timestamp;
-import java.util.AbstractCollection;
+import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,33 +10,15 @@ import java.util.List;
  * Created by EliasBrattli on 30/03/2016.
  */
 //int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered
-public class ChauffeurOrderTableModel extends AbstractTableModel {
-    private String[] columnNames ={
-            "Order ID", "Customer", "Portions", "Delivery date","Location","Status"
-    };
-    private List<Order> orderList;
-    public ChauffeurOrderTableModel(){
-        orderList = new ArrayList<Order>();
-    }
-    public ChauffeurOrderTableModel(List<Order> orderList){
-        this.orderList = orderList;
+public class ChauffeurOrderTableModel extends EntityTableModel {
+
+    public ChauffeurOrderTableModel(){orderList = new ArrayList<Order>();}
+
+    public ChauffeurOrderTableModel(List<Order> orderList, String[] columnNames){
+        super(orderList, columnNames);
     }
 
-    //Parent methods must be overridden as we use Abstract table model
-    @Override
-    public int getColumnCount(){
-        return columnNames.length;
-    }
-    @Override
-    public String getColumnName(int column){
-        return columnNames[column];
-    }
-    @Override
-    public int getRowCount(){
-        return orderList.size();
-    }
-
-    @Override
+    /*@Override
     public Class getColumnClass(int column){
         switch (column){
             case 0: return Integer.class;
@@ -48,17 +29,21 @@ public class ChauffeurOrderTableModel extends AbstractTableModel {
             case 5: return String.class;
             default: return String.class;
         }
-    }
-    @Override
+    }*/
+
+    /*@Override
     public boolean isCellEditable(int row, int column){
         switch (column){
             default: return false;
         }
     }
+
     public Order getOrder(int row){
         boolean valid = row < getRowCount() && row > -1;
         return (valid)?orderList.get(row):null;
     }
+    */
+
     @Override
     public Object getValueAt(int row, int column){
         Order order = getOrder(row);
@@ -88,7 +73,8 @@ public class ChauffeurOrderTableModel extends AbstractTableModel {
         }
         fireTableCellUpdated(row, column);
     }
-    public void addOrder(Order order){
+
+    /*public void addOrder(Order order){
         insertOrdert(getRowCount(),order);
     }
 
@@ -96,8 +82,9 @@ public class ChauffeurOrderTableModel extends AbstractTableModel {
         orderList.add(row,order);
         fireTableRowsInserted(row,row);
     }
+
     public void removeOrder(int row){
         orderList.remove(row);
         fireTableRowsDeleted(row,row);
-    }
+    }*/
 }

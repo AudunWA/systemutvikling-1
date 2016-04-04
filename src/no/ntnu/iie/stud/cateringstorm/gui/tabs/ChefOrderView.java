@@ -2,8 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 //import no.ntnu.iie.stud.cateringstorm.gui.tabs.ChauffeurOrderView;
 
-import no.ntnu.iie.stud.cateringstorm.entities.order.ChauffeurOrderTableModel;
-import no.ntnu.iie.stud.cateringstorm.entities.order.ChefOrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tableModels.ChefOrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 
@@ -27,7 +26,9 @@ public class ChefOrderView extends JPanel {
     private JPanel cbPanel;
     private ChefOrderTableModel tableModel;
     private ArrayList<Order> orderList = new ArrayList<Order>();
-
+    private String[] columnNames = {
+            "OrderId","Description","Portions","Delivery time","Priority","Status"
+    };
     public ChefOrderView() {
         add(mainPanel);
         viewButton.addActionListener(e -> {
@@ -45,7 +46,7 @@ public class ChefOrderView extends JPanel {
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
 
-        tableModel = new ChefOrderTableModel(orderList);
+        tableModel = new ChefOrderTableModel(orderList,columnNames);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
@@ -58,7 +59,7 @@ public class ChefOrderView extends JPanel {
             statusBox = new JComboBox(status);
             statusBox.setSelectedIndex(0);
     }
-    // FIXME: Trouble with wrongly selected indexes
+    // FIXME: Trouble with wrongly selected indexes. Might be wrong logic i back-end
     private void setStatus(){
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
