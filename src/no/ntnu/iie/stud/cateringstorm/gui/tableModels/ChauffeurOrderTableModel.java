@@ -10,13 +10,14 @@ import java.util.List;
  * Created by EliasBrattli on 30/03/2016.
  */
 //int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered
-public class ChauffeurOrderTableModel extends EntityTableModel {
+public class ChauffeurOrderTableModel extends EntityTableModel<Order> {
 
-    public ChauffeurOrderTableModel(){orderList = new ArrayList<Order>();}
+    public ChauffeurOrderTableModel(){entityList = new ArrayList<Order>();}
 
     public ChauffeurOrderTableModel(List<Order> orderList, String[] columnNames){
         super(orderList, columnNames);
     }
+
 
     /*@Override
     public Class getColumnClass(int column){
@@ -46,7 +47,7 @@ public class ChauffeurOrderTableModel extends EntityTableModel {
 
     @Override
     public Object getValueAt(int row, int column){
-        Order order = getOrder(row);
+        Order order = getEntity(row);
         switch (column){
             case 0: return order.getOrderId();
             case 1: return order.getCustomerName();
@@ -59,7 +60,7 @@ public class ChauffeurOrderTableModel extends EntityTableModel {
     }
     @Override
     public void setValueAt(Object value, int row, int column){
-        Order order = getOrder(row);
+        Order order = getEntity(row);
 
         switch (column){
             case 5:

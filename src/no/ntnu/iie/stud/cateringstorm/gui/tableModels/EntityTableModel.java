@@ -10,15 +10,15 @@ import java.util.List;
 /**
  * Created by Chris on 04.04.2016.
  */
-abstract class EntityTableModel extends AbstractTableModel{
+abstract class EntityTableModel<T> extends AbstractTableModel{
 
     protected String[] columnNames;
-    protected List<Object> entityList;
+    protected List<T> entityList;
 
     public EntityTableModel(){
-        entityList = new ArrayList<Object>();}
+        entityList = new ArrayList<T>();}
 
-    public EntityTableModel(List<Object> entityList, String[] columnNames){
+    public EntityTableModel(List<T> entityList, String[] columnNames){
         this.entityList = entityList;
         this.columnNames = columnNames;
     }
@@ -58,7 +58,9 @@ abstract class EntityTableModel extends AbstractTableModel{
         }
     }
 
-    public abstract Object getEntity(int row);
+    public T getEntity(int row) {
+        return entityList.get(row);
+    }
 
     @Override
     public abstract Object getValueAt(int row, int column);
@@ -68,12 +70,12 @@ abstract class EntityTableModel extends AbstractTableModel{
     public abstract void setValueAt(Object value, int row, int column);
 
 
-    public void addEntity(Order order){
-        insertEntity(getRowCount(),order);
+    public void addEntity(T entity){
+        insertEntity(getRowCount(), entity);
     }
 
-    public void insertEntity(int row, Order order){
-        entityList.add(row,order);
+    public void insertEntity(int row, T entity){
+        entityList.add(row,entity);
         fireTableRowsInserted(row,row);
     }
     public void removeEntity(int row){

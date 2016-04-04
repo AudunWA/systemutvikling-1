@@ -10,17 +10,17 @@ import java.util.List;
  * Created by EliasBrattli on 30/03/2016.
  */
 //int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered
-public class ChefOrderTableModel extends EntityTableModel {
+public class ChefOrderTableModel extends EntityTableModel<Order> {
 
-    public ChefOrderTableModel(){entityList = new ArrayList<Object>();}
+    public ChefOrderTableModel(){entityList = new ArrayList<Order>();}
 
-    public ChefOrderTableModel(List<Object> entityList, String[] columnNames) {
+    public ChefOrderTableModel(List<Order> entityList, String[] columnNames) {
         super(entityList, columnNames);
     }
 
     @Override
-    public Object getEntity(int row) {
-        return null;
+    public Order getEntity(int row) {
+        return entityList.get(row);
     }
 
     /*@Override
