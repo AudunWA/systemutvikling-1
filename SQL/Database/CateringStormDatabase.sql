@@ -97,11 +97,11 @@ PRIMARY KEY (hours_id, employee_id)
 CREATE TABLE ingredient(
 ingredient_id INTEGER AUTO_INCREMENT,
 arrival_date TIMESTAMP NOT NULL,
-name VARCHAR(20) NOT NULL,
-description VARCHAR(50),
+name VARCHAR(32) NOT NULL,
+description TEXT,
 vegetarian BOOLEAN NOT NULL,
 expire_date DATE NOT NULL,
-quantity INT(10),
+amount DOUBLE,
 unit VARCHAR(10) NOT NULL, 
 PRIMARY KEY (ingredient_id)
 );

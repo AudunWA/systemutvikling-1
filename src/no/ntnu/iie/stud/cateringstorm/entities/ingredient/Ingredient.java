@@ -12,7 +12,9 @@ public class Ingredient {
     private String description;
     private boolean vegetarian;
     private Timestamp arrivalDate;
-    private Timestamp expireDate;
+    private Date expireDate;
+    private double amount;
+    private String unit;
 
     public int getIngredientId() {
         return ingredientId;
@@ -34,17 +36,19 @@ public class Ingredient {
         return arrivalDate;
     }
 
-    public Timestamp getExpireDate() {
+    public Date getExpireDate() {
         return expireDate;
     }
 
-    public Ingredient(int ingredientId, Timestamp arrivalDate, String name, String description, boolean vegetarian, Timestamp expireDate) {
+    public Ingredient(int ingredientId, Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount, String unit) {
         this.ingredientId = ingredientId;
         this.name = name;
         this.description = description;
         this.vegetarian = vegetarian;
         this.arrivalDate = arrivalDate;
         this.expireDate = expireDate;
+        this.amount = amount;
+        this.unit = unit;
     }
 
     @Override
@@ -56,6 +60,16 @@ public class Ingredient {
                 ", vegetarian=" + vegetarian +
                 ", arrivalDate=" + arrivalDate +
                 ", expireDate=" + expireDate +
+                ", amount=" + amount +
+                ", unit='" + unit + '\'' +
                 '}';
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getUnit() {
+        return unit;
     }
 }
