@@ -15,7 +15,7 @@
           <component id="228c4" class="javax.swing.JButton" binding="addRowButton">
             <constraints/>
             <properties>
-              <text value="Add Row"/>
+              <text value="Add row"/>
             </properties>
           </component>
           <component id="baa5" class="javax.swing.JButton" binding="editRowButton">
@@ -31,10 +31,10 @@
               <text value="Save changes"/>
             </properties>
           </component>
-          <component id="ec3ed" class="javax.swing.JButton" binding="exitButton">
+          <component id="ec3ed" class="javax.swing.JButton" binding="removeRowButton">
             <constraints/>
             <properties>
-              <text value="Exit"/>
+              <text value="Remove row"/>
             </properties>
           </component>
         </children>

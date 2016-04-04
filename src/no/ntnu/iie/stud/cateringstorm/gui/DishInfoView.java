@@ -19,16 +19,29 @@ public class DishInfoView extends JFrame{
     private JTable ingredientTable;
     private JScrollPane tablePane;
     private JPanel buttonPanel;
-    private JButton exitButton;
     private JButton saveButton;
-
+    private JButton removeRowButton;
     public DishInfoView() {
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(mainPanel);
         addRowButton.addActionListener(e-> {
-            //Add a table row
+            // TODO: Implement method addRow() that will open an empty table row, disabling save button until details are filled in
+            //Consider using components
+            addRow();
+        });
+        saveButton.addActionListener(e->{
+            // TODO: Impement method saveChanges() that will send table into database
+            saveChanges();
+        });
+        editRowButton.addActionListener(e->{
+            // TODO: Implement method editRow() that will control the data input in the editable table cells
+            editRow();
+        });
+        removeRowButton.addActionListener(e->{
+            // TODO: Implement method removeRow() that will "remove" data from the view table. Data will still exist in database,
+            removeRow();
         });
     }
 
@@ -50,8 +63,18 @@ public class DishInfoView extends JFrame{
 
     }
 
+    private boolean addRow(){
+        return false;
+    }
+    private boolean saveChanges(){
+        return false;
+    }
+    private void editRow(){
 
-
+    }
+    private boolean removeRow(){
+        return false;
+    }
     public static void main(String[]args){
         DishInfoView di = new DishInfoView();
         di.setVisible(true);
