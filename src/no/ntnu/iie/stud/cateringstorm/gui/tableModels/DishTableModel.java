@@ -11,7 +11,7 @@ public class DishTableModel extends EntityTableModel {
     public DishTableModel(List<Order> orderList, String[] columnNames){
         super(orderList,columnNames);
     }
-    
+
     //TODO: implement the rest of the methods
 
 }

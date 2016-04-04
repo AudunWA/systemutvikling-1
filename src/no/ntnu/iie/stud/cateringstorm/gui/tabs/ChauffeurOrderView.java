@@ -26,7 +26,7 @@ public class ChauffeurOrderView extends JPanel {
     private ComboBoxModel cbModel;
     private ChauffeurOrderTableModel tableModel;
     private static ArrayList<Order> orderList = new ArrayList<Order>();
-    private String[] columnNames{"OrderId","Customer","Portions","Delivery time","Location","Status"};
+    private String[] columnNames = {"OrderId","Customer","Portions","Delivery time","Location","Status"};
 
     public ChauffeurOrderView() {
 
