@@ -58,7 +58,7 @@ public class ChefOrderView extends JPanel {
             statusBox = new JComboBox(status);
             statusBox.setSelectedIndex(0);
     }
-    // FIXME: Trouble with wrongly selected indexes
+    // FIXME: Trouble with wrongly selected indexes. Might be wrong logic i back-end
     private void setStatus(){
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
