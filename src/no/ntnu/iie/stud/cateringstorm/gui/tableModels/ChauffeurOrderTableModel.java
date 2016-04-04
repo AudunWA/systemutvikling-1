@@ -2,9 +2,6 @@ package no.ntnu.iie.stud.cateringstorm.gui.tableModels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 
-import javax.swing.table.AbstractTableModel;
-import java.security.Timestamp;
-import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +10,7 @@ import java.util.List;
  * Created by EliasBrattli on 30/03/2016.
  */
 //int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered
-public class ChauffeurOrderTableModel extends TableModel {
+public class ChauffeurOrderTableModel extends EntityTableModel {
 
     public ChauffeurOrderTableModel(){orderList = new ArrayList<Order>();}
 
