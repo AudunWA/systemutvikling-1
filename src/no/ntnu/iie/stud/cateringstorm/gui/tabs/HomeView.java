@@ -18,6 +18,6 @@ public class HomeView extends JPanel {
     public HomeView(Employee employee) {
         this.employee = employee;
         add(mainPanel);
-        welcomeLabel.setText(welcomeLabel.getText().replace("%name%", employee.getForename()) + "\uD83D\uDE17");
+        welcomeLabel.setText(welcomeLabel.getText().replace("%name%", employee.getForename()));
     }
 }

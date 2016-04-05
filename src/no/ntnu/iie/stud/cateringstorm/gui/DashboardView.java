@@ -15,11 +15,11 @@ import javax.swing.*;
  * Created by Audun on 31.03.2016.
  */
 public class DashboardView extends JFrame {
-    private static final String WINDOW_TITLE = "Fabulous dashboard \uD83D\uDCA9";
+    private static final String WINDOW_TITLE = "Catering Storm Dashboard";
 
     // Window dimensions
     private static final int WIDTH = 600;
-    private static final int HEIGHT = 500;
+    private static final int HEIGHT = 600;
 
     private Employee employee;
 

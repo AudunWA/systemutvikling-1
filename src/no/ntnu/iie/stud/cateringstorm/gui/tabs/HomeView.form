@@ -13,9 +13,7 @@
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties>
-          <background color="-34416"/>
-        </properties>
+        <properties/>
         <border type="none"/>
         <children>
           <component id="45de2" class="javax.swing.JLabel" binding="welcomeLabel">
@@ -23,8 +21,8 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-13044736"/>
-              <font name="Comic Sans MS" size="18" style="3"/>
+              <background color="-12171706"/>
+              <font name="Roboto" size="18"/>
               <text value="Welcome back, %name%!"/>
             </properties>
           </component>
@@ -33,6 +31,8 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <enabled value="true"/>
+              <font name="Roboto"/>
               <text value="You can access your tools from the different tabs above."/>
             </properties>
           </component>
