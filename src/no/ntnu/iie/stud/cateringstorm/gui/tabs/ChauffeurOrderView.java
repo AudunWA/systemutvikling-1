@@ -32,7 +32,7 @@ public class ChauffeurOrderView extends JPanel {
 
         add(mainPanel);
         refreshButton.addActionListener(e-> {
-            // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
+            refresh();
         });
 
         statusBox.addActionListener(e -> {
@@ -79,6 +79,9 @@ public class ChauffeurOrderView extends JPanel {
 
             tableModel.setValueAt((delivered) ? "Delivered" : "Not delivered", selectedRow, statusColumn);
         }
+    }
+    private void refresh(){
+        // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
     }
 
     // FIXME: Add possibility to expand mainFrame for table

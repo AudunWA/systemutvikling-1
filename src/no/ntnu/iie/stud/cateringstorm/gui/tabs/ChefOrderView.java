@@ -33,13 +33,13 @@ public class ChefOrderView extends JPanel {
     public ChefOrderView() {
         add(mainPanel);
         viewButton.addActionListener(e -> {
-            //TODO: Implement method opening a new tab, allowing user to view more information of a single order
+            viewOrder();
         });
         statusBox.addActionListener(e -> {
             setStatus();
         });
         refreshButton.addActionListener(e->{
-            // TODO: Implement a method updating table for new orders, and removing changed orders from table.
+            refresh();
         });
     }
     //Custom initialization of UI components
@@ -63,6 +63,7 @@ public class ChefOrderView extends JPanel {
             statusBox = new JComboBox(status);
             statusBox.setSelectedIndex(0);
     }
+
     // FIXME: Trouble with wrongly selected indexes. Might be wrong logic i back-end?
     private void setStatus(){
         int choice = statusBox.getSelectedIndex();
@@ -73,6 +74,12 @@ public class ChefOrderView extends JPanel {
             orderTable.clearSelection();
             tableModel.setValueAt((delivered) ? "Ready for delivery" : "In production", selectedRow, statusColumn);
         }
+    }
+    private void viewOrder(){
+        // TODO: Implement method opening a new tab, allowing user to view more information of a single order
+    }
+    private void refresh(){
+        //  TODO: Implement a method updating table for new orders, and removing changed orders from table.
     }
     public static void main(String[] args){
         final int WIDTH = 700;
