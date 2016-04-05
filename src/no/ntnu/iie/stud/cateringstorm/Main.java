@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm;
 
 import no.ntnu.iie.stud.cateringstorm.database.Database;
+import no.ntnu.iie.stud.cateringstorm.gui.LoginView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,16 +11,7 @@ import java.sql.SQLException;
 public class Main {
 
     public static void main(String[] args) {
-        try (Connection connection = Database.getConnection()) {
-            try(PreparedStatement statement = connection.prepareStatement("SELECT forename FROM employee")) {
-                try(ResultSet resultSet = statement.executeQuery()) {
-                    while(resultSet.next()) {
-                        System.out.println(resultSet.getString("forename"));
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        LoginView loginVIew = new LoginView();
+        loginVIew.setVisible(true);
     }
 }

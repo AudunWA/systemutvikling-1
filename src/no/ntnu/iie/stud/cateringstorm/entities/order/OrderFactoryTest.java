@@ -55,7 +55,7 @@ public class OrderFactoryTest {
         ArrayList<Integer> tall = new ArrayList<>();
         tall.add(1);
         tall.add(2);
-        tall.add(6);
+        tall.add(3);
 
         OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, tall);
 

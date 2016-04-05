@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact name="systemutvikling-1:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/systemutvikling_1_jar</output-path>
+    <root id="root">
+      <element id="archive" name="systemutvikling-1.jar">
+        <element id="module-output" name="systemutvikling-1" />
+      </element>
+      <element id="library" level="module" name="JUnit4" module-name="systemutvikling-1" />
+      <element id="library" level="project" name="commons-codec:commons-codec:1.10" />
+      <element id="library" level="project" name="mysql:mysql-connector-java:5.1.38" />
+      <element id="library" level="project" name="org.jdatepicker:jdatepicker:1.3.4" />
+    </root>
+  </artifact>
+</component>
