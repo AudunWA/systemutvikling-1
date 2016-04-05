@@ -32,7 +32,7 @@ public class DishInfoView extends JFrame{
             addRow();
         });
         saveButton.addActionListener(e->{
-            // TODO: Impement method saveChanges() that will send table into database
+            // TODO: Impement method saveChanges() that will send table into database, and remove rows marked as deleted.
             saveChanges();
         });
         editRowButton.addActionListener(e->{

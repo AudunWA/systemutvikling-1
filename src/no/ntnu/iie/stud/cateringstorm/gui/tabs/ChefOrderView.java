@@ -24,6 +24,7 @@ public class ChefOrderView extends JPanel {
     private JButton editButton;
     private JComboBox statusBox;
     private JPanel cbPanel;
+    private JButton refreshButton;
     private ChefOrderTableModel tableModel;
     private ArrayList<Order> orderList = new ArrayList<>();
     private String[] columnNames = {
@@ -36,6 +37,9 @@ public class ChefOrderView extends JPanel {
         });
         statusBox.addActionListener(e -> {
             setStatus();
+        });
+        refreshButton.addActionListener(e->{
+            // TODO: Implement a method updating table for new orders, and removing changed orders from table.
         });
     }
     //Custom initialization of UI components
@@ -59,7 +63,7 @@ public class ChefOrderView extends JPanel {
             statusBox = new JComboBox(status);
             statusBox.setSelectedIndex(0);
     }
-    // FIXME: Trouble with wrongly selected indexes. Might be wrong logic i back-end
+    // FIXME: Trouble with wrongly selected indexes. Might be wrong logic i back-end?
     private void setStatus(){
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();

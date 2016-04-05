@@ -18,7 +18,7 @@ public class ChauffeurOrderView extends JPanel {
     private JPanel mainPanel;
     private JScrollPane orderPane;
     private JTable orderTable;
-    private JButton homeButton;
+    private JButton refreshButton;
     private JComboBox statusBox;
     private JPanel ComboBoxPanel;
     private JPanel ButtonPanel;
@@ -31,8 +31,8 @@ public class ChauffeurOrderView extends JPanel {
     public ChauffeurOrderView() {
 
         add(mainPanel);
-        homeButton.addActionListener(e-> {
-            //Change window
+        refreshButton.addActionListener(e-> {
+            // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
         });
 
         statusBox.addActionListener(e -> {

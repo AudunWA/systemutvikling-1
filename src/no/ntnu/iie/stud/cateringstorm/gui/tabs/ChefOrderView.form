@@ -33,6 +33,12 @@
                   <text value="Edit"/>
                 </properties>
               </component>
+              <component id="88f35" class="javax.swing.JButton" binding="refreshButton">
+                <constraints/>
+                <properties>
+                  <text value="Refresh"/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>
