@@ -26,10 +26,10 @@ public class SalespersonOrderView extends JPanel {
     private JButton addCustomerButton;
     private JButton editCustomerButton;
     private JPanel buttonPanel;
-    private JScrollPane scrollPane;
     private JComboBox statusBox;
     private JTable orderTable;
     private JButton refreshButton;
+    private JScrollPane scrollPane;
 
     private static ArrayList<Order> orderList = new ArrayList<Order>();
 
