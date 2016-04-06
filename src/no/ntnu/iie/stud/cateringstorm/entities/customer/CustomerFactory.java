@@ -28,8 +28,10 @@ public final class CustomerFactory {
         String address = result.getString("address");
         Boolean active = result.getBoolean("active");
         int area_id = result.getInt("area_id");
+        String phone = result.getString("phone");
+        String email = result.getString("email");
 
-        return new Customer(customer_id, surname, forename, address, active, area_id);
+        return new Customer(customer_id, surname, forename, address, active, area_id,phone,email);
 
     }
 

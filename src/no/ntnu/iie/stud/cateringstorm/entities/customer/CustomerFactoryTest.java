@@ -29,7 +29,7 @@ public class CustomerFactoryTest {
     @Test
     public void testCreateCustomer() throws Exception {
 
-        Customer knut = new Customer(0, "Kirkhorn", "Knut",  "Hornindal", true, 2);
+        Customer knut = new Customer(0, "Kirkhorn", "Knut",  "Hornindal", true, 2, "999999","noot@hotmail.com");
 
         CustomerFactory.createCustomer(knut);
 
