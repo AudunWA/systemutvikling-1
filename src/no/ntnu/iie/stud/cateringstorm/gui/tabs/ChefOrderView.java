@@ -7,6 +7,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -17,6 +18,7 @@ public class ChefOrderView extends JPanel {
     private static final String WINDOW_TITLE = "Active orders";
 
     private JPanel mainPanel;
+    private JScrollPane scrollPane;
     private JScrollPane orderPane;
     private JTable orderTable;
     private JPanel buttonPanel;
@@ -45,16 +47,22 @@ public class ChefOrderView extends JPanel {
     private void createUIComponents() {
         createTable();
         createComboBox();
+        setScrollPane();
     }
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
 
-        final Integer[] columns = new Integer[] { OrderTableModel.COLUMN_STATUS_ID, OrderTableModel.COLUMN_DESCRIPTION};
+        Integer[] columns = new Integer[] { OrderTableModel.COLUMN_STATUS_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_STATUS_TEXT};
         OrderTableModel tableModel = new OrderTableModel(orderList,columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
         orderTable.setFillsViewportHeight(true);
+    }
+
+    private void setScrollPane(){
+        scrollPane = new JScrollPane(orderTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setPreferredSize(new Dimension(1000,500));
     }
 
 
@@ -82,8 +90,8 @@ public class ChefOrderView extends JPanel {
         //  TODO: Implement a method updating table for new orders, and removing changed orders from table.
     }
     public static void main(String[] args){
-        final int WIDTH = 700;
-        final int HEIGHT = 700;
+        final int WIDTH = 1300;
+        final int HEIGHT = 600;
         JFrame frame = new JFrame();
         frame.add(new ChefOrderView());
         frame.setVisible(true);
