@@ -3,6 +3,14 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 /*import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;*/
+import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditDishDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
+
 import javax.swing.*;
 
 import java.util.ArrayList;
@@ -23,14 +31,12 @@ public class MenuAdministratorView extends JPanel {
     private JButton addDishButton;
     private JButton editDishButton;
     private JButton removeDishButton;
-    //Use DishTableModel
     private JTable dishTable;
     private JPanel mainPanel;
     private JButton exitButton;
     private JScrollPane dishPane;
-    //private DishTableModel tableModel;
-    private String[] columnNames = new String[6];
-    private static ArrayList<Object> dishList = new ArrayList<Object>();
+
+    private DishTableModel tableModel;
 
     public MenuAdministratorView() {
         add(mainPanel);
@@ -38,7 +44,18 @@ public class MenuAdministratorView extends JPanel {
             //Change window to dishinfo
         });
         editDishButton.addActionListener(e -> {
-            //setDish();
+            int selectedRow = dishTable.getSelectedRow();
+            if(selectedRow == -1) {
+                return;
+            }
+
+            Dish dish = tableModel.getValue(selectedRow);
+
+            EditDishDialog dialog = new EditDishDialog(dish);
+            dialog.pack();
+            dialog.setVisible(true);
+
+            // TODO: Update table, see StorageView
         });
 
         dishTable.getSelectionModel().addListSelectionListener(e -> {
@@ -51,12 +68,11 @@ public class MenuAdministratorView extends JPanel {
         createTable();
     }
     private void createTable(){
-       // dishList = DishFactory.getAllDishes();
-
-        //tableModel = new DishTableModel(dishList,columnNames);
-        //dishTable = new JTable(tableModel);
-        //dishPane = new JScrollPane(dishTable);
-        //dishTable.setFillsViewportHeight(true);
+        ArrayList<Dish> dishList = DishFactory.getAllDishes();
+        Integer[] columns = new Integer[] { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION }; // Columns can be changed
+        tableModel = new DishTableModel(dishList, columns);
+        dishTable = new JTable(tableModel);
+        dishTable.setFillsViewportHeight(true);
     }
 
     public static void main(String[] args){

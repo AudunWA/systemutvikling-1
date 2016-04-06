@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
+import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class OrderTableModel extends EntityTableModel<Order> {
     public static final int COLUMN_STATUS_ID = 9;
     public static final int COLUMN_CHAUFFEUR_ID = 10;
     public static final int COLUMN_STATUS_TEXT = 11;
+    public static final int COLUMN_ADDRESS = 12;
 
     public OrderTableModel(ArrayList<Order> rows) {
         super(rows);
@@ -30,6 +32,7 @@ public class OrderTableModel extends EntityTableModel<Order> {
     public OrderTableModel(ArrayList<Order> rows, Integer[] columns) {
         super(rows, columns);
     }
+
 
     @Override
     public String getColumnName(int column) {
@@ -59,6 +62,8 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 return "Chauffeur ID";
             case COLUMN_STATUS_TEXT:
                 return "Status";
+            case COLUMN_ADDRESS:
+                return "Address";
             default:
                 throw new IndexOutOfBoundsException("columnIndex " + column + " not defined.");
         }
@@ -94,6 +99,8 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 return value.getChauffeurId();
             case COLUMN_STATUS_TEXT:
                 return value.deliveryStatus();
+            case COLUMN_ADDRESS:
+                return value.getCustomerAddress();
             default:
                 throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
         }
@@ -158,8 +165,10 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 return int.class;
             case COLUMN_STATUS_TEXT:
                 return String.class;
+            case COLUMN_ADDRESS:
+                return String.class;
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
+                throw new IndexOutOfBoundsException("columnIndex " + columnType + " not defined.");
         }
     }
     public void addOrder(Order order){
