@@ -64,7 +64,7 @@ public class DishInfoView extends JFrame{
         return false;
     }
     private boolean saveChanges(){
-        // TODO: Impement method saveChanges() that will send table into database, and remove rows marked as deleted.
+        // TODO: Implement method saveChanges() that will send table into database, and remove rows marked as deleted.
         return false;
     }
     private void editRow(){
