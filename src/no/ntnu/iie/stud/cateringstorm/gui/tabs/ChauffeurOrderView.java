@@ -72,7 +72,7 @@ public class ChauffeurOrderView extends JPanel {
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
         int statusColumn= 5;
-        boolean delivered = choice > 0;
+        boolean delivered = choice < 1;
         int arrLength = tableModel.getRowCount()-1;
         if(selectedRow > -1) {
             orderTable.clearSelection();
