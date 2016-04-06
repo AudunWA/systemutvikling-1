@@ -97,7 +97,26 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
         }
     }
-
+    @Override
+    public void setValueAt(Object value, int row, int column){
+        Order entity = getValue(row);
+        int columnType = getColumnType(column);
+        String status0 =
+        switch (columnType){
+            case COLUMN_DESCRIPTION:
+            case COLUMN_DELIVERY_TIME:
+            case COLUMN_ORDER_TIME:
+            case COLUMN_PORTIONS:
+            case COLUMN_PRIORITY:
+            case COLUMN_SALESPERSON_ID:
+            case COLUMN_CUSTOMER_ID:
+            case COLUMN_RECURRING_ORDER_ID:
+            case COLUMN_STATUS_ID:
+                if(value.equals())
+                entity.setStatus();
+            case COLUMN_CHAUFFEUR_ID:
+        }
+    }
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         int columnType = getColumnType(columnIndex);
