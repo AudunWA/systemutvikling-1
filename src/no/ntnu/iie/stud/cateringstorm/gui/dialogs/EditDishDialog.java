@@ -24,7 +24,7 @@ public class EditDishDialog extends JDialog {
 
 
     public EditDishDialog(Dish dish) {
-
+        this.dish = dish;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -90,7 +90,7 @@ public class EditDishDialog extends JDialog {
         boolean active = editStatus.getSelectedIndex()<1;
 
 
-        Dish dish = new Dish(placeholder ,name, description, type, active);
+        Dish dish = null; //= new Dish(placeholder ,name, description, type, active);
 
 
 
@@ -110,7 +110,7 @@ public class EditDishDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        EditDishDialog dialog = new EditDishDialog();
+        EditDishDialog dialog = new EditDishDialog(null);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
