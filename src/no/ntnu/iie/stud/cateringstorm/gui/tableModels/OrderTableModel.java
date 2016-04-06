@@ -97,25 +97,44 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
         }
     }
+    /* if (getStatus() == 0){
+            return "Ready for delivery";
+        } else if (getStatus() == 1){
+            return "In production";
+        } else if (getStatus() == 2) {
+            return "Delivered";
+        } else {
+            return "Removed";*/
     @Override
     public void setValueAt(Object value, int row, int column){
         Order entity = getValue(row);
         int columnType = getColumnType(column);
-        String status0 =
+        String status0 = "Ready for delivery", status1 = "In production", status2 = "Delivered", statusNeg1 = "Removed";
+
         switch (columnType){
-            case COLUMN_DESCRIPTION:
-            case COLUMN_DELIVERY_TIME:
-            case COLUMN_ORDER_TIME:
-            case COLUMN_PORTIONS:
-            case COLUMN_PRIORITY:
-            case COLUMN_SALESPERSON_ID:
-            case COLUMN_CUSTOMER_ID:
-            case COLUMN_RECURRING_ORDER_ID:
+            case COLUMN_DESCRIPTION:break;
+            case COLUMN_DELIVERY_TIME:break;
+            case COLUMN_ORDER_TIME:break;
+            case COLUMN_PORTIONS:break;
+            case COLUMN_PRIORITY:break;
+            case COLUMN_SALESPERSON_ID:break;
+            case COLUMN_CUSTOMER_ID:break;
+            case COLUMN_RECURRING_ORDER_ID:break;
             case COLUMN_STATUS_ID:
-                if(value.equals())
-                entity.setStatus();
-            case COLUMN_CHAUFFEUR_ID:
+                if(value.equals(status0)) {
+                    entity.setStatus(0);
+                }else if(value.equals(status1)){
+                    entity.setStatus(1);
+                }else if(value.equals(status2)){
+                    entity.setStatus(2);
+                }else{
+                    entity.setStatus(-1);
+                }
+                break;
+            case COLUMN_CHAUFFEUR_ID:break;
         }
+        fireTableCellUpdated(row,column);
+
     }
     @Override
     public Class<?> getColumnClass(int columnIndex) {
