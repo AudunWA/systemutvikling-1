@@ -2,6 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.gui;
 
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
@@ -85,7 +86,7 @@ public class SalespersonOrderView extends JPanel {
     }
 
     private void refresh() {
-        createTable();
+        ((EntityTableModel)orderTable.getModel()).setRows(OrderFactory.getAllOrders());
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
     }
 
