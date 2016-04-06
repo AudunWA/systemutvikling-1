@@ -47,4 +47,17 @@ public class IngredientFactoryTest {
         }
 
     }
+
+    @Test
+    public void testUpdateIngredientAmount() throws Exception {
+        Ingredient ingredient = IngredientFactory.viewSingleIngredient(1); // Let's say ingredient 1 exists
+        Assert.assertNotNull(ingredient);
+        ingredient.incrementAmount();
+        double incrementedAmunt = ingredient.getAmount();
+        IngredientFactory.updateIngredientAmount(ingredient.getIngredientId(), incrementedAmunt);
+
+        ingredient = IngredientFactory.viewSingleIngredient(ingredient.getIngredientId());
+        Assert.assertNotNull(ingredient);
+        Assert.assertEquals(ingredient.getAmount(), incrementedAmunt, 1e-9);
+    }
 }

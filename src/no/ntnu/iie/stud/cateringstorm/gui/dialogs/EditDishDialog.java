@@ -2,23 +2,29 @@ package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
+import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
-public class AddDishDialog extends JDialog {
+public class EditDishDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTextField dishName;
-    private JTextField dishDescription;
-    private JComboBox activeStatus;
-    private JComboBox dishType;
-    private JLabel dishNameLabel;
-    private JLabel dishDescriptionLabel;
+    private JTextField editDescription;
+    private JTextField editName;
+    private JComboBox editType;
+    private JComboBox editStatus;
+    private JLabel editNameLabel;
+    private JLabel editDescriptionLabel;
+    private Dish dish;
 
 
-    public AddDishDialog() {
+    public EditDishDialog(Dish dish) {
+
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -50,41 +56,43 @@ public class AddDishDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+
     private void createComboBoxType(){
         Object[] status = {"Appetizer?","Main?","Desert?"};
 
-        dishType = new JComboBox(status);
-        dishType.setSelectedIndex(0);
+        editType = new JComboBox(status);
+        editType.setSelectedIndex(0);
     }
 
     private void createComboBoxActiveStatus(){
         Object[] status = {"Active","Not active"};
 
-        activeStatus = new JComboBox(status);
-        activeStatus.setSelectedIndex(0);
+        editStatus = new JComboBox(status);
+        editStatus.setSelectedIndex(0);
     }
 
     private void onOK() {
-        String name = dishName.getText();
+
+        String name = editName.getText();
         if (name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in a name.");
             return;
         }
 
-        String description = dishDescription.getText();
+        String description = editDescription.getText();
         if (description.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in a description.");
             return;
         }
 
-        int type = dishType.getSelectedIndex() + 1;
+        int type = editType.getSelectedIndex() + 1;
 
-        boolean active = activeStatus.getSelectedIndex()<1;
+        boolean active = editStatus.getSelectedIndex()<1;
 
 
-        Dish dish = new Dish(-1, name, description, type, active);
+        Dish dish = new Dish(placeholder ,name, description, type, active);
 
-        dish = DishFactory.createDish(dish);
+
 
         if (dish == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
@@ -92,6 +100,7 @@ public class AddDishDialog extends JDialog {
             // Debug code
             JOptionPane.showMessageDialog(this, dish);
         }
+
         dispose();
     }
 
@@ -101,17 +110,14 @@ public class AddDishDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        final int WIDTH = 700;
-        final int HEIGHT = 600;
-        AddDishDialog dialog = new AddDishDialog();
-        dialog.setSize(WIDTH, HEIGHT);
+        EditDishDialog dialog = new EditDishDialog();
+        dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
-
     }
 
     private void createUIComponents() {
-        // TODO: Custom initialization of UI components here
+        // TODO: place custom component creation code here
         createComboBoxType();
         createComboBoxActiveStatus();
     }

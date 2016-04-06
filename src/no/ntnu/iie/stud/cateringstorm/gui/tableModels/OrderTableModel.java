@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
+ * Table model for order entities
  * Created by Audun on 06.04.2016.
  */
 public class OrderTableModel extends EntityTableModel<Order> {
