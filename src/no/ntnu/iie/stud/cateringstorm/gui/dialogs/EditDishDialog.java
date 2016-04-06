@@ -11,6 +11,8 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class EditDishDialog extends JDialog {
+    private boolean addedNewValue;
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -89,9 +91,15 @@ public class EditDishDialog extends JDialog {
 
         boolean active = editStatus.getSelectedIndex()<1;
 
+        dish.setName(name);
+        dish.setDescription(description);
+        dish.setDishType(type);
+        dish.setActive(active);
 
-        Dish dish = null; //= new Dish(placeholder ,name, description, type, active);
-
+        DishFactory.updateDish(dish);
+        if (DishFactory.updateDish(dish) != 1) {
+            JOptionPane.showMessageDialog(this, "Dish wasn't update, please try again later!");
+        }
 
 
         if (dish == null) {
@@ -99,6 +107,7 @@ public class EditDishDialog extends JDialog {
         } else {
             // Debug code
             JOptionPane.showMessageDialog(this, dish);
+            addedNewValue = true;
         }
 
         dispose();
@@ -120,5 +129,9 @@ public class EditDishDialog extends JDialog {
         // TODO: place custom component creation code here
         createComboBoxType();
         createComboBoxActiveStatus();
+    }
+
+    public boolean getAddedNewValue() {
+        return addedNewValue;
     }
 }
