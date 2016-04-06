@@ -77,13 +77,13 @@
               <text value="Skriv en beskrivelse på retten..."/>
             </properties>
           </component>
-          <component id="2b73" class="javax.swing.JComboBox" binding="activeStatus">
+          <component id="2b73" class="javax.swing.JComboBox" binding="activeStatus" custom-create="true">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
           </component>
-          <component id="e95c4" class="javax.swing.JComboBox" binding="dishType">
+          <component id="e95c4" class="javax.swing.JComboBox" binding="dishType" custom-create="true">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
