@@ -1,4 +1,4 @@
-package no.ntnu.iie.stud.cateringstorm.gui.tableModels;
+package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 

@@ -1,12 +1,11 @@
-package no.ntnu.iie.stud.cateringstorm.gui.backend;
+package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
-import no.ntnu.iie.stud.cateringstorm.gui.backend.EntityTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.StringJoiner;
 
 /**
  * Table model for ingredient entities
@@ -32,7 +31,8 @@ public class IngredientTableModel extends EntityTableModel<Ingredient> {
 
     @Override
     public String getColumnName(int column) {
-        switch (column) {
+        int columnType = getColumnType(column);
+        switch (columnType) {
             case COLUMN_ID:
                 return "ID";
             case COLUMN_NAME:
@@ -83,7 +83,8 @@ public class IngredientTableModel extends EntityTableModel<Ingredient> {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
+        int columnType = getColumnType(columnIndex);
+        switch (columnType) {
             case COLUMN_ID:
                 return int.class;
             case COLUMN_NAME:

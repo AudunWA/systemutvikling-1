@@ -1,4 +1,4 @@
-package no.ntnu.iie.stud.cateringstorm.gui.tableModels;
+package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * Created by EliasBrattli on 30/03/2016.
  */
 //int orderId, int employeeId, int customerId, int recurringOrderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, boolean delivered
-public class ChefOrderTableModel extends EntityTableModel<Order> {
+public class ChefOrderTableModel extends EntityTableModel<Order> { // TODO: Fix
 
     public ChefOrderTableModel(){entityList = new ArrayList<Order>();}
 
