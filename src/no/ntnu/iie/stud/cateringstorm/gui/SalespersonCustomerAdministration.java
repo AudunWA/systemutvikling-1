@@ -1,6 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.gui;
 
-import no.ntnu.iie.stud.cateringstorm.gui.tableModels.ChefOrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 
@@ -52,8 +52,8 @@ public class SalespersonCustomerAdministration extends JPanel{
     }
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
-        
-        tableModel = new no.ntnu.iie.stud.cateringstorm.gui.tablemodels.ChefOrderTableModel(orderList,columnNames);
+
+        tablemodel = new no.ntnu.iie.stud.cateringstorm.gui.tablemodels.ChefOrderTableModel(orderList,columnNames);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
