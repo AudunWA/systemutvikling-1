@@ -85,7 +85,7 @@ public class SalespersonOrderView extends JPanel {
     }
 
     private void refresh() {
-        orderList = OrderFactory.getAllOrders();
+        createTable();
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
     }
 
