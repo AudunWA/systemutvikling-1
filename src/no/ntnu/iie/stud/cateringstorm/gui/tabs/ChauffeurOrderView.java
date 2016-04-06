@@ -66,7 +66,6 @@ public class ChauffeurOrderView extends JPanel {
         statusBox = new JComboBox(status);
         statusBox.setSelectedIndex(0);
     }
-    // FIXME: Check trouble with wrongly selected indexes in combobox
     private void setStatus(){
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
