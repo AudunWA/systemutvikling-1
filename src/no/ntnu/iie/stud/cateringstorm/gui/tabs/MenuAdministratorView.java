@@ -6,6 +6,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;*/
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditDishDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
@@ -40,9 +41,7 @@ public class MenuAdministratorView extends JPanel {
 
     public MenuAdministratorView() {
         add(mainPanel);
-        exitButton.addActionListener(e-> {
-            //Change window to dishinfo
-        });
+
         editDishButton.addActionListener(e -> {
             int selectedRow = dishTable.getSelectedRow();
             if(selectedRow == -1) {
@@ -55,7 +54,23 @@ public class MenuAdministratorView extends JPanel {
             dialog.pack();
             dialog.setVisible(true);
 
+            if(dialog.getAddedNewValue()) {
+                // Refresh data
+                refreshTable();
+            }
+
             // TODO: Update table, see StorageView
+        });
+
+        removeDishButton.addActionListener(e -> {
+            int selectedRow = dishTable.getSelectedRow();
+            if(selectedRow == -1) {
+                return;
+            }
+
+            tableModel.removeRow(selectedRow);
+            
+
         });
 
         dishTable.getSelectionModel().addListSelectionListener(e -> {
@@ -85,6 +100,9 @@ public class MenuAdministratorView extends JPanel {
         frame.setTitle(WINDOW_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
+    }
+    private void refreshTable() {
+        ((EntityTableModel)dishTable.getModel()).setRows(DishFactory.getAllDishes());
     }
 }
 

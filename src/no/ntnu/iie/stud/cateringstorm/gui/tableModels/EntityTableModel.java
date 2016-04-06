@@ -35,6 +35,11 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    /**
+     Replaces a row in the table, then refreshes the GUI.
+     * @param rowIndex Which row index to replace
+     * @param value The new value
+     */
     public void setRow(int rowIndex, T value) {
         if(rowIndex < 0 || rowIndex >= rows.size()) {
             throw new ArrayIndexOutOfBoundsException();
@@ -42,6 +47,19 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
 
         rows.set(rowIndex, value);
         fireTableRowsUpdated(rowIndex, rowIndex);
+    }
+
+    /**
+     Removes a row from the table, then refreshes the GUI.
+     * @param rowIndex Which row index to remove
+     */
+    public void removeRow(int rowIndex) {
+        if(rowIndex < 0 || rowIndex >= rows.size()) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+
+        rows.remove(rowIndex);
+        fireTableRowsDeleted(rowIndex, rowIndex);
     }
 
     @Override

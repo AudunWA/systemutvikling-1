@@ -52,16 +52,17 @@ public class Dish {
 
     public void setName(String newName){
         this.name = newName;
-        DishFactory.editDishName(dishId, newName);
+    }
+
+    public void setDishType(int dishType) {
+        this.dishType = dishType;
     }
 
     public void setDescription(String newDescription){
         this.description = newDescription;
-        DishFactory.editDishDescription(dishId, newDescription);
     }
 
     public void setActive(Boolean newActive){
         this.active = newActive;
-        DishFactory.editDish(dishId, active);
     }
 }
