@@ -115,8 +115,10 @@ public class Order {
             return "Ready for delivery";
         } else if (getStatus() == 1){
             return "In production";
-        } else {
+        } else if (getStatus() == 2) {
             return "Delivered";
+        } else {
+            return "Removed";
         }
     }
 
