@@ -49,7 +49,7 @@ public class ChefOrderView extends JPanel {
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
 
-        final Integer[] columns = new Integer[] { OrderTableModel.COLUMN_STATUS, OrderTableModel.COLUMN_DESCRIPTION};
+        final Integer[] columns = new Integer[] { OrderTableModel.COLUMN_STATUS_ID, OrderTableModel.COLUMN_DESCRIPTION};
         OrderTableModel tableModel = new OrderTableModel(orderList,columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);

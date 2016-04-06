@@ -27,20 +27,16 @@ public class DishInfoView extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setContentPane(mainPanel);
         addRowButton.addActionListener(e-> {
-            // TODO: Implement method addRow() that will open an empty table row, disabling save button until details are filled in
             //Consider using components
             addRow();
         });
         saveButton.addActionListener(e->{
-            // TODO: Impement method saveChanges() that will send table into database, and remove rows marked as deleted.
             saveChanges();
         });
         editRowButton.addActionListener(e->{
-            // TODO: Implement method editRow() that will control the data input in the editable table cells
             editRow();
         });
         removeRowButton.addActionListener(e->{
-            // TODO: Implement method removeRow() that will "remove" data from the view table. Data will still exist in database,
             removeRow();
         });
     }
@@ -64,15 +60,18 @@ public class DishInfoView extends JFrame{
     }
 
     private boolean addRow(){
+        // TODO: Implement method addRow() that will open an empty table row, disabling save button until details are filled in
         return false;
     }
     private boolean saveChanges(){
+        // TODO: Impement method saveChanges() that will send table into database, and remove rows marked as deleted.
         return false;
     }
     private void editRow(){
-
+        // TODO: Implement method editRow() that will control the data input in the editable table cells
     }
     private boolean removeRow(){
+        // TODO: Implement method removeRow() that will "remove" data from the view table. Data will still exist in database,
         return false;
     }
     public static void main(String[]args){

@@ -177,6 +177,27 @@ public final class DishFactory {
             e.printStackTrace();
             return null;
         }
+    }
 
+    /**
+     Runs an UPDATE-query of a dish, with all its columns.
+     * @param dish The dish to update
+     * @return An integer representing affected rows
+     */
+    public static int updateDish(Dish dish) {
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE dish SET dish_type_id = ?, name = ?, description = ?, active = ? WHERE dish_id = ?")) {
+                statement.setInt(1, dish.getDishType());
+                statement.setString(2, dish.getName());
+                statement.setString(3, dish.getDescription());
+                statement.setBoolean(4, dish.isActive());
+                statement.setInt(5, dish.getDishId());
+
+                return statement.executeUpdate();
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
