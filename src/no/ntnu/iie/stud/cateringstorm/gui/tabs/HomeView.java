@@ -14,10 +14,23 @@ public class HomeView extends JPanel {
 
     private JPanel mainPanel;
     private JLabel welcomeLabel;
+    private JPanel image;
 
     public HomeView(Employee employee) {
         this.employee = employee;
         add(mainPanel);
         welcomeLabel.setText(welcomeLabel.getText().replace("%name%", employee.getForename()));
+    }
+
+    private void createImage(){
+
+        image = new JPanel(true);
+        image.add(new JLabel(new ImageIcon("CSChefTekst.png")));
+
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        createImage();
     }
 }
