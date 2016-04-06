@@ -25,7 +25,7 @@ public class ChefOrderView extends JPanel {
     private JComboBox statusBox;
     private JPanel cbPanel;
     private JButton refreshButton;
-    //private ChefOrderTableModel tableModel;
+    private ChefOrderTableModel tableModel;
     private ArrayList<Order> orderList = new ArrayList<>();
     private String[] columnNames = {
             "OrderId","Description","Portions","Delivery time","Priority","Status"
@@ -50,7 +50,7 @@ public class ChefOrderView extends JPanel {
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
 
-        //tableModel = new ChefOrderTableModel(orderList,columnNames);
+        tableModel = new ChefOrderTableModel(orderList,columnNames);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
