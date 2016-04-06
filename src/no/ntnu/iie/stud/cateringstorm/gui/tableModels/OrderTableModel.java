@@ -33,6 +33,9 @@ public class OrderTableModel extends EntityTableModel<Order> {
         super(rows, columns);
     }
 
+    public String getCustomerAddressModel(int row){
+        return OrderFactory.getCustomerAddress(row);
+    }
 
     @Override
     public String getColumnName(int column) {
@@ -100,7 +103,7 @@ public class OrderTableModel extends EntityTableModel<Order> {
             case COLUMN_STATUS_TEXT:
                 return value.deliveryStatus();
             case COLUMN_ADDRESS:
-                return value.getCustomerAddress();
+                return getCustomerAddressModel(rowIndex);
             default:
                 throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
         }
@@ -110,8 +113,8 @@ public class OrderTableModel extends EntityTableModel<Order> {
     public void setValueAt(Object value, int row, int column){
         Order entity = getValue(row);
         int columnType = getColumnType(column);
-        String status0 = "Ready for delivery", status1 = "In production", status2 = "Delivered", statusNeg1 = "Removed";
-
+        String status0 = "Ready for delivery", status1 = "Activate", status2 = "Delivered", statusNeg1 = "Remove";
+        System.out.println(columnType);
         switch (columnType){
             case COLUMN_DESCRIPTION:break;
             case COLUMN_DELIVERY_TIME:break;
@@ -121,7 +124,8 @@ public class OrderTableModel extends EntityTableModel<Order> {
             case COLUMN_SALESPERSON_ID:break;
             case COLUMN_CUSTOMER_ID:break;
             case COLUMN_RECURRING_ORDER_ID:break;
-            case COLUMN_STATUS_ID:
+            case COLUMN_STATUS_ID:break;
+            case COLUMN_STATUS_TEXT:
                 if(value.equals(status0)) {
                     entity.setStatus(0);
                 }else if(value.equals(status1)){
@@ -164,8 +168,6 @@ public class OrderTableModel extends EntityTableModel<Order> {
             case COLUMN_CHAUFFEUR_ID:
                 return int.class;
             case COLUMN_STATUS_TEXT:
-                return String.class;
-            case COLUMN_ADDRESS:
                 return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnIndex " + columnType + " not defined.");

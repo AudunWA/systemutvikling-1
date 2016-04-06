@@ -86,12 +86,12 @@ public class SalespersonOrderView extends JPanel {
     private void setStatus() {
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
-        int statusColumn = 8;
-        boolean delivered = choice < 1;
+        int statusColumn = 7;
+        boolean active = choice < 1;
         if (selectedRow > -1) {
             orderTable.clearSelection();
 
-            orderTable.getModel().setValueAt((delivered) ? "Active" : "Removed", selectedRow, statusColumn);
+            orderTable.getModel().setValueAt((active) ? "Activate" : "Removed", selectedRow, statusColumn);
         }
     }
 
