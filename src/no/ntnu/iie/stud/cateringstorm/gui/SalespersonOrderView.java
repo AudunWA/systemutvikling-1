@@ -55,7 +55,7 @@ public class SalespersonOrderView extends JPanel {
 
     private void createTable() {
         orderList = OrderFactory.getAllOrders();
-        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_STATUS, OrderTableModel.COLUMN_DESCRIPTION};
+        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_DESCRIPTION};
         OrderTableModel tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
@@ -85,7 +85,7 @@ public class SalespersonOrderView extends JPanel {
     }
 
     private void refresh() {
-        orderList = OrderFactory.getAllOrders();
+        createTable();
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
     }
 
