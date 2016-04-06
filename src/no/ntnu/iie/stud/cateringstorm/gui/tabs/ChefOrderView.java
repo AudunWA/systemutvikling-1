@@ -2,7 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 //import no.ntnu.iie.stud.cateringstorm.gui.tabs.ChauffeurOrderView;
 
-import no.ntnu.iie.stud.cateringstorm.gui.tableModels.ChefOrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.ChefOrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 
@@ -69,10 +69,10 @@ public class ChefOrderView extends JPanel {
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
         int statusColumn = 5;
-        boolean delivered = choice > 0;
+        boolean inProduction = choice > 0;
         if(selectedRow > -1) {
             orderTable.clearSelection();
-            tableModel.setValueAt((delivered) ? "Ready for delivery" : "In production", selectedRow, statusColumn);
+           // tableModel.setValueAt((inProduction) ? "Ready for delivery" : "In production", selectedRow, statusColumn);
         }
     }
     private void viewOrder(){

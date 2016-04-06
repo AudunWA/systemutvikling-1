@@ -2,7 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 /*import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tableModels.DishTableModel;*/
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;*/
 import javax.swing.*;
 
 import java.util.ArrayList;

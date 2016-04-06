@@ -1,86 +1,54 @@
-package no.ntnu.iie.stud.cateringstorm.gui.tableModels;
+package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
-import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 
 import javax.swing.table.AbstractTableModel;
-import java.security.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
- * Created by Chris on 04.04.2016.
+ * Abstract base class for our custom table models
+ * Created by Audun on 05.04.2016.
  */
-abstract class EntityTableModel<T> extends AbstractTableModel{
+public abstract class EntityTableModel<T> extends AbstractTableModel {
+    private ArrayList<T> rows;
+    private ArrayList<Integer> columns;
 
-    protected String[] columnNames;
-    protected List<T> entityList;
-
-    public EntityTableModel(){
-        entityList = new ArrayList<T>();}
-
-    public EntityTableModel(List<T> entityList, String[] columnNames){
-        this.entityList = entityList;
-        this.columnNames = columnNames;
+    public EntityTableModel(ArrayList<T> rows) {
+        this.rows = rows;
+        this.columns = new ArrayList<>();
     }
 
-    //Parent methods must be overridden as we use Abstract table model
-    @Override
-    public int getColumnCount(){
-        return columnNames.length;
-    }
-    @Override
-    public String getColumnName(int column){
-        return columnNames[column];
-    }
-    @Override
-    public int getRowCount(){
-        return entityList.size();
+    public EntityTableModel(ArrayList<T> rows, Integer[] columns) {
+        this.rows = rows;
+        this.columns = new ArrayList<>(Arrays.asList(columns));
     }
 
-    //Unique
-    @Override
-    public Class getColumnClass(int column){
-        switch (column){
-            case 0: return Integer.class;
-            case 1: return String.class;
-            case 2: return Integer.class;
-            case 3: return Timestamp.class;
-            case 4: return String.class;
-            case 5: return String.class;
-            default: return String.class;
-        }
-    }
-    //Unique -abstract
-    @Override
-    public boolean isCellEditable(int row, int column){
-        switch (column){
-            default: return false;
-        }
+    protected T getValue(int rowIndex) {
+        return rows.get(rowIndex);
     }
 
-    public T getEntity(int row) {
-        return entityList.get(row);
+    protected int getColumnType(int index) { return columns.get(index); }
+
+    public void setRows(ArrayList<T> rows) {
+        this.rows = rows;
+        fireTableDataChanged();
     }
 
     @Override
-    public abstract Object getValueAt(int row, int column);
+    public final int getRowCount() {
+        return rows.size();
+    }
 
-    //Unique
     @Override
-    public abstract void setValueAt(Object value, int row, int column);
-
-
-    public void addEntity(T entity){
-        insertEntity(getRowCount(), entity);
+    public final int getColumnCount() {
+        return columns.size();
     }
 
-    public void insertEntity(int row, T entity){
-        entityList.add(row,entity);
-        fireTableRowsInserted(row,row);
-    }
-    public void removeEntity(int row){
-        entityList.remove(row);
-        fireTableRowsDeleted(row,row);
-    }
+    // Force some methods to be implemented
+    @Override
+    public abstract String getColumnName(int column);
 
+    @Override
+    public abstract Class<?> getColumnClass(int columnIndex);
 }

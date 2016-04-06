@@ -2,13 +2,11 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.backend.IngredientTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
-import no.ntnu.iie.stud.cateringstorm.gui.tableModels.ChauffeurOrderTableModel;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -30,6 +28,11 @@ public class StorageView extends JPanel {
             AddIngredientDialog dialog = new AddIngredientDialog();
             dialog.pack();
             dialog.setVisible(true);
+
+            if(dialog.getAddedNewValue()) {
+                // Refresh data
+                refreshTable();
+            }
         });
     }
 
@@ -52,5 +55,9 @@ public class StorageView extends JPanel {
         IngredientTableModel tableModel = new IngredientTableModel(ingredients, columns);
         ingredientTable = new JTable(tableModel);
         ingredientTable.getTableHeader().setReorderingAllowed(false);
+    }
+
+    private void refreshTable() {
+        ((EntityTableModel)ingredientTable.getModel()).setRows(IngredientFactory.viewAllIngredient());
     }
 }

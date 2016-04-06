@@ -1,6 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
-import no.ntnu.iie.stud.cateringstorm.gui.tableModels.ChauffeurOrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.ChauffeurOrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 
@@ -72,7 +72,7 @@ public class ChauffeurOrderView extends JPanel {
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
         int statusColumn= 5;
-        boolean delivered = choice > 0;
+        boolean delivered = choice < 1;
         int arrLength = tableModel.getRowCount()-1;
         if(selectedRow > -1) {
             orderTable.clearSelection();
