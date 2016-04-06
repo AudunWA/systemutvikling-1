@@ -34,6 +34,23 @@ public class StorageView extends JPanel {
                 refreshTable();
             }
         });
+
+        incrementSupply.addActionListener(e -> {
+            int selectedRow = ingredientTable.getSelectedRow();
+            if(selectedRow == -1) {
+                return;
+            }
+
+            Ingredient ingredient = ((EntityTableModel<Ingredient>)ingredientTable.getModel()).getValue(selectedRow);
+            ingredient.incrementAmount();
+            int affectedRows = IngredientFactory.updateIngredientAmount(ingredient.getIngredientId(), ingredient.getAmount());
+
+            if(affectedRows == 1) {
+                ((EntityTableModel<Ingredient>) ingredientTable.getModel()).setRow(selectedRow, ingredient);
+            } else {
+                // TODO: Log error?
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -50,7 +67,7 @@ public class StorageView extends JPanel {
 
     private void createTable(){
         ArrayList<Ingredient> ingredients = IngredientFactory.viewAllIngredient();
-        Integer[] columns = new Integer[] { IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_EXPIRE_DATE };
+        Integer[] columns = new Integer[] { IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_EXPIRE_DATE, IngredientTableModel.COLUMN_AMOUNT };
 
         IngredientTableModel tableModel = new IngredientTableModel(ingredients, columns);
         ingredientTable = new JTable(tableModel);

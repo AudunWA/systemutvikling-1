@@ -24,7 +24,7 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
         this.columns = new ArrayList<>(Arrays.asList(columns));
     }
 
-    protected T getValue(int rowIndex) {
+    public T getValue(int rowIndex) {
         return rows.get(rowIndex);
     }
 
@@ -33,6 +33,15 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
     public void setRows(ArrayList<T> rows) {
         this.rows = rows;
         fireTableDataChanged();
+    }
+
+    public void setRow(int rowIndex, T value) {
+        if(rowIndex < 0 || rowIndex >= rows.size()) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+
+        rows.set(rowIndex, value);
+        fireTableRowsUpdated(rowIndex, rowIndex);
     }
 
     @Override

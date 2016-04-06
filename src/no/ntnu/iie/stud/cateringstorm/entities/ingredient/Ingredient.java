@@ -40,6 +40,13 @@ public class Ingredient {
         return expireDate;
     }
 
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+    public void incrementAmount() {
+        this.amount++;
+    }
+
     public Ingredient(int ingredientId, Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount, String unit) {
         this.ingredientId = ingredientId;
         this.name = name;

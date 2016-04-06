@@ -183,5 +183,20 @@ public final class IngredientFactory {
         }
         return temp;
     }
+
+    public static int updateIngredientAmount(int ingredientId, double newAmount){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE ingredient SET amount = ? WHERE ingredient_id = ?")) {
+
+                statement.setDouble(1, newAmount);
+                statement.setInt(2, ingredientId);
+
+                return statement.executeUpdate();
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }
 
