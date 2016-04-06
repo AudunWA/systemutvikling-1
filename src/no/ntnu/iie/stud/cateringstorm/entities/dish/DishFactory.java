@@ -84,6 +84,33 @@ public final class DishFactory {
     }
 
     /**
+     * Creates an arraylist of the active dishes in the SQL table dish
+     * @return ArrayList<Dish>
+     */
+    public static ArrayList<Dish> getActiveDishes(){
+        ArrayList<Dish> dishes = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE active = TRUE")){
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()) {
+
+                        dishes.add(createDishFromResultSet(result));
+                    }
+
+                }
+                return dishes;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * takes a dish and inserts it into the SQL table dish
      * @param newDish
      * @return Dish
