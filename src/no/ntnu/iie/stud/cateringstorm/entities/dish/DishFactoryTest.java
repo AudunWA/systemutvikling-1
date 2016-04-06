@@ -51,4 +51,20 @@ public class DishFactoryTest {
         DishFactory.editDishName(1, "Test Dish");
 
     }
+
+    @Test
+    public void testUpdateDish() throws Exception {
+        final String newDescription = "Changed.";
+
+        Dish dish = DishFactory.createDish(new Dish(-1, "testUpdateDish", "Changeme", 1, true));
+        Assert.assertNotNull(dish);
+        dish.setDescription(newDescription);
+
+        int affectedRows = DishFactory.updateDish(dish);
+        Assert.assertEquals(affectedRows, 1);
+
+        dish = DishFactory.viewSingleDish(dish.getDishId());
+        Assert.assertNotNull(dish);
+        Assert.assertEquals(dish.getDescription(), newDescription);
+    }
 }
