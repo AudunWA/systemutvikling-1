@@ -93,7 +93,7 @@ public final class CustomerFactory {
     public static Customer createCustomer(Customer newCustomer){
 
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?)")){
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS)){
 
                 statement.setInt(1, newCustomer.getCustomerId());
                 statement.setString(2, newCustomer.getSurname());
@@ -101,9 +101,26 @@ public final class CustomerFactory {
                 statement.setString(4, newCustomer.getAddress());
                 statement.setBoolean(5, newCustomer.isActive());
                 statement.setInt(6, newCustomer.getAreaId());
+                statement.setString(7,newCustomer.getPhone());
+                statement.setString(8,newCustomer.getEmail());
 
-                statement.execute();
-                return newCustomer;
+                int affectedRows = statement.executeUpdate();
+                if (affectedRows == 0) {
+                    return null; // No rows inserted
+                }
+
+                int generatedId;
+                try (ResultSet result = statement.getGeneratedKeys()) {
+                    if (result.next()) {
+                        generatedId = result.getInt(1);
+                    } else {
+                        return null; // No ID?
+                    }
+                }
+
+                Customer customer = new Customer(generatedId, newCustomer.getForename(), newCustomer.getSurname(), newCustomer.getAddress(),newCustomer.isActive(),newCustomer.getAreaId(), newCustomer.getPhone(),newCustomer.getEmail());
+                //statement.execute();
+                return customer;
             }
         } catch (SQLException e){
             e.printStackTrace();
