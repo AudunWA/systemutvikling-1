@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="no.ntnu.iie.stud.cateringstorm.gui.SalespersonOrderView">
+  <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="b1370" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <vspacer id="576f5">
+            <constraints/>
+          </vspacer>
+          <component id="5e965" class="javax.swing.JButton" binding="addCustomerButton">
+            <constraints/>
+            <properties>
+              <text value="Add Order"/>
+            </properties>
+          </component>
+          <component id="35650" class="javax.swing.JButton" binding="editCustomerButton">
+            <constraints/>
+            <properties>
+              <text value="Edit Order"/>
+            </properties>
+          </component>
+          <component id="26847" class="javax.swing.JButton" binding="refreshButton">
+            <constraints/>
+            <properties>
+              <text value="Refresh"/>
+            </properties>
+          </component>
+          <component id="6a9bb" class="javax.swing.JComboBox" binding="statusBox" custom-create="true">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </grid>
+      <scrollpane id="5cf12">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="217ff" class="javax.swing.JTable" binding="orderTable" custom-create="true">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+    </children>
+  </grid>
+</form>

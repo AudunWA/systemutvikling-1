@@ -32,7 +32,7 @@ public final class OrderFactory {
     public static ArrayList<Order> getAllOrders() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order`")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE status != -1")) {
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {
