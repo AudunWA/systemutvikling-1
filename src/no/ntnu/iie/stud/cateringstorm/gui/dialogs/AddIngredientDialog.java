@@ -20,6 +20,8 @@ import java.util.Calendar;
 import java.util.Properties;
 
 public class AddIngredientDialog extends JDialog {
+    private boolean addedNewValue;
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -118,8 +120,10 @@ public class AddIngredientDialog extends JDialog {
         if (ingredient == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
         } else {
+            addedNewValue = true;
+
             // Debug code
-            JOptionPane.showMessageDialog(this, ingredient);
+            System.out.println(ingredient);
         }
         dispose();
     }
@@ -152,5 +156,9 @@ public class AddIngredientDialog extends JDialog {
         model = new UtilDateModel();
         datePanel = new JDatePanelImpl(model, p);
         expireDatePicker = new JDatePickerImpl(datePanel, new SimpleDateFormatter());
+    }
+
+    public boolean getAddedNewValue() {
+        return addedNewValue;
     }
 }

@@ -30,6 +30,11 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
 
     protected int getColumnType(int index) { return columns.get(index); }
 
+    public void setRows(ArrayList<T> rows) {
+        this.rows = rows;
+        fireTableDataChanged();
+    }
+
     @Override
     public final int getRowCount() {
         return rows.size();

@@ -32,7 +32,8 @@ public class IngredientTableModel extends EntityTableModel<Ingredient> {
 
     @Override
     public String getColumnName(int column) {
-        switch (column) {
+        int columnType = getColumnType(column);
+        switch (columnType) {
             case COLUMN_ID:
                 return "ID";
             case COLUMN_NAME:
@@ -83,7 +84,8 @@ public class IngredientTableModel extends EntityTableModel<Ingredient> {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
+        int columnType = getColumnType(columnIndex);
+        switch (columnType) {
             case COLUMN_ID:
                 return int.class;
             case COLUMN_NAME:
