@@ -24,7 +24,7 @@ public class EditDishDialog extends JDialog {
 
 
     public EditDishDialog(Dish dish) {
-
+        this.dish = dish;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);

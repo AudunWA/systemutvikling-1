@@ -5,7 +5,11 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;*/
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditDishDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
 import javax.swing.*;
 
@@ -40,7 +44,18 @@ public class MenuAdministratorView extends JPanel {
             //Change window to dishinfo
         });
         editDishButton.addActionListener(e -> {
-            //setDish();
+            int selectedRow = dishTable.getSelectedRow();
+            if(selectedRow == -1) {
+                return;
+            }
+
+            Dish dish = tableModel.getValue(selectedRow);
+
+            EditDishDialog dialog = new EditDishDialog(dish);
+            dialog.pack();
+            dialog.setVisible(true);
+
+            // TODO: Update table, see StorageView
         });
 
         dishTable.getSelectionModel().addListSelectionListener(e -> {
