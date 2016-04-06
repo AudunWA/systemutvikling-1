@@ -98,14 +98,7 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
         }
     }
-    /* if (getStatus() == 0){
-            return "Ready for delivery";
-        } else if (getStatus() == 1){
-            return "In production";
-        } else if (getStatus() == 2) {
-            return "Delivered";
-        } else {
-            return "Removed";*/
+
     @Override
     public void setValueAt(Object value, int row, int column){
         Order entity = getValue(row);
@@ -169,4 +162,8 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
         }
     }
+    public void addOrder(Order order){
+        setRow(getRowCount(),order);
+    }
+
 }
