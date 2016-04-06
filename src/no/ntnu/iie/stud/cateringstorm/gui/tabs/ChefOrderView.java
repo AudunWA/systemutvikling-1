@@ -2,9 +2,9 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 //import no.ntnu.iie.stud.cateringstorm.gui.tabs.ChauffeurOrderView;
 
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.ChefOrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -25,7 +25,6 @@ public class ChefOrderView extends JPanel {
     private JComboBox statusBox;
     private JPanel cbPanel;
     private JButton refreshButton;
-    private ChefOrderTableModel tableModel;
     private ArrayList<Order> orderList = new ArrayList<>();
     private String[] columnNames = {
             "OrderId","Description","Portions","Delivery time","Priority","Status"
@@ -50,7 +49,8 @@ public class ChefOrderView extends JPanel {
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
 
-        tableModel = new ChefOrderTableModel(orderList,columnNames);
+        final Integer[] columns = new Integer[] { OrderTableModel.COLUMN_STATUS, OrderTableModel.COLUMN_DESCRIPTION};
+        OrderTableModel tableModel = new OrderTableModel(orderList,columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);

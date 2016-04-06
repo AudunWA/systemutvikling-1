@@ -1,5 +1,8 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
+import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -11,6 +14,7 @@ public class AddDishDialog extends JDialog {
     private JTextField dishDescription;
     private JComboBox activeStatus;
     private JComboBox dishType;
+
 
     public AddDishDialog() {
         setContentPane(contentPane);
@@ -44,9 +48,48 @@ public class AddDishDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+    private void createComboBoxType(){
+        Object[] status = {"Appetizer?","Main?","Desert?"};
+
+        dishType = new JComboBox(status);
+        dishType.setSelectedIndex(0);
+    }
+
+    private void createComboBoxActiveStatus(){
+        Object[] status = {"Active","Not active"};
+
+        activeStatus = new JComboBox(status);
+        dishType.setSelectedIndex(0);
+    }
 
     private void onOK() {
-// add your code here
+        String name = dishName.getText();
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in a name.");
+            return;
+        }
+
+        String description = dishDescription.getText();
+        if (description.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in a description.");
+            return;
+        }
+
+        int type = dishType.getSelectedIndex() + 1;
+
+        boolean active = activeStatus.getSelectedIndex()<1;
+
+
+        Dish dish = new Dish(-1, name, description, type, active);
+
+        dish = DishFactory.createDish(dish);
+
+        if (dish == null) {
+            JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
+        } else {
+            // Debug code
+            JOptionPane.showMessageDialog(this, dish);
+        }
         dispose();
     }
 
@@ -56,9 +99,18 @@ public class AddDishDialog extends JDialog {
     }
 
     public static void main(String[] args) {
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
         AddDishDialog dialog = new AddDishDialog();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+
+    }
+
+    private void createUIComponents() {
+        // TODO: Custom initialization of UI components here
+        createComboBoxType();
+        createComboBoxActiveStatus();
     }
 }

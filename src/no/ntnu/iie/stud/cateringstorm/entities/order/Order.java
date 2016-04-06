@@ -51,6 +51,14 @@ public class Order {
         this.salespersonId = salespersonId;
     }
 
+    public int getSalespersonId() {
+        return salespersonId;
+    }
+
+    public int getChauffeurId() {
+        return chauffeurId;
+    }
+
     public int getOrderId() {
         return orderId;
     }

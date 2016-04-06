@@ -1,8 +1,8 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.ChauffeurOrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -24,7 +24,6 @@ public class ChauffeurOrderView extends JPanel {
     private JPanel ButtonPanel;
     private JTextField infoText;
     private ComboBoxModel cbModel;
-    private ChauffeurOrderTableModel tableModel;
     private static ArrayList<Order> orderList = new ArrayList<Order>();
     private String[] columnNames = {"OrderId","Customer","Portions","Delivery time","Location","Status"};
 
@@ -52,8 +51,8 @@ public class ChauffeurOrderView extends JPanel {
 
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
-
-        tableModel = new ChauffeurOrderTableModel(orderList,columnNames);
+        Integer[] columns = new Integer[] { OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_STATUS, OrderTableModel.COLUMN_DESCRIPTION};
+        OrderTableModel tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
@@ -73,11 +72,10 @@ public class ChauffeurOrderView extends JPanel {
         int selectedRow = orderTable.getSelectedRow();
         int statusColumn= 5;
         boolean delivered = choice < 1;
-        int arrLength = tableModel.getRowCount()-1;
         if(selectedRow > -1) {
             orderTable.clearSelection();
 
-            tableModel.setValueAt((delivered) ? "Delivered" : "Not delivered", selectedRow, statusColumn);
+            orderTable.getModel().setValueAt((delivered) ? "Delivered" : "Not delivered", selectedRow, statusColumn);
         }
     }
     private void refresh(){
