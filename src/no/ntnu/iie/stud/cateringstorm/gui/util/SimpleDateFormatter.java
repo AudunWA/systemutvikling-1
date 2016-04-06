@@ -1,4 +1,4 @@
-package no.ntnu.iie.stud.cateringstorm.gui.backend;
+package no.ntnu.iie.stud.cateringstorm.gui.util;
 
 import javax.swing.*;
 import java.text.ParseException;

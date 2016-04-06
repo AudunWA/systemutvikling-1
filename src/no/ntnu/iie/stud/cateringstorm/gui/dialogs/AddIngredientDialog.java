@@ -1,22 +1,16 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.backend.SimpleDateFormatter;
-import org.jdatepicker.JDateComponentFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.util.SimpleDateFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
-import org.jdatepicker.util.JDatePickerUtil;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Properties;
 
 public class AddIngredientDialog extends JDialog {
