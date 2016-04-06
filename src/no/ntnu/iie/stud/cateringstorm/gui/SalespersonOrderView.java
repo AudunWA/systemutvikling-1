@@ -6,6 +6,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -25,6 +26,7 @@ public class SalespersonOrderView extends JPanel {
     private JButton addCustomerButton;
     private JButton editCustomerButton;
     private JPanel buttonPanel;
+    private JScrollPane scrollPane;
     private JComboBox statusBox;
     private JTable orderTable;
     private JButton refreshButton;
@@ -46,22 +48,30 @@ public class SalespersonOrderView extends JPanel {
         orderTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
+
+
     }
 
     private void createUIComponents() {
         // TODO: Custom initialization of UI components here
         createTable();
         createComboBox();
+        setScrollPane();
     }
 
     private void createTable() {
         orderList = OrderFactory.getAllOrders();
-        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_DESCRIPTION};
+        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_CUSTOMER_ID, OrderTableModel.COLUMN_STATUS_TEXT};
         OrderTableModel tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
         orderTable.setFillsViewportHeight(true);
+    }
+
+    private void setScrollPane(){
+        scrollPane = new JScrollPane(orderTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setPreferredSize(new Dimension(1000,500));
     }
 
 
@@ -76,7 +86,7 @@ public class SalespersonOrderView extends JPanel {
     private void setStatus() {
         int choice = statusBox.getSelectedIndex();
         int selectedRow = orderTable.getSelectedRow();
-        int statusColumn = 5;
+        int statusColumn = 8;
         boolean delivered = choice < 1;
         if (selectedRow > -1) {
             orderTable.clearSelection();
@@ -93,7 +103,7 @@ public class SalespersonOrderView extends JPanel {
     // FIXME: Add possibility to expand mainFrame for table
     public static void main(String[] args) {
         // Window dimensions
-        final int WIDTH = 700;
+        final int WIDTH = 1300;
         final int HEIGHT = 600;
         JFrame frame = new JFrame();
         frame.add(new SalespersonOrderView());
