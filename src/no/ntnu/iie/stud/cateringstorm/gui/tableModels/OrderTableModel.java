@@ -18,8 +18,9 @@ public class OrderTableModel extends EntityTableModel<Order> {
     public static final int COLUMN_SALESPERSON_ID = 6;
     public static final int COLUMN_CUSTOMER_ID = 7;
     public static final int COLUMN_RECURRING_ORDER_ID = 8;
-    public static final int COLUMN_STATUS = 9;
+    public static final int COLUMN_STATUS_ID = 9;
     public static final int COLUMN_CHAUFFEUR_ID = 10;
+    public static final int COLUMN_STATUS_TEXT = 11;
 
     public OrderTableModel(ArrayList<Order> rows) {
         super(rows);
@@ -51,10 +52,12 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 return "Customer ID";
             case COLUMN_RECURRING_ORDER_ID:
                 return "Recurring order ID";
-            case COLUMN_STATUS:
-                return "Status";
+            case COLUMN_STATUS_ID:
+                return "Status ID";
             case COLUMN_CHAUFFEUR_ID:
                 return "Chauffeur ID";
+            case COLUMN_STATUS_TEXT:
+                return "Status";
             default:
                 throw new IndexOutOfBoundsException("columnIndex " + column + " not defined.");
         }
@@ -84,10 +87,12 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 return value.getCustomerId();
             case COLUMN_RECURRING_ORDER_ID:
                 return value.getRecurringOrderId();
-            case COLUMN_STATUS:
-                return value.getStatus(); // TODO: As text
+            case COLUMN_STATUS_ID:
+                return value.getStatus();
             case COLUMN_CHAUFFEUR_ID:
                 return value.getChauffeurId();
+            case COLUMN_STATUS_TEXT:
+                return value.deliveryStatus();
             default:
                 throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
         }
@@ -115,10 +120,12 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 return int.class;
             case COLUMN_RECURRING_ORDER_ID:
                 return int.class;
-            case COLUMN_STATUS:
-                return int.class; // TODO: As text
+            case COLUMN_STATUS_ID:
+                return int.class;
             case COLUMN_CHAUFFEUR_ID:
                 return int.class;
+            case COLUMN_STATUS_TEXT:
+                return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
         }

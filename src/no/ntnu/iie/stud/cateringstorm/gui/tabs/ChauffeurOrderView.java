@@ -51,7 +51,7 @@ public class ChauffeurOrderView extends JPanel {
 
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
-        Integer[] columns = new Integer[] { OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_STATUS, OrderTableModel.COLUMN_DESCRIPTION};
+        Integer[] columns = new Integer[] { OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_DESCRIPTION};
         OrderTableModel tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
