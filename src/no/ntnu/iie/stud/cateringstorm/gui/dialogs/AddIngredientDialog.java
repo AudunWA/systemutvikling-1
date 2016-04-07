@@ -137,7 +137,7 @@ public class AddIngredientDialog extends JDialog {
         // Create date pickers
         UtilDateModel model = new UtilDateModel();
 
-        // Dunno
+        // Dunn
         Properties p = new Properties();
         p.put("text.today", "Today");
         p.put("text.month", "Month");

@@ -145,7 +145,7 @@ public final class OrderFactory {
 
                 connection.setAutoCommit(false);
 
-                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, null, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, null, ?, null);", PreparedStatement.RETURN_GENERATED_KEYS)) {
 
                     //Insert data
                     statement.setString(1, description);
@@ -156,7 +156,6 @@ public final class OrderFactory {
                     statement.setInt(6, salespersonId);
                     statement.setInt(7, customerId);
                     statement.setInt(8, 1);
-                    statement.setInt(9, chauffeurId);
 
                     int affectedRows = statement.executeUpdate();
 
@@ -198,7 +197,7 @@ public final class OrderFactory {
             return null;
         }
 
-        Order order = new Order(generatedId, description, deliveryTime, orderTime, portions, priority, salespersonId, customer, 0, 1, chauffeurId);
+        Order order = new Order(generatedId, description, deliveryTime, orderTime, portions, priority, salespersonId, customer, 0, 1, 0);
         return order;
     }
 
