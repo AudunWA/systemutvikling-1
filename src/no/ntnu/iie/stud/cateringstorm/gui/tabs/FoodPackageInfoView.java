@@ -36,7 +36,7 @@ public class FoodPackageInfoView extends JPanel {
                 return;
             }
 
-            Dish order = tableModel.getValue(selectedRow);
+            Dish dish = tableModel.getValue(selectedRow);
 
             //TODO Lag en ViewDishDialog
 

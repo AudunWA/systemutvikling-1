@@ -12,29 +12,10 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="228c4" class="javax.swing.JButton" binding="addRowButton">
+          <component id="ec3ed" class="javax.swing.JButton" binding="viewIngredientsButton">
             <constraints/>
             <properties>
-              <text value="Add row"/>
-            </properties>
-          </component>
-          <component id="baa5" class="javax.swing.JButton" binding="editRowButton">
-            <constraints/>
-            <properties>
-              <enabled value="true"/>
-              <text value="Edit row"/>
-            </properties>
-          </component>
-          <component id="df670" class="javax.swing.JButton" binding="saveButton">
-            <constraints/>
-            <properties>
-              <text value="Save changes"/>
-            </properties>
-          </component>
-          <component id="ec3ed" class="javax.swing.JButton" binding="removeRowButton">
-            <constraints/>
-            <properties>
-              <text value="Remove row"/>
+              <text value="View"/>
             </properties>
           </component>
         </children>
