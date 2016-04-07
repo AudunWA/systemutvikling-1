@@ -23,8 +23,8 @@ public class SalespersonOrderView extends JPanel {
     private JPanel mainPanel;
     private JScrollPane orderPane;
     private JButton viewButton;
-    private JButton addCustomerButton;
-    private JButton editCustomerButton;
+    private JButton addOrderButton;
+    private JButton editOrderButton;
     private JPanel buttonPanel;
     private JComboBox statusBox;
     private JTable orderTable;
@@ -41,6 +41,14 @@ public class SalespersonOrderView extends JPanel {
             refresh();
         });
 
+        addOrderButton.addActionListener(e -> {
+            addOrder();
+        });
+
+        editOrderButton.addActionListener(e -> {
+            editOrder();
+        });
+
         statusBox.addActionListener(e -> {
             setStatus();
         });
@@ -49,6 +57,14 @@ public class SalespersonOrderView extends JPanel {
             //Get index from selected row
         });
 
+
+    }
+
+    private void addOrder(){
+
+    }
+
+    private void editOrder(){
 
     }
 

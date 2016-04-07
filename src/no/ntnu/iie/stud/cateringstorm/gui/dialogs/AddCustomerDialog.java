@@ -85,7 +85,7 @@ public class AddCustomerDialog extends JDialog{
             JOptionPane.showMessageDialog(this, "Please fill in an email.");
             return;
         }
-        Customer customer = new Customer(100,forename,surname,address,true,1,phone,email);//Inserted ID should be default as it's generated later
+        Customer customer = new Customer(100,forename,surname,address,true,phone,email);//Inserted ID should be default as it's generated later
 
         customer = CustomerFactory.createCustomer(customer);
 

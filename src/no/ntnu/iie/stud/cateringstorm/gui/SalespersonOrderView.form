@@ -15,13 +15,13 @@
           <vspacer id="576f5">
             <constraints/>
           </vspacer>
-          <component id="5e965" class="javax.swing.JButton" binding="addCustomerButton">
+          <component id="5e965" class="javax.swing.JButton" binding="addOrderButton">
             <constraints/>
             <properties>
               <text value="Add Order"/>
             </properties>
           </component>
-          <component id="35650" class="javax.swing.JButton" binding="editCustomerButton">
+          <component id="35650" class="javax.swing.JButton" binding="editOrderButton">
             <constraints/>
             <properties>
               <text value="Edit Order"/>

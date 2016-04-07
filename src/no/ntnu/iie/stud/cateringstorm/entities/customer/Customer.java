@@ -12,7 +12,7 @@ public class Customer {
     private boolean active;
     private String phone;
     private String email;
-    public Customer(int customerId, String surname, String forename, String address, boolean active, int areaId, String phone, String email) {
+    public Customer(int customerId, String surname, String forename, String address, boolean active, String phone, String email) {
         this.customerId = customerId;
         this.areaId = areaId;
         this.forename = forename;

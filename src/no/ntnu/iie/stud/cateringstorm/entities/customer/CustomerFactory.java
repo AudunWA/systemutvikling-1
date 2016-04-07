@@ -27,11 +27,10 @@ public final class CustomerFactory {
         String forename = result.getString("forename");
         String address = result.getString("address");
         Boolean active = result.getBoolean("active");
-        int area_id = result.getInt("area_id");
         String phone = result.getString("phone");
         String email = result.getString("email");
 
-        return new Customer(customer_id, surname, forename, address, active, area_id,phone,email);
+        return new Customer(customer_id, surname, forename, address, active,phone,email);
 
     }
 
@@ -118,7 +117,7 @@ public final class CustomerFactory {
                     }
                 }
 
-                Customer customer = new Customer(generatedId, newCustomer.getForename(), newCustomer.getSurname(), newCustomer.getAddress(),newCustomer.isActive(),newCustomer.getAreaId(), newCustomer.getPhone(),newCustomer.getEmail());
+                Customer customer = new Customer(generatedId, newCustomer.getForename(), newCustomer.getSurname(), newCustomer.getAddress(),newCustomer.isActive(), newCustomer.getPhone(),newCustomer.getEmail());
                 //statement.execute();
                 return customer;
             }
