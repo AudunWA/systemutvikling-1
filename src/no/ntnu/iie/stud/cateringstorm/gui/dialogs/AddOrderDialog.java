@@ -1,21 +1,31 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
+import no.ntnu.iie.stud.cateringstorm.gui.util.SimpleDateFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Properties;
 
 public class AddOrderDialog extends JDialog {
+
+    private boolean addedNewValue;
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTextField textField1;
+    private JTextField nameText;
     private JLabel descriptionLabel;
     private JLabel portionsLabel;
     private JLabel priorityLabel;
     private JLabel customerNameLabel;
     private JLabel deliveryDateLabel;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
+    private JTextField descriptionText;
+    private JTextField portionsText;
+    private JDatePickerImpl dateSelect;
+    private JTextField priorityText;
 
     public AddOrderDialog() {
         setContentPane(contentPane);
@@ -66,5 +76,20 @@ public class AddOrderDialog extends JDialog {
         dialog.setVisible(true);
         System.exit(0);
     }
-   
+
+    public void createUIComponents() {
+        // Create date pickers
+        UtilDateModel model = new UtilDateModel();
+
+        // Dunno
+        Properties p = new Properties();
+        p.put("text.today", "Today");
+        p.put("text.month", "Month");
+        p.put("text.year", "Year");
+
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+        dateSelect = new JDatePickerImpl(datePanel, new SimpleDateFormatter());
+    }
+
+
 }
