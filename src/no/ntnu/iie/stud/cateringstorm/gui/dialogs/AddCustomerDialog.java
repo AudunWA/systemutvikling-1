@@ -103,7 +103,7 @@ public class AddCustomerDialog extends JDialog{
         dispose();
     }
     public static void main(String[] args) {
-        final int WIDTH = 300;
+        final int WIDTH = 320;
         final int HEIGHT = 400;
         AddCustomerDialog dialog = new AddCustomerDialog();
         dialog.setSize(WIDTH, HEIGHT);
