@@ -1,16 +1,22 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
+import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
+import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.SimpleDateFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -37,6 +43,13 @@ public class AddOrderDialog extends JDialog {
     private JTextField surnameText;
     private JSpinner portionsSlider;
     private JComboBox customerList;
+    private JTable packageTable;
+    private JTable addedTable;
+    private JButton addButton;
+
+    private ArrayList<FoodPackage> addedList;
+    private ArrayList<Order> orders = new ArrayList<>();
+    private ArrayList<FoodPackage> foodList;
 
     public AddOrderDialog(Employee employee) {
         this.employee = employee;
@@ -50,10 +63,22 @@ public class AddOrderDialog extends JDialog {
             }
         });
 
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { onAdd(); }
+        });
+
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
+        });
+
+        packageTable.getSelectionModel().addListSelectionListener(e -> {
+
+        });
+
+        addedTable.getSelectionModel().addListSelectionListener(e -> {
+
         });
 
 // call onCancel() when cross is clicked
@@ -75,9 +100,36 @@ public class AddOrderDialog extends JDialog {
     private void onOK() {
 // add your code here
 
+        if (packageTable.getSelectedRow() > -1) {
+            boolean check = true;
+            for (FoodPackage packages : addedList){
+                System.out.println("id" + packages.getFoodPackageId() + "=" + packageTable.getSelectedRow() + "row");
+                if (packages.getFoodPackageId() == (packageTable.getSelectedRow() + 1)){
+                    check = false;
+                }
+            }
+            if (check){
+                addedList.add(foodList.get(packageTable.getSelectedRow()));
+                ((EntityTableModel) addedTable.getModel()).setRows(addedList);
+            } else {
+                JOptionPane.showMessageDialog(this, "This order is already added");
+            }
+        } else if (addedTable.getSelectedRow() > -1){
+            addedList.remove(addedTable.getSelectedRow());
+            ((EntityTableModel) addedTable.getModel()).setRows(addedList);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error nothing selected");
+        }
+
+
+    }
+
+    private void onAdd(){
+
         int customerIndex = customerList.getSelectedIndex();
-        String customerForename = CustomerFactory.viewSingleCustomer(customerIndex).getForename();
-        String customerSurname = CustomerFactory.viewSingleCustomer(customerIndex).getSurname();
+        Customer customer = CustomerFactory.viewSingleCustomer(customerIndex + 1);
+        String customerForename = customer.getForename();
+        String customerSurname = customer.getSurname();
         int customerId = CustomerFactory.getIdFromCustomerName(customerForename, customerSurname);
 
         String description = descriptionText.getText();
@@ -105,16 +157,31 @@ public class AddOrderDialog extends JDialog {
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
         ArrayList<Integer> test = new ArrayList<>();
-        test.add(1);
-        test.add(2);
+        test.add(packageTable.getSelectedRow() + 1);
 
-        Order order = OrderFactory.createOrder(description, deliverDate, portions, priority, employee.getEmployeeId(), customerId, 0, test);
-        if (order == null){
-            JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
-        } else {
-            addedNewValue = true;
+        orders.add(new Order(0, description, deliverDate, currentTime, portions, priority, employee.getEmployeeId(), CustomerFactory.viewSingleCustomer(customerId), 0, 1, 0));
+
+        int check = OrderFactory.getAllOrders().size();
+
+        ArrayList<Integer> packages = new ArrayList<>();
+        for (int k = 0; k < addedList.size(); k++){
+            packages.add(addedList.get(k).getFoodPackageId());
         }
-        dispose();
+
+        if (packages.size() < 1){
+            JOptionPane.showMessageDialog(this, "Please add package(s)");
+            return;
+        }
+
+        OrderFactory.createOrder(description, deliverDate, portions,
+                priority, employee.getEmployeeId(),
+                customerId, 0, packages);
+
+        if (OrderFactory.getAllOrders().size() > check){
+            JOptionPane.showMessageDialog(this, "Add successful");
+            addedList = new ArrayList<>();
+            ((EntityTableModel)addedTable.getModel()).setRows(addedList);
+        }
     }
 
     private void onCancel() {
@@ -139,12 +206,28 @@ public class AddOrderDialog extends JDialog {
         for (int i = 0; i < CustomerFactory.getAllCustomers().size(); i++) {
             customerList.addItem(new String (CustomerFactory.viewSingleCustomer(i+1).getSurname()) + ", " + CustomerFactory.viewSingleCustomer(i+1).getForename());
         }
+
+        foodList = FoodPackageFactory.getAllFoodPackages();
+        Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST};
+        FoodPackageTableModel table = new FoodPackageTableModel(foodList, columns);
+        packageTable = new JTable(table);
+        packageTable.getTableHeader().setReorderingAllowed(false);
+
+        addedList = new ArrayList<>();
+        Integer[] addedColumns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST};
+        FoodPackageTableModel addedObjects = new FoodPackageTableModel(addedList, columns);
+        addedTable = new JTable(addedObjects);
+        packageTable.getTableHeader().setReorderingAllowed(false);
+
+
+
     }
 
     public static void main(String[] args) {
         AddOrderDialog dialog = new AddOrderDialog(EmployeeFactory.newEmployee("drammen"));
         dialog.pack();
         dialog.setVisible(true);
+        dialog.setTitle("Order central");
         System.exit(0);
     }
 
