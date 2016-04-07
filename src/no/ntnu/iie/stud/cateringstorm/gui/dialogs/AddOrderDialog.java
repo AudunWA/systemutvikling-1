@@ -91,4 +91,5 @@ public class AddOrderDialog extends JDialog {
         dateSelect = new JDatePickerImpl(datePanel, new SimpleDateFormatter());
     }
 
+
 }
