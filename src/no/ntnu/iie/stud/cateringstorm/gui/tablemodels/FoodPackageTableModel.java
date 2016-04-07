@@ -1,22 +1,19 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
-import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.StringJoiner;
 
 /**
- * Created by EliasBrattli on 04/04/2016.
+ * Created by Audun on 07.04.2016.
  */
-public class DishTableModel extends EntityTableModel<Dish> {
+public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
     public static final int COLUMN_ID = 0;
-    public static final int COLUMN_TYPE_ID = 1;
-    public static final int COLUMN_NAME = 2;
-    public static final int COLUMN_DESCRIPTION = 3;
-    public static final int COLUMN_ACTIVE = 4;
+    public static final int COLUMN_NAME = 1;
+    public static final int COLUMN_COST = 2;
+    public static final int COLUMN_ACTIVE = 3;
 
-    public DishTableModel(ArrayList<Dish> rows, Integer[] columns) {
+    public FoodPackageTableModel(ArrayList<FoodPackage> rows, Integer[] columns) {
         super(rows, columns);
     }
 
@@ -26,12 +23,10 @@ public class DishTableModel extends EntityTableModel<Dish> {
         switch (columnType) {
             case COLUMN_ID:
                 return "ID";
-            case COLUMN_TYPE_ID:
-                return "Type ID"; // TODO: As string
             case COLUMN_NAME:
                 return "Name";
-            case COLUMN_DESCRIPTION:
-                return "Description";
+            case COLUMN_COST:
+                return "Cost";
             case COLUMN_ACTIVE:
                 return "Active";
             default:
@@ -41,18 +36,16 @@ public class DishTableModel extends EntityTableModel<Dish> {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Dish value = getValue(rowIndex);
+        FoodPackage value = getValue(rowIndex);
         int columnType = getColumnType(columnIndex);
 
         switch (columnType) {
             case COLUMN_ID:
-                return value.getDishId();
-            case COLUMN_TYPE_ID:
-                return value.getDishType(); // TODO: As string
+                value.getFoodPackageId();
             case COLUMN_NAME:
                 return value.getName();
-            case COLUMN_DESCRIPTION:
-                return value.getDescription();
+            case COLUMN_COST:
+                return value.getCost();
             case COLUMN_ACTIVE:
                 return value.isActive();
             default:
@@ -66,12 +59,10 @@ public class DishTableModel extends EntityTableModel<Dish> {
         switch (columnType) {
             case COLUMN_ID:
                 return int.class;
-            case COLUMN_TYPE_ID:
-                return int.class; // TODO: As string
             case COLUMN_NAME:
                 return String.class;
-            case COLUMN_DESCRIPTION:
-                return String.class;
+            case COLUMN_COST:
+                return double.class;
             case COLUMN_ACTIVE:
                 return boolean.class;
             default:

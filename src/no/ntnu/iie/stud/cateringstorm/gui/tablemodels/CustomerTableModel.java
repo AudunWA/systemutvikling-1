@@ -43,7 +43,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
             case COLUMN_EMAIL:
                 return "Email";
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
     @Override
@@ -67,7 +67,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
             case COLUMN_EMAIL:
                 return value.getEmail();
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
     @Override
@@ -89,7 +89,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
             case COLUMN_EMAIL:
                 return String.class;
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
     @Override
