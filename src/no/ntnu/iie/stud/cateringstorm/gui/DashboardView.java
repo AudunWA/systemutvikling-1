@@ -58,7 +58,7 @@ public class DashboardView extends JFrame {
                 tabPane.addTab("ChauffeurOrderView", new ChauffeurOrderView());
                 tabPane.addTab("MenuAdministratorView", new MenuAdministratorView());
                 tabPane.addTab("StorageView", new StorageView());
-                tabPane.addTab("FoodPackageInfoview", new FoodPackageInfoView());
+                //tabPane.addTab("FoodPackageInfoview", new FoodPackageInfoView());
                 break;
             case SALESPERSON:
                 break;

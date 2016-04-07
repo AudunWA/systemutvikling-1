@@ -2,6 +2,8 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
+import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
@@ -19,10 +21,13 @@ public class FoodPackageInfoView extends JPanel {
     private JPanel buttonPanel;
 
     private DishTableModel tableModel;
+    private FoodPackage foodPackage;
 
 
-    public FoodPackageInfoView() {
+    public FoodPackageInfoView(FoodPackage foodPackage) {
+        this.foodPackage = foodPackage;
         add(mainPanel);
+
 
         viewPackageButton.addActionListener(e -> {
 
@@ -48,7 +53,7 @@ public class FoodPackageInfoView extends JPanel {
     }
 
     private void createTable(){
-        ArrayList<Dish> dishList = DishFactory.getAllDishes();
+        ArrayList<Dish> dishList = DishFactory.getDishes(foodPackage.getFoodPackageId());
         Integer[] columns = new Integer[] { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION }; // Columns can be changed
         tableModel = new DishTableModel(dishList, columns);
         dishTable = new JTable(tableModel);
@@ -60,7 +65,7 @@ public class FoodPackageInfoView extends JPanel {
         final int WIDTH = 700;
         final int HEIGHT = 600;
         JFrame frame = new JFrame();
-        frame.add(new FoodPackageInfoView());
+        frame.add(new FoodPackageInfoView(FoodPackageFactory.getFoodPackage(1)));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
