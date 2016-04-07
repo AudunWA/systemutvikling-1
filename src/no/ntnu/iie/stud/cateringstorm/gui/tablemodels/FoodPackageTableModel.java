@@ -30,7 +30,7 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
             case COLUMN_ACTIVE:
                 return "Active";
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnType + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 
@@ -49,7 +49,7 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
             case COLUMN_ACTIVE:
                 return value.isActive();
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 
@@ -66,7 +66,7 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
             case COLUMN_ACTIVE:
                 return boolean.class;
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 }
