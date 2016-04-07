@@ -68,8 +68,21 @@ public class MenuAdministratorView extends JPanel {
                 return;
             }
 
-            tableModel.removeRow(selectedRow);
-            
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
+            if(dialogResult == 0) {
+                Dish dish = tableModel.getValue(selectedRow);
+                dish.setActive(false);
+                DishFactory.updateDish(dish);
+
+                tableModel.removeRow(selectedRow);
+                JOptionPane.showMessageDialog(null, "Row is removed.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Ok.");
+            }
+
+
+
 
         });
 
