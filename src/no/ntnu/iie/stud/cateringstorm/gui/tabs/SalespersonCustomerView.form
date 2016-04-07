@@ -7,8 +7,8 @@
     <properties/>
     <border type="none"/>
     <children>
-      <scrollpane id="c8889">
-        <constraints border-constraint="Center"/>
+      <scrollpane id="c8889" binding="tablePane" custom-create="true">
+        <constraints border-constraint="North"/>
         <properties/>
         <border type="none"/>
         <children>
@@ -18,6 +18,37 @@
           </component>
         </children>
       </scrollpane>
+      <grid id="c5577" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="816cf" class="javax.swing.JButton" binding="addButton">
+            <constraints/>
+            <properties>
+              <text value="Add customer"/>
+            </properties>
+          </component>
+          <component id="ba92f" class="javax.swing.JButton" binding="editButton">
+            <constraints/>
+            <properties>
+              <text value="Edit customer"/>
+            </properties>
+          </component>
+          <component id="a88e5" class="javax.swing.JButton" binding="refreshButton">
+            <constraints/>
+            <properties>
+              <text value="Refresh"/>
+            </properties>
+          </component>
+          <component id="562c3" class="javax.swing.JButton" binding="removeButton">
+            <constraints/>
+            <properties>
+              <text value="Remove customer"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>
