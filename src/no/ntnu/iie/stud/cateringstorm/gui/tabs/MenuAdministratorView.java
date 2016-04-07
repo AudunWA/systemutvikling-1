@@ -77,8 +77,6 @@ public class MenuAdministratorView extends JPanel {
 
                 tableModel.removeRow(selectedRow);
                 JOptionPane.showMessageDialog(null, "Row is removed.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Ok.");
             }
 
 
