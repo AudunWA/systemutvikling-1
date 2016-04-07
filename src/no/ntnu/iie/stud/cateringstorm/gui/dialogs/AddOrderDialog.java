@@ -66,4 +66,5 @@ public class AddOrderDialog extends JDialog {
         dialog.setVisible(true);
         System.exit(0);
     }
+   
 }
