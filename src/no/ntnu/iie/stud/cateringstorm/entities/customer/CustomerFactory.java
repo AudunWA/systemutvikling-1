@@ -92,16 +92,15 @@ public final class CustomerFactory {
     public static Customer createCustomer(Customer newCustomer){
 
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS)){
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS)){
 
                 statement.setInt(1, newCustomer.getCustomerId());
                 statement.setString(2, newCustomer.getSurname());
                 statement.setString(3, newCustomer.getForename());
                 statement.setString(4, newCustomer.getAddress());
                 statement.setBoolean(5, newCustomer.isActive());
-                statement.setInt(6, newCustomer.getAreaId());
-                statement.setString(7,newCustomer.getPhone());
-                statement.setString(8,newCustomer.getEmail());
+                statement.setString(6,newCustomer.getPhone());
+                statement.setString(7,newCustomer.getEmail());
 
                 int affectedRows = statement.executeUpdate();
                 if (affectedRows == 0) {
