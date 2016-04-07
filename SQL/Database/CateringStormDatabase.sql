@@ -148,11 +148,11 @@ FOREIGN KEY (food_package_id) REFERENCES food_package(food_package_id) ON UPDATE
 PRIMARY KEY (dish_id, food_package_id)
 );
 
-CREATE TABLE area(
-area_id INTEGER AUTO_INCREMENT,
-area_name VARCHAR(50),
-PRIMARY KEY (area_id)
-);
+-- CREATE TABLE area(
+-- area_id INTEGER AUTO_INCREMENT,
+-- area_name VARCHAR(50),
+-- PRIMARY KEY (area_id)
+-- );
 
 CREATE TABLE customer(
 customer_id INTEGER AUTO_INCREMENT,
@@ -160,10 +160,10 @@ surname VARCHAR(20) NOT NULL,
 forename VARCHAR(20) NOT NULL,
 address VARCHAR(20) NOT NULL,
 active BOOLEAN NOT NULL,
-area_id INTEGER NOT NULL,
+-- area_id INTEGER NOT NULL,
 phone VARCHAR(10) NOT NULL,
 email VARCHAR(50) NOT NULL,
-FOREIGN KEY (area_id) REFERENCES area(area_id) ON UPDATE CASCADE,
+-- FOREIGN KEY (area_id) REFERENCES area(area_id) ON UPDATE CASCADE,
 PRIMARY KEY (customer_id)
 );
 

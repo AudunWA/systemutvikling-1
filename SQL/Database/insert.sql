@@ -106,21 +106,21 @@ INSERT INTO dish_food_package VALUES (3,3);
 INSERT INTO dish_food_package VALUES (6,3);
 
 -- (area) --
-INSERT INTO area VALUES (default, 'Kolstad');
-INSERT INTO area VALUES (default, 'Byåsen');
-INSERT INTO area VALUES (default, 'Lerkendal');
-INSERT INTO area VALUES (default, 'Malvik');
-INSERT INTO area VALUES (default, 'Klæbu');
+-- INSERT INTO area VALUES (default, 'Kolstad');
+-- INSERT INTO area VALUES (default, 'Byåsen');
+-- INSERT INTO area VALUES (default, 'Lerkendal');
+-- INSERT INTO area VALUES (default, 'Malvik');
+-- INSERT INTO area VALUES (default, 'Klæbu');
 
 -- (customer) --
-INSERT INTO customer VALUES (default, 'Gates', 'Bill', 'Rikmannsvegen 2', true,2);
-INSERT INTO customer VALUES (default, 'Zuckerberg', 'Mark', 'Rikmannsvegen 3',true, 2);
-INSERT INTO customer VALUES (default, 'Smith', 'Will', 'lerkendalvegen 5', true,3);
-INSERT INTO customer VALUES (default, 'Olsen', 'Karl', 'Klæbuvegen 3', true,5);
-INSERT INTO customer VALUES (default, 'Karlsen', 'Ole', 'Stibakken 2', true,4);
-INSERT INTO customer VALUES (default, 'Berntsen', 'Bernt', 'Byåsvegen 4',true, 2);
-INSERT INTO customer VALUES (default, 'Arnsen', 'Gustaff', 'Kolstadvegen 3', true,1);
-INSERT INTO customer VALUES (default, 'Olafdottir', 'Fredrikke', 'Hormonvegen 2',true, 1);
+INSERT INTO customer VALUES (default, 'Gates', 'Bill', 'Rikmannsvegen 2', true, '12345678', 'mail@m.com');
+INSERT INTO customer VALUES (default, 'Zuckerberg', 'Mark', 'Rikmannsvegen 3',true, '87654321' ,'testmail@testmail.com');
+INSERT INTO customer VALUES (default, 'Smith', 'Will', 'lerkendalvegen 5', true, '13245768' ,'ayy@lmao.mail');
+INSERT INTO customer VALUES (default, 'Olsen', 'Karl', 'Klæbuvegen 3', true, '86754231' ,'trondheim@mail.com');
+INSERT INTO customer VALUES (default, 'Karlsen', 'Ole', 'Stibakken 2', true, '45362718' ,'mail@mail.mail');
+INSERT INTO customer VALUES (default, 'Berntsen', 'Bernt', 'Byåsvegen 4',true, '81726354' ,'noot@noot.noot');
+INSERT INTO customer VALUES (default, 'Arnsen', 'Gustaff', 'Kolstadvegen 3', true, '76543218' ,'eg@ekkje.sur');
+INSERT INTO customer VALUES (default, 'Olafdottir', 'Fredrikke', 'Hormonvegen 2',true, '647382816' ,'a@b.c');
 
 -- (subscription) --
 INSERT INTO subscription VALUES (default, DATE('2016-03-10'), DATE('2016-03-30'),400,1,true);
