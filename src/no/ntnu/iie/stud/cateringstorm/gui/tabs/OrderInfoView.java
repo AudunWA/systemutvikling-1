@@ -1,15 +1,14 @@
-package no.ntnu.iie.stud.cateringstorm.gui;
+package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import java.time.LocalDate;
+
 /**
  * Information panel for chefs
  * Enables possibility to view and edit detail considering each order
  * Created by EliasBrattli on 16/03/2016.
  */
-public class OrderInfo extends JPanel {
+public class OrderInfoView extends JPanel {
     private static final String WINDOW_TITLE = "Information";
 
     //Window dimensions
@@ -28,7 +27,7 @@ public class OrderInfo extends JPanel {
     private JButton saveButton;
     private final DefaultTableModel model = new DefaultTableModel(0, 1);
 
-    public OrderInfo() {
+    public OrderInfoView() {
         //setTitle(WINDOW_TITLE);
         //setSize(WIDTH, HEIGHT);
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -58,7 +57,7 @@ public class OrderInfo extends JPanel {
         //Add a table row
     }
     public static void main(String[]args){
-        OrderInfo oi = new OrderInfo();
+        OrderInfoView oi = new OrderInfoView();
         oi.setVisible(true);
     }
 

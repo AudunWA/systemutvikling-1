@@ -1,11 +1,19 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
+import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
+
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  * Created by EliasBrattli on 16/03/2016.
  */
-public class DishInfoView extends JFrame{
+public class DishInfoView extends JPanel{
 
     private static final String WINDOW_TITLE = "Information";
 
@@ -20,62 +28,57 @@ public class DishInfoView extends JFrame{
     private JScrollPane tablePane;
     private JPanel buttonPanel;
     private JButton saveButton;
-    private JButton removeRowButton;
-    public DishInfoView() {
-        setTitle(WINDOW_TITLE);
-        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setContentPane(mainPanel);
-        addRowButton.addActionListener(e-> {
-            //Consider using components
-            addRow();
-        });
-        saveButton.addActionListener(e->{
-            saveChanges();
-        });
-        editRowButton.addActionListener(e->{
-            editRow();
-        });
-        removeRowButton.addActionListener(e->{
-            removeRow();
+    private JButton viewIngredientsButton;
+
+    private IngredientTableModel tableModel;
+    private Dish dish;
+
+    public DishInfoView(Dish dish) {
+        this.dish = dish;
+
+        add(mainPanel);
+
+        viewIngredientsButton.addActionListener(e -> {
+            int selectedRow = ingredientTable.getSelectedRow();
+            if (selectedRow == -1) {
+                return;
+            }
+
+            Ingredient ingredient = tableModel.getValue(selectedRow);
+
+            //TODO Lag en ViewDishDialog
+
+            //ViewDishDialog dialog = new ViewDishDialog(order);
         });
     }
 
+
+
+
+    private void createTable(){
+        ArrayList<Ingredient> ingredientList = IngredientFactory.viewAllIngredientByDishId(dish.getDishId());
+        Integer[] columns = new Integer[] {IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION }; // Columns can be changed
+        tableModel = new IngredientTableModel(ingredientList, columns);
+        ingredientTable = new JTable(tableModel);
+        ingredientTable.setFillsViewportHeight(true);
+    }
+
+    public static void main(String[] args){
+        // Window dimensions
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+        JFrame frame = new JFrame();
+        frame.add(new DishInfoView(DishFactory.viewSingleDish(1)));
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
+
+    }
 
     private void createUIComponents() {
+        createTable();
         // TODO: place custom component creation code here
         // Fill table with dummy data
-        Object[] columnNames = new Object[]{"Meal ID", "Ingredient", "Quantity", "Unit"};
-        Object[][] data = new Object[][]{
-                {1, "Salt", 60,"g" },
-                {2, "Chicken filet", 2000,"g"},
-                {3, "Rice", 2000,"g"},
-                {4, "Sauce", 10,"dL"},
-                {5, "Pepper", 50, "g"},
-                {6,"Lettuce",200,"g"}
-        };
-        ingredientTable = new JTable(data, columnNames);
-        ingredientTable.setFillsViewportHeight(true);
 
-    }
-
-    private boolean addRow(){
-        // TODO: Implement method addRow() that will open an empty table row, disabling save button until details are filled in
-        return false;
-    }
-    private boolean saveChanges(){
-        // TODO: Implement method saveChanges() that will send table into database, and remove rows marked as deleted.
-        return false;
-    }
-    private void editRow(){
-        // TODO: Implement method editRow() that will control the data input in the editable table cells
-    }
-    private boolean removeRow(){
-        // TODO: Implement method removeRow() that will "remove" data from the view table. Data will still exist in database,
-        return false;
-    }
-    public static void main(String[]args){
-        DishInfoView di = new DishInfoView();
-        di.setVisible(true);
     }
 }

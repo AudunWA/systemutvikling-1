@@ -10,13 +10,13 @@ import java.util.Objects;
  * Created by EliasBrattli on 06/04/2016.
  */
 public class CustomerTableModel extends EntityTableModel<Customer>{
-    private static final int COLUMN_CUSTOMER_ID = 0;
-    private static final int COLUMN_NAME = 1;
-    private static final int COLUMN_ADDRESS = 2;
-    private static final int COLUMN_ACTIVETEXT = 3;
-    private static final int COLUMN_PHONE = 4;
-    private static final int COLUMN_ACTIVE = 5;
-    private static final int COLUMN_EMAIL = 6;
+    public static final int COLUMN_CUSTOMER_ID = 0;
+    public static final int COLUMN_NAME = 1;
+    public static final int COLUMN_ADDRESS = 2;
+    public static final int COLUMN_ACTIVETEXT = 3;
+    public static final int COLUMN_PHONE = 4;
+    public static final int COLUMN_ACTIVE = 5;
+    public static final int COLUMN_EMAIL = 6;
     public CustomerTableModel(ArrayList<Customer> rows) {
         super(rows);
     }
@@ -96,5 +96,8 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
     public void setValueAt(Object value, int row, int column) {
         Customer entity = getValue(row);
         int columnType = getColumnType(column);
+        switch(columnType){
+
+        }
     }
 }
