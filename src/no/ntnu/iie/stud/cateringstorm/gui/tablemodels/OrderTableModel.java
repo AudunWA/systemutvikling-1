@@ -169,6 +169,8 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 return int.class;
             case COLUMN_STATUS_TEXT:
                 return String.class;
+            case COLUMN_ADDRESS:
+                return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }

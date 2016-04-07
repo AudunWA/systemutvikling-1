@@ -84,6 +84,17 @@ public final class CustomerFactory {
 
     }
 
+    public static int getIdFromCustomerName(String forename, String surname){
+
+        for (int i = 0; i < getAllCustomers().size(); i++){
+            if (viewSingleCustomer(i+1).getSurname().equals(surname) && viewSingleCustomer(i+1).getForename().equals(forename)){
+                return viewSingleCustomer(i+1).getCustomerId();
+            }
+        }
+        return -1;
+
+    }
+
     /**
      * Inserts a customer into the SQL table customer. Takes a Customer object as arguement
      * @param newCustomer
