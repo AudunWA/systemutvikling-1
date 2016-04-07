@@ -61,11 +61,11 @@ public class SalespersonOrderView extends JPanel {
     }
 
     private void addOrder(){
-
+        // TODO: Open AddOrderDialog
     }
 
     private void editOrder(){
-
+        // TODO: Open EditOrderDialog
     }
 
     private void createUIComponents() {
