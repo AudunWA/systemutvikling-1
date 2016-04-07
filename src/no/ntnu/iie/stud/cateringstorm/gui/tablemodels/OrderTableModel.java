@@ -68,7 +68,7 @@ public class OrderTableModel extends EntityTableModel<Order> {
             case COLUMN_ADDRESS:
                 return "Address";
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + column + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 
@@ -105,7 +105,7 @@ public class OrderTableModel extends EntityTableModel<Order> {
             case COLUMN_ADDRESS:
                 return getCustomerAddressModel(rowIndex);
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 
@@ -169,8 +169,10 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 return int.class;
             case COLUMN_STATUS_TEXT:
                 return String.class;
+            case COLUMN_ADDRESS:
+                return String.class;
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnType + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
     public void addOrder(Order order){

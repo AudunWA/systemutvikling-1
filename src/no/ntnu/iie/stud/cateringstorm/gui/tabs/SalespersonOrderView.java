@@ -1,4 +1,4 @@
-package no.ntnu.iie.stud.cateringstorm.gui;
+package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
@@ -61,11 +61,11 @@ public class SalespersonOrderView extends JPanel {
     }
 
     private void addOrder(){
-
+        // TODO: Open AddOrderDialog
     }
 
     private void editOrder(){
-
+        // TODO: Open EditOrderDialog
     }
 
     private void createUIComponents() {

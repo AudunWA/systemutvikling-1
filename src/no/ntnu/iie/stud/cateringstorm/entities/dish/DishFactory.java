@@ -84,6 +84,35 @@ public final class DishFactory {
     }
 
     /**
+     * Gets all dishes of a food package
+     * @param foodPackageId The ID of the food package
+     * @return ArrayList with all the Dishes<Dish>
+     */
+    public static ArrayList<Dish> getDishes(int foodPackageId){
+        ArrayList<Dish> dishes = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish" +
+                    " INNER JOIN dish_food_package USING (dish_id)" +
+                    " WHERE dish_food_package.food_package_id = ?")){
+                statement.setInt(1, foodPackageId);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()) {
+                        dishes.add(createDishFromResultSet(result));
+                    }
+
+                }
+                return dishes;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * Creates an arraylist of the active dishes in the SQL table dish
      * @return ArrayList<Dish>
      */

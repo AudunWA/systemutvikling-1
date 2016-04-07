@@ -50,7 +50,7 @@ public class IngredientTableModel extends EntityTableModel<Ingredient> {
             case COLUMN_UNIT:
                 return "Unit";
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + column + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 
@@ -77,7 +77,7 @@ public class IngredientTableModel extends EntityTableModel<Ingredient> {
             case COLUMN_UNIT:
                 return value.getUnit();
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 
@@ -102,7 +102,7 @@ public class IngredientTableModel extends EntityTableModel<Ingredient> {
             case COLUMN_UNIT:
                 return String.class;
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 }

@@ -35,7 +35,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
             case COLUMN_ACTIVE:
                 return "Active";
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + column + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 
@@ -56,7 +56,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
             case COLUMN_ACTIVE:
                 return value.isActive();
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 
@@ -75,7 +75,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
             case COLUMN_ACTIVE:
                 return boolean.class;
             default:
-                throw new IndexOutOfBoundsException("columnIndex " + columnIndex + " not defined.");
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 }

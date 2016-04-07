@@ -3,6 +3,8 @@ package no.ntnu.iie.stud.cateringstorm.entities.dish;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 /**
@@ -66,5 +68,14 @@ public class DishFactoryTest {
         dish = DishFactory.viewSingleDish(dish.getDishId());
         Assert.assertNotNull(dish);
         Assert.assertEquals(dish.getDescription(), newDescription);
+    }
+
+    @Test
+    public void testGetDishes() throws Exception {
+        ArrayList<Dish> dishes = DishFactory.getDishes(1); // We assume food package 1 exists
+        Assert.assertNotNull(dishes);
+        for (Dish dish : dishes) {
+            System.out.println(dish);
+        }
     }
 }
