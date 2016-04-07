@@ -1,4 +1,4 @@
-package no.ntnu.iie.stud.cateringstorm.gui;
+package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import javax.swing.*;
 

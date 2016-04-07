@@ -1,4 +1,4 @@
-package no.ntnu.iie.stud.cateringstorm.gui;
+package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
@@ -55,5 +55,20 @@ public class FoodPackageInfoView extends JPanel {
         dishTable.setFillsViewportHeight(true);
     }
 
+    public static void main(String[] args){
+        // Window dimensions
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+        JFrame frame = new JFrame();
+        frame.add(new FoodPackageInfoView());
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        createTable();
+    }
 }
 
