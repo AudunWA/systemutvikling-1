@@ -37,7 +37,7 @@ public class SalespersonCustomerView extends JPanel{
             editCustomer(getSelectedCustomer());
         });
         removeButton.addActionListener(e->{
-            removeCustomer();
+            removeCustomer(getSelectedCustomer());
         });
         refreshButton.addActionListener(e->{
             refresh();
@@ -48,8 +48,14 @@ public class SalespersonCustomerView extends JPanel{
     }
 
     private Customer getSelectedCustomer(){
-        return tableModel.getValue(customerTable.getSelectedRow());
+        int selectedRow = customerTable.getSelectedRow();
+        if(selectedRow > -1) {
+            Customer customer = tableModel.getValue(selectedRow);
+            return customer;
+        }
+        return null;
     }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
         createTable();
@@ -76,10 +82,26 @@ public class SalespersonCustomerView extends JPanel{
     }
     private void editCustomer(Customer customer){
         // TODO: Implement class EditCustomerDialog
-        EditCustomerDialog ecDialog = new EditCustomerDialog(customer);
+        if(customer != null) {
+            EditCustomerDialog ecDialog = new EditCustomerDialog(customer);
+            final int WIDTH = 300;
+            final int HEIGHT = 200;
+            ecDialog.pack();
+            ecDialog.setSize(WIDTH, HEIGHT);
+            ecDialog.setVisible(true);
+            System.exit(0);
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a row in the customer table");
+        }
     }
-    private void removeCustomer(){
+    private void removeCustomer(Customer customer){
         // TODO: Implement a method setting customer status to "Not active"
+        if(customer != null) {
+            // TODO: Fill code here
+
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a row in the customer table");
+        }
     }
     private void refresh(){
         // TODO: Implement method refreshing data

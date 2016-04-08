@@ -5,7 +5,6 @@ package no.ntnu.iie.stud.cateringstorm.entities.customer;
  */
 public class Customer {
     private int customerId;
-    private int areaId;
     private String forename;
     private String surname;
     private String address;
@@ -14,7 +13,6 @@ public class Customer {
     private String email;
     public Customer(int customerId, String surname, String forename, String address, boolean active, String phone, String email) {
         this.customerId = customerId;
-        this.areaId = areaId;
         this.forename = forename;
         this.surname = surname;
         this.address = address;
@@ -25,10 +23,6 @@ public class Customer {
 
     public int getCustomerId() {
         return customerId;
-    }
-
-    public int getAreaId() {
-        return areaId;
     }
 
     public String getForename() {
@@ -59,12 +53,13 @@ public class Customer {
     public String getActiveText(){
         return (isActive())?"Active":"Not active";
     }
-
+    public void setStatus(boolean active){
+        this.active = active;
+    }
     @Override
     public String toString() {
         return "Customer{" +
                 "customerId=" + customerId +
-                ", areaId=" + areaId +
                 ", forename='" + forename + '\'' +
                 ", surname='" + surname + '\'' +
                 ", address='" + address + '\'' +
