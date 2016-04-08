@@ -24,10 +24,10 @@
               <text value="Save "/>
             </properties>
           </component>
-          <component id="ce151" class="javax.swing.JButton" binding="exitButton" default-binding="true">
+          <component id="ce151" class="javax.swing.JButton" binding="cancelButton">
             <constraints/>
             <properties>
-              <text value="Exit"/>
+              <text value="Cancel"/>
             </properties>
           </component>
         </children>

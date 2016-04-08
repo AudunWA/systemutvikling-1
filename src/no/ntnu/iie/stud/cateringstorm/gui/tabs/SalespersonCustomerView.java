@@ -2,6 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddCustomerDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.CustomerTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
@@ -63,6 +64,9 @@ public class SalespersonCustomerView extends JPanel{
     }
     private void addCustomer(){
         // TODO: Implement AddCustomerDialog
+        AddCustomerDialog addDialog = new AddCustomerDialog();
+        addDialog.pack();
+        addDialog.setVisible(true);
     }
     private void editCustomer(){
         // TODO: Implement class EditCustomerDialog
