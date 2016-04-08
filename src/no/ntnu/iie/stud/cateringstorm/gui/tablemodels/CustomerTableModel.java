@@ -113,7 +113,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
             case COLUMN_ADDRESS:
                 break;
             case COLUMN_ACTIVETEXT:
-                entity.setStatus(value.equals("Active"));
+                entity.setActive(value.equals("Active"));
                 break;
             case COLUMN_PHONE:
                 break;

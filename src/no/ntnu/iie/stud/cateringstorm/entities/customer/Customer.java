@@ -8,6 +8,9 @@ public class Customer {
     private String forename;
     private String surname;
     private String address;
+
+
+
     private boolean active;
     private String phone;
     private String email;
@@ -53,8 +56,29 @@ public class Customer {
     public String getActiveText(){
         return (isActive())?"Active":"Not active";
     }
-    public void setStatus(boolean active){
+
+    public void setForename(String forename) {
+        this.forename = forename;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     @Override
     public String toString() {

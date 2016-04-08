@@ -11,7 +11,9 @@ import java.util.ArrayList;
 /**
  * Created by EliasBrattli on 08/04/2016.
  */
+// FIXME: There is something wrong with database connection. Check class CustomerFactory
 public class EditCustomerDialog extends JDialog{
+    private boolean addedNewValue;
     private Customer customer;
     private JPanel mainPanel;
     private JPanel textPanel;
@@ -51,16 +53,53 @@ public class EditCustomerDialog extends JDialog{
 
     private void saveChanges(){
         // TODO: Implement a method sending the saved changes to database
+        final int COLUMN_SURNAME = 0;
+        final int COLUMN_FORENAME = 1;
+        final int COLUMN_ADDRESS = 2;
+        final int COLUMN_PHONE = 3;
+        final int COLUMN_EMAIL = 4;
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
+
         if(dialogResult == 0){
             String input = inputField.getText();
             if(input.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Please enter a value");
+                return;
+            }
+            switch (getChoice()){
 
+                case COLUMN_FORENAME :
+                    customer.setForename(input);
+                    break;
+                case COLUMN_SURNAME :
+                    customer.setSurname(input);
+                case COLUMN_ADDRESS:
+                    customer.setAddress(input);
+                    break;
+                case COLUMN_PHONE:
+                    customer.setPhone(input);
+                    break;
+                case COLUMN_EMAIL:
+                    customer.setEmail(input);
+                    break;
+                default: return;
+            }
+            int updatedId = CustomerFactory.updateCustomer(customer);
+            if ( updatedId != 1) {
+                JOptionPane.showMessageDialog(this, "Customer wasn't updated, please try again later!");
+            }
+            if (customer == null) {
+                JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
+            } else {
+                // Debug code
+                JOptionPane.showMessageDialog(this, customer);
+                addedNewValue = true;
             }
         }
         dispose();
     }
+
     private void onCancel(){
         // TODO: Implement a method exiting window
         dispose();
@@ -75,11 +114,11 @@ public class EditCustomerDialog extends JDialog{
         switch (getChoice()){
 
             case COLUMN_FORENAME :
-                inputField.setText("Enter new surname");
+                inputField.setText("Enter new forename");
                 inputField.setEnabled(true);
                 break;
             case COLUMN_SURNAME :
-                inputField.setText("Enter new forename");
+                inputField.setText("Enter new surname");
                 inputField.setEnabled(true);
             case COLUMN_ADDRESS:
                 inputField.setText("Enter new address");
@@ -142,5 +181,8 @@ public class EditCustomerDialog extends JDialog{
         dialog.setSize(WIDTH,HEIGHT);
         dialog.setVisible(true);
         System.exit(0);
+    }
+    public boolean getAddedNewValue(){
+        return addedNewValue;
     }
 }

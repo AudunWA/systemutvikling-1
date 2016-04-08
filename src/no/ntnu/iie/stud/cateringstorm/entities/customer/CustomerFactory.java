@@ -159,4 +159,22 @@ public final class CustomerFactory {
             return -1;
         }
     }
+
+    // FIXME: There is something wrong with database connection?
+    public static int updateCustomer(Customer customer){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE customer SET  surname = ?,forename = ?, address = ?, active = ?, phone = ?, email = ? WHERE customer_id = ?")) {
+                statement.setString(2,customer.getSurname());
+                statement.setString(3,customer.getForename());
+                statement.setString(4,customer.getAddress());
+                statement.setBoolean(5,customer.isActive());
+                statement.setString(6,customer.getPhone());
+                statement.setString(7,customer.getEmail());
+                return statement.executeUpdate();
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }
