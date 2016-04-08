@@ -41,11 +41,14 @@ public class EditCustomerDialog extends JDialog{
         inputField.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent e) {
-                emptyTextField();
+                if(inputField.isEnabled()) {
+                    emptyTextField(inputField.getText());
+                }
             }
         });
 
     }
+
     private void saveChanges(){
         // TODO: Implement a method sending the saved changes to database
         int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -73,27 +76,32 @@ public class EditCustomerDialog extends JDialog{
 
             case COLUMN_FORENAME :
                 inputField.setText("Enter new surname");
+                inputField.setEnabled(true);
                 break;
             case COLUMN_SURNAME :
                 inputField.setText("Enter new forename");
+                inputField.setEnabled(true);
             case COLUMN_ADDRESS:
                 inputField.setText("Enter new address");
+                inputField.setEnabled(true);
                 break;
             case COLUMN_PHONE:
                 inputField.setText("Enter new phone number");
+                inputField.setEnabled(true);
                 break;
             case COLUMN_EMAIL:
                 inputField.setText("Enter new email");
+                inputField.setEnabled(true);
                 break;
-            default: inputField.setText("Enter input here");
+            default: inputField.setText("Please choose a value in combobox below");
         }
     }
     private int getChoice(){
        return choiceBox.getSelectedIndex();
     }
-    private void emptyTextField(){
+    private void emptyTextField(String text){
         // TODO: Implement a method emptying the text field
-        if(inputField.getText().equals("Enter input here")) {
+        if(inputField.getText().equals(text)) {
             inputField.setText("");
         }
     }
@@ -116,7 +124,8 @@ public class EditCustomerDialog extends JDialog{
     }
     private void createTextField(){
         inputField = new JTextField(20);
-        inputField.setText("Enter input here");
+        inputField.setText("Choose a value in combobox below");
+        inputField.setEnabled(false);
         add(inputField);
     }
     private void createUIComponents() {
