@@ -16,14 +16,14 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="1be2e" class="javax.swing.JTextField" binding="inputField">
+          <component id="1be2e" class="javax.swing.JTextField" binding="inputField" custom-create="true">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
             <properties>
-              <text value="Put your input here"/>
+              <text value="Enter input here"/>
             </properties>
           </component>
         </children>
@@ -36,7 +36,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="246ff" class="javax.swing.JComboBox" binding="choiceBox">
+          <component id="246ff" class="javax.swing.JComboBox" binding="choiceBox" custom-create="true">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>

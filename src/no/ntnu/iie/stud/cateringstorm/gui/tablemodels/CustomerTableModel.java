@@ -11,12 +11,13 @@ import java.util.Objects;
  */
 public class CustomerTableModel extends EntityTableModel<Customer>{
     public static final int COLUMN_CUSTOMER_ID = 0;
-    public static final int COLUMN_NAME = 1;
-    public static final int COLUMN_ADDRESS = 2;
-    public static final int COLUMN_ACTIVETEXT = 3;
-    public static final int COLUMN_PHONE = 4;
-    public static final int COLUMN_ACTIVE = 5;
-    public static final int COLUMN_EMAIL = 6;
+    public static final int COLUMN_SURNAME = 1;
+    public static final int COLUMN_FORENAME = 2;
+    public static final int COLUMN_ADDRESS = 3;
+    public static final int COLUMN_ACTIVETEXT = 4;
+    public static final int COLUMN_PHONE = 5;
+    public static final int COLUMN_ACTIVE = 6;
+    public static final int COLUMN_EMAIL = 7;
     public CustomerTableModel(ArrayList<Customer> rows) {
         super(rows);
     }
@@ -30,8 +31,10 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
         switch (columnType) {
             case COLUMN_CUSTOMER_ID :
                 return "Customer ID";
-            case COLUMN_NAME :
-                return "Name";
+            case COLUMN_SURNAME :
+                return "Surname";
+            case COLUMN_FORENAME :
+                return "Forename";
             case COLUMN_ADDRESS:
                 return "Address";
             case COLUMN_ACTIVETEXT:
@@ -54,8 +57,10 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
         switch (columnType) {
             case COLUMN_CUSTOMER_ID :
                 return value.getCustomerId();
-            case COLUMN_NAME :
-                return value.getForename()+" "+value.getSurname();
+            case COLUMN_SURNAME :
+                return value.getSurname();
+            case COLUMN_FORENAME :
+                return value.getForename();
             case COLUMN_ADDRESS:
                 return value.getAddress();
             case COLUMN_ACTIVETEXT:
@@ -76,7 +81,9 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
         switch (columnType) {
             case COLUMN_CUSTOMER_ID :
                 return int.class;
-            case COLUMN_NAME :
+            case COLUMN_SURNAME :
+                return String.class;
+            case COLUMN_FORENAME :
                 return String.class;
             case COLUMN_ADDRESS:
                 return String.class;
