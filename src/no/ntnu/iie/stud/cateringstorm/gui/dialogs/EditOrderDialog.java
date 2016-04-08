@@ -12,30 +12,29 @@ import java.util.ArrayList;
 
 public class EditOrderDialog extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private JTable table1;
-    private JTable table2;
-    private JScrollPane originalOrderPane;
-    private JScrollPane table1Pane;
+    private JTextField textField1;
+    private JComboBox columnBox;
+    private JButton saveChangesButton;
+    private JButton cancelButton;
+    private OrderTableModel orderTableModel;
+
     private Order order;
 
-    private ArrayList<Order> orderList;
 
 
     public EditOrderDialog(Order order) {
         this.order = order;
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(saveChangesButton);
 
-        buttonOK.addActionListener(new ActionListener() {
+        saveChangesButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
+        cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
@@ -68,25 +67,26 @@ public class EditOrderDialog extends JDialog {
         dispose();
     }
 
-    private void setTables(){
-        orderList = new ArrayList<>();
-        orderList.add(order);
-        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_CUSTOMER_ID, OrderTableModel.COLUMN_STATUS_TEXT};
-        OrderTableModel addedObjects = new OrderTableModel(orderList, columns);
-        table1 = new JTable(addedObjects);
-        table1.getTableHeader().setReorderingAllowed(false);
+    private void createComboBox() {
 
-        table2 = new JTable(addedObjects);
-        table2.getTableHeader().setReorderingAllowed(false);
+        ArrayList<Order> list = OrderFactory.getAllOrders();
+        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_DELIVERY_TIME,
+                OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_DESCRIPTION};
+        orderTableModel = new OrderTableModel(list, columns);
+        Object[] objects = new Object[columns.length];
 
-        originalOrderPane = new JScrollPane(table1, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        originalOrderPane.setPreferredSize(new Dimension(100,500));
+        for (int i = 0; i < columns.length; i++) {
+            objects[i] = (new String(orderTableModel.getColumnName(i)));
+        }
+
+        columnBox = new JComboBox(objects);
+        columnBox.setSelectedIndex(0);
     }
-
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        setTables();
+
+        createComboBox();
 
     }
 
