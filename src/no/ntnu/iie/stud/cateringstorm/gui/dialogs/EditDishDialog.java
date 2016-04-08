@@ -2,9 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
-import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
-import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
+
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -114,7 +112,7 @@ public class EditDishDialog extends JDialog {
                 addedNewValue = true;
             }
 
-            dispose();
+            onCancel();
         }
     }
 
