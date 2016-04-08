@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Created by EliasBrattli on 16/03/2016.
+ * Fixed by Kenan on 08.04.16
  */
 public class DishInfoView extends JPanel{
 
