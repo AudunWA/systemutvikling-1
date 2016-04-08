@@ -9,6 +9,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditDishDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddDishDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
@@ -41,6 +42,12 @@ public class MenuAdministratorView extends JPanel {
 
     public MenuAdministratorView() {
         add(mainPanel);
+
+        addDishButton.addActionListener(e1 -> {
+            AddDishDialog dialog = new AddDishDialog();
+            dialog.pack();
+            dialog.setVisible(true);
+        });
 
         editDishButton.addActionListener(e -> {
             int selectedRow = dishTable.getSelectedRow();

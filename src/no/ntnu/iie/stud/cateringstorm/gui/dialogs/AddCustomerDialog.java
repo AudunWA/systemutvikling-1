@@ -18,7 +18,7 @@ public class AddCustomerDialog extends JDialog{
     private JTextField surnameField;
     private JTextField addressField;
     private JTextField phoneField;
-    private JButton exitButton;
+    private JButton cancelButton;
     private JTextField emailField;
     private JLabel forenameLabel;
     private JLabel surnameLabel;
@@ -35,7 +35,7 @@ public class AddCustomerDialog extends JDialog{
             }
         });
 
-        exitButton.addActionListener(new ActionListener() {
+        cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }

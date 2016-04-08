@@ -91,6 +91,7 @@ public class SalespersonOrderView extends JPanel {
     }
 
 
+
     private void createComboBox() {
         Object[] status = {"Activate", "Remove"};
 

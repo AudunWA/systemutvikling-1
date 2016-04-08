@@ -2,6 +2,8 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddCustomerDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditCustomerDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.CustomerTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
@@ -32,7 +34,7 @@ public class SalespersonCustomerView extends JPanel{
             addCustomer();
         });
         editButton.addActionListener(e->{
-            editCustomer();
+            editCustomer(getSelectedCustomer());
         });
         removeButton.addActionListener(e->{
             removeCustomer();
@@ -44,6 +46,10 @@ public class SalespersonCustomerView extends JPanel{
             //Get index from selected row
         });
     }
+
+    private Customer getSelectedCustomer(){
+        return tableModel.getValue(customerTable.getSelectedRow());
+    }
     private void createUIComponents() {
         // TODO: place custom component creation code here
         createTable();
@@ -51,21 +57,26 @@ public class SalespersonCustomerView extends JPanel{
     }
     public void createTable() {
         ArrayList<Customer> customerList = CustomerFactory.getAllCustomers();
-        Integer[] columns = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_NAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVETEXT}; // Columns can be changed
+        Integer[] columns = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVETEXT}; // Columns can be changed
         tableModel = new CustomerTableModel(customerList, columns);
         customerTable = new JTable(tableModel);
         customerTable.getTableHeader().setReorderingAllowed(false);
         customerTable.setFillsViewportHeight(true);
     }
+    //Method used to set size for scroll pane containing JTable
     private void setScrollPane(){
         tablePane = new JScrollPane(customerTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         tablePane.setPreferredSize(new Dimension(1000,700));
     }
     private void addCustomer(){
         // TODO: Implement AddCustomerDialog
+        AddCustomerDialog acDialog = new AddCustomerDialog();
+        acDialog.pack();
+        acDialog.setVisible(true);
     }
-    private void editCustomer(){
+    private void editCustomer(Customer customer){
         // TODO: Implement class EditCustomerDialog
+        EditCustomerDialog ecDialog = new EditCustomerDialog(customer);
     }
     private void removeCustomer(){
         // TODO: Implement a method setting customer status to "Not active"
@@ -73,6 +84,9 @@ public class SalespersonCustomerView extends JPanel{
     private void refresh(){
         // TODO: Implement method refreshing data
         ((EntityTableModel)customerTable.getModel()).setRows(CustomerFactory.getAllCustomers());
+    }
+    public CustomerTableModel getTableModel(){
+        return tableModel;
     }
     public static void main(String[] args){
         // Window dimensions
