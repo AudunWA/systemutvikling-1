@@ -75,42 +75,47 @@ public class EditDishDialog extends JDialog {
 
     private void onOK() {
 
-        String name = editName.getText();
-        if (name.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in a name.");
-            return;
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
+        if(dialogResult == 0) {
+
+            String name = editName.getText();
+            if (name.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please fill in a name.");
+                return;
+            }
+
+            String description = editDescription.getText();
+            if (description.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please fill in a description.");
+                return;
+            }
+
+            int type = editType.getSelectedIndex() + 1;
+
+            boolean active = editStatus.getSelectedIndex() < 1;
+
+            dish.setName(name);
+            dish.setDescription(description);
+            dish.setDishType(type);
+            dish.setActive(active);
+
+            DishFactory.updateDish(dish);
+            if (DishFactory.updateDish(dish) != 1) {
+                JOptionPane.showMessageDialog(this, "Dish wasn't update, please try again later!");
+            }
+
+
+            if (dish == null) {
+                JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
+            } else {
+                // Debug code
+                JOptionPane.showMessageDialog(this, dish);
+                addedNewValue = true;
+            }
+
+            dispose();
         }
-
-        String description = editDescription.getText();
-        if (description.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in a description.");
-            return;
-        }
-
-        int type = editType.getSelectedIndex() + 1;
-
-        boolean active = editStatus.getSelectedIndex()<1;
-
-        dish.setName(name);
-        dish.setDescription(description);
-        dish.setDishType(type);
-        dish.setActive(active);
-
-        DishFactory.updateDish(dish);
-        if (DishFactory.updateDish(dish) != 1) {
-            JOptionPane.showMessageDialog(this, "Dish wasn't update, please try again later!");
-        }
-
-
-        if (dish == null) {
-            JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
-        } else {
-            // Debug code
-            JOptionPane.showMessageDialog(this, dish);
-            addedNewValue = true;
-        }
-
-        dispose();
     }
 
     private void onCancel() {
