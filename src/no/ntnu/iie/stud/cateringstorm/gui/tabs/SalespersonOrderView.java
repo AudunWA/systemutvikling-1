@@ -2,6 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditOrderDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
@@ -30,6 +31,7 @@ public class SalespersonOrderView extends JPanel {
     private JTable orderTable;
     private JButton refreshButton;
     private JScrollPane scrollPane;
+    OrderTableModel tableModel;
 
     private static ArrayList<Order> orderList = new ArrayList<Order>();
 
@@ -46,7 +48,7 @@ public class SalespersonOrderView extends JPanel {
         });
 
         editOrderButton.addActionListener(e -> {
-            editOrder();
+            editOrder(getSelectedOrder());
         });
 
         statusBox.addActionListener(e -> {
@@ -59,13 +61,16 @@ public class SalespersonOrderView extends JPanel {
 
 
     }
-
+    private Order getSelectedOrder(){
+        return tableModel.getValue(orderTable.getSelectedRow());
+    }
     private void addOrder(){
         // TODO: Open AddOrderDialog
     }
 
-    private void editOrder(){
+    private void editOrder(Order order){
         // TODO: Open EditOrderDialog
+        EditOrderDialog eoDialog = new EditOrderDialog(order);
     }
 
     private void createUIComponents() {
@@ -78,7 +83,7 @@ public class SalespersonOrderView extends JPanel {
     private void createTable() {
         orderList = OrderFactory.getAllOrders();
         Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_CUSTOMER_ID, OrderTableModel.COLUMN_STATUS_TEXT};
-        OrderTableModel tableModel = new OrderTableModel(orderList, columns);
+        tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
