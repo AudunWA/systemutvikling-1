@@ -1,5 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
+import jdk.nashorn.internal.scripts.JO;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
@@ -25,8 +26,6 @@ import java.util.Properties;
 
 public class AddOrderDialog extends JDialog {
     private Employee employee;
-
-    private boolean addedNewValue;
 
     private JPanel contentPane;
     private JButton buttonOK;
@@ -81,6 +80,15 @@ public class AddOrderDialog extends JDialog {
 
         });
 
+        descriptionText.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (descriptionText.getText().equals("Enter description here")) {
+                    descriptionText.setText("");
+                }
+            }
+        });
+
 // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -100,28 +108,35 @@ public class AddOrderDialog extends JDialog {
     private void onOK() {
 // add your code here
 
-        if (packageTable.getSelectedRow() > -1) {
-            boolean check = true;
-            for (FoodPackage packages : addedList){
-                System.out.println("id" + packages.getFoodPackageId() + "=" + packageTable.getSelectedRow() + "row");
-                if (packages.getFoodPackageId() == (packageTable.getSelectedRow() + 1)){
-                    check = false;
-                }
-            }
-            if (check){
-                addedList.add(foodList.get(packageTable.getSelectedRow()));
-                ((EntityTableModel) addedTable.getModel()).setRows(addedList);
-            } else {
-                JOptionPane.showMessageDialog(this, "This order is already added");
-            }
-        } else if (addedTable.getSelectedRow() > -1){
-            addedList.remove(addedTable.getSelectedRow());
-            ((EntityTableModel) addedTable.getModel()).setRows(addedList);
+        if (packageTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
+            JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
+            packageTable.clearSelection();
+            addedTable.clearSelection();
         } else {
-            JOptionPane.showMessageDialog(this, "Error nothing selected");
+            if (packageTable.getSelectedRow() > -1) {
+                boolean check = true;
+                for (FoodPackage packages : addedList) {
+                    if (packages.getFoodPackageId() == (packageTable.getSelectedRow() + 1)) {
+                        check = false;
+                    }
+                }
+                if (check) {
+                    addedList.add(foodList.get(packageTable.getSelectedRow()));
+                    ((EntityTableModel) addedTable.getModel()).setRows(addedList);
+                    packageTable.clearSelection();
+                } else {
+                    JOptionPane.showMessageDialog(this, "This order is already added.");
+                    packageTable.clearSelection();
+                }
+            } else if (addedTable.getSelectedRow() > -1 && !packageTable.isColumnSelected(1) && !packageTable.isColumnSelected(2)) {
+                addedList.remove(addedTable.getSelectedRow());
+                ((EntityTableModel) addedTable.getModel()).setRows(addedList);
+                addedTable.clearSelection();
+            } else {
+                JOptionPane.showMessageDialog(this, "Please unselect the package list. Do this by clicking with crtl down.");
+                addedTable.clearSelection();
+            }
         }
-
-
     }
 
     private void onAdd(){
@@ -190,6 +205,7 @@ public class AddOrderDialog extends JDialog {
     }
 
     public void createUIComponents() {
+
         // Create date pickers
         UtilDateModel model = new UtilDateModel();
 
@@ -219,8 +235,6 @@ public class AddOrderDialog extends JDialog {
         addedTable = new JTable(addedObjects);
         packageTable.getTableHeader().setReorderingAllowed(false);
 
-
-
     }
 
     public static void main(String[] args) {
@@ -230,6 +244,4 @@ public class AddOrderDialog extends JDialog {
         dialog.setTitle("Order central");
         System.exit(0);
     }
-
-
 }
