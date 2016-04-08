@@ -37,7 +37,7 @@ public class SalespersonCustomerView extends JPanel{
             editCustomer(getSelectedCustomer());
         });
         removeButton.addActionListener(e->{
-            removeCustomer();
+            removeCustomer(getSelectedCustomer());
         });
         refreshButton.addActionListener(e->{
             refresh();
@@ -55,6 +55,7 @@ public class SalespersonCustomerView extends JPanel{
         }
         return null;
     }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
         createTable();
@@ -93,8 +94,14 @@ public class SalespersonCustomerView extends JPanel{
             JOptionPane.showMessageDialog(null, "Please select a row in the customer table");
         }
     }
-    private void removeCustomer(){
+    private void removeCustomer(Customer customer){
         // TODO: Implement a method setting customer status to "Not active"
+        if(customer != null) {
+            // TODO: Fill code here
+
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a row in the customer table");
+        }
     }
     private void refresh(){
         // TODO: Implement method refreshing data

@@ -104,7 +104,25 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
         Customer entity = getValue(row);
         int columnType = getColumnType(column);
         switch(columnType){
-
+            case COLUMN_CUSTOMER_ID :
+                break;
+            case COLUMN_SURNAME :
+                break;
+            case COLUMN_FORENAME :
+                break;
+            case COLUMN_ADDRESS:
+                break;
+            case COLUMN_ACTIVETEXT:
+                entity.setStatus(value.equals("Active"));
+                break;
+            case COLUMN_PHONE:
+                break;
+            case COLUMN_ACTIVE:
+                break;
+            case COLUMN_EMAIL:
+                break;
+            default:
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 }
