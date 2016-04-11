@@ -118,6 +118,7 @@ public class MenuAdministratorView extends JPanel {
         frame.setTitle(WINDOW_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);//Puts window in middle of screen
     }
     private void refreshTable() {
         ((EntityTableModel)dishTable.getModel()).setRows(DishFactory.getAllDishes());

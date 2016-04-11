@@ -80,8 +80,8 @@ PRIMARY KEY (employee_id)
 
 CREATE TABLE hours(
 hours_id INTEGER AUTO_INCREMENT,
-from_time TIMESTAMP NOT NULL,
-to_time TIMESTAMP NOT NULL,
+from_time DATETIME NOT NULL,
+to_time DATETIME NOT NULL,
 PRIMARY KEY (hours_id)
 );
 
@@ -96,13 +96,13 @@ PRIMARY KEY (hours_id, employee_id)
 
 CREATE TABLE ingredient(
 ingredient_id INTEGER AUTO_INCREMENT,
-arrival_date TIMESTAMP NOT NULL,
+arrival_date DATETIME NOT NULL,
 name VARCHAR(32) NOT NULL,
 description TEXT,
 vegetarian BOOLEAN NOT NULL,
 expire_date DATE NOT NULL,
 amount DOUBLE,
-unit VARCHAR(10) NOT NULL, 
+unit VARCHAR(10) NOT NULL,
 PRIMARY KEY (ingredient_id)
 );
 
@@ -192,8 +192,8 @@ CREATE TABLE recurring_order(
 CREATE TABLE _order(
 _order_id INTEGER AUTO_INCREMENT,
 description VARCHAR(20),
-delivery_time TIMESTAMP NOT NULL,
-_order_time TIMESTAMP NOT NULL,
+delivery_time DATETIME NOT NULL,
+_order_time DATETIME NOT NULL,
 portions INTEGER NOT NULL,
 priority BOOLEAN NOT NULL,
 salesperson_id INTEGER,
@@ -202,9 +202,9 @@ rec_order_id INTEGER,
 status TINYINT NOT NULL,
 chauffeur_id INTEGER,
 FOREIGN KEY (rec_order_id) REFERENCES recurring_order(rec_order_id) ON UPDATE CASCADE,
-FOREIGN KEY (salesperson_id) REFERENCES salesperson(employee_id) ON UPDATE CASCADE,
+FOREIGN KEY (salesperson_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
 FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON UPDATE CASCADE,
-FOREIGN key (chauffeur_id) REFERENCES chauffeur(employee_id) ON UPDATE CASCADE,
+FOREIGN key (chauffeur_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
 PRIMARY KEY (_order_id)
 );
 

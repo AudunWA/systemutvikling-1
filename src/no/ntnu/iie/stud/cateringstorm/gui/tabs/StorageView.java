@@ -30,7 +30,7 @@ public class StorageView extends JPanel {
             AddIngredientDialog dialog = new AddIngredientDialog();
             dialog.pack();
             dialog.setVisible(true);
-
+            dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             if(dialog.getAddedNewValue()) {
                 // Refresh data
                 refreshTable();
@@ -71,6 +71,7 @@ public class StorageView extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
     }
 
     private void createUIComponents() {
