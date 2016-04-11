@@ -32,7 +32,7 @@ public class EditCustomerDialog extends JDialog{
         setModal(true);
         getRootPane().setDefaultButton(saveButton);
         saveButton.addActionListener(e->{
-            saveChanges();
+            onOK();
         });
         cancelButton.addActionListener(e->{
             onCancel();
@@ -50,8 +50,8 @@ public class EditCustomerDialog extends JDialog{
         });
 
     }
-
-    private void saveChanges(){
+    //Method when clicking "Save changes" button
+    private void onOK(){
         // TODO: Implement a method sending the saved changes to database
         final int COLUMN_SURNAME = 0;
         final int COLUMN_FORENAME = 1;
@@ -149,6 +149,7 @@ public class EditCustomerDialog extends JDialog{
         Integer[] columns = new Integer[]{ CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL}; // Columns can be changed
         model = new CustomerTableModel(customerList, columns);
         Object[] choices = new Object[model.getColumnCount()];
+
         //Loop to select desired indexes from table model.
         int ctr = 0;
         int unwantedColumn1 = 4, unwantedColumn2 = 6;

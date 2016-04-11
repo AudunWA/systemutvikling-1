@@ -2,8 +2,6 @@ package no.ntnu.iie.stud.cateringstorm.entities.customer;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by Chris on 17.03.2016.
  */
@@ -36,9 +34,13 @@ public class CustomerFactoryTest {
     }
 
     @Test
-    public void testEditCustomer() throws Exception {
+    public void testEditCustomerStatus() throws Exception {
 
-        CustomerFactory.editCustomer(9,false);
+        CustomerFactory.editCustomerStatus(9,false);
 
+    }
+    @Test
+    public void testUpdateCustomer() throws Exception {
+        CustomerFactory.updateCustomer(new Customer(0, "Kirkhorn", "Knut",  "Hornindal", true, "999999","noot@hotmail.com"));
     }
 }
