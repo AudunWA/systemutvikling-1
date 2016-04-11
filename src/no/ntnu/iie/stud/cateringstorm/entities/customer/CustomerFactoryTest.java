@@ -27,9 +27,7 @@ public class CustomerFactoryTest {
     @Test
     public void testCreateCustomer() throws Exception {
 
-        Customer knut = new Customer(0, "Kirkhorn", "Knut",  "Hornindal", true, "999999","noot@hotmail.com");
-
-        CustomerFactory.createCustomer(knut);
+        CustomerFactory.createCustomer("Kirkhorn", "Knut",  "Hornindal", true, "999999","noot@hotmail.com");
 
     }
 
@@ -39,6 +37,7 @@ public class CustomerFactoryTest {
         CustomerFactory.editCustomerStatus(9,false);
 
     }
+
     @Test
     public void testUpdateCustomer() throws Exception {
         CustomerFactory.updateCustomer(new Customer(0, "Kirkhorn", "Knut",  "Hornindal", true, "999999","noot@hotmail.com"));
