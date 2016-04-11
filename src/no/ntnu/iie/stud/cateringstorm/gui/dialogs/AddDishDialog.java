@@ -82,9 +82,7 @@ public class AddDishDialog extends JDialog {
         boolean active = activeStatus.getSelectedIndex()<1;
 
 
-        Dish dish = new Dish(-1, name, description, type, active);
-
-        dish = DishFactory.createDish(dish);
+        Dish dish = DishFactory.createDish(name, description, type, active);
 
         if (dish == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");

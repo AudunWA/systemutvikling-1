@@ -24,12 +24,6 @@ import javax.swing.*;
  * Created by kenan on 01.04.2016.
  */
 public class MenuAdministratorView extends JPanel {
-    private static final String WINDOW_TITLE = "Menu Administrator";
-
-    // Window dimensions
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 400;
-
     private JButton addDishButton;
     private JButton editDishButton;
     private JButton removeDishButton;
@@ -115,13 +109,12 @@ public class MenuAdministratorView extends JPanel {
         JFrame frame = new JFrame();
         frame.add(new MenuAdministratorView());
         frame.setVisible(true);
-        frame.setTitle(WINDOW_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);//Puts window in middle of screen
     }
     private void refreshTable() {
-        ((EntityTableModel)dishTable.getModel()).setRows(DishFactory.getAllDishes());
+        tableModel.setRows(DishFactory.getAllDishes());
     }
 }
 

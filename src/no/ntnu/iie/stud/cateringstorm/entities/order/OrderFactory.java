@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by Audun on 11.03.2016.
  */
 public final class OrderFactory {
-    public static Order newOrder(int orderId) {
+    public static Order getOrder(int orderId) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE `_order_id` = ?")) {
                 statement.setInt(1, orderId);
@@ -61,7 +61,7 @@ public final class OrderFactory {
         int status = result.getInt("status");
         int chauffeurId = result.getInt("chauffeur_id");
 
-        Customer customer = CustomerFactory.viewSingleCustomer(customerId);
+        Customer customer = CustomerFactory.getCustomer(customerId);
         if(customer == null) {
             throw new NullPointerException("customer is null, check customerId.");
         }
@@ -86,52 +86,10 @@ public final class OrderFactory {
             return false;
         }
     }
-    //This method is currently used by ChauffeurOrderTableModel
-    public static String getCustomerName(int customerId){
-        try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT surname, forename FROM customer WHERE customer_id = ?")){
-
-                statement.setInt(1, customerId);
-                statement.executeQuery();
-
-                try (ResultSet result = statement.getResultSet()){
-                    if (result.next()) {
-                        String temp = result.getString("surname");
-                        temp += ", " + result.getString("forename");
-                        return temp;
-                    }
-                }
-
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-    public static String getCustomerAddress(int customerId){
-        try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM customer WHERE customer_id = ?")){
-
-                statement.setInt(1, customerId);
-                statement.executeQuery();
-
-                try (ResultSet result = statement.getResultSet()){
-                    if (result.next()) {
-                        String temp = result.getString("address");
-                        return temp;
-                    }
-                }
-
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public static Order createOrder(String description, Timestamp deliveryTime, int portions, boolean priority,
                                     int salespersonId, int customerId, int chauffeurId, ArrayList<Integer> packageId) {
-        Customer customer = CustomerFactory.viewSingleCustomer(customerId);
+        Customer customer = CustomerFactory.getCustomer(customerId);
         if(customer == null) {
             return null;
         }

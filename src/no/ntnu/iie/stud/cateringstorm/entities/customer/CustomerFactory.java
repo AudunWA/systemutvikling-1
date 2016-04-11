@@ -1,7 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.entities.customer;
 
 import no.ntnu.iie.stud.cateringstorm.database.Database;
-import no.ntnu.iie.stud.cateringstorm.entities.Address;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,11 +35,11 @@ public final class CustomerFactory {
     }
 
     /**
-     * Shows a single customer by customerID
+     * Gets a single customer by ID
      * @param customerId
      * @return Customer
      */
-    public static Customer viewSingleCustomer(int customerId){
+    public static Customer getCustomer(int customerId){
         try (Connection connection = Database.getConnection()){
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customer WHERE customer_id = ?")){
 
@@ -88,8 +87,8 @@ public final class CustomerFactory {
     public static int getIdFromCustomerName(String forename, String surname){
 
         for (int i = 0; i < getAllCustomers().size(); i++){
-            if (viewSingleCustomer(i+1).getSurname().equals(surname) && viewSingleCustomer(i+1).getForename().equals(forename)){
-                return viewSingleCustomer(i+1).getCustomerId();
+            if (getCustomer(i+1).getSurname().equals(surname) && getCustomer(i+1).getForename().equals(forename)){
+                return getCustomer(i+1).getCustomerId();
             }
         }
         return -1;

@@ -21,7 +21,7 @@ public final class EmployeeFactory {
      * @param password
      * @return Employee. if matching username and password
      */
-    public static Employee newEmployee(String username, String password) {
+    public static Employee getEmployee(String username, String password) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM employee WHERE username = ?")) {
                 statement.setString(1, username);
@@ -53,7 +53,7 @@ public final class EmployeeFactory {
      * @param username
      * @return Employee
      */
-    public static Employee newEmployee(String username) {
+    public static Employee getEmployee(String username) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM employee WHERE username = ?")) {
                 statement.setString(1, username);

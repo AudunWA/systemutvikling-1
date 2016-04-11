@@ -13,9 +13,6 @@ import java.util.ArrayList;
  * Created by Audun on 10.03.2016.
  */
 public class ChauffeurOrderView extends JPanel {
-    private static final String WINDOW_TITLE = "Active orders";
-
-
     private JPanel mainPanel;
     private JScrollPane orderPane;
     private JTable orderTable;
@@ -27,7 +24,6 @@ public class ChauffeurOrderView extends JPanel {
     private ComboBoxModel cbModel;
     private JScrollPane scrollPane;
     private static ArrayList<Order> orderList = new ArrayList<Order>();
-    private String[] columnNames = {"OrderId","Customer","Portions","Delivery time","Location","Status"};
 
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
@@ -97,7 +93,6 @@ public class ChauffeurOrderView extends JPanel {
         JFrame frame = new JFrame();
         frame.add(new ChauffeurOrderView());
         frame.setVisible(true);
-        frame.setTitle(WINDOW_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
     }

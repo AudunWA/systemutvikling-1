@@ -13,7 +13,7 @@ public class IngredientFactoryTest {
 
     @Test
     public void testViewSingleIngredient() throws Exception {
-        System.out.println(IngredientFactory.viewSingleIngredient(1));
+        System.out.println(IngredientFactory.getIngredient(1));
 
     }
 
@@ -26,14 +26,14 @@ public class IngredientFactoryTest {
 
     @Test
     public void testInsertNewIngredient() throws Exception {
-        Ingredient ingredient = IngredientFactory.insertNewIngredient("Unit test", "Unit test", 8008135, "testunit", false, new Timestamp(System.currentTimeMillis() - 10*(86400000)), new Date(System.currentTimeMillis() + 10*(86400000)));
+        Ingredient ingredient = IngredientFactory.createIngredient("Unit test", "Unit test", 8008135, "testunit", false, new Timestamp(System.currentTimeMillis() - 10*(86400000)), new Date(System.currentTimeMillis() + 10*(86400000)));
         Assert.assertNotNull(ingredient);
         System.out.println("ingredient = " + ingredient);
     }
 
     @Test
     public void testShowExpired() throws Exception {
-        for (Ingredient ingredient : IngredientFactory.showExpired()){
+        for (Ingredient ingredient : IngredientFactory.getExpiredIngredients()){
             System.out.println(ingredient);
         }
     }
@@ -41,7 +41,7 @@ public class IngredientFactoryTest {
     @Test
     public void testViewAllIngredientByDishId() throws Exception {
 
-        for (Ingredient ingredient : IngredientFactory.viewAllIngredientByDishId(1)) {
+        for (Ingredient ingredient : IngredientFactory.getIngredients(1)) {
 
             System.out.println(ingredient);
         }
@@ -50,13 +50,13 @@ public class IngredientFactoryTest {
 
     @Test
     public void testUpdateIngredientAmount() throws Exception {
-        Ingredient ingredient = IngredientFactory.viewSingleIngredient(1); // Let's say ingredient 1 exists
+        Ingredient ingredient = IngredientFactory.getIngredient(1); // Let's say ingredient 1 exists
         Assert.assertNotNull(ingredient);
         ingredient.incrementAmount();
         double incrementedAmunt = ingredient.getAmount();
         IngredientFactory.updateIngredientAmount(ingredient.getIngredientId(), incrementedAmunt);
 
-        ingredient = IngredientFactory.viewSingleIngredient(ingredient.getIngredientId());
+        ingredient = IngredientFactory.getIngredient(ingredient.getIngredientId());
         Assert.assertNotNull(ingredient);
         Assert.assertEquals(ingredient.getAmount(), incrementedAmunt, 1e-9);
     }

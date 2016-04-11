@@ -93,7 +93,7 @@ public final class FoodPackageFactory {
      * @param dishes A list of the dishes
      * @return A FoodPackage object representing the new food package, or null if an error occurred.
      */
-    public static FoodPackage insertNewFoodPackage(String name, double cost, ArrayList<Dish> dishes) {
+    public static FoodPackage createFoodPackage(String name, double cost, ArrayList<Dish> dishes) {
         if (dishes == null) {
             throw new IllegalArgumentException("dishes cannot be null.");
         }

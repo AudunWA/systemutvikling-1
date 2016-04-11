@@ -33,10 +33,6 @@ public class OrderTableModel extends EntityTableModel<Order> {
         super(rows, columns);
     }
 
-    public String getCustomerAddressModel(int row){
-        return OrderFactory.getCustomerAddress(row);
-    }
-
     @Override
     public String getColumnName(int column) {
         int columnType = getColumnType(column);
@@ -103,7 +99,7 @@ public class OrderTableModel extends EntityTableModel<Order> {
             case COLUMN_STATUS_TEXT:
                 return value.deliveryStatus();
             case COLUMN_ADDRESS:
-                return getCustomerAddressModel(rowIndex);
+                return value.getCustomerAddress();
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }

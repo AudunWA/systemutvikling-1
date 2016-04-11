@@ -15,9 +15,8 @@ import static org.junit.Assert.*;
 public class OrderFactoryTest {
 
     @Test
-    public void testNewOrder() throws Exception {
-        //Assert.assertNotNull(OrderFactory.newOrder(1));
-        System.out.println(OrderFactory.getAllOrders().get(1));
+    public void testGetOrder() throws Exception {
+        Assert.assertNotNull(OrderFactory.getOrder(1));
     }
 
     @Test
@@ -35,18 +34,6 @@ public class OrderFactoryTest {
         OrderFactory.setOrderState(2, 2);
         OrderFactory.setOrderState(3, 0);
         OrderFactory.setOrderState(4, 1);
-
-    }
-
-    @Test
-    public void testGetCustomerName() throws Exception {
-        System.out.println(OrderFactory.getCustomerName(5));
-
-    }
-
-    @Test
-    public void testGetCustomerAddress() throws Exception {
-        System.out.println(OrderFactory.getCustomerAddress(5));
 
     }
 

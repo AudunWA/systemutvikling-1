@@ -15,8 +15,6 @@ import java.util.ArrayList;
  * Created by Audun on 10.03.2016.
  */
 public class ChefOrderView extends JPanel {
-    private static final String WINDOW_TITLE = "Active orders";
-
     private JPanel mainPanel;
     private JScrollPane scrollPane;
     private JScrollPane orderPane;
@@ -28,9 +26,7 @@ public class ChefOrderView extends JPanel {
     private JPanel cbPanel;
     private JButton refreshButton;
     private ArrayList<Order> orderList = new ArrayList<>();
-    private String[] columnNames = {
-            "OrderId","Description","Portions","Delivery time","Priority","Status"
-    };
+
     public ChefOrderView() {
         add(mainPanel);
         viewButton.addActionListener(e -> {
@@ -95,7 +91,6 @@ public class ChefOrderView extends JPanel {
         JFrame frame = new JFrame();
         frame.add(new ChefOrderView());
         frame.setVisible(true);
-        frame.setTitle(WINDOW_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);

@@ -1,9 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
-import jdk.nashorn.internal.scripts.JO;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.SimpleDateFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -11,7 +9,6 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -179,7 +176,7 @@ public class EditOrderDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        EditOrderDialog dialog = new EditOrderDialog(OrderFactory.newOrder(4));
+        EditOrderDialog dialog = new EditOrderDialog(OrderFactory.getOrder(4));
         dialog.pack();
         dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         dialog.setVisible(true);

@@ -15,12 +15,12 @@ public class EmployeeFactoryTest {
     @Test
     public void testNewEmployee() throws Exception {
         // Existing employee
-        Employee employee = EmployeeFactory.newEmployee("nootnoot");
+        Employee employee = EmployeeFactory.getEmployee("nootnoot");
         Assert.assertNotNull(employee);
         System.out.println(employee);
 
         // Non-existing employee
-        employee = EmployeeFactory.newEmployee("nonexisting");
+        employee = EmployeeFactory.getEmployee("nonexisting");
         Assert.assertNull(employee);
         System.out.println(employee);
     }
@@ -28,12 +28,12 @@ public class EmployeeFactoryTest {
     @Test
     public void testLogin() throws Exception {
         // Valid credentials
-        Employee employee = EmployeeFactory.newEmployee("nootnoot", "testPassword123");
+        Employee employee = EmployeeFactory.getEmployee("nootnoot", "testPassword123");
         Assert.assertNotNull(employee);
         System.out.println(employee);
 
         // Invalid credentials
-        employee = EmployeeFactory.newEmployee("nootnoot", "invalidPassword");
+        employee = EmployeeFactory.getEmployee("nootnoot", "invalidPassword");
         Assert.assertNull(employee);
     }
 

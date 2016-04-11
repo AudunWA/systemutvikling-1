@@ -16,8 +16,6 @@ import java.util.ArrayList;
  * Created by EliasBrattli on 06/04/2016.
  */
 public class SalespersonCustomerView extends JPanel{
-    private static final String WINDOW_TITLE = "Customer Administration";
-
     private JPanel mainPanel;
     private JTable customerTable;
     private JScrollPane tablePane;
@@ -115,7 +113,7 @@ public class SalespersonCustomerView extends JPanel{
     }
     private void refresh(){
         // TODO: Implement method refreshing data
-        ((EntityTableModel)customerTable.getModel()).setRows(CustomerFactory.getAllCustomers());
+        tableModel.setRows(CustomerFactory.getAllCustomers());
     }
     public CustomerTableModel getTableModel(){
         return tableModel;
@@ -127,7 +125,6 @@ public class SalespersonCustomerView extends JPanel{
         JFrame frame = new JFrame();
         frame.add(new SalespersonCustomerView());
         frame.setVisible(true);
-        frame.setTitle(WINDOW_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);

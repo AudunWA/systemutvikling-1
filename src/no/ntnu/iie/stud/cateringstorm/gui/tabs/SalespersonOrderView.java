@@ -17,13 +17,6 @@ import java.util.ArrayList;
  * Created by kenan on 30.03.2016.
  */
 public class SalespersonOrderView extends JPanel {
-
-    private static final String WINDOW_TITLE = "Menu Administrator";
-
-    // Window dimensions
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 400;
-
     private JPanel mainPanel;
     private JScrollPane orderPane;
     private JButton viewButton;
@@ -145,7 +138,7 @@ public class SalespersonOrderView extends JPanel {
     }
 
     private void refresh() {
-        ((EntityTableModel)orderTable.getModel()).setRows(OrderFactory.getAllOrders());
+        tableModel.setRows(OrderFactory.getAllOrders());
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
     }
 
@@ -155,9 +148,8 @@ public class SalespersonOrderView extends JPanel {
         final int WIDTH = 1300;
         final int HEIGHT = 600;
         JFrame frame = new JFrame();
-        frame.add(new SalespersonOrderView(EmployeeFactory.newEmployee("chechter")));
+        frame.add(new SalespersonOrderView(EmployeeFactory.getEmployee("chechter")));
         frame.setVisible(true);
-        frame.setTitle(WINDOW_TITLE);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);

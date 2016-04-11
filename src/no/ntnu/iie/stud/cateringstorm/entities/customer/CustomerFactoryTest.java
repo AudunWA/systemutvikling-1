@@ -10,7 +10,7 @@ public class CustomerFactoryTest {
     @Test
     public void testViewSingleCustomer() throws Exception {
 
-        System.out.println(CustomerFactory.viewSingleCustomer(1).getForename());
+        System.out.println(CustomerFactory.getCustomer(1).getForename());
 
     }
 

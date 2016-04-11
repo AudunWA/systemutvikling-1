@@ -9,12 +9,6 @@ import javax.swing.table.DefaultTableModel;
  * Created by EliasBrattli on 16/03/2016.
  */
 public class OrderInfoView extends JPanel {
-    private static final String WINDOW_TITLE = "Information";
-
-    //Window dimensions
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 700;
-
     //Components
     private JTable ingredientTable;
     private JPanel mainPanel;
