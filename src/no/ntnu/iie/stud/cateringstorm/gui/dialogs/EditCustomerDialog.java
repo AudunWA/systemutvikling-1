@@ -139,7 +139,6 @@ public class EditCustomerDialog extends JDialog{
        return choiceBox.getSelectedIndex();
     }
     private void emptyTextField(String text){
-        // TODO: Implement a method emptying the text field
         if(inputField.getText().equals(text)) {
             inputField.setText("");
         }
@@ -173,13 +172,14 @@ public class EditCustomerDialog extends JDialog{
         createComboBox();
         createTextField();
     }
-
+    //Test method
     public static void main(String[] args) {
         final int WIDTH = 300;
         final int HEIGHT = 200;
         EditCustomerDialog dialog = new EditCustomerDialog(null);
         dialog.pack();
         dialog.setSize(WIDTH,HEIGHT);
+        dialog.setLocationRelativeTo(dialog.getParent());
         dialog.setVisible(true);
         System.exit(0);
     }

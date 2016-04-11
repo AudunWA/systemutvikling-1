@@ -78,7 +78,13 @@ public class SalespersonCustomerView extends JPanel{
         // TODO: Implement AddCustomerDialog
         AddCustomerDialog acDialog = new AddCustomerDialog();
         acDialog.pack();
+        final int WIDTH = 350, HEIGHT = 500;
+        acDialog.setSize(WIDTH,HEIGHT);
         acDialog.setVisible(true);
+        acDialog.setLocationRelativeTo(acDialog.getParent());
+        if(acDialog.hasAddedNewValue()){
+            refresh();
+        }
     }
     private void editCustomer(Customer customer){
         // TODO: Implement class EditCustomerDialog
@@ -88,8 +94,12 @@ public class SalespersonCustomerView extends JPanel{
             final int HEIGHT = 200;
             ecDialog.pack();
             ecDialog.setSize(WIDTH, HEIGHT);
+            ecDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             ecDialog.setVisible(true);
-            System.exit(0);
+            ecDialog.setLocationRelativeTo(ecDialog.getParent());
+            if(ecDialog.getAddedNewValue()){
+                refresh();
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Please select a row in the customer table");
         }
@@ -120,5 +130,6 @@ public class SalespersonCustomerView extends JPanel{
         frame.setTitle(WINDOW_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
     }
 }

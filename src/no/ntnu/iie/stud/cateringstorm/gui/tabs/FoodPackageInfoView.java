@@ -69,6 +69,7 @@ public class FoodPackageInfoView extends JPanel {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
     }
 
     private void createUIComponents() {

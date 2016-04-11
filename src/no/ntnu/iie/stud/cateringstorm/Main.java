@@ -21,5 +21,6 @@ public class Main {
 
         LoginView loginVIew = new LoginView();
         loginVIew.setVisible(true);
+        loginVIew.setLocationRelativeTo(null);
     }
 }

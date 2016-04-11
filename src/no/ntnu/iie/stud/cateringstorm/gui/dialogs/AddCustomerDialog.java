@@ -24,11 +24,12 @@ public class AddCustomerDialog extends JDialog{
     private JLabel surnameLabel;
     private JLabel phoneLabel;
     private JLabel emailLabel;
-
+    private boolean addedNewValue;
     public AddCustomerDialog(){
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(saveButton);
+        addedNewValue = false;
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
@@ -86,7 +87,7 @@ public class AddCustomerDialog extends JDialog{
             return;
         }
         Customer customer = CustomerFactory.createCustomer(surname, forename,address,true,phone,email);
-
+        addedNewValue = true;
         if (customer == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
         } else {
@@ -95,7 +96,9 @@ public class AddCustomerDialog extends JDialog{
         }
         dispose();
     }
-
+    public boolean hasAddedNewValue(){
+        return addedNewValue;
+    }
     private void onCancel() {
         dispose();
     }
