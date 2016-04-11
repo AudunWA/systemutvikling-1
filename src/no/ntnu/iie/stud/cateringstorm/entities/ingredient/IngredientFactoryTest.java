@@ -18,8 +18,8 @@ public class IngredientFactoryTest {
     }
 
     @Test
-    public void testViewAllIngredient() throws Exception {
-        for (Ingredient ingredient : IngredientFactory.viewAllIngredient()){
+    public void testGetAllIngredients() throws Exception {
+        for (Ingredient ingredient : IngredientFactory.getAllIngredients()){
             System.out.println(ingredient);
         }
     }
