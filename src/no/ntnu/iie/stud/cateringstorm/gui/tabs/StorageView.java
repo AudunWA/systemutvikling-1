@@ -20,6 +20,8 @@ public class StorageView extends JPanel {
     private JButton incrementSupply;
     private JTextField textField1;
     private JButton addIngredientButton;
+    private JTextField searchTextField;
+    private JButton searchButton;
 
     public StorageView() {
         add(mainPanel);
@@ -51,6 +53,16 @@ public class StorageView extends JPanel {
                 // TODO: Log error?
             }
         });
+
+        searchButton.addActionListener(e -> {
+            ArrayList<Ingredient> newRows;
+            if(searchTextField.getText().trim().equals("")) {
+                newRows = IngredientFactory.getAllIngredients();
+            } else {
+                newRows = IngredientFactory.getIngredientsByQuery(searchTextField.getText());
+            }
+            ((EntityTableModel)ingredientTable.getModel()).setRows(newRows);
+        });
     }
 
     public static void main(String[] args) {
@@ -66,7 +78,7 @@ public class StorageView extends JPanel {
     }
 
     private void createTable(){
-        ArrayList<Ingredient> ingredients = IngredientFactory.viewAllIngredient();
+        ArrayList<Ingredient> ingredients = IngredientFactory.getAllIngredients();
         Integer[] columns = new Integer[] { IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_EXPIRE_DATE, IngredientTableModel.COLUMN_AMOUNT };
 
         IngredientTableModel tableModel = new IngredientTableModel(ingredients, columns);
@@ -75,6 +87,6 @@ public class StorageView extends JPanel {
     }
 
     private void refreshTable() {
-        ((EntityTableModel)ingredientTable.getModel()).setRows(IngredientFactory.viewAllIngredient());
+        ((EntityTableModel)ingredientTable.getModel()).setRows(IngredientFactory.getAllIngredients());
     }
 }

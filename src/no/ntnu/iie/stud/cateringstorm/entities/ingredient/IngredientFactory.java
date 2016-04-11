@@ -61,13 +61,39 @@ public final class IngredientFactory {
      * Creates a list of ingredients
      * @return an arrayylist containing all ingredients in the SQL table ingrdient
      */
-    public static ArrayList<Ingredient> viewAllIngredient(){
+    public static ArrayList<Ingredient> getAllIngredients(){
 
         ArrayList<Ingredient> temp = new ArrayList<>();
 
         try (Connection connection = Database.getConnection()){
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM ingredient")){
 
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()){
+
+                        temp.add(createIngredientFromResultSet(result));
+                    }
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
+    /**
+     * Finds ingredients with name.
+     * @return An ArrayList containing all ingredients in the SQL table ingrdient
+     */
+    public static ArrayList<Ingredient> getIngredientsByQuery(String searchQuery){
+
+        ArrayList<Ingredient> temp = new ArrayList<>();
+
+        try (Connection connection = Database.getConnection()){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM ingredient WHERE name LIKE ?")){
+                statement.setString(1, '%' + searchQuery + '%');
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()){
