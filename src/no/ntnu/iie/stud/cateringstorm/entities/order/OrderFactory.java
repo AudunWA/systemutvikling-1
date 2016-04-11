@@ -181,7 +181,7 @@ public final class OrderFactory {
                         statement.setInt(2, numbers);
                         statement.addBatch();
                     }
-                    statement.executeBatch();
+                        statement.executeBatch();
                 }
             } catch (SQLException e){
                 connection.rollback();
@@ -199,6 +199,77 @@ public final class OrderFactory {
 
         Order order = new Order(generatedId, description, deliveryTime, orderTime, portions, priority, salespersonId, customer, 0, 1, 0);
         return order;
+    }
+
+    public static boolean setOrderDate(int orderId, Timestamp newDate){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET delivery_time = ? WHERE _order_id = ?")) {
+
+                statement.setTimestamp(1, newDate);
+                statement.setInt(2, orderId);
+
+                statement.execute();
+                return true;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static boolean setOrderPortions(int orderId, int portions){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET portions = ? WHERE _order_id = ?")) {
+
+                statement.setInt(1, portions);
+                statement.setInt(2, orderId);
+
+                statement.execute();
+                return true;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static boolean setOrderDescription(int orderId, String description){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET description = ? WHERE _order_id = ?")) {
+
+                statement.setString(1, description);
+                statement.setInt(2, orderId);
+
+                statement.execute();
+                return true;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static boolean setOrderPriority(int orderID, boolean priority){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET priority = ? WHERE _order_id = ?")) {
+
+                statement.setBoolean(1, priority);
+                statement.setInt(2, orderID);
+
+                statement.execute();
+                return true;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

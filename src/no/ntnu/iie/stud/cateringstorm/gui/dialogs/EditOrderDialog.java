@@ -1,14 +1,22 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
+import jdk.nashorn.internal.scripts.JO;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.util.SimpleDateFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Properties;
 
 public class EditOrderDialog extends JDialog {
     private JPanel contentPane;
@@ -16,6 +24,7 @@ public class EditOrderDialog extends JDialog {
     private JComboBox columnBox;
     private JButton saveChangesButton;
     private JButton cancelButton;
+    private JDatePickerImpl dateSelect;
     private OrderTableModel orderTableModel;
 
     private Order order;
@@ -59,7 +68,70 @@ public class EditOrderDialog extends JDialog {
 
     private void onOK() {
 // add your code here
-        dispose();
+        boolean changed = false;
+        switch (columnBox.getSelectedIndex()) {
+            case 0:
+                if (textField1.getText().equals("True") || textField1.getText().equals("true")) {
+                    OrderFactory.setOrderPriority(order.getOrderId(), true);
+                    changed = true;
+                } else if (textField1.getText().equals("False") || textField1.getText().equals("false")) {
+                    OrderFactory.setOrderPriority(order.getOrderId(), false);
+                    changed = true;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please enter either true or false for this field.");
+                }
+                break;
+            case 1:
+                String temp = textField1.getText();
+                if (temp != null || !temp.isEmpty()) {
+                    try {
+                        Integer parsedText = Integer.parseInt(temp);
+                        OrderFactory.setOrderState(order.getOrderId(), parsedText);
+                        changed = true;
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(this, "Please only input numbers for this field");
+                    }
+                    break;
+                }
+                JOptionPane.showMessageDialog(this, "Please enter a number");
+                break;
+            case 2:
+                System.out.println("Date change");
+                Date tempDate = (Date) dateSelect.getModel().getValue();
+                Timestamp deliverDate = new Timestamp(tempDate.getTime());
+                OrderFactory.setOrderDate(order.getOrderId(), deliverDate);
+                changed = true;
+                break;
+            case 3:
+                //TODO Portions
+                String portionText = textField1.getText();
+                if (portionText != null || !portionText.isEmpty()) {
+                    try {
+                        Integer parsedText = Integer.parseInt(portionText);
+                        OrderFactory.setOrderPortions(order.getOrderId(), parsedText);
+                        changed = true;
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(this, "Please only input numbers for this field");
+                    }
+                    break;
+                }
+                JOptionPane.showMessageDialog(this, "Please enter a number");
+                break;
+
+            case 4:
+
+                String desc = textField1.getText();
+                OrderFactory.setOrderDescription(order.getOrderId(), desc);
+                changed = true;
+                break;
+
+            default:
+                break;
+
+        }
+        if (changed){
+            JOptionPane.showMessageDialog(this, "Edit successful");
+        }
     }
 
     private void onCancel() {
@@ -83,15 +155,29 @@ public class EditOrderDialog extends JDialog {
         columnBox.setSelectedIndex(0);
     }
 
+    private void createDatePicker(){
+        UtilDateModel model = new UtilDateModel();
+
+        // Dunno
+        Properties p = new Properties();
+        p.put("text.today", "Today");
+        p.put("text.month", "Month");
+        p.put("text.year", "Year");
+
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+        dateSelect = new JDatePickerImpl(datePanel, new SimpleDateFormatter());
+    }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
 
         createComboBox();
+        createDatePicker();
 
     }
 
     public static void main(String[] args) {
-        EditOrderDialog dialog = new EditOrderDialog(OrderFactory.getAllOrders().get(2));
+        EditOrderDialog dialog = new EditOrderDialog(OrderFactory.newOrder(4));
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
