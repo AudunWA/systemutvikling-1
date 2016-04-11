@@ -139,7 +139,6 @@ public class EditCustomerDialog extends JDialog{
        return choiceBox.getSelectedIndex();
     }
     private void emptyTextField(String text){
-        // TODO: Implement a method emptying the text field
         if(inputField.getText().equals(text)) {
             inputField.setText("");
         }

@@ -26,7 +26,6 @@ public class HomeView extends JPanel {
 
         image = new JPanel(true);
         image.add(new JLabel(new ImageIcon("CSChefTekst.png")));
-
     }
 
     private void createUIComponents() {

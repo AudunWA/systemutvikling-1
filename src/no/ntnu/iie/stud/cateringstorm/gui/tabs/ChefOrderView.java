@@ -84,7 +84,7 @@ public class ChefOrderView extends JPanel {
         }
     }
     private void viewOrder(){
-        // TODO: Implement method opening a new tab, allowing user to view more information of a single order
+        // TODO: Implement method opening a new tab DishInfoView, allowing user to view more information of a single order
     }
     private void refresh(){
         //  TODO: Implement a method updating table for new orders, and removing changed orders from table.
@@ -98,5 +98,6 @@ public class ChefOrderView extends JPanel {
         frame.setTitle(WINDOW_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
     }
 }
