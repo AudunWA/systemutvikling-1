@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.entities.customer;
 
 import no.ntnu.iie.stud.cateringstorm.database.Database;
+import no.ntnu.iie.stud.cateringstorm.entities.Address;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -97,21 +98,20 @@ public final class CustomerFactory {
 
     /**
      * Inserts a customer into the SQL table customer. Takes a Customer object as arguement
-     * @param newCustomer
+     * @param surname, forename, address, active, phone, email
      * @return Customer
      */
-    public static Customer createCustomer(Customer newCustomer){
+    public static Customer createCustomer(String surname, String forename, String address, boolean active, String phone, String email){
 
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS)){
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO customer VALUES(DEFAULT,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS)){
 
-                statement.setInt(1, newCustomer.getCustomerId());
-                statement.setString(2, newCustomer.getSurname());
-                statement.setString(3, newCustomer.getForename());
-                statement.setString(4, newCustomer.getAddress());
-                statement.setBoolean(5, newCustomer.isActive());
-                statement.setString(6,newCustomer.getPhone());
-                statement.setString(7,newCustomer.getEmail());
+                statement.setString(1, surname);
+                statement.setString(2, forename);
+                statement.setString(3, address);
+                statement.setBoolean(4, active);
+                statement.setString(5,phone);
+                statement.setString(6,email);
 
                 int affectedRows = statement.executeUpdate();
                 if (affectedRows == 0) {
@@ -127,7 +127,7 @@ public final class CustomerFactory {
                     }
                 }
 
-                Customer customer = new Customer(generatedId, newCustomer.getForename(), newCustomer.getSurname(), newCustomer.getAddress(),newCustomer.isActive(), newCustomer.getPhone(),newCustomer.getEmail());
+                Customer customer = new Customer(generatedId, forename, surname, address,active, phone,email);
                 //statement.execute();
                 return customer;
             }
@@ -169,8 +169,8 @@ public final class CustomerFactory {
                 statement.setString(3,customer.getAddress());
                 statement.setBoolean(4,customer.isActive());
                 statement.setString(5,customer.getPhone());
-                statement.setString(7,customer.getEmail());
-                statement.setInt(8,customer.getCustomerId());
+                statement.setString(6,customer.getEmail());
+                statement.setInt(7,customer.getCustomerId());
                 return statement.executeUpdate();
             }
         } catch (SQLException e){
