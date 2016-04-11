@@ -173,13 +173,14 @@ public class EditCustomerDialog extends JDialog{
         createComboBox();
         createTextField();
     }
-
+    //Test method
     public static void main(String[] args) {
         final int WIDTH = 300;
         final int HEIGHT = 200;
         EditCustomerDialog dialog = new EditCustomerDialog(null);
         dialog.pack();
         dialog.setSize(WIDTH,HEIGHT);
+        dialog.setLocationRelativeTo(dialog.getParent());
         dialog.setVisible(true);
         System.exit(0);
     }

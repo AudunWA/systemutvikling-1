@@ -28,7 +28,7 @@ public class StorageView extends JPanel {
             AddIngredientDialog dialog = new AddIngredientDialog();
             dialog.pack();
             dialog.setVisible(true);
-
+            dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             if(dialog.getAddedNewValue()) {
                 // Refresh data
                 refreshTable();
