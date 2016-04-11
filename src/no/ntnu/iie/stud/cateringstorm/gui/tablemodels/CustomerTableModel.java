@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
+ * Table model designed to manage contents of JTable in SalespersonCustomerView
  * Created by EliasBrattli on 06/04/2016.
  */
 public class CustomerTableModel extends EntityTableModel<Customer>{

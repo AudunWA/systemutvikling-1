@@ -143,7 +143,7 @@ public final class CustomerFactory {
      * @param active
      * @return int
      */
-    public static int editCustomer(int customerId, boolean active){
+    public static int editCustomerStatus(int customerId, boolean active){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.customer SET active = ? WHERE customer.customer_id = ?")) {
 
@@ -164,12 +164,13 @@ public final class CustomerFactory {
     public static int updateCustomer(Customer customer){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE customer SET  surname = ?,forename = ?, address = ?, active = ?, phone = ?, email = ? WHERE customer_id = ?")) {
-                statement.setString(2,customer.getSurname());
-                statement.setString(3,customer.getForename());
-                statement.setString(4,customer.getAddress());
-                statement.setBoolean(5,customer.isActive());
-                statement.setString(6,customer.getPhone());
+                statement.setString(1,customer.getSurname());
+                statement.setString(2,customer.getForename());
+                statement.setString(3,customer.getAddress());
+                statement.setBoolean(4,customer.isActive());
+                statement.setString(5,customer.getPhone());
                 statement.setString(7,customer.getEmail());
+                statement.setInt(8,customer.getCustomerId());
                 return statement.executeUpdate();
             }
         } catch (SQLException e){
