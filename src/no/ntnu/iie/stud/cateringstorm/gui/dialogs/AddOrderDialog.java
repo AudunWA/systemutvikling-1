@@ -142,66 +142,94 @@ public class AddOrderDialog extends JDialog {
     private void onAdd(){
 
         int customerIndex = customerList.getSelectedIndex();
-        Customer customer = CustomerFactory.viewSingleCustomer(customerIndex + 1);
-        String customerForename = customer.getForename();
-        String customerSurname = customer.getSurname();
-        int customerId = CustomerFactory.getIdFromCustomerName(customerForename, customerSurname);
+        if (customerIndex == CustomerFactory.getAllCustomers().size()){
+            AddCustomerDialog add = new AddCustomerDialog();
+            final int WIDTH = 500;
+            final int HEIGHT = 400;
+            add.pack();
+            add.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            add.setSize(WIDTH, HEIGHT);
+            add.setLocationRelativeTo(add.getParent());
+            add.setVisible(true);
+            if(add.hasAddedNewValue()){
+                System.out.println("added");
+                customerList.addItem(new String(CustomerFactory.viewSingleCustomer(CustomerFactory.getAllCustomers().size()).getSurname() + ", " + CustomerFactory.viewSingleCustomer(CustomerFactory.getAllCustomers().size()).getForename()));
+                customerList.removeItem("New customer");
+                customerList.addItem("New customer");
+            }
+        } else {
+            Customer customer = CustomerFactory.viewSingleCustomer(customerIndex + 1);
+            String customerForename = customer.getForename();
+            String customerSurname = customer.getSurname();
+            int customerId = CustomerFactory.getIdFromCustomerName(customerForename, customerSurname);
 
-        String description = descriptionText.getText();
+            String description = descriptionText.getText();
+            if (description.length() > 10){
+                JOptionPane.showMessageDialog(this, "The description is too long");
+                return;
+            }
 
-        int portions = (int)portionsSlider.getValue();
+            int portions = (int) portionsSlider.getValue();
 
-        if (portions < 1) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid portion amount");
-            return;
-        }
+            if (portions < 1) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid portion amount");
+                return;
+            }
 
-        boolean priority = priorityBox.isSelected();
+            boolean priority = priorityBox.isSelected();
 
-        Date temp = (Date)dateSelect.getModel().getValue();
-        Timestamp deliverDate = new Timestamp(temp.getTime());
-        if (deliverDate == null){
-            JOptionPane.showMessageDialog(this, "Please fill in a delivery date.");
-            return;
-        } else if (!deliverDate.after(new Date(System.currentTimeMillis()))){
-            JOptionPane.showMessageDialog(this, "Error the delivery date is before current date.");
-            return;
-        }
+            Date temp = (Date) dateSelect.getModel().getValue();
+            Timestamp deliverDate = new Timestamp(temp.getTime());
+            if (deliverDate == null) {
+                JOptionPane.showMessageDialog(this, "Please fill in a delivery date.");
+                return;
+            } else if (!deliverDate.after(new Date(System.currentTimeMillis()))) {
+                JOptionPane.showMessageDialog(this, "Error the delivery date is before current date.");
+                return;
+            }
 
 
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
-        ArrayList<Integer> test = new ArrayList<>();
-        test.add(packageTable.getSelectedRow() + 1);
+            ArrayList<Integer> test = new ArrayList<>();
+            test.add(packageTable.getSelectedRow() + 1);
 
-        orders.add(new Order(0, description, deliverDate, currentTime, portions, priority, employee.getEmployeeId(), CustomerFactory.viewSingleCustomer(customerId), 0, 1, 0));
+            orders.add(new Order(0, description, deliverDate, currentTime, portions, priority, employee.getEmployeeId(), CustomerFactory.viewSingleCustomer(customerId), 0, 1, 0));
 
-        int check = OrderFactory.getAllOrders().size();
+            int check = OrderFactory.getAllOrders().size();
 
-        ArrayList<Integer> packages = new ArrayList<>();
-        for (int k = 0; k < addedList.size(); k++){
-            packages.add(addedList.get(k).getFoodPackageId());
-        }
+            ArrayList<Integer> packages = new ArrayList<>();
+            for (int k = 0; k < addedList.size(); k++) {
+                packages.add(addedList.get(k).getFoodPackageId());
+            }
 
-        if (packages.size() < 1){
-            JOptionPane.showMessageDialog(this, "Please add package(s)");
-            return;
-        }
+            if (packages.size() < 1) {
+                JOptionPane.showMessageDialog(this, "Please add package(s)");
+                return;
+            }
 
-        OrderFactory.createOrder(description, deliverDate, portions,
-                priority, employee.getEmployeeId(),
-                customerId, 0, packages);
+            OrderFactory.createOrder(description, deliverDate, portions,
+                    priority, employee.getEmployeeId(),
+                    customerId, 0, packages);
 
-        if (OrderFactory.getAllOrders().size() > check){
-            JOptionPane.showMessageDialog(this, "Add successful");
-            addedList = new ArrayList<>();
-            ((EntityTableModel)addedTable.getModel()).setRows(addedList);
+            if (OrderFactory.getAllOrders().size() > check) {
+                JOptionPane.showMessageDialog(this, "Add successful");
+                addedList = new ArrayList<>();
+                ((EntityTableModel) addedTable.getModel()).setRows(addedList);
+            }
         }
     }
 
     private void onCancel() {
 // add your code here if necessary
         dispose();
+    }
+
+    private void createComboBox(){
+        customerList = new JComboBox();
+        for (int i = 0; i < CustomerFactory.getAllCustomers().size(); i++) {
+            customerList.addItem(new String (CustomerFactory.viewSingleCustomer(i+1).getSurname()) + ", " + CustomerFactory.viewSingleCustomer(i+1).getForename());
+        }
     }
 
     public void createUIComponents() {
@@ -218,10 +246,8 @@ public class AddOrderDialog extends JDialog {
         JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
         dateSelect = new JDatePickerImpl(datePanel, new SimpleDateFormatter());
 
-        customerList = new JComboBox();
-        for (int i = 0; i < CustomerFactory.getAllCustomers().size(); i++) {
-            customerList.addItem(new String (CustomerFactory.viewSingleCustomer(i+1).getSurname()) + ", " + CustomerFactory.viewSingleCustomer(i+1).getForename());
-        }
+        createComboBox();
+
         //TODO make the combo box open add new customer when selected
         customerList.addItem(new String("New customer"));
 
