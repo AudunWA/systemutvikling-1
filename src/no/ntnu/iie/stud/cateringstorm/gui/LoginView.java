@@ -42,10 +42,10 @@ public class LoginView extends JFrame {
                 JOptionPane.showMessageDialog(this, "Login attempt failed!");
                 return;
             } else {
-                setVisible(false);
-                dispose();
                 JOptionPane.showMessageDialog(this, "Hello, " + employee.getFullName() + "!");
                 employee.onSuccessfulLogin();
+                setVisible(false);
+                dispose();
             }
         });
         pack();
