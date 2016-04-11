@@ -202,9 +202,9 @@ rec_order_id INTEGER,
 status TINYINT NOT NULL,
 chauffeur_id INTEGER,
 FOREIGN KEY (rec_order_id) REFERENCES recurring_order(rec_order_id) ON UPDATE CASCADE,
-FOREIGN KEY (salesperson_id) REFERENCES salesperson(employee_id) ON UPDATE CASCADE,
+FOREIGN KEY (salesperson_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
 FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON UPDATE CASCADE,
-FOREIGN key (chauffeur_id) REFERENCES chauffeur(employee_id) ON UPDATE CASCADE,
+FOREIGN key (chauffeur_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
 PRIMARY KEY (_order_id)
 );
 
