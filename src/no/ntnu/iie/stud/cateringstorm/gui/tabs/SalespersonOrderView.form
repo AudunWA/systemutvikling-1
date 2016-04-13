@@ -39,7 +39,7 @@
           </component>
         </children>
       </grid>
-      <scrollpane id="5cf12" binding="scrollPane" custom-create="true">
+      <scrollpane id="5cf12">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>

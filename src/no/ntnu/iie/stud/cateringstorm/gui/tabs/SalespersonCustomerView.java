@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class SalespersonCustomerView extends JPanel{
     private JPanel mainPanel;
     private JTable customerTable;
-    private JScrollPane tablePane;
     private JButton addButton;
     private JButton editButton;
     private JPanel buttonPanel;
@@ -27,7 +26,9 @@ public class SalespersonCustomerView extends JPanel{
     private CustomerTableModel tableModel;
 
     public SalespersonCustomerView(){
-        add(mainPanel);
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
+
         addButton.addActionListener(e->{
             addCustomer();
         });
@@ -57,7 +58,6 @@ public class SalespersonCustomerView extends JPanel{
     private void createUIComponents() {
         // TODO: place custom component creation code here
         createTable();
-        setScrollPane();
     }
     public void createTable() {
         ArrayList<Customer> customerList = CustomerFactory.getAllCustomers();
@@ -67,11 +67,7 @@ public class SalespersonCustomerView extends JPanel{
         customerTable.getTableHeader().setReorderingAllowed(false);
         customerTable.setFillsViewportHeight(true);
     }
-    //Method used to set size for scroll pane containing JTable
-    private void setScrollPane(){
-        tablePane = new JScrollPane(customerTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        tablePane.setPreferredSize(new Dimension(1000,700));
-    }
+
     private void addCustomer(){
         // TODO: Implement AddCustomerDialog
         AddCustomerDialog acDialog = new AddCustomerDialog();

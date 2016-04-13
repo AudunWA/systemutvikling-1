@@ -9,6 +9,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -26,8 +27,9 @@ public class FoodPackageInfoView extends JPanel {
 
     public FoodPackageInfoView(FoodPackage foodPackage) {
         this.foodPackage = foodPackage;
-        add(mainPanel);
 
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
 
         viewPackageButton.addActionListener(e -> {
 

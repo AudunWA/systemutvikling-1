@@ -3,6 +3,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * GUI for the employee home screen.
@@ -18,7 +19,10 @@ public class HomeView extends JPanel {
 
     public HomeView(Employee employee) {
         this.employee = employee;
-        add(mainPanel);
+
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
+
         welcomeLabel.setText(welcomeLabel.getText().replace("%name%", employee.getForename()));
     }
 

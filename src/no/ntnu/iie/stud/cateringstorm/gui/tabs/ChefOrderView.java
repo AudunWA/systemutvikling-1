@@ -28,7 +28,9 @@ public class ChefOrderView extends JPanel {
     private ArrayList<Order> orderList = new ArrayList<>();
 
     public ChefOrderView() {
-        add(mainPanel);
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
+
         viewButton.addActionListener(e -> {
             viewOrder();
         });
@@ -43,7 +45,6 @@ public class ChefOrderView extends JPanel {
     private void createUIComponents() {
         createTable();
         createComboBox();
-        setScrollPane();
     }
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
@@ -55,12 +56,6 @@ public class ChefOrderView extends JPanel {
         orderPane = new JScrollPane(orderTable);
         orderTable.setFillsViewportHeight(true);
     }
-
-    private void setScrollPane(){
-        scrollPane = new JScrollPane(orderTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setPreferredSize(new Dimension(1000,500));
-    }
-
 
     private void createComboBox(){
             Object[] status = {"In production","Ready for delivery"};

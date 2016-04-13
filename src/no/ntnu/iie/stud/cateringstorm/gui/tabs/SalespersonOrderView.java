@@ -26,7 +26,6 @@ public class SalespersonOrderView extends JPanel {
     private JComboBox statusBox;
     private JTable orderTable;
     private JButton refreshButton;
-    private JScrollPane scrollPane;
     OrderTableModel tableModel;
 
     private Employee employee;
@@ -37,7 +36,8 @@ public class SalespersonOrderView extends JPanel {
     public SalespersonOrderView(Employee employee) {
         this.employee = employee;
 
-        add(mainPanel);
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
 
         refreshButton.addActionListener(e -> {
             refresh();
@@ -97,7 +97,6 @@ public class SalespersonOrderView extends JPanel {
         // TODO: Custom initialization of UI components here
         createTable();
         createComboBox();
-        setScrollPane();
     }
 
     private void createTable() {
@@ -109,13 +108,6 @@ public class SalespersonOrderView extends JPanel {
         orderPane = new JScrollPane(orderTable);
         orderTable.setFillsViewportHeight(true);
     }
-
-    private void setScrollPane(){
-        scrollPane = new JScrollPane(orderTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setPreferredSize(new Dimension(1000,500));
-    }
-
-
 
     private void createComboBox() {
         Object[] status = {"Activate", "Remove"};

@@ -2,6 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 /**
  * Information panel for chefs
@@ -17,16 +18,13 @@ public class OrderInfoView extends JPanel {
     private JButton addRowButton;
     private JPanel buttonPanel;
     private JButton exitButton;
-    private JScrollPane tablePane;
     private JButton saveButton;
     private final DefaultTableModel model = new DefaultTableModel(0, 1);
 
     public OrderInfoView() {
-        //setTitle(WINDOW_TITLE);
-        //setSize(WIDTH, HEIGHT);
-        //setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //setContentPane(mainPanel);
-        add(mainPanel);
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
+
         addRowButton.addActionListener(e-> {
             addRow();
         });
@@ -44,8 +42,6 @@ public class OrderInfoView extends JPanel {
         };
         //Adding object array to JTable
         ingredientTable = new JTable(data, columnNames);
-        ingredientTable.setFillsViewportHeight(true);
-
     }
     private void addRow(){
         //Add a table row

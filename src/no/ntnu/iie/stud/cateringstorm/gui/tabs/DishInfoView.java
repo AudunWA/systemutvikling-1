@@ -7,6 +7,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +30,8 @@ public class DishInfoView extends JPanel{
     public DishInfoView(Dish dish) {
         this.dish = dish;
 
-        add(mainPanel);
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
 
         viewIngredientsButton.addActionListener(e -> {
             int selectedRow = ingredientTable.getSelectedRow();

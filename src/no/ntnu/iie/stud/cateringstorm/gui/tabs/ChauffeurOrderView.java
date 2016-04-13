@@ -22,7 +22,6 @@ public class ChauffeurOrderView extends JPanel {
     private JPanel ButtonPanel;
     private JTextField infoText;
     private ComboBoxModel cbModel;
-    private JScrollPane scrollPane;
     private static ArrayList<Order> orderList = new ArrayList<Order>();
 
     private void createTable(){
@@ -36,8 +35,9 @@ public class ChauffeurOrderView extends JPanel {
     }
 
     public ChauffeurOrderView() {
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
 
-        add(mainPanel);
         refreshButton.addActionListener(e-> {
             refresh();
         });
@@ -55,14 +55,7 @@ public class ChauffeurOrderView extends JPanel {
         // TODO: Custom initialization of UI components here
         createTable();
         createComboBox();
-        setScrollPane();
     }
-
-    private void setScrollPane(){
-        scrollPane = new JScrollPane(orderTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setPreferredSize(new Dimension(1000,500));
-    }
-
 
     private void createComboBox(){
         Object[] status = {"Delivered","Ready for delivery"};
