@@ -2,7 +2,6 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
 
@@ -60,7 +59,7 @@ public class StorageView extends JPanel {
             if(searchTextField.getText().trim().equals("")) {
                 newRows = IngredientFactory.getAllIngredients();
             } else {
-                newRows = IngredientFactory.getIngredientsByQuery(searchTextField.getText());
+                newRows = IngredientFactory.getAllIngredientsByQuery(searchTextField.getText());
             }
             tableModel.setRows(newRows);
         });

@@ -108,6 +108,7 @@ public class AddCustomerDialog extends JDialog{
         AddCustomerDialog dialog = new AddCustomerDialog();
         dialog.setSize(WIDTH, HEIGHT);
         dialog.setVisible(true);
+        dialog.setLocationRelativeTo(dialog.getParent());
         System.exit(0);
 
     }
