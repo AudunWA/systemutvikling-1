@@ -62,6 +62,7 @@ public class SalespersonCustomerView extends JPanel{
     public void createTable() {
         ArrayList<Customer> customerList = CustomerFactory.getAllCustomers();
         Integer[] columns = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVETEXT}; // Columns can be changed
+
         tableModel = new CustomerTableModel(customerList, columns);
         customerTable = new JTable(tableModel);
         customerTable.getTableHeader().setReorderingAllowed(false);
@@ -104,9 +105,13 @@ public class SalespersonCustomerView extends JPanel{
     }
     private void removeCustomer(Customer customer){
         // TODO: Implement a method setting customer status to "Not active"
-        if(customer != null) {
+        int activeColumn = tableModel.COLUMN_ACTIVETEXT;
+        int selectedRow = customerTable.getSelectedRow();
+        if(customer != null ) {
             // TODO: Fill code here
-
+            customerTable.clearSelection();
+            customerTable.getModel().setValueAt(false,selectedRow,activeColumn);
+            refresh();
         }else{
             JOptionPane.showMessageDialog(null, "Please select a row in the customer table");
         }
