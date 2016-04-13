@@ -84,10 +84,10 @@ public final class IngredientFactory {
     }
 
     /**
-     * Finds ingredients with name.
-     * @return An ArrayList containing all ingredients in the SQL table ingrdient
+     * Gets ingredients with name matching a query.
+     * @return An ArrayList containing all ingredients matched.
      */
-    public static ArrayList<Ingredient> getIngredientsByQuery(String searchQuery){
+    public static ArrayList<Ingredient> getAllIngredientsByQuery(String searchQuery){
 
         ArrayList<Ingredient> temp = new ArrayList<>();
 

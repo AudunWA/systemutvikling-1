@@ -84,6 +84,60 @@ public final class DishFactory {
     }
 
     /**
+     * Gets all dishes with name matching a query.
+     * @return An ArrayList containing all dishes matched.
+     */
+    public static ArrayList<Dish> getAllDishesByQuery(String searchQuery) {
+        ArrayList<Dish> dishes = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE name LIKE ?")){
+                statement.setString(1, '%' + searchQuery + '%');
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()) {
+                        dishes.add(createDishFromResultSet(result));
+                    }
+
+                }
+                return dishes;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets all active dishes with name matching a query.
+     * @return An ArrayList containing all dishes matched.
+     */
+    public static ArrayList<Dish> getActiveDishesByQuery(String searchQuery) {
+        ArrayList<Dish> dishes = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE name LIKE ? AND active = TRUE")){
+                statement.setString(1, '%' + searchQuery + '%');
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()) {
+                        dishes.add(createDishFromResultSet(result));
+                    }
+
+                }
+                return dishes;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * Gets all dishes of a food package
      * @param foodPackageId The ID of the food package
      * @return ArrayList with all the Dishes<Dish>
