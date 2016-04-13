@@ -6,6 +6,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +25,8 @@ public class StorageView extends JPanel {
     private IngredientTableModel tableModel;
 
     public StorageView() {
-        add(mainPanel);
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
 
         addIngredientButton.addActionListener(e -> {
             AddIngredientDialog dialog = new AddIngredientDialog();

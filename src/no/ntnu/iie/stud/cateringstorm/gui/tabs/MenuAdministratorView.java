@@ -15,6 +15,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
 import javax.swing.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -38,7 +39,8 @@ public class MenuAdministratorView extends JPanel {
     private DishTableModel tableModel;
 
     public MenuAdministratorView() {
-        add(mainPanel);
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
 
         addDishButton.addActionListener(e1 -> {
             AddDishDialog dialog = new AddDishDialog();

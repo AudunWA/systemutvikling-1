@@ -9,6 +9,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -26,8 +27,9 @@ public class FoodPackageInfoView extends JPanel {
 
     public FoodPackageInfoView(FoodPackage foodPackage) {
         this.foodPackage = foodPackage;
-        add(mainPanel);
 
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
 
         viewPackageButton.addActionListener(e -> {
 
@@ -40,7 +42,16 @@ public class FoodPackageInfoView extends JPanel {
 
             //TODO Lag en ViewDishDialog
 
-            //ViewDishDialog dialog = new ViewDishDialog(order);
+            DishInfoView dishInfoView = new DishInfoView(dish);
+            final int WIDTH = 700;
+            final int HEIGHT = 600;
+
+            JFrame frame = new JFrame();
+            frame.add(dishInfoView);
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(WIDTH, HEIGHT);
+            frame.setLocationRelativeTo(null);
 
 
         });
@@ -70,6 +81,7 @@ public class FoodPackageInfoView extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);
+
     }
 
     private void createUIComponents() {

@@ -12,10 +12,10 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="ec3ed" class="javax.swing.JButton" binding="viewIngredientsButton">
+          <component id="ec3ed" class="javax.swing.JButton" binding="closeButton">
             <constraints/>
             <properties>
-              <text value="View"/>
+              <text value="Close"/>
             </properties>
           </component>
         </children>

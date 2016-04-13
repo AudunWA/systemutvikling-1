@@ -83,6 +83,31 @@ public final class CustomerFactory {
         return null;
 
     }
+    /**
+     * Finds ingredients with name.
+     * @return An ArrayList containing all ingredients in the SQL table ingrdient
+     */
+    public static ArrayList<Customer> getCustomersByQuery(String searchQuery){
+
+        ArrayList<Customer> temp = new ArrayList<>();
+
+        try (Connection connection = Database.getConnection()){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customer WHERE name LIKE ?")){
+                statement.setString(1, '%' + searchQuery + '%');
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()){
+
+                        temp.add(createCustomerFromResultSet(result));
+                    }
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return temp;
+    }
 
     public static int getIdFromCustomerName(String forename, String surname){
 

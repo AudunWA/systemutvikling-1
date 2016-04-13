@@ -7,6 +7,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +22,7 @@ public class DishInfoView extends JPanel{
     private JScrollPane tablePane;
     private JPanel buttonPanel;
     private JButton saveButton;
-    private JButton viewIngredientsButton;
+    private JButton closeButton;
 
     private IngredientTableModel tableModel;
     private Dish dish;
@@ -29,21 +30,15 @@ public class DishInfoView extends JPanel{
     public DishInfoView(Dish dish) {
         this.dish = dish;
 
-        add(mainPanel);
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
 
-        viewIngredientsButton.addActionListener(e -> {
-            int selectedRow = ingredientTable.getSelectedRow();
-            if (selectedRow == -1) {
-                return;
-            }
+        closeButton.addActionListener(e -> {
 
-            Ingredient ingredient = tableModel.getValue(selectedRow);
-
-            //TODO Lag en ViewDishDialog
-
-            //ViewDishDialog dialog = new ViewDishDialog(order);
         });
+
     }
+
 
 
 
@@ -71,7 +66,7 @@ public class DishInfoView extends JPanel{
     private void createUIComponents() {
         createTable();
         // TODO: place custom component creation code here
-        // Fill table with dummy data
+
 
     }
 }

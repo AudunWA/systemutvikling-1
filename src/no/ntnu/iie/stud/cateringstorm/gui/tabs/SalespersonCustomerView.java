@@ -18,16 +18,22 @@ import java.util.ArrayList;
 public class SalespersonCustomerView extends JPanel{
     private JPanel mainPanel;
     private JTable customerTable;
-    private JScrollPane tablePane;
     private JButton addButton;
     private JButton editButton;
-    private JPanel buttonPanel;
+    private JPanel selectButtonPanel;
     private JButton refreshButton;
     private JButton removeButton;
+    private JPanel noSelectButtonPanel;
+    private JLabel infoLabel;
+    private JTextField searchField;
+    private JButton searchButton;
+    private JPanel noselectButtonPanel;
     private CustomerTableModel tableModel;
 
     public SalespersonCustomerView(){
-        add(mainPanel);
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
+
         addButton.addActionListener(e->{
             addCustomer();
         });
@@ -39,6 +45,9 @@ public class SalespersonCustomerView extends JPanel{
         });
         refreshButton.addActionListener(e->{
             refresh();
+        });
+        searchButton.addActionListener(e->{
+
         });
         customerTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
@@ -57,21 +66,17 @@ public class SalespersonCustomerView extends JPanel{
     private void createUIComponents() {
         // TODO: place custom component creation code here
         createTable();
-        setScrollPane();
     }
     public void createTable() {
         ArrayList<Customer> customerList = CustomerFactory.getAllCustomers();
         Integer[] columns = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVETEXT}; // Columns can be changed
+
         tableModel = new CustomerTableModel(customerList, columns);
         customerTable = new JTable(tableModel);
         customerTable.getTableHeader().setReorderingAllowed(false);
         customerTable.setFillsViewportHeight(true);
     }
-    //Method used to set size for scroll pane containing JTable
-    private void setScrollPane(){
-        tablePane = new JScrollPane(customerTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        tablePane.setPreferredSize(new Dimension(1000,700));
-    }
+
     private void addCustomer(){
         // TODO: Implement AddCustomerDialog
         AddCustomerDialog acDialog = new AddCustomerDialog();
@@ -104,13 +109,39 @@ public class SalespersonCustomerView extends JPanel{
     }
     private void removeCustomer(Customer customer){
         // TODO: Implement a method setting customer status to "Not active"
-        if(customer != null) {
+        int activeColumn = tableModel.COLUMN_ACTIVETEXT;
+        int selectedRow = customerTable.getSelectedRow();
+        if(customer != null ) {
             // TODO: Fill code here
-
+            customerTable.clearSelection();
+            customerTable.getModel().setValueAt(false,selectedRow,activeColumn);
+            refresh();
         }else{
             JOptionPane.showMessageDialog(null, "Please select a row in the customer table");
         }
     }
+    /*
+    // TODO: Eli has to fix buttons, they don't show
+    private void search(){
+        ArrayList<Customer> newRows;
+        if(searchTextField.getText().trim().equals("")) {
+            newRows = CustomerFactory.getAllCustomers();
+        } else {
+            newRows = CustomerFactory.getCustomersByQuery(searchTextField.getText());
+        }
+        tableModel.setRows(newRows);
+    }
+
+    searchButton.addActionListener(e -> {
+        ArrayList<Customer> newRows;
+        if(searchTextField.getText().trim().equals("")) {
+            newRows = CustomerFactory.getAllCustomers();
+        } else {
+            newRows = CustomerFactory.getCustomersByQuery(searchTextField.getText());
+        }
+        tableModel.setRows(newRows);
+    });
+    */
     private void refresh(){
         // TODO: Implement method refreshing data
         tableModel.setRows(CustomerFactory.getAllCustomers());
