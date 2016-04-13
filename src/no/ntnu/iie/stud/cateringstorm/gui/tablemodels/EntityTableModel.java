@@ -57,7 +57,6 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
         if(rowIndex < 0 || rowIndex >= rows.size()) {
             throw new ArrayIndexOutOfBoundsException();
         }
-
         rows.remove(rowIndex);
         fireTableRowsDeleted(rowIndex, rowIndex);
     }
