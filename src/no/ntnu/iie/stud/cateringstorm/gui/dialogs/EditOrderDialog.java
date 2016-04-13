@@ -84,27 +84,16 @@ public class EditOrderDialog extends JDialog {
                 }
                 break;
             case 1:
-                String temp = textField1.getText();
-                if (temp != null || !temp.isEmpty()) {
-                    try {
-                        Integer parsedText = Integer.parseInt(temp);
-                        OrderFactory.setOrderState(order.getOrderId(), parsedText);
-                        changed = true;
-                    } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(this, "Please only input numbers for this field");
-                    }
-                    break;
-                }
-                JOptionPane.showMessageDialog(this, "Please enter a number");
-                break;
-            case 2:
-                System.out.println("Date change");
                 Date tempDate = (Date) dateSelect.getModel().getValue();
                 Timestamp deliverDate = new Timestamp(tempDate.getTime());
-                OrderFactory.setOrderDate(order.getOrderId(), deliverDate);
-                changed = true;
+                if (tempDate.after(new Date(System.currentTimeMillis()))) {
+                    OrderFactory.setOrderDate(order.getOrderId(), deliverDate);
+                    changed = true;
+                } else {
+                    JOptionPane.showMessageDialog(this, "The date is before current date");
+                }
                 break;
-            case 3:
+            case 2:
                 //TODO Portions
                 String portionText = textField1.getText();
                 if (portionText != null || !portionText.isEmpty()) {
@@ -120,7 +109,7 @@ public class EditOrderDialog extends JDialog {
                 JOptionPane.showMessageDialog(this, "Please enter a number");
                 break;
 
-            case 4:
+            case 3:
 
                 String desc = textField1.getText();
                 OrderFactory.setOrderDescription(order.getOrderId(), desc);
@@ -144,7 +133,7 @@ public class EditOrderDialog extends JDialog {
     private void createComboBox() {
 
         ArrayList<Order> list = OrderFactory.getAllOrders();
-        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_DELIVERY_TIME,
+        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_DELIVERY_TIME,
                 OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_DESCRIPTION};
         orderTableModel = new OrderTableModel(list, columns);
         Object[] objects = new Object[columns.length];
