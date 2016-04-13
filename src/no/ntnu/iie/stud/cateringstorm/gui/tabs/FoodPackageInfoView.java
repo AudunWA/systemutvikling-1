@@ -40,7 +40,16 @@ public class FoodPackageInfoView extends JPanel {
 
             //TODO Lag en ViewDishDialog
 
-            //ViewDishDialog dialog = new ViewDishDialog(order);
+            DishInfoView dishInfoView = new DishInfoView(dish);
+            final int WIDTH = 700;
+            final int HEIGHT = 600;
+
+            JFrame frame = new JFrame();
+            frame.add(dishInfoView);
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(WIDTH, HEIGHT);
+            frame.setLocationRelativeTo(null);
 
 
         });
@@ -70,6 +79,7 @@ public class FoodPackageInfoView extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);
+
     }
 
     private void createUIComponents() {

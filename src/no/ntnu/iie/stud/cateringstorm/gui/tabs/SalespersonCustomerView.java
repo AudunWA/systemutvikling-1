@@ -111,6 +111,18 @@ public class SalespersonCustomerView extends JPanel{
             JOptionPane.showMessageDialog(null, "Please select a row in the customer table");
         }
     }
+    // TODO: Eli has to fix buttons, they dont show
+    /*
+    searchButton.addActionListener(e -> {
+        ArrayList<Customer> newRows;
+        if(searchTextField.getText().trim().equals("")) {
+            newRows = CustomerFactory.getAllCustomers();
+        } else {
+            newRows = CustomerFactory.getCustomersByQuery(searchTextField.getText());
+        }
+        tableModel.setRows(newRows);
+    });
+    */
     private void refresh(){
         // TODO: Implement method refreshing data
         tableModel.setRows(CustomerFactory.getAllCustomers());
