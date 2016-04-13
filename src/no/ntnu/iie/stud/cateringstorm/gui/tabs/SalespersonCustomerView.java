@@ -21,9 +21,14 @@ public class SalespersonCustomerView extends JPanel{
     private JScrollPane tablePane;
     private JButton addButton;
     private JButton editButton;
-    private JPanel buttonPanel;
+    private JPanel selectButtonPanel;
     private JButton refreshButton;
     private JButton removeButton;
+    private JPanel noSelectButtonPanel;
+    private JLabel infoLabel;
+    private JTextField searchField;
+    private JButton searchButton;
+    private JPanel noselectButtonPanel;
     private CustomerTableModel tableModel;
 
     public SalespersonCustomerView(){
@@ -39,6 +44,9 @@ public class SalespersonCustomerView extends JPanel{
         });
         refreshButton.addActionListener(e->{
             refresh();
+        });
+        searchButton.addActionListener(e->{
+
         });
         customerTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
@@ -116,8 +124,18 @@ public class SalespersonCustomerView extends JPanel{
             JOptionPane.showMessageDialog(null, "Please select a row in the customer table");
         }
     }
-    // TODO: Eli has to fix buttons, they dont show
     /*
+    // TODO: Eli has to fix buttons, they don't show
+    private void search(){
+        ArrayList<Customer> newRows;
+        if(searchTextField.getText().trim().equals("")) {
+            newRows = CustomerFactory.getAllCustomers();
+        } else {
+            newRows = CustomerFactory.getCustomersByQuery(searchTextField.getText());
+        }
+        tableModel.setRows(newRows);
+    }
+
     searchButton.addActionListener(e -> {
         ArrayList<Customer> newRows;
         if(searchTextField.getText().trim().equals("")) {
