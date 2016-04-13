@@ -64,6 +64,7 @@ public class SalespersonOrderView extends JPanel {
     private Order getSelectedOrder(){
         return tableModel.getValue(orderTable.getSelectedRow());
     }
+
     private void addOrder(Employee employee){
         // TODO: Open AddOrderDialog
         AddOrderDialog aoDialog = new AddOrderDialog(employee);
@@ -131,9 +132,12 @@ public class SalespersonOrderView extends JPanel {
         int statusColumn = 7;
         boolean active = choice < 1;
         if (selectedRow > -1) {
-            orderTable.clearSelection();
-
-            orderTable.getModel().setValueAt((active) ? "Activate" : "Removed", selectedRow, statusColumn);
+            if (orderList.get(selectedRow).getStatus() != 2 && orderList.get(selectedRow).getStatus() != 0) {
+                orderTable.clearSelection();
+                orderTable.getModel().setValueAt((active) ? "Activate" : "Removed", selectedRow, statusColumn);
+            } else {
+                JOptionPane.showMessageDialog(this, "Salesperson can't change this status");
+            }
         }
     }
 
