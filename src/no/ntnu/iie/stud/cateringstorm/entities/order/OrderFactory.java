@@ -48,6 +48,37 @@ public final class OrderFactory {
         return null;
     }
 
+    public static ArrayList<Order> getAllOrdersChef() {
+        ArrayList<Order> employees = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE status < 2 && delivery_time > NOW() ORDER BY delivery_time")) {
+                statement.executeQuery();
+
+                try (ResultSet resultPreUpdate = statement.getResultSet()){
+                    while (resultPreUpdate.next()){
+
+                        if((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2*86400000))) == -1){
+                            try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
+                                statementUpdate.setInt(1, createOrderFromResultSet(resultPreUpdate).getOrderId());
+                                statementUpdate.execute();
+                            }
+                        }
+                    }
+                }
+                statement.executeQuery();
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        employees.add(createOrderFromResultSet(result));
+                    }
+                }
+            }
+            return employees;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private static Order createOrderFromResultSet(ResultSet result) throws SQLException {
         int orderId = result.getInt("_order_id");
         String description = result.getString("description");
@@ -210,6 +241,27 @@ public final class OrderFactory {
             e.printStackTrace();
             return false;
         }
+
+    }
+
+    public static ArrayList<Integer> getPackages(int orderID){
+        ArrayList<Integer> packages = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT food_package_id FROM _order_food_package WHERE _order_id = ?")) {
+                statement.setInt(1, orderID);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        packages.add(result.getInt("food_package_id"));
+                    }
+                }
+            }
+            return packages;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
 
     }
 

@@ -24,13 +24,7 @@
               <component id="f6285" class="javax.swing.JButton" binding="viewButton">
                 <constraints/>
                 <properties>
-                  <text value="View Info"/>
-                </properties>
-              </component>
-              <component id="12249" class="javax.swing.JButton" binding="editButton">
-                <constraints/>
-                <properties>
-                  <text value="Edit"/>
+                  <text value="Make this order"/>
                 </properties>
               </component>
               <component id="88f35" class="javax.swing.JButton" binding="refreshButton">

@@ -15,7 +15,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
     public static final int COLUMN_NAME = 2;
     public static final int COLUMN_DESCRIPTION = 3;
     public static final int COLUMN_ACTIVE = 4;
-
+    public static final int COLUMN_TYPE_TEXT = 5;
     public DishTableModel(ArrayList<Dish> rows, Integer[] columns) {
         super(rows, columns);
     }
@@ -34,6 +34,8 @@ public class DishTableModel extends EntityTableModel<Dish> {
                 return "Description";
             case COLUMN_ACTIVE:
                 return "Active";
+            case COLUMN_TYPE_TEXT:
+                return "Type";
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
@@ -55,9 +57,43 @@ public class DishTableModel extends EntityTableModel<Dish> {
                 return value.getDescription();
             case COLUMN_ACTIVE:
                 return value.isActive();
+            case COLUMN_TYPE_TEXT:
+                return value.dishTypeText();
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
+    }
+
+    @Override
+    public void setValueAt(Object value, int row, int column){
+        Dish entity = getValue(row);
+        int columnType = getColumnType(column);
+        String status0 = "Appetiser", status1 = "Main course", status2 = "Dessert";
+        switch (columnType){
+            case COLUMN_ID:
+                break;
+            case COLUMN_TYPE_ID:
+                break;
+            case COLUMN_NAME:
+                break;
+            case COLUMN_DESCRIPTION:
+                break;
+            case COLUMN_ACTIVE:
+                break;
+            case COLUMN_TYPE_TEXT:
+                if(value.equals(status0)) {
+                    entity.setDishType(1);
+                }else if(value.equals(status1)){
+                    entity.setDishType(2);
+                }else if(value.equals(status2)){
+                    entity.setDishType(3);
+                }else{
+                    entity.setDishType(-1);
+                }
+                break;
+        }
+        fireTableCellUpdated(row,column);
+
     }
 
     @Override
@@ -74,6 +110,8 @@ public class DishTableModel extends EntityTableModel<Dish> {
                 return String.class;
             case COLUMN_ACTIVE:
                 return boolean.class;
+            case COLUMN_TYPE_TEXT:
+                return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }

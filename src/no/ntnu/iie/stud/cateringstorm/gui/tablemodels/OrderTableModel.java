@@ -109,7 +109,7 @@ public class OrderTableModel extends EntityTableModel<Order> {
     public void setValueAt(Object value, int row, int column){
         Order entity = getValue(row);
         int columnType = getColumnType(column);
-        String status0 = "Ready for delivery", status1 = "Activate", status2 = "Delivered", statusNeg1 = "Remove";
+        String status0 = "Ready for delivery", status1 = "In production", status2 = "Delivered", statusNeg1 = "Removed";
         System.out.println(columnType);
         switch (columnType){
             case COLUMN_DESCRIPTION:break;

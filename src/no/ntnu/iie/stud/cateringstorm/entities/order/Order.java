@@ -110,13 +110,16 @@ public class Order {
     public String findPriority() {
         return (isPriority())?"Priority":"Ordinary";
     }
+
     public String deliveryStatus(){
         if (getStatus() == 0){
             return "Ready for delivery";
-        } else if (getStatus() == 1){
-            return "In production";
+        } else if (getStatus() == 1) {
+            return "Ready for production";
         } else if (getStatus() == 2) {
             return "Delivered";
+        } else if (getStatus() == 3) {
+            return "In production";
         } else {
             return "Removed";
         }

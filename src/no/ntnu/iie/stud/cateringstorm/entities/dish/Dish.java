@@ -19,6 +19,18 @@ public class Dish {
         this.active = active;
     }
 
+    public String dishTypeText(){
+        if (getDishType() == 1){
+            return "Appetiser";
+        } else if (getDishType() == 2){
+            return "Main course";
+        } else if (getDishType() == 3){
+            return "Dessert";
+        } else {
+            return "error";
+        }
+    }
+
     public int getDishId() {
         return dishId;
     }
