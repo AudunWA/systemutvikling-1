@@ -18,7 +18,7 @@ public class StorageView extends JPanel {
     private JTable ingredientTable;
     private JButton incrementSupply;
     private JTextField textField1;
-    private JButton addIngredientButton; 
+    private JButton addIngredientButton;
     private JTextField searchTextField;
     private JButton searchButton;
     private IngredientTableModel tableModel;
