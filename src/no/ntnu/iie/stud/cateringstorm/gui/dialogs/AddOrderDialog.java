@@ -1,6 +1,5 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
-import jdk.nashorn.internal.scripts.JO;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
@@ -17,7 +16,6 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -153,12 +151,12 @@ public class AddOrderDialog extends JDialog {
             add.setVisible(true);
             if(add.hasAddedNewValue()){
                 System.out.println("added");
-                customerList.addItem(new String(CustomerFactory.viewSingleCustomer(CustomerFactory.getAllCustomers().size()).getSurname() + ", " + CustomerFactory.viewSingleCustomer(CustomerFactory.getAllCustomers().size()).getForename()));
+                customerList.addItem(new String(CustomerFactory.getCustomer(CustomerFactory.getAllCustomers().size()).getSurname() + ", " + CustomerFactory.getCustomer(CustomerFactory.getAllCustomers().size()).getForename()));
                 customerList.removeItem("New customer");
                 customerList.addItem("New customer");
             }
         } else {
-            Customer customer = CustomerFactory.viewSingleCustomer(customerIndex + 1);
+            Customer customer = CustomerFactory.getCustomer(customerIndex + 1);
             String customerForename = customer.getForename();
             String customerSurname = customer.getSurname();
             int customerId = CustomerFactory.getIdFromCustomerName(customerForename, customerSurname);
@@ -194,7 +192,7 @@ public class AddOrderDialog extends JDialog {
             ArrayList<Integer> test = new ArrayList<>();
             test.add(packageTable.getSelectedRow() + 1);
 
-            orders.add(new Order(0, description, deliverDate, currentTime, portions, priority, employee.getEmployeeId(), CustomerFactory.viewSingleCustomer(customerId), 0, 1, 0));
+            orders.add(new Order(0, description, deliverDate, currentTime, portions, priority, employee.getEmployeeId(), CustomerFactory.getCustomer(customerId), 0, 1, 0));
 
             int check = OrderFactory.getAllOrders().size();
 
@@ -228,7 +226,7 @@ public class AddOrderDialog extends JDialog {
     private void createComboBox(){
         customerList = new JComboBox();
         for (int i = 0; i < CustomerFactory.getAllCustomers().size(); i++) {
-            customerList.addItem(new String (CustomerFactory.viewSingleCustomer(i+1).getSurname()) + ", " + CustomerFactory.viewSingleCustomer(i+1).getForename());
+            customerList.addItem(new String (CustomerFactory.getCustomer(i+1).getSurname()) + ", " + CustomerFactory.getCustomer(i+1).getForename());
         }
     }
 
@@ -266,7 +264,7 @@ public class AddOrderDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        AddOrderDialog dialog = new AddOrderDialog(EmployeeFactory.newEmployee("drammen"));
+        AddOrderDialog dialog = new AddOrderDialog(EmployeeFactory.getEmployee("drammen"));
         dialog.pack();
         dialog.setVisible(true);
         dialog.setTitle("Order central");

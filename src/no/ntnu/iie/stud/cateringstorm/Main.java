@@ -11,6 +11,10 @@ import java.sql.SQLException;
 
 public class Main {
 
+    /**
+     The main entry point of the application.
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
         // Makes the GUI same style as current OS :)
         try {

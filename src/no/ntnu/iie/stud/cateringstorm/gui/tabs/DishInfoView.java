@@ -4,7 +4,6 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 
 import javax.swing.*;
@@ -15,13 +14,6 @@ import java.util.ArrayList;
  * Fixed by Kenan on 08.04.16
  */
 public class DishInfoView extends JPanel{
-
-    private static final String WINDOW_TITLE = "Information";
-
-    //Window dimensions
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 700;
-
     private JButton editRowButton;
     private JPanel mainPanel;
     private JButton addRowButton;
@@ -57,7 +49,7 @@ public class DishInfoView extends JPanel{
 
 
     private void createTable(){
-        ArrayList<Ingredient> ingredientList = IngredientFactory.viewAllIngredientByDishId(dish.getDishId());
+        ArrayList<Ingredient> ingredientList = IngredientFactory.getIngredients(dish.getDishId());
         Integer[] columns = new Integer[] {IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION }; // Columns can be changed
         tableModel = new IngredientTableModel(ingredientList, columns);
         ingredientTable = new JTable(tableModel);
@@ -69,7 +61,7 @@ public class DishInfoView extends JPanel{
         final int WIDTH = 700;
         final int HEIGHT = 600;
         JFrame frame = new JFrame();
-        frame.add(new DishInfoView(DishFactory.viewSingleDish(1)));
+        frame.add(new DishInfoView(DishFactory.getDish(1)));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);

@@ -24,12 +24,6 @@ import javax.swing.*;
  * Created by kenan on 01.04.2016.
  */
 public class MenuAdministratorView extends JPanel {
-    private static final String WINDOW_TITLE = "Menu Administrator";
-
-    // Window dimensions
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 400;
-
     private JButton addDishButton;
     private JButton editDishButton;
     private JButton removeDishButton;
@@ -37,6 +31,9 @@ public class MenuAdministratorView extends JPanel {
     private JPanel mainPanel;
     private JButton exitButton;
     private JScrollPane dishPane;
+    private JTextField searchTextField;
+    private JButton searchButton;
+    private JCheckBox inactiveCheckBox;
 
     private DishTableModel tableModel;
 
@@ -85,10 +82,24 @@ public class MenuAdministratorView extends JPanel {
                 tableModel.removeRow(selectedRow);
                 JOptionPane.showMessageDialog(null, "Row is removed.");
             }
+        });
 
-
-
-
+        searchButton.addActionListener(e -> {
+            ArrayList<Dish> newRows;
+            if(searchTextField.getText().trim().equals("")) {
+                if(inactiveCheckBox.isSelected()) {
+                    newRows = DishFactory.getAllDishes();
+                } else {
+                    newRows = DishFactory.getActiveDishes();
+                }
+            } else {
+                if(inactiveCheckBox.isSelected()) {
+                    newRows = DishFactory.getAllDishesByQuery(searchTextField.getText());
+                } else {
+                    newRows = DishFactory.getActiveDishesByQuery(searchTextField.getText());
+                }
+            }
+            tableModel.setRows(newRows);
         });
 
         dishTable.getSelectionModel().addListSelectionListener(e -> {
@@ -115,13 +126,12 @@ public class MenuAdministratorView extends JPanel {
         JFrame frame = new JFrame();
         frame.add(new MenuAdministratorView());
         frame.setVisible(true);
-        frame.setTitle(WINDOW_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);//Puts window in middle of screen
     }
     private void refreshTable() {
-        ((EntityTableModel)dishTable.getModel()).setRows(DishFactory.getAllDishes());
+        tableModel.setRows(DishFactory.getAllDishes());
     }
 }
 

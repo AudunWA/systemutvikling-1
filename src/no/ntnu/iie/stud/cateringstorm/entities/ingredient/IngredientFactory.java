@@ -33,15 +33,15 @@ public final class IngredientFactory {
 
     /**
      * Shows a single ingredient from the SQL table ingredient given an ID
-     * @param ingredient_id
+     * @param ingredientId
      * @return An ingredient
      */
-    public static Ingredient viewSingleIngredient(int ingredient_id){
+    public static Ingredient getIngredient(int ingredientId){
 
         try (Connection connection = Database.getConnection()){
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM ingredient WHERE ingredient_id = ?")){
 
-                statement.setInt(1, ingredient_id);
+                statement.setInt(1, ingredientId);
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()){
@@ -84,10 +84,10 @@ public final class IngredientFactory {
     }
 
     /**
-     * Finds ingredients with name.
-     * @return An ArrayList containing all ingredients in the SQL table ingrdient
+     * Gets ingredients with name matching a query.
+     * @return An ArrayList containing all ingredients matched.
      */
-    public static ArrayList<Ingredient> getIngredientsByQuery(String searchQuery){
+    public static ArrayList<Ingredient> getAllIngredientsByQuery(String searchQuery){
 
         ArrayList<Ingredient> temp = new ArrayList<>();
 
@@ -113,7 +113,7 @@ public final class IngredientFactory {
      * Shows expired ingredients
      * @return Arraylist containing the expired ingredients
      */
-    public static ArrayList<Ingredient> showExpired(){
+    public static ArrayList<Ingredient> getExpiredIngredients(){
 
         Timestamp nowTime = new Timestamp(System.currentTimeMillis());
 
@@ -149,7 +149,7 @@ public final class IngredientFactory {
      * @param expireDate
      * @return
      */
-    public static Ingredient insertNewIngredient(String name, String description, double amount, String unit, boolean vegetarian, Timestamp arrivalDate, Date expireDate) {
+    public static Ingredient createIngredient(String name, String description, double amount, String unit, boolean vegetarian, Timestamp arrivalDate, Date expireDate) {
         int generatedId; // The AUTO_INCREMENT from INSERT
 
         try (Connection connection = Database.getConnection()) {
@@ -186,7 +186,7 @@ public final class IngredientFactory {
         return ingredient;
     }
 
-    public static ArrayList<Ingredient> viewAllIngredientByDishId(int dishId){
+    public static ArrayList<Ingredient> getIngredients(int dishId){
 
         ArrayList<Ingredient> temp = new ArrayList<>();
 

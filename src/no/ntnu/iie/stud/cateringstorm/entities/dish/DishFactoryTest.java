@@ -5,8 +5,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by Chris on 16.03.2016.
  */
@@ -15,7 +13,7 @@ public class DishFactoryTest {
     @Test
     public void testViewSingleDish() throws Exception {
 
-        System.out.println(DishFactory.viewSingleDish(1));
+        System.out.println(DishFactory.getDish(1));
 
     }
 
@@ -29,10 +27,9 @@ public class DishFactoryTest {
 
     @Test
     public void testCreateDish() throws Exception {
-        Dish knutSpesial = new Dish(0, "Penguin", "NOOOOOT NOOOOOOOT!!!", 2, true);
-        knutSpesial = DishFactory.createDish(knutSpesial);
-        Assert.assertNotNull(knutSpesial);
-        System.out.println(knutSpesial);
+        Dish dish = DishFactory.createDish("Penguin", "NOOOOOT NOOOOOOOT!!!", 2, true);
+        Assert.assertNotNull(dish);
+        System.out.println(dish);
     }
 
     @Test
@@ -58,14 +55,14 @@ public class DishFactoryTest {
     public void testUpdateDish() throws Exception {
         final String newDescription = "Changed.";
 
-        Dish dish = DishFactory.createDish(new Dish(-1, "testUpdateDish", "Changeme", 1, true));
+        Dish dish = DishFactory.createDish("testUpdateDish", "Changeme", 1, true);
         Assert.assertNotNull(dish);
         dish.setDescription(newDescription);
 
         int affectedRows = DishFactory.updateDish(dish);
         Assert.assertEquals(affectedRows, 1);
 
-        dish = DishFactory.viewSingleDish(dish.getDishId());
+        dish = DishFactory.getDish(dish.getDishId());
         Assert.assertNotNull(dish);
         Assert.assertEquals(dish.getDescription(), newDescription);
     }

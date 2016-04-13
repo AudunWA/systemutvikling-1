@@ -36,16 +36,16 @@ public class LoginView extends JFrame {
             String usernameInput = usernameField.getText();
             String passwordInput = new String(passwordField.getPassword());
 
-            Employee employee = EmployeeFactory.newEmployee(usernameInput, passwordInput);
+            Employee employee = EmployeeFactory.getEmployee(usernameInput, passwordInput);
             if (employee == null) {
                 // Login failed
                 JOptionPane.showMessageDialog(this, "Login attempt failed!");
                 return;
             } else {
-                setVisible(false);
-                dispose();
                 JOptionPane.showMessageDialog(this, "Hello, " + employee.getFullName() + "!");
                 employee.onSuccessfulLogin();
+                setVisible(false);
+                dispose();
             }
         });
         pack();

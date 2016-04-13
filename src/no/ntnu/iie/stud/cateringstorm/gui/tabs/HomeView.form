@@ -19,7 +19,7 @@
             </constraints>
             <properties>
               <background color="-12171706"/>
-              <font name="Roboto" size="18"/>
+              <font size="18"/>
               <text value="Welcome back, %name%!"/>
             </properties>
           </component>
@@ -29,7 +29,7 @@
             </constraints>
             <properties>
               <enabled value="true"/>
-              <font name="Roboto"/>
+              <font/>
               <text value="You can access your tools from the different tabs above."/>
             </properties>
           </component>

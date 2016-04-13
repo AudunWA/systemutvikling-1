@@ -2,7 +2,6 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
 
@@ -22,6 +21,7 @@ public class StorageView extends JPanel {
     private JButton addIngredientButton;
     private JTextField searchTextField;
     private JButton searchButton;
+    private IngredientTableModel tableModel;
 
     public StorageView() {
         add(mainPanel);
@@ -33,7 +33,7 @@ public class StorageView extends JPanel {
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             if(dialog.getAddedNewValue()) {
                 // Refresh data
-                refreshTable();
+                tableModel.setRows(IngredientFactory.getAllIngredients());
             }
         });
 
@@ -43,12 +43,12 @@ public class StorageView extends JPanel {
                 return;
             }
 
-            Ingredient ingredient = ((EntityTableModel<Ingredient>)ingredientTable.getModel()).getValue(selectedRow);
+            Ingredient ingredient = tableModel.getValue(selectedRow);
             ingredient.incrementAmount();
             int affectedRows = IngredientFactory.updateIngredientAmount(ingredient.getIngredientId(), ingredient.getAmount());
 
             if(affectedRows == 1) {
-                ((EntityTableModel<Ingredient>) ingredientTable.getModel()).setRow(selectedRow, ingredient);
+                tableModel.setRow(selectedRow, ingredient);
             } else {
                 // TODO: Log error?
             }
@@ -59,9 +59,9 @@ public class StorageView extends JPanel {
             if(searchTextField.getText().trim().equals("")) {
                 newRows = IngredientFactory.getAllIngredients();
             } else {
-                newRows = IngredientFactory.getIngredientsByQuery(searchTextField.getText());
+                newRows = IngredientFactory.getAllIngredientsByQuery(searchTextField.getText());
             }
-            ((EntityTableModel)ingredientTable.getModel()).setRows(newRows);
+            tableModel.setRows(newRows);
         });
     }
 
@@ -82,12 +82,8 @@ public class StorageView extends JPanel {
         ArrayList<Ingredient> ingredients = IngredientFactory.getAllIngredients();
         Integer[] columns = new Integer[] { IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_EXPIRE_DATE, IngredientTableModel.COLUMN_AMOUNT };
 
-        IngredientTableModel tableModel = new IngredientTableModel(ingredients, columns);
+        tableModel = new IngredientTableModel(ingredients, columns);
         ingredientTable = new JTable(tableModel);
         ingredientTable.getTableHeader().setReorderingAllowed(false);
-    }
-
-    private void refreshTable() {
-        ((EntityTableModel)ingredientTable.getModel()).setRows(IngredientFactory.getAllIngredients());
     }
 }

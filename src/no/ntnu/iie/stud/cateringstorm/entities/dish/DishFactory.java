@@ -29,11 +29,11 @@ public final class DishFactory {
     }
 
     /**
-     * View a single dish from the SQL table dish by giving its dishID
+     * Gets a single dish from the SQL table dish by giving its ID
      * @param dishId
      * @return Dish
      */
-    public static Dish viewSingleDish(int dishId){
+    public static Dish getDish(int dishId){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE dish_id = ?")){
 
@@ -57,7 +57,7 @@ public final class DishFactory {
     }
 
     /**
-     * Creates an arraylist of all the dishes in the SQL table dish
+     * Creates an Arraylist of all the dishes in the SQL table dish
      * @return ArrayList<Dish>
      */
     public static ArrayList<Dish> getAllDishes(){
@@ -69,6 +69,60 @@ public final class DishFactory {
                 try (ResultSet result = statement.getResultSet()){
                     while (result.next()) {
 
+                        dishes.add(createDishFromResultSet(result));
+                    }
+
+                }
+                return dishes;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets all dishes with name matching a query.
+     * @return An ArrayList containing all dishes matched.
+     */
+    public static ArrayList<Dish> getAllDishesByQuery(String searchQuery) {
+        ArrayList<Dish> dishes = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE name LIKE ?")){
+                statement.setString(1, '%' + searchQuery + '%');
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()) {
+                        dishes.add(createDishFromResultSet(result));
+                    }
+
+                }
+                return dishes;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets all active dishes with name matching a query.
+     * @return An ArrayList containing all dishes matched.
+     */
+    public static ArrayList<Dish> getActiveDishesByQuery(String searchQuery) {
+        ArrayList<Dish> dishes = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE name LIKE ? AND active = TRUE")){
+                statement.setString(1, '%' + searchQuery + '%');
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()) {
                         dishes.add(createDishFromResultSet(result));
                     }
 
@@ -139,19 +193,14 @@ public final class DishFactory {
         return null;
     }
 
-    /**
-     * takes a dish and inserts it into the SQL table dish
-     * @param newDish
-     * @return Dish
-     */
-    public static Dish createDish(Dish newDish){
+    public static Dish createDish(String name, String description, int dishType, boolean active){
 
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish VALUES(DEFAULT, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)){
-                statement.setString(1, newDish.getName());
-                statement.setString(2, newDish.getDescription());
-                statement.setInt(3, newDish.getDishType());
-                statement.setBoolean(4, newDish.isActive());
+                statement.setString(1, name);
+                statement.setString(2, description);
+                statement.setInt(3, dishType);
+                statement.setBoolean(4, active);
 
                 int affectedRows = statement.executeUpdate();
                 if (affectedRows == 0) {
@@ -167,7 +216,7 @@ public final class DishFactory {
                     }
                 }
 
-                Dish dish = new Dish(generatedId, newDish.getName(), newDish.getDescription(), newDish.getDishType(), newDish.isActive());
+                Dish dish = new Dish(generatedId, name, description, dishType, active);
                 return dish;
 
             }

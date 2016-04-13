@@ -7,8 +7,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by Audun on 16.03.2016.
  */
@@ -47,7 +45,7 @@ public class FoodPackageFactoryTest {
     @Test
     public void testInsertNewFoodPackage() throws Exception {
         ArrayList<Dish> dishes = DishFactory.getAllDishes();
-        FoodPackage foodPackage = FoodPackageFactory.insertNewFoodPackage("Unit test package", 8008135, dishes);
+        FoodPackage foodPackage = FoodPackageFactory.createFoodPackage("Unit test package", 8008135, dishes);
         Assert.assertNotNull(foodPackage);
         System.out.println(foodPackage);
     }
