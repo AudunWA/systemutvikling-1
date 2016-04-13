@@ -1,7 +1,0 @@
-diff a/src/no/ntnu/iie/stud/cateringstorm/gui/dialogs/AddOrderDialog.java b/src/no/ntnu/iie/stud/cateringstorm/gui/dialogs/AddOrderDialog.java	(rejected hunks)
-@@ -66,4 +66,5 @@
-         dialog.setVisible(true);
-         System.exit(0);
-     }
-+   
- }
