@@ -26,6 +26,7 @@ public class ChefOrderView extends JPanel {
     private JPanel cbPanel;
     private JButton refreshButton;
     private ArrayList<Order> orderList = new ArrayList<>();
+    private   OrderTableModel tableModel;
 
     public ChefOrderView() {
         add(mainPanel);
@@ -49,7 +50,7 @@ public class ChefOrderView extends JPanel {
         orderList = OrderFactory.getAllOrders();
 
         Integer[] columns = new Integer[] { OrderTableModel.COLUMN_STATUS_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_STATUS_TEXT};
-        OrderTableModel tableModel = new OrderTableModel(orderList,columns);
+      tableModel = new OrderTableModel(orderList,columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
@@ -84,6 +85,7 @@ public class ChefOrderView extends JPanel {
     }
     private void refresh(){
         //  TODO: Implement a method updating table for new orders, and removing changed orders from table.
+        tableModel.setRows(OrderFactory.getAllOrders());
     }
     public static void main(String[] args){
         final int WIDTH = 1300;

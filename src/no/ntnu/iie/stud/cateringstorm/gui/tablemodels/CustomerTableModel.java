@@ -43,7 +43,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
             case COLUMN_PHONE:
                 return "Phone";
             case COLUMN_ACTIVE:
-                return "Status ID";
+                return "Status";
             case COLUMN_EMAIL:
                 return "Email";
             default:
