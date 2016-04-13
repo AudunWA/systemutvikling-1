@@ -22,7 +22,7 @@ public class DishInfoView extends JPanel{
     private JScrollPane tablePane;
     private JPanel buttonPanel;
     private JButton saveButton;
-    private JButton viewIngredientsButton;
+    private JButton closeButton;
 
     private IngredientTableModel tableModel;
     private Dish dish;
@@ -33,19 +33,12 @@ public class DishInfoView extends JPanel{
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        viewIngredientsButton.addActionListener(e -> {
-            int selectedRow = ingredientTable.getSelectedRow();
-            if (selectedRow == -1) {
-                return;
-            }
+        closeButton.addActionListener(e -> {
 
-            Ingredient ingredient = tableModel.getValue(selectedRow);
-
-            //TODO Lag en ViewDishDialog
-
-            //ViewDishDialog dialog = new ViewDishDialog(order);
         });
+
     }
+
 
 
 
@@ -73,7 +66,7 @@ public class DishInfoView extends JPanel{
     private void createUIComponents() {
         createTable();
         // TODO: place custom component creation code here
-        // Fill table with dummy data
+
 
     }
 }

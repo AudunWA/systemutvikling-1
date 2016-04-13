@@ -68,5 +68,6 @@ public class LoginView extends JFrame {
         }
         LoginView loginWindow = new LoginView();
         loginWindow.setVisible(true);
+        loginWindow.setLocationRelativeTo(null);
     }
 }

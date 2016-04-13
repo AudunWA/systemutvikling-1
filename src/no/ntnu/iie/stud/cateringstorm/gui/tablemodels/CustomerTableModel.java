@@ -15,10 +15,10 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
     public static final int COLUMN_SURNAME = 1;
     public static final int COLUMN_FORENAME = 2;
     public static final int COLUMN_ADDRESS = 3;
-    public static final int COLUMN_ACTIVETEXT = 4;
-    public static final int COLUMN_PHONE = 5;
-    public static final int COLUMN_ACTIVE = 6;
-    public static final int COLUMN_EMAIL = 7;
+    public static final int COLUMN_PHONE = 4;
+    public static final int COLUMN_EMAIL = 5;
+    public static final int COLUMN_ACTIVETEXT = 6;
+    public static final int COLUMN_ACTIVE = 7;
     public CustomerTableModel(ArrayList<Customer> rows) {
         super(rows);
     }
@@ -43,7 +43,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
             case COLUMN_PHONE:
                 return "Phone";
             case COLUMN_ACTIVE:
-                return "Status ID";
+                return "Status";
             case COLUMN_EMAIL:
                 return "Email";
             default:
@@ -114,7 +114,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
             case COLUMN_ADDRESS:
                 break;
             case COLUMN_ACTIVETEXT:
-                entity.setActive(value.equals("Active"));
+                entity.setActive((Boolean)value);
                 break;
             case COLUMN_PHONE:
                 break;
