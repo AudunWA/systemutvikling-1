@@ -83,22 +83,40 @@ public final class CustomerFactory {
         return null;
 
     }
-    /**
+    public static ArrayList<Customer> getActiveCustomers(){
+        ArrayList<Customer> customers = new ArrayList<>();
+        try (Connection connection = Database.getConnection()){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customer WHERE active LIKE true")){
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()){
+
+                        customers.add(createCustomerFromResultSet(result));
+                    }
+                    return customers;
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    /**10
      * Finds ingredients with name.
      * @return An ArrayList containing all ingredients in the SQL table ingrdient
      */
     public static ArrayList<Customer> getCustomersByQuery(String searchQuery){
 
         ArrayList<Customer> temp = new ArrayList<>();
-
+        String input = searchQuery.trim();
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customer WHERE name LIKE ?")){
-                statement.setString(1, '%' + searchQuery + '%');
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * from customer where concat_ws(' ',forename,surname) like ?;")){
+                statement.setString(1, '%' + input + '%');
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()){
                     while (result.next()){
-
                         temp.add(createCustomerFromResultSet(result));
                     }
                 }
@@ -109,7 +127,7 @@ public final class CustomerFactory {
         return temp;
     }
 
-    public static int getIdFromCustomerName(String forename, String surname){
+    public static int getIdFromName(String forename, String surname){
 
         for (int i = 0; i < getAllCustomers().size(); i++){
             if (getCustomer(i+1).getSurname().equals(surname) && getCustomer(i+1).getForename().equals(forename)){

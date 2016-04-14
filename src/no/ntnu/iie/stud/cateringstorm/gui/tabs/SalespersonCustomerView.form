@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="no.ntnu.iie.stud.cateringstorm.gui.tabs.SalespersonCustomerView">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="500" height="553"/>
+      <xy x="20" y="20" width="603" height="553"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -41,6 +41,12 @@
               <text value="Remove customer"/>
             </properties>
           </component>
+          <component id="d3913" class="javax.swing.JCheckBox" binding="showInactiveCB">
+            <constraints/>
+            <properties>
+              <text value="Show inactive customers"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="872a6" binding="noSelectButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
@@ -64,10 +70,11 @@
           <component id="7c817" class="javax.swing.JButton" binding="searchButton">
             <constraints/>
             <properties>
+              <enabled value="false"/>
               <text value="Search"/>
             </properties>
           </component>
-          <component id="ad892" class="javax.swing.JTextField" binding="searchField">
+          <component id="ad892" class="javax.swing.JTextField" binding="searchField" custom-create="true">
             <constraints/>
             <properties/>
           </component>
