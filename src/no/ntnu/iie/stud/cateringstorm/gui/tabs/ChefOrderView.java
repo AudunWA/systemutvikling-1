@@ -90,10 +90,22 @@ public class ChefOrderView extends JPanel {
         }
     }
     private void viewOrder(){
-        // TODO: Implement method opening a new tab DishInfoView, allowing user to view more information of a single order
-        int viewedOrderId = (Integer)orderTable.getModel().getValueAt(orderTable.getSelectedRow(), 0);
-        ChefMakeOrderDialog dialog = new ChefMakeOrderDialog(OrderFactory.getOrder(viewedOrderId));
+        // TODO: Implement method opening a new tab DishInfoView, allowing user to view more information of a single
+        int viewedOrderId = (Integer) orderTable.getModel().getValueAt(orderTable.getSelectedRow(), 0);
+        if (OrderFactory.getOrder(viewedOrderId).getStatus() != 0 && OrderFactory.getOrder(viewedOrderId).getStatus() != 3) {
+            OrderFactory.setOrderState(viewedOrderId, 3);
+            ChefMakeOrderDialog dialog = new ChefMakeOrderDialog(OrderFactory.getOrder(viewedOrderId));
+            final int HEIGHT = 700;
+            final int WIDTH = 1000;
+            dialog.pack();
+            dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            dialog.setSize(WIDTH, HEIGHT);
+            dialog.setLocationRelativeTo(dialog.getParent());
 
+            dialog.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error this order is already made!");
+        }
     }
 
 
