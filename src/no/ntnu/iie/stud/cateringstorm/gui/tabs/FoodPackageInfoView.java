@@ -10,16 +10,21 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * Created by kenan on 07.04.2016.
  */
-public class FoodPackageInfoView extends JPanel {
+public class FoodPackageInfoView extends JFrame {
     private JPanel mainPanel;
     private JButton viewPackageButton;
     private JTable dishTable;
     private JPanel buttonPanel;
+    private JButton closeButton;
 
     private DishTableModel tableModel;
     private FoodPackage foodPackage;
@@ -39,28 +44,43 @@ public class FoodPackageInfoView extends JPanel {
             }
 
             Dish dish = tableModel.getValue(selectedRow);
-
-            //TODO Lag en ViewDishDialog
-
-            DishInfoView dishInfoView = new DishInfoView(dish);
             final int WIDTH = 700;
             final int HEIGHT = 600;
 
-            JFrame frame = new JFrame();
-            frame.add(dishInfoView);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(WIDTH, HEIGHT);
-            frame.setLocationRelativeTo(null);
+            DishInfoView dialog = new DishInfoView(dish);
+            dialog.pack();
+            dialog.setVisible(true);
+            dialog.setSize(WIDTH, HEIGHT);
+            dialog.setLocationRelativeTo(null);//Puts window in middle of screen
 
 
+        });
+
+        closeButton.addActionListener(e -> {
+            onCancel();
         });
 
         dishTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
+        // call onCancel() when cross is clicked
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
+        });
 
-
+// call onCancel() on ESCAPE
+        mainPanel.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
+    private void onCancel() {
+// add your code here if necessary
+        dispose();
     }
 
     private void createTable(){
@@ -75,12 +95,12 @@ public class FoodPackageInfoView extends JPanel {
         // Window dimensions
         final int WIDTH = 700;
         final int HEIGHT = 600;
-        JFrame frame = new JFrame();
-        frame.add(new FoodPackageInfoView(FoodPackageFactory.getFoodPackage(1)));
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
+        FoodPackageInfoView dialog = new FoodPackageInfoView(null);
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setLocationRelativeTo(null);//Puts window in middle of screen
+        System.exit(0);
 
     }
 
