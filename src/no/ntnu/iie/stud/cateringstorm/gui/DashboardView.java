@@ -43,8 +43,9 @@ public class DashboardView extends JFrame {
             case EMPLOYEE:
                 break;
             case CHEF:
-                tabPane.addTab("OrderInfoView", new OrderInfoView());
+                //tabPane.addTab("OrderInfoView", new OrderInfoView());
                 tabPane.addTab("StorageView", new StorageView());
+                tabPane.addTab("ChefOrderView", new ChefOrderView());
                 break;
             case CHAUFFEUR:
                 tabPane.addTab("ChauffeurOrderView", new ChauffeurOrderView());
@@ -54,7 +55,8 @@ public class DashboardView extends JFrame {
                 tabPane.addTab("StorageView", new StorageView());
                 break;
             case ADMINISTRATOR:
-                tabPane.addTab("OrderInfoView", new OrderInfoView());
+                //tabPane.addTab("OrderInfoView", new OrderInfoView());
+                tabPane.addTab("ChefOrderView", new ChefOrderView());
                 tabPane.addTab("ChauffeurOrderView", new ChauffeurOrderView());
                 tabPane.addTab("MenuAdministratorView", new MenuAdministratorView());
                 tabPane.addTab("StorageView", new StorageView());
@@ -67,7 +69,6 @@ public class DashboardView extends JFrame {
                 tabPane.addTab("SalespersonCustomerView", new SalespersonCustomerView());
                 break;
         }
-        //tabPane.addTab("ChefOrderView", new ChefOrderView());
     }
 
     public static void main(String[] args) {

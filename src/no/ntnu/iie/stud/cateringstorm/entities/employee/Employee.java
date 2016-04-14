@@ -70,6 +70,7 @@ public class Employee {
     public void onSuccessfulLogin() {
         DashboardView dashboardView = new DashboardView(this);
         dashboardView.setVisible(true);
+        dashboardView.setLocationRelativeTo(dashboardView.getParent());
     }
 
     @Override
