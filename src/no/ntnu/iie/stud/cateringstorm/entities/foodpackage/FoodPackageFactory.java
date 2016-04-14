@@ -43,7 +43,7 @@ public final class FoodPackageFactory {
     public static ArrayList<FoodPackage> getAllFoodPackages() {
         ArrayList<FoodPackage> foodPackages = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `food_package`")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM food_package")) {
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {
@@ -56,6 +56,84 @@ public final class FoodPackageFactory {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+    /**
+     * Gets all foodpackages with name matching a query.
+     * @return An ArrayList containing all foodpackages matched.
+     */
+    public static ArrayList<FoodPackage> getAllFoodPackagesByQuery(String searchQuery) {
+        ArrayList<FoodPackage> foodPackages = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM food_package WHERE name LIKE ?")){
+                statement.setString(1, '%' + searchQuery + '%');
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()) {
+                        foodPackages.add(createFoodPackageFromResultSet(result));
+                    }
+
+                }
+                return foodPackages;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    /**
+     * Gets all active foodpackes with name matching a query.
+     * @return An ArrayList containing all foodpackages matched.
+     */
+    public static ArrayList<FoodPackage> getActiveFoodPackagesByQuery(String searchQuery) {
+        ArrayList<FoodPackage> foodPackages = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM food_package WHERE name LIKE ? AND active = TRUE")){
+                statement.setString(1, '%' + searchQuery + '%');
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()) {
+                        foodPackages.add(createFoodPackageFromResultSet(result));
+                    }
+
+                }
+                return foodPackages;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    /**
+     * Creates an arraylist of the active foodpackages in the SQL table foodpackages
+     * @return ArrayList<FoodPackage>
+     */
+    public static ArrayList<FoodPackage> getActiveFoodPackages(){
+        ArrayList<FoodPackage> foodPackages = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM food_package WHERE active = TRUE")){
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()){
+                    while (result.next()) {
+
+                        foodPackages.add(createFoodPackageFromResultSet(result));
+                    }
+
+                }
+                return foodPackages;
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
         return null;
     }
 
