@@ -17,8 +17,9 @@ public class FoodPackageAdminView extends JFrame {
     private JTable FoodPackageTable;
     private JButton viewFoodPackage;
     private JButton button2;
-    private JTextField searchField;
-    private JButton refreshTableButton;
+    private JTextField searchTextField;
+    private JButton searchButton;
+    private JCheckBox inactiveCheckBox;
 
     private FoodPackageTableModel tableModel;
 
@@ -48,6 +49,23 @@ public class FoodPackageAdminView extends JFrame {
             dialog.setLocationRelativeTo(null);//Puts window in middle of screen
 
 
+        });
+        searchButton.addActionListener(e -> {
+            ArrayList<FoodPackage> newRows;
+            if(searchTextField.getText().trim().equals("")) {
+                if(inactiveCheckBox.isSelected()) {
+                    newRows = FoodPackageFactory.getAllFoodPackages();
+                } else {
+                    newRows = FoodPackageFactory.getActiveFoodPackages();
+                }
+            } else {
+                if(inactiveCheckBox.isSelected()) {
+                    newRows = FoodPackageFactory.getAllFoodPackagesByQuery(searchTextField.getText());
+                } else {
+                    newRows = FoodPackageFactory.getActiveFoodPackagesByQuery(searchTextField.getText());
+                }
+            }
+            tableModel.setRows(newRows);
         });
 
         FoodPackageTable.getSelectionModel().addListSelectionListener(e -> {
