@@ -37,37 +37,42 @@ public class DashboardView extends JFrame {
     }
 
     private void fillTabPane() {
-        tabPane.addTab("HomeView", new HomeView(employee));
+        ClassLoader loader = getClass().getClassLoader();
+        if(loader == null) {
+            System.err.println("Could not get class loader, aborting tab creation!");
+            return;
+        }
+        tabPane.addTab("Home", new ImageIcon(loader.getResource("ic_home_black_24dp_1x.png")), new HomeView(employee));
 
         switch (employee.getEmployeeType()) {
             case EMPLOYEE:
                 break;
             case CHEF:
                 //tabPane.addTab("OrderInfoView", new OrderInfoView());
-                tabPane.addTab("StorageView", new StorageView());
-                tabPane.addTab("ChefOrderView", new ChefOrderView());
+                tabPane.addTab("Storage", new ImageIcon(loader.getResource("ic_shopping_cart_black_24dp_1x.png")), new StorageView());
+                tabPane.addTab("Orders", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new ChefOrderView());
                 break;
             case CHAUFFEUR:
-                tabPane.addTab("ChauffeurOrderView", new ChauffeurOrderView());
+                tabPane.addTab("Order delivery", new ImageIcon(loader.getResource("ic_assignment_black_24dp_1x.png")), new ChauffeurOrderView());
                 break;
             case NUTRITION_EXPERT:
-                tabPane.addTab("MenuAdministratorView", new MenuAdministratorView());
-                tabPane.addTab("StorageView", new StorageView());
+                tabPane.addTab("Menu", new ImageIcon(loader.getResource("ic_restaurant_menu_black_24dp_1x.png")), new MenuAdministratorView());
+                tabPane.addTab("Storage", new ImageIcon(loader.getResource("ic_shopping_cart_black_24dp_1x.png")), new StorageView());
                 break;
             case ADMINISTRATOR:
                 //tabPane.addTab("OrderInfoView", new OrderInfoView());
-                tabPane.addTab("ChefOrderView", new ChefOrderView());
-                tabPane.addTab("ChauffeurOrderView", new ChauffeurOrderView());
-                tabPane.addTab("MenuAdministratorView", new MenuAdministratorView());
-                tabPane.addTab("StorageView", new StorageView());
-                tabPane.addTab("SalespersonOrderView", new SalespersonOrderView(employee));
-                tabPane.addTab("SalespersonCustomerView", new SalespersonCustomerView());
+                tabPane.addTab("Orders (chef)", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new ChefOrderView());
+                tabPane.addTab("Orders (salesperson)", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new SalespersonOrderView(employee));
+                tabPane.addTab("Order delivery", new ImageIcon(loader.getResource("ic_assignment_black_24dp_1x.png")), new ChauffeurOrderView());
+                tabPane.addTab("Menu", new ImageIcon(loader.getResource("ic_restaurant_menu_black_24dp_1x.png")), new MenuAdministratorView());
+                tabPane.addTab("Storage", new ImageIcon(loader.getResource("ic_shopping_cart_black_24dp_1x.png")), new StorageView());
+                tabPane.addTab("Customers", new ImageIcon(loader.getResource("ic_account_circle_black_24dp_1x.png")), new SalespersonCustomerView());
                 //tabPane.addTab("FoodPackageInfoview", new FoodPackageInfoView());
-                tabPane.addTab("StatisticsView", new StatisticsView());
+                tabPane.addTab("Statistics", new ImageIcon(loader.getResource("ic_insert_chart_black_24dp_1x.png")), new StatisticsView());
                 break;
             case SALESPERSON:
-                tabPane.addTab("SalespersonOrderView", new SalespersonOrderView(employee));
-                tabPane.addTab("SalespersonCustomerView", new SalespersonCustomerView());
+                tabPane.addTab("Orders", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new SalespersonOrderView(employee));
+                tabPane.addTab("Customers", new ImageIcon(loader.getResource("ic_account_circle_black_24dp_1x.png")), new SalespersonCustomerView());
                 break;
         }
     }
