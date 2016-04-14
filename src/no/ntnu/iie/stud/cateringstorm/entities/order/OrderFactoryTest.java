@@ -5,7 +5,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -47,5 +50,14 @@ public class OrderFactoryTest {
 
         OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, tall);
 
+    }
+
+    @Test
+    public void testGetSalesForPeriod() throws Exception {
+        HashMap<LocalDate, Double> sales = OrderFactory.getSalesForPeriod(LocalDate.now().minusDays(7), LocalDate.now());
+        Assert.assertNotNull(sales);
+        for(Map.Entry<LocalDate, Double> entry : sales.entrySet()) {
+            System.out.println("Sales entry: " + entry.getKey() + ", " + entry.getValue());
+        }
     }
 }

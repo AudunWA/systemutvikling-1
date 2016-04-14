@@ -5,6 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.statistics.DeliveredOrdersChart;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -21,6 +22,9 @@ public class StatisticsView extends JPanel {
         add(mainPanel, BorderLayout.CENTER);
 
         tabPane.addTab("Order deliveries by day", new DeliveredOrdersChart());
+        tabPane.addTab("Order placements by day (week)", DeliveredOrdersChart.generateOrdersOrderedChart(LocalDate.now().minusDays(7), LocalDate.now()));
+        tabPane.addTab("Order placements by day (month)", DeliveredOrdersChart.generateOrdersOrderedChart(LocalDate.now().minusDays(30), LocalDate.now()));
+        tabPane.addTab("Income by day (week)", DeliveredOrdersChart.generateIncomeChart(LocalDate.now().minusDays(7), LocalDate.now()));
     }
 
     public static void main(String[] args) {

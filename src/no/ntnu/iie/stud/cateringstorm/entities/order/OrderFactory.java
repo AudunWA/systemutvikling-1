@@ -3,9 +3,12 @@ package no.ntnu.iie.stud.cateringstorm.entities.order;
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.util.DateUtil;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Audun on 11.03.2016.
@@ -262,7 +265,6 @@ public final class OrderFactory {
             e.printStackTrace();
         }
         return null;
-
     }
 
     public static boolean setOrderPriority(int orderID, boolean priority){
@@ -282,4 +284,28 @@ public final class OrderFactory {
         }
     }
 
+    private static final String salesForPeriodQuery = "SELECT DATE(`_order`.`_order_time`) AS date, SUM(cost) AS sales FROM `_order_food_package` INNER JOIN `food_package` USING(food_package_id) INNER JOIN `_order` USING(`_order_id`) WHERE DATE(`_order`.`_order_time`) BETWEEN ? AND ? GROUP BY DATE(`_order`.`_order_time`);";
+
+    public static HashMap<LocalDate, Double> getSalesForPeriod(LocalDate startDate, LocalDate endDate) {
+        HashMap<LocalDate, Double> sales = new HashMap<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(salesForPeriodQuery)) {
+                statement.setDate(1, Date.valueOf(startDate));
+                statement.setDate(2, Date.valueOf(endDate));
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        LocalDate date = result.getDate("date").toLocalDate();
+                        double income = result.getDouble("sales");
+                        sales.put(date, income);
+                    }
+                }
+            }
+            return sales;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
