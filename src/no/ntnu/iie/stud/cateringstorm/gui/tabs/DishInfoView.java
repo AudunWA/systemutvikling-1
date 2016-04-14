@@ -8,13 +8,14 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
  * Created by EliasBrattli on 16/03/2016.
  * Fixed by Kenan on 08.04.16
  */
-public class DishInfoView extends JPanel{
+public class DishInfoView extends JFrame{
     private JButton editRowButton;
     private JPanel mainPanel;
     private JButton addRowButton;
@@ -34,14 +35,27 @@ public class DishInfoView extends JPanel{
         add(mainPanel, BorderLayout.CENTER);
 
         closeButton.addActionListener(e -> {
-
+            onCancel();
+        });
+// call onCancel() when cross is clicked
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
         });
 
+// call onCancel() on ESCAPE
+        mainPanel.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-
-
-
-
+    private void onCancel() {
+// add your code here if necessary
+        dispose();
+    }
 
     private void createTable(){
         ArrayList<Ingredient> ingredientList = IngredientFactory.getIngredients(dish.getDishId());
@@ -55,12 +69,11 @@ public class DishInfoView extends JPanel{
         // Window dimensions
         final int WIDTH = 700;
         final int HEIGHT = 600;
-        JFrame frame = new JFrame();
-        frame.add(new DishInfoView(DishFactory.getDish(1)));
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
+        DishInfoView dialog = new DishInfoView(null);
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setLocationRelativeTo(null);//Puts window in middle of screen
     }
 
     private void createUIComponents() {
