@@ -30,7 +30,8 @@ public class EditCustomerDialog extends JDialog{
         this.customer = customer;
         setContentPane(mainPanel);
         setModal(true);
-        getRootPane().setDefaultButton(saveButton);
+        getRootPane().setDefaultButton(saveButton);//Consider not using this for safety reasons
+        setLocationRelativeTo(getParent());
         saveButton.addActionListener(e->{
             onOK();
         });

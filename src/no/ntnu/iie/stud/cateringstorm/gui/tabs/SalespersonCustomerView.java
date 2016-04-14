@@ -17,6 +17,8 @@ import java.util.ArrayList;
 /**
  * Created by EliasBrattli on 06/04/2016.
  */
+
+// TODO: Implement email, phone and address verification, and checking that names do not contain numbers and such!
 public class SalespersonCustomerView extends JPanel{
     private JPanel mainPanel;
     private JTable customerTable;
@@ -93,19 +95,17 @@ public class SalespersonCustomerView extends JPanel{
     }
 
     private void addCustomer(){
-        // TODO: Implement AddCustomerDialog
         AddCustomerDialog acDialog = new AddCustomerDialog();
         acDialog.pack();
         final int WIDTH = 350, HEIGHT = 500;
         acDialog.setSize(WIDTH,HEIGHT);
         acDialog.setVisible(true);
-        acDialog.setLocationRelativeTo(acDialog.getParent());
         if(acDialog.hasAddedNewValue()){
             refresh();
         }
     }
+    //Method opening a dialog for editing selected customer
     private void editCustomer(Customer customer){
-        // TODO: Implement class EditCustomerDialog
         if(customer != null) {
             EditCustomerDialog ecDialog = new EditCustomerDialog(customer);
             final int WIDTH = 300;
@@ -114,7 +114,6 @@ public class SalespersonCustomerView extends JPanel{
             ecDialog.setSize(WIDTH, HEIGHT);
             ecDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             ecDialog.setVisible(true);
-            ecDialog.setLocationRelativeTo(ecDialog.getParent());
             if(ecDialog.getAddedNewValue()){
                 refresh();
             }
@@ -157,6 +156,7 @@ public class SalespersonCustomerView extends JPanel{
         }
     }
 
+
     private ArrayList<Customer> getActiveCustomers(){
         return CustomerFactory.getActiveCustomers();
     }
@@ -164,6 +164,7 @@ public class SalespersonCustomerView extends JPanel{
     private ArrayList<Customer> getAllCustomers(){
         return CustomerFactory.getAllCustomers();
     }
+
     private void refresh(){
         // TODO: Implement method refreshing data
         if(showInactiveCB.isSelected()) {
@@ -172,9 +173,7 @@ public class SalespersonCustomerView extends JPanel{
             tableModel.setRows(getActiveCustomers());
         }
     }
-    public CustomerTableModel getTableModel(){
-        return tableModel;
-    }
+
     public static void main(String[] args){
         // Window dimensions
         final int WIDTH = 1200;

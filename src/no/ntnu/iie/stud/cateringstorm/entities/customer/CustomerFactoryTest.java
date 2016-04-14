@@ -23,7 +23,12 @@ public class CustomerFactoryTest {
 
         }
     }
-
+    @Test
+    public void testGetActiveCustomers() throws Exception {
+        for(Customer c :CustomerFactory.getActiveCustomers()){
+            System.out.println(c);
+        }
+    }
     @Test
     public void testCreateCustomer() throws Exception {
 
