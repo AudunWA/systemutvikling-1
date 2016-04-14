@@ -42,6 +42,10 @@ public class LoginView extends JFrame {
                 JOptionPane.showMessageDialog(this, "Login attempt failed!");
                 return;
             } else {
+                usernameField.setEnabled(false);
+                passwordField.setEnabled(false);
+                loginButton.setEnabled(false);
+
                 JOptionPane.showMessageDialog(this, "Hello, " + employee.getFullName() + "!");
                 employee.onSuccessfulLogin();
                 setVisible(false);
