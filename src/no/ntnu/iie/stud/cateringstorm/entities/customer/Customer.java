@@ -71,6 +71,7 @@ public class Customer {
 
     public void setActive(boolean active) {
         this.active = active;
+        CustomerFactory.editCustomerStatus(getCustomerId(),active);
     }
 
     public void setPhone(String phone) {

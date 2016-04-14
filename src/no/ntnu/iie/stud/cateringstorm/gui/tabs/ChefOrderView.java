@@ -10,7 +10,9 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Orderview for chefs. Chefs are able to edit contents of the order.
@@ -18,7 +20,6 @@ import java.util.ArrayList;
  */
 public class ChefOrderView extends JPanel {
     private JPanel mainPanel;
-    private JScrollPane scrollPane;
     private JScrollPane orderPane;
     private JTable orderTable;
     private JPanel buttonPanel;
@@ -26,7 +27,7 @@ public class ChefOrderView extends JPanel {
     private JComboBox statusBox;
     private JPanel cbPanel;
     private JButton refreshButton;
-    private ArrayList<Order> orderList = new ArrayList<>();
+    private ArrayList<Order> orderList;
     private   OrderTableModel tableModel;
 
     public ChefOrderView() {
@@ -89,10 +90,22 @@ public class ChefOrderView extends JPanel {
         }
     }
     private void viewOrder(){
-        // TODO: Implement method opening a new tab DishInfoView, allowing user to view more information of a single order
-        int viewedOrderId = (Integer)orderTable.getModel().getValueAt(orderTable.getSelectedRow(), 0);
-        ChefMakeOrderDialog dialog = new ChefMakeOrderDialog(OrderFactory.getOrder(viewedOrderId));
+        // TODO: Implement method opening a new tab DishInfoView, allowing user to view more information of a single
+        int viewedOrderId = (Integer) orderTable.getModel().getValueAt(orderTable.getSelectedRow(), 0);
+        if (OrderFactory.getOrder(viewedOrderId).getStatus() != 0 && OrderFactory.getOrder(viewedOrderId).getStatus() != 3) {
+            OrderFactory.setOrderState(viewedOrderId, 3);
+            ChefMakeOrderDialog dialog = new ChefMakeOrderDialog(OrderFactory.getOrder(viewedOrderId));
+            final int HEIGHT = 700;
+            final int WIDTH = 1000;
+            dialog.pack();
+            dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            dialog.setSize(WIDTH, HEIGHT);
+            dialog.setLocationRelativeTo(dialog.getParent());
 
+            dialog.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error this order is already made!");
+        }
     }
 
 
@@ -111,11 +124,14 @@ public class ChefOrderView extends JPanel {
                 String temp = (String)table.getModel().getValueAt(row , 4);
                 boolean priority = (boolean)table.getModel().getValueAt(row, 3);
                 if (temp.equals("Ready for production") && !priority) {
+                    setBackground(new Color(100,200,100));
+                } else if (temp.equals("Ready for delivery")) {
+                    setBackground(new Color(150,150,150));
+                } else if (temp.equals("In production") && !priority){
                     setBackground(Color.ORANGE);
-                } else if (temp.equals("Ready for delivery") && !priority) {
-                    setBackground(Color.GREEN);
                 } else if (priority) {
-                    setBackground(Color.red);
+                    setBackground(new Color(200,100,100));
+                    setFont(new Font("BOLD", Font.BOLD,12));
                 } else {
                     setBackground(table.getBackground());
                     setForeground(table.getForeground());

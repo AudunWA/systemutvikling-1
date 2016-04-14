@@ -10,11 +10,15 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
  * Created by EliasBrattli on 06/04/2016.
  */
+
+// TODO: Implement email, phone and address verification, and checking that names do not contain numbers and such!
 public class SalespersonCustomerView extends JPanel{
     private JPanel mainPanel;
     private JTable customerTable;
@@ -27,6 +31,7 @@ public class SalespersonCustomerView extends JPanel{
     private JLabel infoLabel;
     private JTextField searchField;
     private JButton searchButton;
+    private JCheckBox showInactiveCB;
     private JPanel noselectButtonPanel;
     private CustomerTableModel tableModel;
 
@@ -41,14 +46,25 @@ public class SalespersonCustomerView extends JPanel{
             editCustomer(getSelectedCustomer());
         });
         removeButton.addActionListener(e->{
+
             removeCustomer(getSelectedCustomer());
         });
         refreshButton.addActionListener(e->{
             refresh();
         });
         searchButton.addActionListener(e->{
-
+            search();
         });
+        showInactiveCB.addActionListener(e->{
+            refresh();
+        });
+        searchField.addMouseListener(new MouseAdapter() {
+             @Override
+             public void mouseClicked(MouseEvent e) {
+                 setSearchField("");
+                 searchButton.setEnabled(true);
+             }
+         });
         customerTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
@@ -66,9 +82,10 @@ public class SalespersonCustomerView extends JPanel{
     private void createUIComponents() {
         // TODO: place custom component creation code here
         createTable();
+        createSearchField();
     }
     public void createTable() {
-        ArrayList<Customer> customerList = CustomerFactory.getAllCustomers();
+        ArrayList<Customer> customerList = getActiveCustomers();
         Integer[] columns = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVETEXT}; // Columns can be changed
 
         tableModel = new CustomerTableModel(customerList, columns);
@@ -78,19 +95,17 @@ public class SalespersonCustomerView extends JPanel{
     }
 
     private void addCustomer(){
-        // TODO: Implement AddCustomerDialog
         AddCustomerDialog acDialog = new AddCustomerDialog();
         acDialog.pack();
         final int WIDTH = 350, HEIGHT = 500;
         acDialog.setSize(WIDTH,HEIGHT);
         acDialog.setVisible(true);
-        acDialog.setLocationRelativeTo(acDialog.getParent());
         if(acDialog.hasAddedNewValue()){
             refresh();
         }
     }
+    //Method opening a dialog for editing selected customer
     private void editCustomer(Customer customer){
-        // TODO: Implement class EditCustomerDialog
         if(customer != null) {
             EditCustomerDialog ecDialog = new EditCustomerDialog(customer);
             final int WIDTH = 300;
@@ -99,7 +114,6 @@ public class SalespersonCustomerView extends JPanel{
             ecDialog.setSize(WIDTH, HEIGHT);
             ecDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             ecDialog.setVisible(true);
-            ecDialog.setLocationRelativeTo(ecDialog.getParent());
             if(ecDialog.getAddedNewValue()){
                 refresh();
             }
@@ -120,39 +134,50 @@ public class SalespersonCustomerView extends JPanel{
             JOptionPane.showMessageDialog(null, "Please select a row in the customer table");
         }
     }
-    /*
+    private void createSearchField(){
+        searchField = new JTextField(20);
+        setSearchField("Search customer name");
+        add(searchField);
+    }
+    private void setSearchField(String text){
+        searchField.setText(text);
+        searchField.setEnabled(true);
+    }
+
+
     // TODO: Eli has to fix buttons, they don't show
     private void search(){
         ArrayList<Customer> newRows;
-        if(searchTextField.getText().trim().equals("")) {
-            newRows = CustomerFactory.getAllCustomers();
+        if(searchField.getText().trim().equals("")) {
+            refresh();
         } else {
-            newRows = CustomerFactory.getCustomersByQuery(searchTextField.getText());
+            newRows = CustomerFactory.getCustomersByQuery(searchField.getText());
+            tableModel.setRows(newRows);
         }
-        tableModel.setRows(newRows);
     }
 
-    searchButton.addActionListener(e -> {
-        ArrayList<Customer> newRows;
-        if(searchTextField.getText().trim().equals("")) {
-            newRows = CustomerFactory.getAllCustomers();
-        } else {
-            newRows = CustomerFactory.getCustomersByQuery(searchTextField.getText());
-        }
-        tableModel.setRows(newRows);
-    });
-    */
+
+    private ArrayList<Customer> getActiveCustomers(){
+        return CustomerFactory.getActiveCustomers();
+    }
+
+    private ArrayList<Customer> getAllCustomers(){
+        return CustomerFactory.getAllCustomers();
+    }
+
     private void refresh(){
         // TODO: Implement method refreshing data
-        tableModel.setRows(CustomerFactory.getAllCustomers());
+        if(showInactiveCB.isSelected()) {
+            tableModel.setRows(getAllCustomers());
+        }else {
+            tableModel.setRows(getActiveCustomers());
+        }
     }
-    public CustomerTableModel getTableModel(){
-        return tableModel;
-    }
+
     public static void main(String[] args){
         // Window dimensions
         final int WIDTH = 1200;
-        final int HEIGHT = 800;
+        final int HEIGHT = 600;
         JFrame frame = new JFrame();
         frame.add(new SalespersonCustomerView());
         frame.setVisible(true);

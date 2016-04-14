@@ -159,7 +159,7 @@ public class AddOrderDialog extends JDialog {
             Customer customer = CustomerFactory.getCustomer(customerIndex + 1);
             String customerForename = customer.getForename();
             String customerSurname = customer.getSurname();
-            int customerId = CustomerFactory.getIdFromCustomerName(customerForename, customerSurname);
+            int customerId = CustomerFactory.getIdFromName(customerForename, customerSurname);
 
             String description = descriptionText.getText();
             if (description.length() > 10){

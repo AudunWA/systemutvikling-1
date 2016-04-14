@@ -47,6 +47,10 @@ public class ChefMakeOrderDialog extends JDialog {
             }
         });
 
+        viewIngredientsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { onView();}
+        });
+
 // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -63,6 +67,18 @@ public class ChefMakeOrderDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    private void onView(){
+        ChefViewIngredientsDialog view = new ChefViewIngredientsDialog(DishFactory.getDish((Integer)dishTable.getModel().getValueAt(dishTable.getSelectedRow(),0)));
+        final int HEIGHT = 700;
+        final int WIDTH = 1000;
+        view.pack();
+        view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        view.setSize(WIDTH, HEIGHT);
+        view.setLocationRelativeTo(view.getParent());
+        view.setVisible(true);
+
+    }
+
     private void onOK() {
 // add your code here
         OrderFactory.setOrderState(order.getOrderId(), 0);
@@ -71,6 +87,7 @@ public class ChefMakeOrderDialog extends JDialog {
 
     private void onCancel() {
 // add your code here if necessary
+        OrderFactory.setOrderState(order.getOrderId(), 1);
         dispose();
     }
 
@@ -85,7 +102,7 @@ public class ChefMakeOrderDialog extends JDialog {
             }
         }
         //FIXME add package column???
-        Integer[] columns = new Integer[] {DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_TYPE_TEXT, DishTableModel.COLUMN_DESCRIPTION};
+        Integer[] columns = new Integer[] {DishTableModel.COLUMN_ID, DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_TYPE_TEXT, DishTableModel.COLUMN_DESCRIPTION};
         tableModel = new DishTableModel(dishList,columns);
         dishTable = new JTable(tableModel);
 

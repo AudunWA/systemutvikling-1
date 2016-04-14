@@ -4,6 +4,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 /**
@@ -28,7 +29,10 @@ public class AddCustomerDialog extends JDialog{
     public AddCustomerDialog(){
         setContentPane(mainPanel);
         setModal(true);
-        getRootPane().setDefaultButton(saveButton);
+        getRootPane().setDefaultButton(saveButton);// Consider not using this for safety reasons
+        setLocationRelativeTo(getParent());
+        /*setComponentOrientation(((parent == null) ?
+                getRootPane() : parent).getComponentOrientation());*/
         addedNewValue = false;
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
