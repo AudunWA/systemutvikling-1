@@ -53,6 +53,7 @@ public class DeliveredOrdersChart extends ChartPanel {
 
         long daysTotal = ChronoUnit.DAYS.between(startLocalDate, endLocalDate);
 
+        // Create the correct X-axis scale (from first date to last)
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM");
         for (long i = 0; i <= daysTotal; i++) {
@@ -61,13 +62,15 @@ public class DeliveredOrdersChart extends ChartPanel {
         }
 
 
+        // Increment y-values of dates containing orders
         for(Order order : orders) {
             LocalDate date = DateUtil.convertDate(order.getDeliveryDate());
             if(date.isBefore(startLocalDate) || date.isAfter(endLocalDate)) {
-                continue; // Outside range
+                continue; // Outside range, ignore
             }
 
-            dataset.setValue(dataset.getValue("orders", formatter.format(date)).intValue() + 1, "orders", formatter.format(date));
+            int currentValue = dataset.getValue("orders", formatter.format(date)).intValue();
+            dataset.setValue(currentValue + 1, "orders", formatter.format(date));
         }
         return dataset;
     }
