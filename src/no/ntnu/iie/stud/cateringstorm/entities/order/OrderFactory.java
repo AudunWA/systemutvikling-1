@@ -100,7 +100,6 @@ public final class OrderFactory {
         return new Order(orderId, description, deliveryDate, orderDate, portions, priority, salespersonId, customer, recurringOrderId, status, chauffeurId);
     }
 
-    //This method is used by the Chauffeur, through ChaufferOrderView
     public static boolean setOrderState(int orderID, int status){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET status = ? WHERE _order_id = ?")) {
@@ -117,6 +116,31 @@ public final class OrderFactory {
             return false;
         }
     }
+    /**10
+     * Find orders by customer name.
+     * @return An ArrayList containing all orders matching search
+     */
+
+    public static ArrayList<Order> getOrdersByQuery(String searchQuery){
+
+            ArrayList<Order> temp = new ArrayList<>();
+            String input = searchQuery.trim();
+            try (Connection connection = Database.getConnection()){
+                try (PreparedStatement statement = connection.prepareStatement("select o.* from _order o join customer c ON (o.customer_id LIKE c.customer_id) where concat_ws(' ',c.forename,c.surname) like ?;")){
+                    statement.setString(1, '%' + input + '%');
+                    statement.executeQuery();
+
+                    try (ResultSet result = statement.getResultSet()){
+                        while (result.next()){
+                            temp.add(createOrderFromResultSet(result));
+                        }
+                    }
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+            return temp;
+        }
 
     public static Order createOrder(String description, Timestamp deliveryTime, int portions, boolean priority,
                                     int salespersonId, int customerId, int chauffeurId, ArrayList<Integer> packageId) {

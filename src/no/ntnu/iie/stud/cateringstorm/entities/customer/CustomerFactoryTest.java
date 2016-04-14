@@ -24,6 +24,12 @@ public class CustomerFactoryTest {
         }
     }
     @Test
+    public void testGetCustomersByQuery()throws Exception {
+        for(Customer c: CustomerFactory.getCustomersByQuery("test")){
+            System.out.println(c);
+        }
+    }
+    @Test
     public void testGetActiveCustomers() throws Exception {
         for(Customer c :CustomerFactory.getActiveCustomers()){
             System.out.println(c);

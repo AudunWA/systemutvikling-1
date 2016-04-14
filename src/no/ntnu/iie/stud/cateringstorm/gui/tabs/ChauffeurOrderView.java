@@ -26,7 +26,7 @@ public class ChauffeurOrderView extends JPanel {
 
     private void createTable(){
         orderList = OrderFactory.getAllOrders();
-        Integer[] columns = new Integer[] {OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_CUSTOMER_ID, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_ADDRESS, OrderTableModel.COLUMN_STATUS_TEXT};
+        Integer[] columns = new Integer[] {OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_CUSTOMER_NAME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_ADDRESS, OrderTableModel.COLUMN_STATUS_TEXT};
         OrderTableModel tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
@@ -76,9 +76,11 @@ public class ChauffeurOrderView extends JPanel {
     }
     private void refresh(){
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
+        getReadyOrders();
     }
-
-    // FIXME: Add possibility to expand mainFrame for table
+    private void getReadyOrders(){
+        // TODO: Implement method loading orders with status "ready for delivery", changing status to "being delivered"
+    }
     public static void main(String[] args){
         // Window dimensions
         final int WIDTH = 1300;

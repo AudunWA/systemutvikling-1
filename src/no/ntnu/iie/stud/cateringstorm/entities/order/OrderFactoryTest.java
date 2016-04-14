@@ -27,7 +27,14 @@ public class OrderFactoryTest {
             System.out.println(order);
         }
     }
-
+    @Test
+    public void testGetOrdersByQuery() throws Exception {
+        ArrayList<Order> orders = OrderFactory.getOrdersByQuery("Mark");
+        Assert.assertNotNull(orders);
+        for(Order order: orders){
+            System.out.println(order);
+        }
+    }
     @Test
     public void testSetOrderState() throws Exception {
         OrderFactory.setOrderState(1, 1);
