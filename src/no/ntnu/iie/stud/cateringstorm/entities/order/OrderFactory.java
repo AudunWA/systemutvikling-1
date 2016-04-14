@@ -51,7 +51,7 @@ public final class OrderFactory {
     public static ArrayList<Order> getAllOrdersChef() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE status < 2 && delivery_time > NOW() ORDER BY delivery_time")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status < 2 || status = 3) && delivery_time > NOW() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()){
