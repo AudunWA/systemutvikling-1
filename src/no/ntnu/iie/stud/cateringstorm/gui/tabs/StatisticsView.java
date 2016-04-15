@@ -1,9 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
-<<<<<<< HEAD
-=======
-//import no.ntnu.iie.stud.cateringstorm.gui.statistics.ChartUtil;
->>>>>>> a8a8396121fcbc232cb6bf189d406db6cddbedfb
+
 import no.ntnu.iie.stud.cateringstorm.gui.statistics.DeliveredOrdersChart;
 
 import javax.swing.*;
