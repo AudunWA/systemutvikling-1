@@ -185,7 +185,7 @@ CREATE TABLE recurring_order(
 
 CREATE TABLE _order(
 _order_id INTEGER AUTO_INCREMENT,
-description VARCHAR(20),
+description VARCHAR(200),
 delivery_time DATETIME NOT NULL,
 _order_time DATETIME NOT NULL,
 portions INTEGER NOT NULL,
