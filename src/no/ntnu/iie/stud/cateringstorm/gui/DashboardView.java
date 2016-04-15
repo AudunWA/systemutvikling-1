@@ -18,14 +18,14 @@ public class DashboardView extends JFrame {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 600;
 
-    private Employee employee;
+    private Employee loggedInEmployee;
 
     private JTabbedPane tabPane;
     private JPanel mainPanel;
 
-    public DashboardView(Employee employee) {
+    public DashboardView(Employee loggedInEmployee) {
         super();
-        this.employee = employee;
+        this.loggedInEmployee = loggedInEmployee;
 
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
@@ -37,9 +37,9 @@ public class DashboardView extends JFrame {
     }
 
     private void fillTabPane() {
-        tabPane.addTab("HomeView", new HomeView(employee));
+        tabPane.addTab("HomeView", new HomeView(loggedInEmployee));
 
-        switch (employee.getEmployeeType()) {
+        switch (loggedInEmployee.getEmployeeType()) {
             case EMPLOYEE:
                 break;
             case CHEF:
@@ -60,13 +60,13 @@ public class DashboardView extends JFrame {
                 tabPane.addTab("ChauffeurOrderView", new ChauffeurOrderView());
                 tabPane.addTab("MenuAdministratorView", new MenuAdministratorView());
                 tabPane.addTab("StorageView", new StorageView());
-                tabPane.addTab("SalespersonOrderView", new SalespersonOrderView(employee));
+                tabPane.addTab("SalespersonOrderView", new SalespersonOrderView(loggedInEmployee));
                 tabPane.addTab("SalespersonCustomerView", new SalespersonCustomerView());
                 //tabPane.addTab("FoodPackageInfoview", new FoodPackageInfoView());
                 tabPane.addTab("StatisticsView", new StatisticsView());
                 break;
             case SALESPERSON:
-                tabPane.addTab("SalespersonOrderView", new SalespersonOrderView(employee));
+                tabPane.addTab("SalespersonOrderView", new SalespersonOrderView(loggedInEmployee));
                 tabPane.addTab("SalespersonCustomerView", new SalespersonCustomerView());
                 break;
         }

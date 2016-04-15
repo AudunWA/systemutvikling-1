@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="no.ntnu.iie.stud.cateringstorm.gui.tabs.SalespersonCustomerView">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="603" height="553"/>
+      <xy x="20" y="20" width="905" height="553"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -19,7 +19,7 @@
         </children>
       </scrollpane>
       <grid id="c5577" binding="selectButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-        <constraints border-constraint="South"/>
+        <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>
         <children>
@@ -50,7 +50,7 @@
         </children>
       </grid>
       <grid id="872a6" binding="noSelectButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-        <constraints border-constraint="Center"/>
+        <constraints border-constraint="South"/>
         <properties/>
         <border type="none"/>
         <children>

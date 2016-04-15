@@ -1,6 +1,9 @@
 package no.ntnu.iie.stud.cateringstorm.entities.customer;
 
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 /**
  * Created by Chris on 17.03.2016.
@@ -16,8 +19,9 @@ public class CustomerFactoryTest {
 
     @Test
     public void testGetAllCustomers() throws Exception {
-
-        for (Customer customer : CustomerFactory.getAllCustomers()){
+        ArrayList<Customer> list = CustomerFactory.getAllCustomers();
+        Assert.assertNotNull(list);
+        for (Customer customer : list){
 
             System.out.println(customer);
 
@@ -25,32 +29,43 @@ public class CustomerFactoryTest {
     }
     @Test
     public void testGetCustomersByQuery()throws Exception {
-        for(Customer c: CustomerFactory.getCustomersByQuery("test")){
+        ArrayList<Customer> list = CustomerFactory.getCustomersByQuery("test");
+        Assert.assertNotNull(list);
+        for(Customer c: list){
             System.out.println(c);
         }
     }
     @Test
     public void testGetActiveCustomers() throws Exception {
-        for(Customer c :CustomerFactory.getActiveCustomers()){
+        ArrayList<Customer> list = CustomerFactory.getActiveCustomers();
+        Assert.assertNotNull(list);
+        for(Customer c : list){
             System.out.println(c);
         }
     }
     @Test
     public void testCreateCustomer() throws Exception {
 
-        CustomerFactory.createCustomer("Kirkhorn", "Knut",  "Hornindal", true, "999999","noot@hotmail.com");
-
+       Customer customer= CustomerFactory.createCustomer("Kirkhorn", "Knut",  "Hornindal", true, "999999","noot@hotmail.com");
+        Assert.assertNotNull(customer);
     }
 
     @Test
     public void testEditCustomerStatus() throws Exception {
-
-        CustomerFactory.editCustomerStatus(9,false);
-
+        Customer customer = CustomerFactory.createCustomer("Kirkhorn", "Knut Sr.",  "Hornindal", true, "999999","noot@hotmail.com");
+        CustomerFactory.editCustomerStatus(customer.getCustomerId(),false);
+        customer = CustomerFactory.getCustomer(customer.getCustomerId());
+        Assert.assertEquals(customer.isActive(), false);
     }
 
     @Test
     public void testUpdateCustomer() throws Exception {
-        CustomerFactory.updateCustomer(new Customer(0, "Kirkhorn", "Knut",  "Hornindal", true, "999999","noot@hotmail.com"));
+        String text = "Knut Jr.";
+        Customer customer = CustomerFactory.createCustomer("Kirkhorn", "Knut Sr.",  "Hornindal", true, "999999","noot@hotmail.com");
+        customer.setForename(text);
+        CustomerFactory.updateCustomer(customer);
+        customer = CustomerFactory.getCustomer(customer.getCustomerId());
+        Assert.assertEquals(customer.getForename(), text);
+
     }
 }

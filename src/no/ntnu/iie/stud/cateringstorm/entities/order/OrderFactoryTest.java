@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Audun on 11.03.2016.
  */
+// FIXME: Inspect methods, fix echterbugs and use asserts in every test
 public class OrderFactoryTest {
 
     @Test
