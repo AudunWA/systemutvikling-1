@@ -24,6 +24,8 @@ public class OrderTableModel extends EntityTableModel<Order> {
     public static final int COLUMN_CHAUFFEUR_ID = 10;
     public static final int COLUMN_STATUS_TEXT = 11;
     public static final int COLUMN_ADDRESS = 12;
+    public static final int COLUMN_CUSTOMER_NAME = 13;
+
 
     public OrderTableModel(ArrayList<Order> rows) {
         super(rows);
@@ -63,6 +65,8 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 return "Status";
             case COLUMN_ADDRESS:
                 return "Address";
+            case COLUMN_CUSTOMER_NAME :
+                return "Customer";
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
@@ -100,6 +104,8 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 return value.deliveryStatus();
             case COLUMN_ADDRESS:
                 return value.getCustomerAddress();
+            case COLUMN_CUSTOMER_NAME:
+                return value.getCustomerName();
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
@@ -166,6 +172,8 @@ public class OrderTableModel extends EntityTableModel<Order> {
             case COLUMN_STATUS_TEXT:
                 return String.class;
             case COLUMN_ADDRESS:
+                return String.class;
+            case COLUMN_CUSTOMER_NAME:
                 return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");

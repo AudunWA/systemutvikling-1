@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="no.ntnu.iie.stud.cateringstorm.gui.tabs.HoursView">
+  <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="521"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <scrollpane id="913c4" binding="tablePane" custom-create="true">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="7e14f" class="javax.swing.JTable" binding="hoursTable" custom-create="true">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <grid id="9ce1" binding="selectButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="f81b6" class="javax.swing.JLabel" binding="infoLabel2">
+            <constraints/>
+            <properties>
+              <text value="With selected row:"/>
+            </properties>
+          </component>
+          <component id="2c67d" class="javax.swing.JButton" binding="editButton">
+            <constraints/>
+            <properties>
+              <text value="Edit"/>
+            </properties>
+          </component>
+          <component id="1b351" class="javax.swing.JButton" binding="removeButton">
+            <constraints/>
+            <properties>
+              <text value="Remove"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="1d15d" binding="noSelectButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="ea9a3" class="javax.swing.JLabel" binding="infoLabel1">
+            <constraints/>
+            <properties>
+              <text value="With current time: "/>
+            </properties>
+          </component>
+          <component id="41399" class="javax.swing.JButton" binding="clockInButton">
+            <constraints/>
+            <properties>
+              <text value="Clock in"/>
+            </properties>
+          </component>
+          <component id="66060" class="javax.swing.JButton" binding="clockOutButton">
+            <constraints/>
+            <properties>
+              <enabled value="false"/>
+              <text value="Clock out"/>
+            </properties>
+          </component>
+          <component id="4dd1d" class="javax.swing.JButton" binding="okButton">
+            <constraints/>
+            <properties>
+              <text value="Ok"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="62ab8" class="javax.swing.JButton" binding="clockManuallyButton">
+        <constraints border-constraint="East"/>
+        <properties>
+          <text value="Clock in manually"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

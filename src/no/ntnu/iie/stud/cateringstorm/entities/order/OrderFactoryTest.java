@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Audun on 11.03.2016.
  */
+// FIXME: Inspect methods, fix echterbugs and use asserts in every test
 public class OrderFactoryTest {
 
     @Test
@@ -30,7 +31,14 @@ public class OrderFactoryTest {
             System.out.println(order);
         }
     }
-
+    @Test
+    public void testGetOrdersByQuery() throws Exception {
+        ArrayList<Order> orders = OrderFactory.getOrdersByQuery("Mark");
+        Assert.assertNotNull(orders);
+        for(Order order: orders){
+            System.out.println(order);
+        }
+    }
     @Test
     public void testSetOrderState() throws Exception {
         OrderFactory.setOrderState(1, 1);

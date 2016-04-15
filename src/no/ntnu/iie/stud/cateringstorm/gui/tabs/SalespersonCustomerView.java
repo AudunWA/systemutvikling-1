@@ -145,7 +145,6 @@ public class SalespersonCustomerView extends JPanel{
     }
 
 
-    // TODO: Eli has to fix buttons, they don't show
     private void search(){
         ArrayList<Customer> newRows;
         if(searchField.getText().trim().equals("")) {
@@ -166,7 +165,6 @@ public class SalespersonCustomerView extends JPanel{
     }
 
     private void refresh(){
-        // TODO: Implement method refreshing data
         if(showInactiveCB.isSelected()) {
             tableModel.setRows(getAllCustomers());
         }else {

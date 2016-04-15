@@ -75,6 +75,7 @@ public class EditCustomerDialog extends JDialog{
                     break;
                 case COLUMN_SURNAME :
                     customer.setSurname(input);
+                    break;
                 case COLUMN_ADDRESS:
                     customer.setAddress(input);
                     break;
@@ -121,6 +122,7 @@ public class EditCustomerDialog extends JDialog{
             case COLUMN_SURNAME :
                 inputField.setText("Enter new surname");
                 inputField.setEnabled(true);
+                break;
             case COLUMN_ADDRESS:
                 inputField.setText("Enter new address");
                 inputField.setEnabled(true);

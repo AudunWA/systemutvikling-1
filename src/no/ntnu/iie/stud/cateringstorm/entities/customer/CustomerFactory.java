@@ -102,9 +102,9 @@ public final class CustomerFactory {
         }
         return null;
     }
-    /**10
-     * Finds ingredients with name.
-     * @return An ArrayList containing all ingredients in the SQL table ingrdient
+    /**
+     * Finds customers by name
+     * @return An ArrayList containing all customers matching search
      */
     public static ArrayList<Customer> getCustomersByQuery(String searchQuery){
 

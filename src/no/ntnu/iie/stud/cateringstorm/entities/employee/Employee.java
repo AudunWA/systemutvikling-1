@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.entities.employee;
 
 import no.ntnu.iie.stud.cateringstorm.gui.DashboardView;
+import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 /**
  * Contains the basic information about an employee
@@ -69,6 +70,7 @@ public class Employee {
      */
     public void onSuccessfulLogin() {
         DashboardView dashboardView = new DashboardView(this);
+        GlobalStorage.setLoggedInEmployee(this);
         dashboardView.setVisible(true);
         dashboardView.setLocationRelativeTo(dashboardView.getParent());
     }

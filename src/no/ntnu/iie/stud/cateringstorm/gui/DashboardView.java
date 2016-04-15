@@ -18,14 +18,14 @@ public class DashboardView extends JFrame {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 600;
 
-    private Employee employee;
+    private Employee loggedInEmployee;
 
     private JTabbedPane tabPane;
     private JPanel mainPanel;
 
-    public DashboardView(Employee employee) {
+    public DashboardView(Employee loggedInEmployee) {
         super();
-        this.employee = employee;
+        this.loggedInEmployee = loggedInEmployee;
 
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
@@ -42,9 +42,9 @@ public class DashboardView extends JFrame {
             System.err.println("Could not get class loader, aborting tab creation!");
             return;
         }
-        tabPane.addTab("Home", new ImageIcon(loader.getResource("ic_home_black_24dp_1x.png")), new HomeView(employee));
+        tabPane.addTab("Home", new ImageIcon(loader.getResource("ic_home_black_24dp_1x.png")), new HomeView(loggedInEmployee));
 
-        switch (employee.getEmployeeType()) {
+        switch (loggedInEmployee.getEmployeeType()) {
             case EMPLOYEE:
                 break;
             case CHEF:
@@ -62,7 +62,7 @@ public class DashboardView extends JFrame {
             case ADMINISTRATOR:
                 //tabPane.addTab("OrderInfoView", new OrderInfoView());
                 tabPane.addTab("Orders (chef)", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new ChefOrderView());
-                tabPane.addTab("Orders (salesperson)", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new SalespersonOrderView(employee));
+                tabPane.addTab("Orders (salesperson)", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new SalespersonOrderView(loggedInEmployee));
                 tabPane.addTab("Order delivery", new ImageIcon(loader.getResource("ic_assignment_black_24dp_1x.png")), new ChauffeurOrderView());
                 tabPane.addTab("Menu", new ImageIcon(loader.getResource("ic_restaurant_menu_black_24dp_1x.png")), new MenuAdministratorView());
                 tabPane.addTab("Storage", new ImageIcon(loader.getResource("ic_shopping_cart_black_24dp_1x.png")), new StorageView());
@@ -71,7 +71,7 @@ public class DashboardView extends JFrame {
                 tabPane.addTab("Statistics", new ImageIcon(loader.getResource("ic_insert_chart_black_24dp_1x.png")), new StatisticsView());
                 break;
             case SALESPERSON:
-                tabPane.addTab("Orders", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new SalespersonOrderView(employee));
+                tabPane.addTab("Orders", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new SalespersonOrderView(loggedInEmployee));
                 tabPane.addTab("Customers", new ImageIcon(loader.getResource("ic_account_circle_black_24dp_1x.png")), new SalespersonCustomerView());
                 break;
         }

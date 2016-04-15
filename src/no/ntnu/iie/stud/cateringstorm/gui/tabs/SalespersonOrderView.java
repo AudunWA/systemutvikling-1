@@ -1,5 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
+import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
+import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
@@ -11,6 +13,8 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
@@ -22,10 +26,14 @@ public class SalespersonOrderView extends JPanel {
     private JButton viewButton;
     private JButton addOrderButton;
     private JButton editOrderButton;
-    private JPanel buttonPanel;
+    private JPanel selectButtonPanel;
     private JComboBox statusBox;
     private JTable orderTable;
     private JButton refreshButton;
+    private JPanel noSelectButtonPanel;
+    private JLabel infoLabel;
+    private JButton searchButton;
+    private JTextField searchField;
     OrderTableModel tableModel;
 
     private Employee employee;
@@ -54,12 +62,20 @@ public class SalespersonOrderView extends JPanel {
         statusBox.addActionListener(e -> {
             setStatus();
         });
-
+        searchButton.addActionListener(e->{
+            search();
+        });
         orderTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
 
-
+        searchField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setSearchField("");
+                searchButton.setEnabled(true);
+            }
+        });
     }
     private Order getSelectedOrder(){
         return tableModel.getValue(orderTable.getSelectedRow());
@@ -98,11 +114,12 @@ public class SalespersonOrderView extends JPanel {
         // TODO: Custom initialization of UI components here
         createTable();
         createComboBox();
+        createSearchField();
     }
 
     private void createTable() {
         orderList = OrderFactory.getAllOrders();
-        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_CUSTOMER_ID, OrderTableModel.COLUMN_STATUS_TEXT};
+        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_CUSTOMER_NAME,OrderTableModel.COLUMN_ADDRESS, OrderTableModel.COLUMN_STATUS_TEXT};
         tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
@@ -132,7 +149,26 @@ public class SalespersonOrderView extends JPanel {
             }
         }
     }
+    private void createSearchField(){
+        searchField = new JTextField(20);
+        setSearchField("Search by customer name");
+        add(searchField);
+    }
+    private void setSearchField(String text){
+        searchField.setText(text);
+        searchField.setEnabled(true);
+    }
 
+
+    private void search(){
+        ArrayList<Order> newRows;
+        if(searchField.getText().trim().equals("")) {
+            refresh();
+        } else {
+            newRows = OrderFactory.getOrdersByQuery(searchField.getText());
+            tableModel.setRows(newRows);
+        }
+    }
     private void refresh() {
         tableModel.setRows(OrderFactory.getAllOrders());
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
