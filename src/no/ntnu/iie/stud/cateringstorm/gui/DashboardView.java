@@ -3,8 +3,10 @@ package no.ntnu.iie.stud.cateringstorm.gui;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.tabs.*;
+import no.ntnu.iie.stud.cateringstorm.gui.util.DynamicTabbedPane;
 
 import javax.swing.*;
+import java.awt.*;
 import java.net.URL;
 
 /**
@@ -21,7 +23,7 @@ public class DashboardView extends JFrame {
 
     private Employee loggedInEmployee;
 
-    private JTabbedPane tabPane;
+    private DynamicTabbedPane tabPane;
     private JPanel mainPanel;
 
     public DashboardView(Employee loggedInEmployee) {
@@ -43,37 +45,37 @@ public class DashboardView extends JFrame {
             System.err.println("Could not get class loader, aborting tab creation!");
             return;
         }
-        tabPane.addTab("Home", getIconResource("ic_home_black_24dp_1x.png"), new HomeView(loggedInEmployee));
+        tabPane.addTab("Home", getIconResource("ic_home_black_24dp_1x.png"), HomeView.class);
 
         switch (loggedInEmployee.getEmployeeType()) {
             case EMPLOYEE:
                 break;
             case CHEF:
                 //tabPane.addTab("OrderInfoView", new OrderInfoView());
-                tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), new StorageView());
-                tabPane.addTab("Orders", getIconResource("ic_list_black_24dp_1x.png"), new ChefOrderView());
+                tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), StorageView.class);
+                tabPane.addTab("Orders", getIconResource("ic_list_black_24dp_1x.png"), ChefOrderView.class);
                 break;
             case CHAUFFEUR:
-                tabPane.addTab("Delivery", getIconResource("ic_assignment_black_24dp_1x.png"), new ChauffeurOrderView());
+                tabPane.addTab("Delivery", getIconResource("ic_assignment_black_24dp_1x.png"), ChauffeurOrderView.class);
                 break;
             case NUTRITION_EXPERT:
-                tabPane.addTab("Menu", getIconResource("ic_restaurant_menu_black_24dp_1x.png"), new MenuAdministratorView());
-                tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), new StorageView());
+                tabPane.addTab("Menu", getIconResource("ic_restaurant_menu_black_24dp_1x.png"), MenuAdministratorView.class);
+                tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), StorageView.class);
                 break;
             case ADMINISTRATOR:
                 //tabPane.addTab("OrderInfoView", new OrderInfoView());
-                tabPane.addTab("Orders (chef)", getIconResource("ic_list_black_24dp_1x.png"), new ChefOrderView());
-                tabPane.addTab("Orders (salesperson)", getIconResource("ic_list_black_24dp_1x.png"), new SalespersonOrderView(loggedInEmployee));
-                tabPane.addTab("Delivery", getIconResource("ic_assignment_black_24dp_1x.png"), new ChauffeurOrderView());
-                tabPane.addTab("Menu", getIconResource("ic_restaurant_menu_black_24dp_1x.png"), new MenuAdministratorView());
-                tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), new StorageView());
-                tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), new SalespersonCustomerView());
+                tabPane.addTab("Orders (chef)", getIconResource("ic_list_black_24dp_1x.png"), ChefOrderView.class);
+                tabPane.addTab("Orders (salesperson)", getIconResource("ic_list_black_24dp_1x.png"), SalespersonOrderView.class);
+                tabPane.addTab("Delivery", getIconResource("ic_assignment_black_24dp_1x.png"), ChauffeurOrderView.class);
+                tabPane.addTab("Menu", getIconResource("ic_restaurant_menu_black_24dp_1x.png"), MenuAdministratorView.class);
+                tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), StorageView.class);
+                tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), SalespersonCustomerView.class);
                 //tabPane.addTab("FoodPackageInfoview", new FoodPackageInfoView());
-                tabPane.addTab("Statistics", getIconResource("ic_insert_chart_black_24dp_1x.png"), new StatisticsView());
+                tabPane.addTab("Statistics", getIconResource("ic_insert_chart_black_24dp_1x.png"), StatisticsView.class);
                 break;
             case SALESPERSON:
-                tabPane.addTab("Orders", getIconResource("ic_list_black_24dp_1x.png"), new SalespersonOrderView(loggedInEmployee));
-                tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), new SalespersonCustomerView());
+                tabPane.addTab("Orders", getIconResource("ic_list_black_24dp_1x.png"), SalespersonOrderView.class);
+                tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), SalespersonCustomerView.class);
                 break;
         }
     }

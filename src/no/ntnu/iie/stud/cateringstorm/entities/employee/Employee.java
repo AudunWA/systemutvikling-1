@@ -69,8 +69,8 @@ public class Employee {
      * Called on successful login attempt.
      */
     public void onSuccessfulLogin() {
-        DashboardView dashboardView = new DashboardView(this);
         GlobalStorage.setLoggedInEmployee(this);
+        DashboardView dashboardView = new DashboardView(this);
         dashboardView.setVisible(true);
         dashboardView.setLocationRelativeTo(dashboardView.getParent());
     }

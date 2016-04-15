@@ -7,7 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <tabbedpane id="24ec4" binding="tabPane">
+      <tabbedpane id="2f66f" class="no.ntnu.iie.stud.cateringstorm.gui.util.DynamicTabbedPane" binding="tabPane">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>

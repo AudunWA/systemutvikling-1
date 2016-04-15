@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
+import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,19 +12,15 @@ import java.awt.*;
  * Created by Audun on 01.04.2016.
  */
 public class HomeView extends JPanel {
-    private Employee employee;
-
     private JPanel mainPanel;
     private JLabel welcomeLabel;
     private JPanel image;
 
-    public HomeView(Employee employee) {
-        this.employee = employee;
-
+    public HomeView() {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        welcomeLabel.setText(welcomeLabel.getText().replace("%name%", employee.getForename()));
+        welcomeLabel.setText(welcomeLabel.getText().replace("%name%", GlobalStorage.getLoggedInEmployee().getForename()));
     }
 
     private void createImage(){

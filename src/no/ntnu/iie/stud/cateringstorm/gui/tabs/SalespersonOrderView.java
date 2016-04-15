@@ -10,6 +10,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddOrderDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditOrderDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,14 +37,9 @@ public class SalespersonOrderView extends JPanel {
     private JTextField searchField;
     OrderTableModel tableModel;
 
-    private Employee employee;
-
-
     private static ArrayList<Order> orderList = new ArrayList<Order>();
 
-    public SalespersonOrderView(Employee employee) {
-        this.employee = employee;
-
+    public SalespersonOrderView() {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
@@ -52,7 +48,7 @@ public class SalespersonOrderView extends JPanel {
         });
 
         addOrderButton.addActionListener(e -> {
-            addOrder(employee);
+            addOrder(GlobalStorage.getLoggedInEmployee());
         });
 
         editOrderButton.addActionListener(e -> {
@@ -180,7 +176,7 @@ public class SalespersonOrderView extends JPanel {
         final int WIDTH = 1300;
         final int HEIGHT = 600;
         JFrame frame = new JFrame();
-        frame.add(new SalespersonOrderView(EmployeeFactory.getEmployee("chechter")));
+        frame.add(new SalespersonOrderView());
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
