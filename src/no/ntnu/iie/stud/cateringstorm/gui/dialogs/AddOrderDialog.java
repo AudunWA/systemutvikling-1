@@ -162,15 +162,15 @@ public class AddOrderDialog extends JDialog {
             int customerId = CustomerFactory.getIdFromName(customerForename, customerSurname);
 
             String description = descriptionText.getText();
-            if (description.length() > 10){
-                JOptionPane.showMessageDialog(this, "The description is too long");
+            if (description.length() > 200){
+                JOptionPane.showMessageDialog(this, "The description is too long.");
                 return;
             }
 
             int portions = (int) portionsSlider.getValue();
 
             if (portions < 1) {
-                JOptionPane.showMessageDialog(this, "Please enter a valid portion amount");
+                JOptionPane.showMessageDialog(this, "Please enter a valid portion amount.");
                 return;
             }
 
