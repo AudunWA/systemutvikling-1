@@ -53,7 +53,7 @@ public class DashboardView extends JFrame {
                 tabPane.addTab("Orders", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new ChefOrderView());
                 break;
             case CHAUFFEUR:
-                tabPane.addTab("Order delivery", new ImageIcon(loader.getResource("ic_assignment_black_24dp_1x.png")), new ChauffeurOrderView());
+                tabPane.addTab("Delivery", new ImageIcon(loader.getResource("ic_assignment_black_24dp_1x.png")), new ChauffeurOrderView());
                 break;
             case NUTRITION_EXPERT:
                 tabPane.addTab("Menu", new ImageIcon(loader.getResource("ic_restaurant_menu_black_24dp_1x.png")), new MenuAdministratorView());
@@ -63,7 +63,7 @@ public class DashboardView extends JFrame {
                 //tabPane.addTab("OrderInfoView", new OrderInfoView());
                 tabPane.addTab("Orders (chef)", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new ChefOrderView());
                 tabPane.addTab("Orders (salesperson)", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new SalespersonOrderView(loggedInEmployee));
-                tabPane.addTab("Order delivery", new ImageIcon(loader.getResource("ic_assignment_black_24dp_1x.png")), new ChauffeurOrderView());
+                tabPane.addTab("Delivery", new ImageIcon(loader.getResource("ic_assignment_black_24dp_1x.png")), new ChauffeurOrderView());
                 tabPane.addTab("Menu", new ImageIcon(loader.getResource("ic_restaurant_menu_black_24dp_1x.png")), new MenuAdministratorView());
                 tabPane.addTab("Storage", new ImageIcon(loader.getResource("ic_shopping_cart_black_24dp_1x.png")), new StorageView());
                 tabPane.addTab("Customers", new ImageIcon(loader.getResource("ic_account_circle_black_24dp_1x.png")), new SalespersonCustomerView());
