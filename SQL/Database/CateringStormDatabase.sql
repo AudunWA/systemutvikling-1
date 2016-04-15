@@ -79,18 +79,12 @@ PRIMARY KEY (employee_id)
 );
 
 CREATE TABLE hours(
-hours_id INTEGER AUTO_INCREMENT,
-from_time DATETIME NOT NULL,
-to_time DATETIME NOT NULL,
-PRIMARY KEY (hours_id)
-);
-
-CREATE TABLE hours_employee(
 hours_id INTEGER NOT NULL,
 employee_id INTEGER NOT NULL,
-FOREIGN KEY (hours_id) REFERENCES hours(hours_id) ON UPDATE CASCADE,
+from_time DATETIME NOT NULL,
+to_time DATETIME NOT NULL,
 FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
-PRIMARY KEY (hours_id, employee_id)
+PRIMARY KEY (employee_id, from_time)
 );
 
 

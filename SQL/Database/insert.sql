@@ -23,27 +23,12 @@ INSERT INTO chauffeur VALUES (5);
 INSERT INTO salesperson VALUES (6);
 
 -- (hours) --
-INSERT INTO hours VALUES (default, DATE('2016-03-01'), 8);
-INSERT INTO hours VALUES (default, DATE('2016-03-01'), 0);
-INSERT INTO hours VALUES (default, DATE('2016-03-02'), 8);
-INSERT INTO hours VALUES (default, DATE('2016-03-02'), 0);
-INSERT INTO hours VALUES (default, DATE('2016-03-03'), 8);
-INSERT INTO hours VALUES (default, DATE('2016-03-03'), 5);
-
-
--- (employee_hours) --
-INSERT INTO hours_employee VALUES (1,1);
-INSERT INTO hours_employee VALUES (2,1);
-INSERT INTO hours_employee VALUES (3,1);
-INSERT INTO hours_employee VALUES (4,1);
-INSERT INTO hours_employee VALUES (5,1);
-INSERT INTO hours_employee VALUES (6,2);
-INSERT INTO hours_employee VALUES (1,3);
-INSERT INTO hours_employee VALUES (2,3);
-INSERT INTO hours_employee VALUES (3,3);
-INSERT INTO hours_employee VALUES (4,4);
-INSERT INTO hours_employee VALUES (5,3);
-INSERT INTO hours_employee VALUES (6,3);
+INSERT INTO hours VALUES (1, DATETIME('2016-03-01'), 8);
+INSERT INTO hours VALUES (2, DATE('2016-03-01'), 0);
+INSERT INTO hours VALUES (1, DATE('2016-03-02'), 8);
+INSERT INTO hours VALUES (2, DATE('2016-03-02'), 0);
+INSERT INTO hours VALUES (1, DATE('2016-03-03'), 8);
+INSERT INTO hours VALUES (3, DATE('2016-03-03'), 5);
 
 INSERT INTO hours_employee VALUES (1,6);
 INSERT INTO hours_employee VALUES (2,6);
