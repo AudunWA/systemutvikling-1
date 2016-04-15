@@ -5,6 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.tabs.*;
 
 import javax.swing.*;
+import java.net.URL;
 
 /**
  * The main view of the application.
@@ -42,39 +43,59 @@ public class DashboardView extends JFrame {
             System.err.println("Could not get class loader, aborting tab creation!");
             return;
         }
-        tabPane.addTab("Home", new ImageIcon(loader.getResource("ic_home_black_24dp_1x.png")), new HomeView(loggedInEmployee));
+        tabPane.addTab("Home", getIconResource("ic_home_black_24dp_1x.png"), new HomeView(loggedInEmployee));
 
         switch (loggedInEmployee.getEmployeeType()) {
             case EMPLOYEE:
                 break;
             case CHEF:
                 //tabPane.addTab("OrderInfoView", new OrderInfoView());
-                tabPane.addTab("Storage", new ImageIcon(loader.getResource("ic_shopping_cart_black_24dp_1x.png")), new StorageView());
-                tabPane.addTab("Orders", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new ChefOrderView());
+                tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), new StorageView());
+                tabPane.addTab("Orders", getIconResource("ic_list_black_24dp_1x.png"), new ChefOrderView());
                 break;
             case CHAUFFEUR:
-                tabPane.addTab("Delivery", new ImageIcon(loader.getResource("ic_assignment_black_24dp_1x.png")), new ChauffeurOrderView());
+                tabPane.addTab("Delivery", getIconResource("ic_assignment_black_24dp_1x.png"), new ChauffeurOrderView());
                 break;
             case NUTRITION_EXPERT:
-                tabPane.addTab("Menu", new ImageIcon(loader.getResource("ic_restaurant_menu_black_24dp_1x.png")), new MenuAdministratorView());
-                tabPane.addTab("Storage", new ImageIcon(loader.getResource("ic_shopping_cart_black_24dp_1x.png")), new StorageView());
+                tabPane.addTab("Menu", getIconResource("ic_restaurant_menu_black_24dp_1x.png"), new MenuAdministratorView());
+                tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), new StorageView());
                 break;
             case ADMINISTRATOR:
                 //tabPane.addTab("OrderInfoView", new OrderInfoView());
-                tabPane.addTab("Orders (chef)", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new ChefOrderView());
-                tabPane.addTab("Orders (salesperson)", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new SalespersonOrderView(loggedInEmployee));
-                tabPane.addTab("Delivery", new ImageIcon(loader.getResource("ic_assignment_black_24dp_1x.png")), new ChauffeurOrderView());
-                tabPane.addTab("Menu", new ImageIcon(loader.getResource("ic_restaurant_menu_black_24dp_1x.png")), new MenuAdministratorView());
-                tabPane.addTab("Storage", new ImageIcon(loader.getResource("ic_shopping_cart_black_24dp_1x.png")), new StorageView());
-                tabPane.addTab("Customers", new ImageIcon(loader.getResource("ic_account_circle_black_24dp_1x.png")), new SalespersonCustomerView());
+                tabPane.addTab("Orders (chef)", getIconResource("ic_list_black_24dp_1x.png"), new ChefOrderView());
+                tabPane.addTab("Orders (salesperson)", getIconResource("ic_list_black_24dp_1x.png"), new SalespersonOrderView(loggedInEmployee));
+                tabPane.addTab("Delivery", getIconResource("ic_assignment_black_24dp_1x.png"), new ChauffeurOrderView());
+                tabPane.addTab("Menu", getIconResource("ic_restaurant_menu_black_24dp_1x.png"), new MenuAdministratorView());
+                tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), new StorageView());
+                tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), new SalespersonCustomerView());
                 //tabPane.addTab("FoodPackageInfoview", new FoodPackageInfoView());
-                tabPane.addTab("Statistics", new ImageIcon(loader.getResource("ic_insert_chart_black_24dp_1x.png")), new StatisticsView());
+                tabPane.addTab("Statistics", getIconResource("ic_insert_chart_black_24dp_1x.png"), new StatisticsView());
                 break;
             case SALESPERSON:
-                tabPane.addTab("Orders", new ImageIcon(loader.getResource("ic_list_black_24dp_1x.png")), new SalespersonOrderView(loggedInEmployee));
-                tabPane.addTab("Customers", new ImageIcon(loader.getResource("ic_account_circle_black_24dp_1x.png")), new SalespersonCustomerView());
+                tabPane.addTab("Orders", getIconResource("ic_list_black_24dp_1x.png"), new SalespersonOrderView(loggedInEmployee));
+                tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), new SalespersonCustomerView());
                 break;
         }
+    }
+
+    /**
+     Helper method for creating ImageIcons from project resources
+     * @param path The resource path (image)
+     * @return An ImageIcon initialized with the loaded resource
+     */
+    private ImageIcon getIconResource(String path) {
+        ClassLoader loader = getClass().getClassLoader();
+        if (loader == null) {
+            System.err.println("Could not get class loader!");
+            return new ImageIcon();
+        }
+
+        URL resource = loader.getResource(path);
+        if (resource == null) {
+            System.err.println("Could not get resource \"" + path + "\"");
+            return new ImageIcon();
+        }
+        return new ImageIcon(resource);
     }
 
     public static void main(String[] args) {
