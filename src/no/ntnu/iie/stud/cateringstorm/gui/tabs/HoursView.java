@@ -90,7 +90,10 @@ public class HoursView extends JPanel{
         // TODO: Open RegisterHoursDialog
     }
     private void removeTimesheet(Hours hours){
-        // TODO: set Status of a timesheet to inactive. It's accessible to admin
+        // TODO: set Status of a time sheet to inactive. It's accessible to admin
+        if(hours == null){
+            JOptionPane.showMessageDialog(null,"Please select a table row");
+        }
     }
     public static void main(String[] args) {
         // Window dimensions
