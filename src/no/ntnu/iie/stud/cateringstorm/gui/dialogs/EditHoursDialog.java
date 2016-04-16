@@ -1,0 +1,7 @@
+package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
+
+/**
+ * Created by EliasBrattli on 16/04/2016.
+ */
+public class EditHoursDialog {
+}
