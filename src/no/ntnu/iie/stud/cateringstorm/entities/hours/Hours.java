@@ -10,12 +10,13 @@ public class Hours {
     private int employeeId;
     private Timestamp startTime;
     private Timestamp endTime;
-
-    public Hours(int hoursId,int employeeId, Timestamp startTime, Timestamp endTime){
+    private boolean active;
+    public Hours(int hoursId,int employeeId, Timestamp startTime, Timestamp endTime, boolean active){
         this.hoursId = hoursId;
         this.employeeId = employeeId;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.active = active;
     }
 
     public int getHoursId() {
@@ -39,5 +40,12 @@ public class Hours {
 
     public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+    public void setActive(boolean active){
+        this.active = active;
     }
 }
