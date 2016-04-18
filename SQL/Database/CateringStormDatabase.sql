@@ -173,6 +173,14 @@ FOREIGN KEY(customer_id) REFERENCES customer (customer_id),
 PRIMARY KEY (subscription_id)
 );
 
+CREATE TABLE subscription_food_package(
+	subscription_id INTEGER NOT NULL,
+	food_package_id INTEGER NOT NULL,
+	FOREIGN KEY (subscription_id) REFERENCES subscription(subscription_id),
+	FOREIGN KEY (food_package_id) REFERENCES food_package(food_package_id),
+	PRIMARY KEY (subscription_id, food_package_id)
+);
+
 CREATE TABLE recurring_order(
 	rec_order_id INTEGER AUTO_INCREMENT,
 	week_day INTEGER NOT NULL,
