@@ -60,7 +60,7 @@ public class HoursView extends JPanel{
         removeButton.addActionListener(e -> {
             removeTimesheet(getSelectedHours());
         });
-        
+
         hoursTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
@@ -100,7 +100,6 @@ public class HoursView extends JPanel{
         if(hours == null){
             JOptionPane.showMessageDialog(null,"Please select a table row");
         }
-
     }
 
     private void clockIn(){
