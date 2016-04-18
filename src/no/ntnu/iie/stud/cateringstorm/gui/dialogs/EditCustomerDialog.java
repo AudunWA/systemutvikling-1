@@ -154,7 +154,7 @@ public class EditCustomerDialog extends JDialog{
 
         //Loop to select desired indexes from table model.
         int ctr = 0;
-        int unwantedColumn1 = 4, unwantedColumn2 = 6;
+        int unwantedColumn1 = 6, unwantedColumn2 = 7;
         for (int i = 1; i < 8; i++) {
             if(i != unwantedColumn1 && i != unwantedColumn2) {
                 choices[ctr] = model.getColumnName(i);
