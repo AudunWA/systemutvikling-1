@@ -61,6 +61,12 @@
               <text value="New order"/>
             </properties>
           </component>
+          <component id="5c894" class="javax.swing.JButton" binding="newSubscriptionButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="New subscription"/>
+            </properties>
+          </component>
           <component id="a6103" class="javax.swing.JButton" binding="searchButton" default-binding="true">
             <constraints/>
             <properties>
