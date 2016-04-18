@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class EditFoodPackageDialog extends JDialog {
+
+    // fixed
     private boolean addedNewValue;
 
     private JPanel contentPane;
