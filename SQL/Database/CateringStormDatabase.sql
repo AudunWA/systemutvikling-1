@@ -79,12 +79,13 @@ PRIMARY KEY (employee_id)
 );
 
 CREATE TABLE hours(
-hours_id INTEGER NOT NULL,
+hours_id INTEGER AUTO_INCREMENT NOT NULL,
 employee_id INTEGER NOT NULL,
 from_time DATETIME NOT NULL,
 to_time DATETIME NOT NULL,
+active BOOLEAN NOT NULL,
 FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
-PRIMARY KEY (employee_id, from_time)
+PRIMARY KEY (hours_id, employee_id)
 );
 
 

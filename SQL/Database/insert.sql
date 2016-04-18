@@ -23,19 +23,12 @@ INSERT INTO chauffeur VALUES (5);
 INSERT INTO salesperson VALUES (6);
 
 -- (hours) --
-INSERT INTO hours VALUES (1, DATETIME('2016-03-01'), 8);
-INSERT INTO hours VALUES (2, DATE('2016-03-01'), 0);
-INSERT INTO hours VALUES (1, DATE('2016-03-02'), 8);
-INSERT INTO hours VALUES (2, DATE('2016-03-02'), 0);
-INSERT INTO hours VALUES (1, DATE('2016-03-03'), 8);
-INSERT INTO hours VALUES (3, DATE('2016-03-03'), 5);
-
-INSERT INTO hours_employee VALUES (1,6);
-INSERT INTO hours_employee VALUES (2,6);
-INSERT INTO hours_employee VALUES (3,5);
-INSERT INTO hours_employee VALUES (4,5);
-INSERT INTO hours_employee VALUES (5,5);
-INSERT INTO hours_employee VALUES (6,5);
+-- INSERT INTO hours VALUES (1, DATETIME('2016-03-01'), 8);
+-- INSERT INTO hours VALUES (2, DATETIME('2016-03-01'), 0);
+-- INSERT INTO hours VALUES (1, DATETIME('2016-03-02'), 8);
+-- INSERT INTO hours VALUES (2, DATETIME('2016-03-02'), 0);
+-- INSERT INTO hours VALUES (1, DATETIME('2016-03-03'), 8);
+-- INSERT INTO hours VALUES (3, DATETIME('2016-03-03'), 5);
 
 -- (ingredient) --
 INSERT INTO ingredient VALUES (default, '2012-12-31 11:30:45', 'Pølse', 'AKA Kenans pølse', false, DATE('2016-10-20'), 5, "units");
