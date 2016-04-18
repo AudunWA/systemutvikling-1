@@ -79,12 +79,13 @@ PRIMARY KEY (employee_id)
 );
 
 CREATE TABLE hours(
-hours_id INTEGER NOT NULL,
+hours_id INTEGER AUTO_INCREMENT NOT NULL,
 employee_id INTEGER NOT NULL,
 from_time DATETIME NOT NULL,
 to_time DATETIME NOT NULL,
+active BOOLEAN NOT NULL,
 FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
-PRIMARY KEY (employee_id, from_time)
+PRIMARY KEY (hours_id, employee_id)
 );
 
 
@@ -170,6 +171,14 @@ customer_id INTEGER NOT NULL,
 active BOOLEAN NOT NULL,
 FOREIGN KEY(customer_id) REFERENCES customer (customer_id),
 PRIMARY KEY (subscription_id)
+);
+
+CREATE TABLE subscription_food_package(
+	subscription_id INTEGER NOT NULL,
+	food_package_id INTEGER NOT NULL,
+	FOREIGN KEY (subscription_id) REFERENCES subscription(subscription_id),
+	FOREIGN KEY (food_package_id) REFERENCES food_package(food_package_id),
+	PRIMARY KEY (subscription_id, food_package_id)
 );
 
 CREATE TABLE recurring_order(

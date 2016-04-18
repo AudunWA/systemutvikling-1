@@ -16,7 +16,7 @@ public final class HoursFactory {
         // TODO: Implement method gathering all hours from table, only where employee ID equals this ID
         Employee thisEmployee = GlobalStorage.getLoggedInEmployee(); //Access to the respective employee
         ArrayList<Hours> dummy = new ArrayList<>();
-        dummy.add(new Hours(1,1,new Timestamp(1460713371),new Timestamp(1460714371)));
+        dummy.add(new Hours(1,1,new Timestamp(1460713371),new Timestamp(1460714371),true));
         return dummy;
     }
 
