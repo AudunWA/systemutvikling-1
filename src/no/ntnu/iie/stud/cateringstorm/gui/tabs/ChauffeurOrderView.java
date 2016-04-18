@@ -25,7 +25,7 @@ public class ChauffeurOrderView extends JPanel {
     private static ArrayList<Order> orderList = new ArrayList<Order>();
 
     private void createTable(){
-        orderList = OrderFactory.getAllOrders();
+        orderList = OrderFactory.getAllOrdersChauffeur();
         Integer[] columns = new Integer[] {OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_CUSTOMER_NAME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_ADDRESS, OrderTableModel.COLUMN_STATUS_TEXT};
         OrderTableModel tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);

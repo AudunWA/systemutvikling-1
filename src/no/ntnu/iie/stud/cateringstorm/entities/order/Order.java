@@ -120,6 +120,8 @@ public class Order {
             return "Delivered";
         } else if (getStatus() == 3) {
             return "In production";
+        } else if (getStatus() == 4) {
+            return "Being delivered";
         } else {
             return "Removed";
         }
