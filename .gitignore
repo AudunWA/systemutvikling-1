@@ -60,4 +60,4 @@ fabric.properties
 /coverage/
 
 # Custom libraries
-!lib/
+!lib/*.jar
