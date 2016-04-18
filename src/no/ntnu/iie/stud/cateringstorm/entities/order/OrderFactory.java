@@ -32,6 +32,25 @@ public final class OrderFactory {
         return null;
     }
 
+    public static ArrayList<String> getAllAddresses(){
+        ArrayList<String> addresses = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM _order NATURAL JOIN customer WHERE (status = 0 || status > 2) && delivery_time > NOW() ORDER BY delivery_time")) {
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        addresses.add(result.getString("address"));
+                    }
+                }
+            }
+            return addresses;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static ArrayList<Order> getAllOrders() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {

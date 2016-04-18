@@ -1,5 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
+import no.ntnu.iie.stud.cateringstorm.Maps.MapBackend;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
@@ -8,6 +9,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Represents GUI with overview of orders for the chauffeur
@@ -22,7 +24,7 @@ public class ChauffeurOrderView extends JPanel {
     private JPanel ComboBoxPanel;
     private JPanel ButtonPanel;
     private JButton startDeliveryButton;
-    private JSpinner spinner1;
+    private JSpinner deliveryAmountSpinner;
     private ComboBoxModel cbModel;
     private static ArrayList<Order> orderList = new ArrayList<Order>();
 
@@ -93,7 +95,28 @@ public class ChauffeurOrderView extends JPanel {
     }
 
     private void makeDelivery(){
-        //TODO
+
+        int amount = (Integer)deliveryAmountSpinner.getValue();
+        if (amount < 1 || amount > 10){
+            JOptionPane.showMessageDialog(this, "Please add a valid amount of Orders \n (from 1 - 10)");
+            return;
+        }
+
+        ArrayList<String> addresses = OrderFactory.getAllAddresses();
+
+        while (addresses.size() > amount){
+            addresses.remove(addresses.size() - 1);
+        }
+
+        ArrayList<double[]> addressToPoint = new ArrayList<>();
+
+        for (int i = 0; i < addresses.size(); i++){
+            addressToPoint.add(MapBackend.addressToPoint(addresses.get(i)));
+        }
+
+        MapBackend.getShortestRoute(addressToPoint);
+
+
     }
 
     private void createComboBox(){
