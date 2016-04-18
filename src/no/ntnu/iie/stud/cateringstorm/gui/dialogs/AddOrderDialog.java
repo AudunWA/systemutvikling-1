@@ -177,24 +177,21 @@ public class AddOrderDialog extends JDialog {
             boolean priority = priorityBox.isSelected();
 
             Date temp = (Date) dateSelect.getModel().getValue();
-            Timestamp deliverDate = new Timestamp(temp.getTime());
-            if (deliverDate == null) {
+            if (temp == null) {
                 JOptionPane.showMessageDialog(this, "Please fill in a delivery date.");
                 return;
-            } else if (!deliverDate.after(new Date(System.currentTimeMillis()))) {
+            } else if (!temp.after(new Date(System.currentTimeMillis()))) {
                 JOptionPane.showMessageDialog(this, "Error the delivery date is before current date.");
                 return;
             }
 
-
+            Timestamp deliverDate = new Timestamp(temp.getTime());
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
             ArrayList<Integer> test = new ArrayList<>();
             test.add(packageTable.getSelectedRow() + 1);
 
             orders.add(new Order(0, description, deliverDate, currentTime, portions, priority, employee.getEmployeeId(), CustomerFactory.getCustomer(customerId), 0, 1, 0));
-
-            int check = OrderFactory.getAllOrders().size();
 
             ArrayList<Integer> packages = new ArrayList<>();
             for (int k = 0; k < addedList.size(); k++) {
@@ -206,14 +203,17 @@ public class AddOrderDialog extends JDialog {
                 return;
             }
 
-            OrderFactory.createOrder(description, deliverDate, portions,
+            Order order = OrderFactory.createOrder(description, deliverDate, portions,
                     priority, employee.getEmployeeId(),
                     customerId, 0, packages);
 
-            if (OrderFactory.getAllOrders().size() > check) {
+            if (order != null) {
                 JOptionPane.showMessageDialog(this, "Add successful");
                 addedList = new ArrayList<>();
                 ((EntityTableModel) addedTable.getModel()).setRows(addedList);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "An error occurred!\nPlease try again later.", "Error!", JOptionPane.OK_OPTION);
             }
         }
     }
