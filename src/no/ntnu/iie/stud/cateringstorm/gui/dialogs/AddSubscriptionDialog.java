@@ -76,9 +76,8 @@ public class AddSubscriptionDialog extends JDialog {
     }
 
     private void onOK() {
-// add your code here
 
-        //TODO add backend logic here
+        //TODO add query here (remember to add a try-catch)
 
         String day = (String)dayComboBox.getSelectedItem();
         String findCustomer = (String)customerComboBox.getSelectedItem();
