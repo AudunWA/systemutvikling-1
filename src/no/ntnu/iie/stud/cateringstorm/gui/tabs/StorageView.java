@@ -82,7 +82,7 @@ public class StorageView extends JPanel {
 
     private void createTable(){
         ArrayList<Ingredient> ingredients = IngredientFactory.getAllIngredients();
-        Integer[] columns = new Integer[] { IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_EXPIRE_DATE, IngredientTableModel.COLUMN_AMOUNT };
+        Integer[] columns = new Integer[] { IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION, IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_EXPIRE_DATE, IngredientTableModel.COLUMN_AMOUNT, IngredientTableModel.COLUMN_UNIT };
 
         tableModel = new IngredientTableModel(ingredients, columns);
         ingredientTable = new JTable(tableModel);
