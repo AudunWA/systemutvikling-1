@@ -142,7 +142,7 @@ public class AddOrderDialog extends JDialog {
         int customerIndex = customerList.getSelectedIndex();
         if (customerIndex == CustomerFactory.getAllCustomers().size()){
             AddCustomerDialog add = new AddCustomerDialog();
-            final int WIDTH = 1000;
+            final int WIDTH = 500;
             final int HEIGHT = 400;
             add.pack();
             add.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
