@@ -38,13 +38,16 @@ public class HoursView extends JPanel{
     private JButton removeButton;
     private JScrollPane tablePane;
     private JLabel infoLabel3;
+    private JButton refreshButton;
     private HoursTableModel tableModel;
     private ArrayList<Hours> hoursList;
-
+    private int loggedInEmployeeId;
     //Constructor
-    public HoursView() {
+    public HoursView(int loggedInEmployeeId) {
+        this.loggedInEmployeeId = loggedInEmployeeId;
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
+        System.out.printf(loggedInEmployeeId+"\n");
         editButton.addActionListener(e -> {
             editTimesheet(getSelectedHours());
         });
@@ -60,7 +63,9 @@ public class HoursView extends JPanel{
         removeButton.addActionListener(e -> {
             removeTimesheet(getSelectedHours());
         });
-
+        refreshButton.addActionListener(e->{
+            refresh();
+        });
         hoursTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
@@ -72,13 +77,17 @@ public class HoursView extends JPanel{
         createTable();
     }
     private void createTable(){
-        hoursList = HoursFactory.getAllHours();
+        //hoursList = HoursFactory.getAllHours();
+        System.out.println(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR);
         Integer[] columns;
         if(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
+            hoursList = getHoursByEmployeeId();
             columns = new Integer[]{HoursTableModel.COLUMN_HOURS_ID, HoursTableModel.COLUMN_START_TIME, HoursTableModel.COLUMN_END_TIME, HoursTableModel.COLUMN_ACTIVE};
         }else{
+            hoursList = getActiveHoursByEmployeeId();
             columns = new Integer[]{ HoursTableModel.COLUMN_HOURS_ID,HoursTableModel.COLUMN_START_TIME, HoursTableModel.COLUMN_END_TIME};
         }
+        //System.out.println(hoursList.get(0));
         tableModel = new HoursTableModel(hoursList, columns);
         hoursTable = new JTable(tableModel);
         hoursTable.getTableHeader().setReorderingAllowed(false);
@@ -117,13 +126,29 @@ public class HoursView extends JPanel{
             JOptionPane.showMessageDialog(null,"Please select a table row");
         }
     }
+    private ArrayList<Hours> getActiveHoursByEmployeeId(){
+        return HoursFactory.getActiveHoursByEmployee(loggedInEmployeeId);
+    }
+    private ArrayList<Hours> getHoursByEmployeeId(){
+        return HoursFactory.getHoursByEmployee(loggedInEmployeeId);
+    }
+    private void refresh(){
+        if(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
+            tableModel.setRows(getHoursByEmployeeId());
+        }else{
+            tableModel.setRows(getActiveHoursByEmployeeId());
+        }
+    }
+    public int getLoggedInEmployeeId() {
+        return loggedInEmployeeId;
+    }
 
     public static void main(String[] args) {
         // Window dimensions
         final int WIDTH = 550, HEIGHT = 550;
         GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
         JFrame frame = new JFrame();
-        frame.add(new HoursView());
+        frame.add(new HoursView(GlobalStorage.getLoggedInEmployee().getEmployeeId()));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
