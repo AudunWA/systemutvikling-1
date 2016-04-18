@@ -58,3 +58,6 @@ fabric.properties
 
 # Code coverage
 /coverage/
+
+# Custom libraries
+!lib/*.jar

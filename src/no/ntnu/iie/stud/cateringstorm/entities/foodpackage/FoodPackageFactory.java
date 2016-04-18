@@ -137,6 +137,27 @@ public final class FoodPackageFactory {
         return null;
     }
 
+    public static double getFoodPackageCost(int foodPackageId){
+
+        double price = -1;
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT cost FROM food_package WHERE food_package_id = ?")) {
+                statement.setInt(1, foodPackageId);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        price = result.getDouble("cost");
+                    }
+                }
+            }
+            return price;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     /**
      Gets all the food packages for a specified order.
      * @param orderId The ID of the order
@@ -246,5 +267,25 @@ public final class FoodPackageFactory {
         boolean active = result.getBoolean("active");
 
         return new FoodPackage(foodPackageId, name, cost, active);
+    }
+    /**
+     Runs an UPDATE-query of a foodpackage, with all its columns.
+     * @param foodPackage The foodpackage to update
+     * @return An integer representing affected rows
+     */
+    public static int updateFoodPackage(FoodPackage foodPackage) {
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE food_package SET name = ?, cost = ?, active = ? WHERE food_package_id = ?")) {
+                statement.setString(1, foodPackage.getName());
+                statement.setDouble(2, foodPackage.getCost());
+                statement.setBoolean(3, foodPackage.isActive());
+                statement.setInt(4, foodPackage.getFoodPackageId());
+
+                return statement.executeUpdate();
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return 0;
+        }
     }
 }

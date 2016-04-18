@@ -5,6 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -20,18 +21,48 @@ public class ChauffeurOrderView extends JPanel {
     private JComboBox statusBox;
     private JPanel ComboBoxPanel;
     private JPanel ButtonPanel;
-    private JTextField infoText;
+    private JButton startDeliveryButton;
+    private JSpinner spinner1;
     private ComboBoxModel cbModel;
     private static ArrayList<Order> orderList = new ArrayList<Order>();
 
     private void createTable(){
-        orderList = OrderFactory.getAllOrders();
-        Integer[] columns = new Integer[] {OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_CUSTOMER_NAME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_ADDRESS, OrderTableModel.COLUMN_STATUS_TEXT};
+        orderList = OrderFactory.getAllOrdersChauffeur();
+        Integer[] columns = new Integer[] {OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_CUSTOMER_NAME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_ADDRESS, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_DELIVERY_TIME};
         OrderTableModel tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
+        getNewRenderedTable(orderTable);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
         orderTable.setFillsViewportHeight(true);
+    }
+
+    private static JTable getNewRenderedTable(final JTable table) {
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            @Override
+            public Component getTableCellRendererComponent(JTable table,
+                                                           Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+                String temp = (String)table.getModel().getValueAt(row , 4);
+                boolean priority = (boolean)table.getModel().getValueAt(row, 5);
+                if (temp.equals("Ready for delivery") && !priority) {
+                    setBackground(new Color(100,200,100));
+                } else if (temp.equals("Delivered")) {
+                    setBackground(new Color(150,150,150));
+                } else if (temp.equals("Being delivered") && !priority){
+                    setBackground(Color.ORANGE);
+                } else if (priority) {
+                    setBackground(new Color(200,100,100));
+                    setFont(new Font("BOLD", Font.BOLD,12));
+                } else {
+                    setBackground(table.getBackground());
+                    setForeground(table.getForeground());
+                }
+                return this;
+            }
+        });
+        return table;
     }
 
     public ChauffeurOrderView() {
@@ -46,6 +77,10 @@ public class ChauffeurOrderView extends JPanel {
             setStatus();
         });
 
+        startDeliveryButton.addActionListener(e-> {
+            makeDelivery();
+        });
+
         orderTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
@@ -55,6 +90,10 @@ public class ChauffeurOrderView extends JPanel {
         // TODO: Custom initialization of UI components here
         createTable();
         createComboBox();
+    }
+
+    private void makeDelivery(){
+        //TODO
     }
 
     private void createComboBox(){

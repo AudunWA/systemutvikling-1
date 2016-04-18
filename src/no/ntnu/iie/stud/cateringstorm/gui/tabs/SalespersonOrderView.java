@@ -35,6 +35,7 @@ public class SalespersonOrderView extends JPanel {
     private JLabel infoLabel;
     private JButton searchButton;
     private JTextField searchField;
+    private JButton newSubscriptionButton;
     OrderTableModel tableModel;
 
     private static ArrayList<Order> orderList = new ArrayList<Order>();
@@ -80,7 +81,7 @@ public class SalespersonOrderView extends JPanel {
     private void addOrder(Employee employee){
         // TODO: Open AddOrderDialog
         AddOrderDialog aoDialog = new AddOrderDialog(employee);
-        final int WIDTH = 500;
+        final int WIDTH = 1000;
         final int HEIGHT = 400;
         aoDialog.pack();
         aoDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

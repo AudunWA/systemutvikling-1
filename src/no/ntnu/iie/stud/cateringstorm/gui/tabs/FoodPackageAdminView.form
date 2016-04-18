@@ -62,16 +62,28 @@
         <properties/>
         <border type="none"/>
         <children>
+          <component id="e5abf" class="javax.swing.JButton" binding="addButton">
+            <constraints/>
+            <properties>
+              <text value="Add"/>
+            </properties>
+          </component>
           <component id="3e77f" class="javax.swing.JButton" binding="viewFoodPackage">
             <constraints/>
             <properties>
               <text value="View"/>
             </properties>
           </component>
-          <component id="fe918" class="javax.swing.JButton" binding="button2" default-binding="true">
+          <component id="fe918" class="javax.swing.JButton" binding="removeFoodPackageButton">
             <constraints/>
             <properties>
-              <text value="Button"/>
+              <text value="Remove"/>
+            </properties>
+          </component>
+          <component id="30eff" class="javax.swing.JButton" binding="editButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Edit"/>
             </properties>
           </component>
         </children>

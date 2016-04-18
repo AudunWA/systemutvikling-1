@@ -76,8 +76,11 @@ public class AddIngredientDialog extends JDialog {
         double amount;
         try {
             amount = Double.parseDouble(amountTextField.getText());
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, "Please fill in a valid amount (use . as comma).");
+            return;
+        } if (amount < 0) {
+            JOptionPane.showMessageDialog(this, "Please fill in a valid amount (Not negative)");
             return;
         }
 
@@ -88,7 +91,7 @@ public class AddIngredientDialog extends JDialog {
         }
 
         Boolean vegetarian = vegetarianCheckBox.isSelected();
-        java.util.Date arrivalDate = (java.util.Date) arrivalDatePicker.getModel().getValue();
+        java.util.Date arrivalDate = new Date(System.currentTimeMillis());
         if(arrivalDate == null) {
             JOptionPane.showMessageDialog(this, "Please fill in an arrival date.");
             return;
@@ -100,8 +103,8 @@ public class AddIngredientDialog extends JDialog {
             return;
         }
 
-        if (arrivalDate.after(expireDate)) {
-            JOptionPane.showMessageDialog(this, "Arrival date can't be after expire date!");
+        if (expireDate.before(arrivalDate)) {
+            JOptionPane.showMessageDialog(this, "Expire date can't be before arrival!");
             return;
         }
 
