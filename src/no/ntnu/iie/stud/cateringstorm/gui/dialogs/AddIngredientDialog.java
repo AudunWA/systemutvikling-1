@@ -76,8 +76,11 @@ public class AddIngredientDialog extends JDialog {
         double amount;
         try {
             amount = Double.parseDouble(amountTextField.getText());
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, "Please fill in a valid amount (use . as comma).");
+            return;
+        } if (amount < 0) {
+            JOptionPane.showMessageDialog(this, "Please fill in a valid amount (Not negative)");
             return;
         }
 
