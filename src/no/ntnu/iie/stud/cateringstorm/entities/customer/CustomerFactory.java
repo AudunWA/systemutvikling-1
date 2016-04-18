@@ -192,7 +192,7 @@ public final class CustomerFactory {
      */
     public static int editCustomerStatus(int customerId, boolean active){
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.customer SET active = ? WHERE customer.customer_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE customer SET active = ? WHERE customer.customer_id = ?")) {
 
                 statement.setBoolean(1, active);
                 statement.setInt(2, customerId);

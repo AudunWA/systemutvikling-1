@@ -112,4 +112,82 @@ public final class HoursFactory {
         }
         return null;
     }
+    /**
+     * Inserts a time sheet into the SQL table hours. Takes an hours object as arguement
+     * @param employeeId,fromTime,toTime,active
+     * @return Hours
+     */
+    public static Hours createTimesheet(int employeeId,Timestamp fromTime, Timestamp toTime, boolean active){
+
+        try (Connection connection = Database.getConnection()){
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO customer VALUES(DEFAULT,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS)){
+
+                statement.setInt(1,employeeId);
+                statement.setTimestamp(2,fromTime);
+                statement.setTimestamp(3,toTime);
+                statement.setBoolean(4,active);
+                int affectedRows = statement.executeUpdate();
+                if (affectedRows == 0) {
+                    return null; // No rows inserted
+                }
+
+                int generatedId;
+                try (ResultSet result = statement.getGeneratedKeys()) {
+                    if (result.next()) {
+                        generatedId = result.getInt(1);
+                    } else {
+                        return null; // No ID?
+                    }
+                }
+
+
+                //statement.execute();
+                return new Hours(generatedId,employeeId,fromTime ,toTime,active);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    /**
+     * Edits the status of a customer (if the customer is active or not)
+     * @param hoursId,employeeId,active
+     * @return int
+     */
+    public static int editTimesheetStatus(int hoursId,int employeeId, boolean active){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE hours SET active = ? WHERE employee_id= ? AND hours_id = ?")) {
+
+                statement.setBoolean(1, active);
+                statement.setInt(2, employeeId);
+                statement.setInt(3,hoursId);
+                statement.execute();
+                return employeeId;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
+     *
+     * @param timesheet
+     * @return statement.executeUpdate
+     */
+    public static int updateHours(Hours timesheet){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE hours SET from_time = ?, to_time = ?, active = ? WHERE employee_id = ? AND hours_id = ?")) {
+                statement.setTimestamp(1,timesheet.getStartTime());
+                statement.setTimestamp(2,timesheet.getEndTime());
+                statement.setBoolean(3,timesheet.isActive());
+                statement.setInt(4,timesheet.getEmployeeId());
+                statement.setInt(5,timesheet.getHoursId());
+                return statement.executeUpdate();
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }
