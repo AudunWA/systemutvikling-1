@@ -48,15 +48,21 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="5a27a" class="javax.swing.JTextField" binding="infoText">
+          <component id="5ef9c" class="javax.swing.JLabel">
             <constraints/>
             <properties>
-              <text value="With selected row:"/>
+              <text value="Amount of orders: "/>
             </properties>
           </component>
-          <component id="e969c" class="javax.swing.JComboBox" binding="statusBox" custom-create="true">
+          <component id="bd540" class="javax.swing.JSpinner" binding="spinner1" default-binding="true">
             <constraints/>
             <properties/>
+          </component>
+          <component id="6c789" class="javax.swing.JButton" binding="startDeliveryButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Start delivery"/>
+            </properties>
           </component>
         </children>
       </grid>
