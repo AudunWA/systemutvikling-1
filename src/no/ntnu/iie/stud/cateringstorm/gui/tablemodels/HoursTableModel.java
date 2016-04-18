@@ -15,7 +15,7 @@ public class HoursTableModel extends EntityTableModel<Hours> {
     public static final int COLUMN_EMPLOYEE_ID = 1;
     public static final int COLUMN_START_TIME = 2;
     public static final int COLUMN_END_TIME = 3;
-
+    public static final int COLUMN_ACTIVE = 4;
     public HoursTableModel(ArrayList<Hours> rows, Integer[] columns) {
         super(rows, columns);
     }
@@ -32,7 +32,8 @@ public class HoursTableModel extends EntityTableModel<Hours> {
                 return "Start time";
             case COLUMN_END_TIME:
                 return "End time";
-
+            case COLUMN_ACTIVE:
+                return "Active";
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
@@ -52,7 +53,8 @@ public class HoursTableModel extends EntityTableModel<Hours> {
                 return value.getStartTime();
             case COLUMN_END_TIME:
                 return value.getStartTime();
-
+            case COLUMN_ACTIVE:
+                return value.isActive();
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
@@ -70,8 +72,34 @@ public class HoursTableModel extends EntityTableModel<Hours> {
                 return Timestamp.class;
             case COLUMN_END_TIME:
                 return Timestamp.class;
+            case COLUMN_ACTIVE:
+                return Boolean.class;
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex){
+        return columnIndex == COLUMN_ACTIVE;
+    }
+     @Override
+    public void setValueAt(Object value, int row, int column){
+         Hours entity = getValue(row);
+         int columnType = getColumnType(column);
+         switch (columnType) {
+             case COLUMN_HOURS_ID:break;
+             case COLUMN_EMPLOYEE_ID:
+                 break;
+             case COLUMN_START_TIME:
+                 break;
+             case COLUMN_END_TIME:
+                 break;
+             case COLUMN_ACTIVE:
+                 entity.setActive((Boolean)value);
+                 break;
+             default:
+                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
+         }
+         fireTableCellUpdated(row,column);
+     }
 }
