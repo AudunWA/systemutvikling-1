@@ -16,7 +16,7 @@ import java.util.*;
 public class MapBackend {
     public static void main(String[] args) {
 
-        ArrayList<String> addressList = new ArrayList<>();
+        ArrayList<double[]> addressList = new ArrayList<>();
         ArrayList<double[]> pointList = new ArrayList<>();
 
         double[] midtByen = new double[]{10.38980484008789, 63.4289094478486};
@@ -26,6 +26,10 @@ public class MapBackend {
         double[] audun = new double[]{10.421905517578125, 63.394534542417105};
         double[] plass1 = new double[]{10.42564343636363, 63.403443636363336};
         double[] plass2 = new double[]{10.213435353535323, 63.44456663434353};
+
+        addressList.add(addressToPoint("Stibakken 2, Malvik, Norway"));
+        addressList.add(addressToPoint("Valgrindvegen 12, Trondheim, Norway"));
+        addressList.add(addressToPoint("Anders tvereggensveg 2, Trondheim, Norway"));
 
         pointList.add(midtByen);
         pointList.add(saksvik);
@@ -49,15 +53,9 @@ public class MapBackend {
 
         //System.out.println(getTotalDistanceList(getRandomList(pointList)));
 
-        for (double[] ayy : getShortestRoute(pointList)) {
+        for (double[] ayy : getShortestRoute(addressList)) {
             System.out.println(ayy[1] + " " + ayy[0] + "     ");
         }
-
-        addressList.add("Oslo, Norway");
-        addressList.add("Los Angeles, CA");
-        addressList.add("Klæbuveien 126, Trondheim, Norway");
-        addressList.add("Stavanger, Norway");
-        addressList.add("Bergen, Norway");
 
     }
 
@@ -167,6 +165,8 @@ public class MapBackend {
         return totalDistance;
     }
 
+    private static final double[] HOME_LOCATION =  new double[]{10.3961772, 63.41910230000001};
+
     public static ArrayList<double[]> getRandomList(ArrayList<double[]> route) {
 
         ArrayList<double[]> copy = new ArrayList<>(route);
@@ -175,11 +175,10 @@ public class MapBackend {
         Random generateRandomInteger = new Random();
         int random = 0;
 
-        randomList.add(route.get(0));
-        copy.remove(0);
+        randomList.add(HOME_LOCATION);
 
 
-        for (int i = 0; i < route.size() - 1; i++){
+        for (int i = 0; i < route.size(); i++){
 
             random = generateRandomInteger.nextInt(copy.size());
 
@@ -188,7 +187,7 @@ public class MapBackend {
 
         }
 
-        randomList.add(route.get(0));
+        randomList.add(HOME_LOCATION);
 
         return randomList;
     }
