@@ -35,6 +35,7 @@ public class SalespersonOrderView extends JPanel {
     private JLabel infoLabel;
     private JButton searchButton;
     private JTextField searchField;
+    private JButton newSubscriptionButton;
     OrderTableModel tableModel;
 
     private static ArrayList<Order> orderList = new ArrayList<Order>();
