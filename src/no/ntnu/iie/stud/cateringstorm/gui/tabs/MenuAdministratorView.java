@@ -42,7 +42,7 @@ public class MenuAdministratorView extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        addDishButton.addActionListener(e1 -> {
+        addDishButton.addActionListener(e -> {
             AddDishDialog dialog = new AddDishDialog();
             dialog.pack();
             dialog.setVisible(true);

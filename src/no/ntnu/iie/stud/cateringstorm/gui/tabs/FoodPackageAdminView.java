@@ -2,6 +2,8 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddFoodPackageDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditFoodPackageDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 
 import javax.swing.*;
@@ -16,10 +18,12 @@ public class FoodPackageAdminView extends JFrame {
     private JPanel mainPanel;
     private JTable FoodPackageTable;
     private JButton viewFoodPackage;
-    private JButton button2;
+    private JButton removeFoodPackageButton;
     private JTextField searchTextField;
     private JButton searchButton;
     private JCheckBox inactiveCheckBox;
+    private JButton addButton;
+    private JButton editButton;
 
     private FoodPackageTableModel tableModel;
 
@@ -27,6 +31,29 @@ public class FoodPackageAdminView extends JFrame {
 
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
+
+        addButton.addActionListener(e -> {
+            AddFoodPackageDialog dialog = new AddFoodPackageDialog();
+            dialog.pack();
+            dialog.setVisible(true);
+        });
+        editButton.addActionListener(e -> {
+            int selectedRow = FoodPackageTable.getSelectedRow();
+            if(selectedRow == -1) {
+                return;
+            }
+
+            FoodPackage foodPackage = tableModel.getValue(selectedRow);
+
+            EditFoodPackageDialog dialog = new EditFoodPackageDialog(foodPackage);
+            dialog.pack();
+            dialog.setVisible(true);
+
+            if(dialog.getAddedNewValue()) {
+                // Refresh data
+                refreshTable();
+            }
+        });
 
         viewFoodPackage.addActionListener(e -> {
 
@@ -67,6 +94,23 @@ public class FoodPackageAdminView extends JFrame {
             }
             tableModel.setRows(newRows);
         });
+        removeFoodPackageButton.addActionListener(e -> {
+            int selectedRow = FoodPackageTable.getSelectedRow();
+            if(selectedRow == -1) {
+                return;
+            }
+
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
+            if(dialogResult == 0) {
+                FoodPackage foodPackage = tableModel.getValue(selectedRow);
+                foodPackage.setActive(false);
+                FoodPackageFactory.updateFoodPackage(foodPackage);
+
+                tableModel.removeRow(selectedRow);
+                JOptionPane.showMessageDialog(null, "Row is removed.");
+            }
+        });
 
         FoodPackageTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
@@ -93,7 +137,7 @@ public class FoodPackageAdminView extends JFrame {
     }
 
     private void createTable(){
-        ArrayList<FoodPackage> foodpackageList = FoodPackageFactory.getAllFoodPackages();
+        ArrayList<FoodPackage> foodpackageList = FoodPackageFactory.getActiveFoodPackages();
         Integer[] columns = new Integer[] { FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_NAME }; // Columns can be changed
         tableModel = new FoodPackageTableModel(foodpackageList, columns);
         FoodPackageTable = new JTable(tableModel);
@@ -103,6 +147,10 @@ public class FoodPackageAdminView extends JFrame {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         createTable();
+    }
+
+    private void refreshTable() {
+        tableModel.setRows(FoodPackageFactory.getAllFoodPackages());
     }
 
     public static void main(String[] args) {
