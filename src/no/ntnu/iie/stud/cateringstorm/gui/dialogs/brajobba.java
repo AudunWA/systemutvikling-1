@@ -6,7 +6,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class EditFoodPackageDialog extends JDialog {
+public class brajobba extends JDialog {
 
     // fixed
     private boolean addedNewValue;
@@ -19,7 +19,7 @@ public class EditFoodPackageDialog extends JDialog {
     private JCheckBox isActive;
     private FoodPackage foodPackage;
 
-    public EditFoodPackageDialog(FoodPackage foodPackage) {
+    public brajobba(FoodPackage foodPackage) {
         this.foodPackage = foodPackage;
         setContentPane(contentPane);
         setModal(true);
@@ -112,7 +112,7 @@ public class EditFoodPackageDialog extends JDialog {
     public static void main(String[] args) {
         final int height = 700;
         final int width = 600;
-        EditFoodPackageDialog dialog = new EditFoodPackageDialog(null);
+        brajobba dialog = new brajobba(null);
         dialog.pack();
         dialog.setVisible(true);
         dialog.setSize(width, height);

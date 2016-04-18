@@ -3,7 +3,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddFoodPackageDialog;
-import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditFoodPackageDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.brajobba;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 
 import javax.swing.*;
@@ -45,7 +45,7 @@ public class FoodPackageAdminView extends JFrame {
 
             FoodPackage foodPackage = tableModel.getValue(selectedRow);
 
-            EditFoodPackageDialog dialog = new EditFoodPackageDialog(foodPackage);
+            brajobba dialog = new brajobba(foodPackage);
             dialog.pack();
             dialog.setVisible(true);
 
