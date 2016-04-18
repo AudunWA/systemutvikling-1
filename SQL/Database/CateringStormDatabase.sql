@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS _order_package;
 DROP TABLE IF EXISTS _order_food_package;
 DROP TABLE IF EXISTS _order;
 DROP TABLE IF EXISTS recurring_order;
+DROP TABLE IF EXISTS subscription_food_package;
 DROP TABLE IF EXISTS subscription;
 DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS area;
@@ -218,6 +219,5 @@ FOREIGN KEY (_order_id) REFERENCES _order(_order_id) ON UPDATE CASCADE,
 FOREIGN KEY (food_package_id) REFERENCES food_package(food_package_id) ON UPDATE CASCADE,
 PRIMARY KEY _order_pk (_order_id, food_package_id)
 );
-
 
 

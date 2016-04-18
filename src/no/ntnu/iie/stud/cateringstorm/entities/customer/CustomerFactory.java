@@ -83,6 +83,11 @@ public final class CustomerFactory {
         return null;
 
     }
+
+    /**
+     * Returns customers with column "Active" = true
+     * @return ArrayList<Customer>
+     */
     public static ArrayList<Customer> getActiveCustomers(){
         ArrayList<Customer> customers = new ArrayList<>();
         try (Connection connection = Database.getConnection()){
