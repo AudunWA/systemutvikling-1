@@ -6,9 +6,12 @@ import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddCustomerDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditCustomerDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.CustomerTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
+import sun.invoke.empty.Empty;
 
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -35,6 +38,8 @@ public class SalespersonCustomerView extends JPanel{
     private JPanel noselectButtonPanel;
     private CustomerTableModel tableModel;
 
+    private ArrayList<Customer> customers;
+
     public SalespersonCustomerView(){
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
@@ -52,12 +57,42 @@ public class SalespersonCustomerView extends JPanel{
         refreshButton.addActionListener(e->{
             refresh();
         });
-        searchButton.addActionListener(e->{
-            search();
-        });
         showInactiveCB.addActionListener(e->{
             refresh();
         });
+        
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            public void searchDocument(){
+
+                customers = CustomerFactory.getActiveCustomers();
+                ArrayList<Customer> copy = new ArrayList<>();
+
+                for (int i = 0; i < customers.size(); i++) {
+                    if ((customers.get(i).getForename()).toLowerCase().contains(searchField.getText().toLowerCase()) || (customers.get(i).getSurname()).toLowerCase().contains(searchField.getText().toLowerCase())){
+                        copy.add(customers.get(i));
+
+                    }
+                }
+                tableModel.setRows(copy);
+
+            }
+        });
+
         searchField.addMouseListener(new MouseAdapter() {
              @Override
              public void mouseClicked(MouseEvent e) {
@@ -79,14 +114,16 @@ public class SalespersonCustomerView extends JPanel{
         return null;
     }
 
+    private Integer[] columns = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVE}; // Columns can be changed
+
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         createTable();
         createSearchField();
     }
     public void createTable() {
         ArrayList<Customer> customerList = getActiveCustomers();
-        Integer[] columns = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVE}; // Columns can be changed
+
+        columns = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVE}; // Columns can be changed
 
         tableModel = new CustomerTableModel(customerList, columns);
         customerTable = new JTable(tableModel);
@@ -165,6 +202,7 @@ public class SalespersonCustomerView extends JPanel{
     }
 
     private void refresh(){
+
         if(showInactiveCB.isSelected()) {
             tableModel.setRows(getAllCustomers());
         }else {

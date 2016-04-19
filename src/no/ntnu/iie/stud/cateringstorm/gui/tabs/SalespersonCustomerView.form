@@ -67,13 +67,6 @@
               <verifyInputWhenFocusTarget value="false"/>
             </properties>
           </component>
-          <component id="7c817" class="javax.swing.JButton" binding="searchButton">
-            <constraints/>
-            <properties>
-              <enabled value="false"/>
-              <text value="Search"/>
-            </properties>
-          </component>
           <component id="ad892" class="javax.swing.JTextField" binding="searchField" custom-create="true">
             <constraints/>
             <properties/>
