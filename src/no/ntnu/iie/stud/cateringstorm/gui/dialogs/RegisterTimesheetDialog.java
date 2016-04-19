@@ -1,8 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
-import no.ntnu.iie.stud.cateringstorm.gui.util.SimpleDateFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
@@ -12,7 +10,7 @@ import java.util.Properties;
 /**
  * Created by EliasBrattli on 14/04/2016.
  */
-public class RegisterHoursDialog extends JDialog {
+public class RegisterTimesheetDialog extends JDialog {
     private JPanel mainPanel;
     private JPanel componentPanel;
     private JPanel buttonPanel;
@@ -25,7 +23,7 @@ public class RegisterHoursDialog extends JDialog {
     private JLabel bottomLabel;
     private JDatePanelImpl datePanel;
 
-    public RegisterHoursDialog() {
+    public RegisterTimesheetDialog() {
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
@@ -102,11 +100,11 @@ public class RegisterHoursDialog extends JDialog {
     }
     public static void main(String[] args){
         final int HEIGHT = 400, WIDTH = 400;
-        RegisterHoursDialog dialog = new RegisterHoursDialog();
+        RegisterTimesheetDialog dialog = new RegisterTimesheetDialog();
         dialog.pack();
         dialog.setSize(WIDTH,HEIGHT);
         dialog.setVisible(true);
-        dialog.setTitle("Register hours");
+        dialog.setTitle("Register timesheet");
         dialog.setLocationRelativeTo(null);
         System.exit(0);
     }

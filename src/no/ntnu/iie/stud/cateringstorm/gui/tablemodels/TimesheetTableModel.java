@@ -1,7 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
-import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
-import no.ntnu.iie.stud.cateringstorm.entities.hours.Hours;
+import no.ntnu.iie.stud.cateringstorm.entities.timesheet.Timesheet;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -9,14 +8,14 @@ import java.util.ArrayList;
 /**
  * Created by EliasBrattli on 14/04/2016.
  */
-public class HoursTableModel extends EntityTableModel<Hours> {
+public class TimesheetTableModel extends EntityTableModel<Timesheet> {
 
     public static final int COLUMN_HOURS_ID = 0;
     public static final int COLUMN_EMPLOYEE_ID = 1;
     public static final int COLUMN_START_TIME = 2;
     public static final int COLUMN_END_TIME = 3;
     public static final int COLUMN_ACTIVE = 4;
-    public HoursTableModel(ArrayList<Hours> rows, Integer[] columns) {
+    public TimesheetTableModel(ArrayList<Timesheet> rows, Integer[] columns) {
         super(rows, columns);
     }
 
@@ -25,7 +24,7 @@ public class HoursTableModel extends EntityTableModel<Hours> {
         int columnType = getColumnType(column);
         switch (columnType) {
             case COLUMN_HOURS_ID :
-                return "Hours ID";
+                return "Timesheet ID";
             case COLUMN_EMPLOYEE_ID:
                 return "Customer ID";
             case COLUMN_START_TIME:
@@ -41,7 +40,7 @@ public class HoursTableModel extends EntityTableModel<Hours> {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Hours value = getValue(rowIndex);
+        Timesheet value = getValue(rowIndex);
         int columnType = getColumnType(columnIndex);
 
         switch (columnType) {
@@ -84,7 +83,7 @@ public class HoursTableModel extends EntityTableModel<Hours> {
     }
      @Override
     public void setValueAt(Object value, int row, int column){
-         Hours entity = getValue(row);
+         Timesheet entity = getValue(row);
          int columnType = getColumnType(column);
          switch (columnType) {
              case COLUMN_HOURS_ID:break;

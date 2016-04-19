@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * Created by EliasBrattli on 16/04/2016.
  */
-public class EditHoursDialog extends JDialog{
+public class EditTimesheetDialog extends JDialog{
     private JPanel componentPanel;
     private JPanel spinnerPanel;
     private JSpinner fromSpinner;
@@ -22,7 +22,7 @@ public class EditHoursDialog extends JDialog{
     private JButton okButton;
     private JButton cancelButton;
     private JPanel mainPanel;
-    public EditHoursDialog() {
+    public EditTimesheetDialog() {
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
@@ -99,11 +99,11 @@ public class EditHoursDialog extends JDialog{
     }
     public static void main(String[] args){
         final int HEIGHT = 400, WIDTH = 400;
-        RegisterHoursDialog dialog = new RegisterHoursDialog();
+        RegisterTimesheetDialog dialog = new RegisterTimesheetDialog();
         dialog.pack();
         dialog.setSize(WIDTH,HEIGHT);
         dialog.setVisible(true);
-        dialog.setTitle("Register hours");
+        dialog.setTitle("Register timesheet");
         dialog.setLocationRelativeTo(null);
         System.exit(0);
     }
