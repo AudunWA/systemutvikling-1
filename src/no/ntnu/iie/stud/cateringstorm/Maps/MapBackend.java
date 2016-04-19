@@ -9,6 +9,7 @@ import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
+import com.google.code.geocoder.model.GeocoderStatus;
 
 import java.io.IOException;
 import java.util.*;
@@ -27,9 +28,12 @@ public class MapBackend {
         double[] plass1 = new double[]{10.42564343636363, 63.403443636363336};
         double[] plass2 = new double[]{10.213435353535323, 63.44456663434353};
 
+        System.out.println(isAddressValid("Anders tvereggensveg 2, Trondheim, Norway"));
+        System.out.println(isAddressValid("Rikmansvegen2"));
+
         addressList.add(addressToPoint("Stibakken 2, Malvik, Norway"));
         addressList.add(addressToPoint("Valgrindvegen 12, Trondheim, Norway"));
-        addressList.add(addressToPoint("Anders tvereggensveg 2, Trondheim, Norway"));
+        addressList.add(addressToPoint("AndersBanan tvereggensveg 2, Trondheim, Norway"));
 
         pointList.add(midtByen);
         pointList.add(saksvik);
@@ -152,6 +156,24 @@ public class MapBackend {
             }
         }
         return lowestList;
+    }
+
+    public static boolean isAddressValid(String address){
+
+        Geocoder geocoder = new Geocoder();
+        GeocoderRequest geoRequest = new GeocoderRequestBuilder().setAddress(address).getGeocoderRequest();
+        GeocodeResponse geocodeResponse = new GeocodeResponse();
+
+        try {
+            geocodeResponse = geocoder.geocode(geoRequest);
+        } catch (IOException ioe) {
+            System.out.println("error");
+        }
+
+        if (geocodeResponse.getStatus().equals(GeocoderStatus.ZERO_RESULTS)){
+            return false;
+        }
+        return true;
     }
 
     public static double getTotalDistanceList(ArrayList<double[]> route) {
