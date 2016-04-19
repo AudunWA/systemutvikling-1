@@ -114,7 +114,7 @@ public class MenuAdministratorView extends JPanel {
         createTable();
     }
     private void createTable(){
-        ArrayList<Dish> dishList = DishFactory.getAllDishes();
+        ArrayList<Dish> dishList = DishFactory.getActiveDishes();
         Integer[] columns = new Integer[] { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION }; // Columns can be changed
         tableModel = new DishTableModel(dishList, columns);
         dishTable = new JTable(tableModel);
