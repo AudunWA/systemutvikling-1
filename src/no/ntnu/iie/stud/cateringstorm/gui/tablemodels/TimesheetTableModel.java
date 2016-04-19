@@ -45,7 +45,7 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
 
         switch (columnType) {
             case COLUMN_HOURS_ID:
-                return value.getHoursId();
+                return value.getTimesheetId();
             case COLUMN_EMPLOYEE_ID:
                 return value.getEmployeeId();
             case COLUMN_START_TIME:

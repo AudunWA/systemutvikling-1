@@ -6,21 +6,21 @@ import java.sql.Timestamp;
  * Created by EliasBrattli on 14/04/2016.
  */
 public class Timesheet {
-    private int hoursId;
+    private int timesheetId;
     private int employeeId;
     private Timestamp startTime;
     private Timestamp endTime;
     private boolean active;
-    public Timesheet(int hoursId, int employeeId, Timestamp startTime, Timestamp endTime, boolean active){
-        this.hoursId = hoursId;
+    public Timesheet(int timesheetId, int employeeId, Timestamp startTime, Timestamp endTime, boolean active){
+        this.timesheetId = timesheetId;
         this.employeeId = employeeId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.active = active;
     }
 
-    public int getHoursId() {
-        return hoursId;
+    public int getTimesheetId() {
+        return timesheetId;
     }
     public int getEmployeeId() {
         return employeeId;
@@ -47,5 +47,15 @@ public class Timesheet {
     }
     public void setActive(boolean active){
         this.active = active;
+    }
+    @Override
+    public String toString() {
+        return "Timesheet{" +
+                "timesheetId=" + timesheetId +
+                ", employeeId=" + employeeId +
+                ", fromTime=" + startTime +
+                ", toTime=" + endTime +
+                ", active=" + active +
+                '}';
     }
 }
