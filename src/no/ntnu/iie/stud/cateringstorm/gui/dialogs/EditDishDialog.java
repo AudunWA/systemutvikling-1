@@ -12,8 +12,8 @@ public class EditDishDialog extends JDialog {
     private boolean addedNewValue;
 
     private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
+    private JButton okButton;
+    private JButton cancelButton;
     private JTextField editDescription;
     private JTextField editName;
     private JComboBox editType;
@@ -27,15 +27,15 @@ public class EditDishDialog extends JDialog {
         this.dish = dish;
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(okButton);
 
-        buttonOK.addActionListener(new ActionListener() {
+        okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
+        cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
@@ -58,7 +58,7 @@ public class EditDishDialog extends JDialog {
     }
 
     private void createComboBoxType(){
-        Object[] status = {"Appetizer?","Main?","Desert?"};
+        Object[] status = {"Appetizer","Main course","Dessert"};
 
         editType = new JComboBox(status);
         editType.setSelectedIndex(0);
@@ -100,7 +100,7 @@ public class EditDishDialog extends JDialog {
 
             DishFactory.updateDish(dish);
             if (DishFactory.updateDish(dish) != 1) {
-                JOptionPane.showMessageDialog(this, "Dish wasn't update, please try again later!");
+                JOptionPane.showMessageDialog(this, "Dish was not update, please try again later.");
             }
 
 
