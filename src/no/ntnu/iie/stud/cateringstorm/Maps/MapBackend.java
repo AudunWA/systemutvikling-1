@@ -54,7 +54,7 @@ public class MapBackend {
         //System.out.println(getTotalDistanceList(getRandomList(pointList)));
 
         for (double[] ayy : getShortestRoute(addressList)) {
-            System.out.println(ayy[1] + " " + ayy[0] + "     ");
+            System.out.println(ayy[0] + " " + ayy[1] + "     ");
         }
 
     }
@@ -165,7 +165,7 @@ public class MapBackend {
         return totalDistance;
     }
 
-    private static final double[] HOME_LOCATION =  new double[]{10.3961772, 63.41910230000001};
+    private static final double[] HOME_LOCATION =  new double[]{63.41910230000001, 10.3961772};
 
     public static ArrayList<double[]> getRandomList(ArrayList<double[]> route) {
 
