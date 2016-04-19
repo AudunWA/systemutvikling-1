@@ -7,6 +7,8 @@ import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditFoodPackageDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -31,6 +33,23 @@ public class FoodPackageAdminView extends JFrame {
 
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
+
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                search();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search();
+            }
+        });
 
         addButton.addActionListener(e -> {
             AddFoodPackageDialog dialog = new AddFoodPackageDialog();
@@ -78,21 +97,7 @@ public class FoodPackageAdminView extends JFrame {
 
         });
         searchButton.addActionListener(e -> {
-            ArrayList<FoodPackage> newRows;
-            if(searchField.getText().trim().equals("")) {
-                if(inactiveCheckBox.isSelected()) {
-                    newRows = FoodPackageFactory.getAllFoodPackages();
-                } else {
-                    newRows = FoodPackageFactory.getActiveFoodPackages();
-                }
-            } else {
-                if(inactiveCheckBox.isSelected()) {
-                    newRows = FoodPackageFactory.getAllFoodPackagesByQuery(searchField.getText());
-                } else {
-                    newRows = FoodPackageFactory.getActiveFoodPackagesByQuery(searchField.getText());
-                }
-            }
-            tableModel.setRows(newRows);
+            search();
         });
         removeFoodPackageButton.addActionListener(e -> {
             int selectedRow = FoodPackageTable.getSelectedRow();
@@ -150,6 +155,23 @@ public class FoodPackageAdminView extends JFrame {
     private void onCancel() {
 // add your code here if necessary
         dispose();
+    }
+    public void search() {
+        ArrayList<FoodPackage> newRows;
+        if(searchField.getText().trim().equals("")) {
+            if(inactiveCheckBox.isSelected()) {
+                newRows = FoodPackageFactory.getAllFoodPackages();
+            } else {
+                newRows = FoodPackageFactory.getActiveFoodPackages();
+            }
+        } else {
+            if(inactiveCheckBox.isSelected()) {
+                newRows = FoodPackageFactory.getAllFoodPackagesByQuery(searchField.getText());
+            } else {
+                newRows = FoodPackageFactory.getActiveFoodPackagesByQuery(searchField.getText());
+            }
+        }
+        tableModel.setRows(newRows);
     }
 
     private void createTable(){
