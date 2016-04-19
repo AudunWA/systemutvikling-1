@@ -8,6 +8,10 @@ import java.awt.event.*;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Properties;
 
@@ -91,38 +95,42 @@ public class RegisterTimesheetDialog extends JDialog {
         return (Date)datePanel.getModel().getValue();
     }
     private Timestamp getFromTime(){
-        Date date = getDate();
-        Date spinnerTime = (Date)fromSpinner.getModel().getValue();
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        format.format(spinnerTime);
-        date.setTime(spinnerTime.getTime());
-        return new Timestamp(date.getTime());
+        return new Timestamp(((Date)fromSpinner.getModel().getValue()).getTime());
     }
     private Timestamp getToTime(){
-        Date date = getDate();
-        Date spinnerTime = (Date)toSpinner.getModel().getValue();
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        format.format(spinnerTime);
-        date.setTime(spinnerTime.getTime());
-        return new Timestamp(date.getTime());
+        return new Timestamp(((Date)toSpinner.getModel().getValue()).getTime());
     }
-    // FIXME: Dates from getFromTime() and getToTime() are wrong as soon as we start spinning the spinner. it imports spinner "null" date, 1970
+
     private void onOK(){
-        // TODO: Implement onOK, sending hour sheet to database
-        System.out.println("FromTime :" + getFromTime());
-        System.out.println("ToTime :" + getToTime());
-        Timestamp fromTime = getFromTime();
-        Timestamp toTime = getToTime();
         Date date = getDate();
-        if(fromTime.getTime() > toTime.getTime()){
-            JOptionPane.showMessageDialog(this,"Negative hours registered. To-ime must be higher than from time");
-        }
+
         if(date == null){
             JOptionPane.showMessageDialog(this,"A date must be selected");
         } else if (date.after(new Date(System.currentTimeMillis()))) {
             JOptionPane.showMessageDialog(this, "Error, you cannot pre-write hours.");
             return;
         }
+        // Convert date to LocalDate, which is easier to work with
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        Timestamp fromTime = getFromTime();
+        Timestamp toTime = getToTime();
+
+        // Extract only hours, and add them to the selected date (from date panel)
+        LocalDateTime localFromTime = fromTime.toLocalDateTime();
+        localFromTime = localDate.atTime(localFromTime.getHour(), localFromTime.getMinute());
+        LocalDateTime localToTime = toTime.toLocalDateTime();
+        localToTime = localDate.atTime(localToTime.getHour(), localToTime.getMinute());
+
+        System.out.println("localFromTime :" + localFromTime);
+        System.out.println("localToTime :" + localToTime);
+
+        if(localToTime.isBefore(localFromTime)){
+            JOptionPane.showMessageDialog(this,"Negative hours registered. To-time must be higher than from time");
+            return;
+        }
+
+        // TODO: Implement onOK, sending hour sheet to database
     }
     private void setSpinners(){
         SpinnerModel fromModel = new SpinnerDateModel();
