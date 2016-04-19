@@ -93,13 +93,15 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
             case COLUMN_PHONE:
                 return String.class;
             case COLUMN_ACTIVE:
-                return boolean.class;
+                return Boolean.class;
             case COLUMN_EMAIL:
                 return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
+
+
     @Override
     public void setValueAt(Object value, int row, int column) {
         Customer entity = getValue(row);
@@ -119,6 +121,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
             case COLUMN_PHONE:
                 break;
             case COLUMN_ACTIVE:
+                entity.setActive((Boolean)value);
                 break;
             case COLUMN_EMAIL:
                 break;
