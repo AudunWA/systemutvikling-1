@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.table.TableCellEditor;
 
@@ -42,7 +43,7 @@ public class TimesheetView extends JPanel{
         this.loggedInEmployeeId = loggedInEmployeeId;
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
-        System.out.printf(loggedInEmployeeId+"\n");
+        clockOutButton.setEnabled(false);
         editButton.addActionListener(e -> {
             editTimesheet(getSelectedHours());
         });
@@ -108,9 +109,23 @@ public class TimesheetView extends JPanel{
 
     private void clockIn(){
         // TODO: Use current time, register to from-Time
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        Timesheet sheet = TimesheetFactory.createTimesheet(loggedInEmployeeId,time,true);
+        JOptionPane.showMessageDialog(null,sheet);
+        refresh();
+        clockOutButton.setEnabled(true);
+        clockInButton.setEnabled(false);
     }
     private void clockOut(){
         // TODO: Use current time, register to-time
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        Timesheet sheet = TimesheetFactory.getUnfinishedTimeSheet(loggedInEmployeeId);
+        sheet.setEndTime(time);
+        int result = TimesheetFactory.updateTimesheet(sheet);
+        JOptionPane.showMessageDialog(null,result);
+        refresh();
+        clockOutButton.setEnabled(false);
+        clockInButton.setEnabled(true);
     }
     private void registerHours(){
         // TODO: Open RegisterTimesheetDialog

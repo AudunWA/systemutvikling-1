@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class AddDishDialog extends JDialog {
-    private JPanel contentPane;
+    private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
     private JTextField dishName;
@@ -19,7 +19,7 @@ public class AddDishDialog extends JDialog {
 
 
     public AddDishDialog() {
-        setContentPane(contentPane);
+        setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
@@ -44,7 +44,7 @@ public class AddDishDialog extends JDialog {
         });
 
 // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        mainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }

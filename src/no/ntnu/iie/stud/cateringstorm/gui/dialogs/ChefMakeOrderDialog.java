@@ -16,7 +16,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class ChefMakeOrderDialog extends JDialog {
-    private JPanel contentPane;
+    private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
     private JTable dishTable;
@@ -31,7 +31,7 @@ public class ChefMakeOrderDialog extends JDialog {
     public ChefMakeOrderDialog(Order order) {
         this.order = order;
 
-        setContentPane(contentPane);
+        setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
@@ -60,7 +60,7 @@ public class ChefMakeOrderDialog extends JDialog {
         });
 
 // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        mainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }

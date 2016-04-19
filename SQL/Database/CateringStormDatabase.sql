@@ -83,7 +83,7 @@ CREATE TABLE timesheet(
 timesheet_id INTEGER AUTO_INCREMENT NOT NULL,
 employee_id INTEGER NOT NULL,
 from_time DATETIME NOT NULL,
-to_time DATETIME NOT NULL,
+to_time DATETIME,
 active BOOLEAN NOT NULL,
 FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
 PRIMARY KEY (timesheet_id, employee_id)
