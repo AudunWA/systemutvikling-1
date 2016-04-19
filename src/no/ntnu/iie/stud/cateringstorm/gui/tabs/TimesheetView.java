@@ -72,7 +72,7 @@ public class TimesheetView extends JPanel{
         createTable();
     }
     private void createTable(){
-        //timesheetList = TimesheetFactory.getAllHours();
+        //timesheetList = TimesheetFactory.getAllTimesheets();
         System.out.println(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR);
         Integer[] columns;
         if(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
@@ -122,10 +122,10 @@ public class TimesheetView extends JPanel{
         }
     }
     private ArrayList<Timesheet> getActiveHoursByEmployeeId(){
-        return TimesheetFactory.getActiveHoursByEmployee(loggedInEmployeeId);
+        return TimesheetFactory.getActiveTimesheetsByEmployee(loggedInEmployeeId);
     }
     private ArrayList<Timesheet> getHoursByEmployeeId(){
-        return TimesheetFactory.getHoursByEmployee(loggedInEmployeeId);
+        return TimesheetFactory.getTimesheetsByEmployee(loggedInEmployeeId);
     }
     private void refresh(){
         if(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {

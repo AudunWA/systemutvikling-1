@@ -36,7 +36,7 @@ public final class TimesheetFactory {
      *
      * @return ArrayList<Timesheet>
      */
-    public static ArrayList<Timesheet> getAllHours() {
+    public static ArrayList<Timesheet> getAllTimesheets() {
         // TODO: Implement method gathering all timesheet from table, only where employee ID equals this ID
         ArrayList<Timesheet> timesheetList = new ArrayList<>();
 
@@ -56,9 +56,6 @@ public final class TimesheetFactory {
             e.printStackTrace();
         }
         return null;
-        /*ArrayList<Timesheet> dummy = new ArrayList<>();
-        dummy.add(new Timesheet(1,1,new Timestamp(1460713371),new Timestamp(1460714371),true));
-        return dummy;*/
     }
 
     /**
@@ -67,7 +64,7 @@ public final class TimesheetFactory {
      * @param employeeId
      * @return Customer
      */
-    public static ArrayList<Timesheet> getHoursByEmployee(int employeeId) {
+    public static ArrayList<Timesheet> getTimesheetsByEmployee(int employeeId) {
 
         ArrayList<Timesheet> timesheetList = new ArrayList<>();
 
@@ -91,9 +88,9 @@ public final class TimesheetFactory {
     }
     /**
      * Returns customers with column "Active" = true, on one employee
-     * @return ArrayList<Customer>
+     * @return ArrayList<Timesheet>
      */
-    public static ArrayList<Timesheet> getActiveHoursByEmployee(int employeeId){
+    public static ArrayList<Timesheet> getActiveTimesheetsByEmployee(int employeeId){
         ArrayList<Timesheet> hours = new ArrayList<>();
         try (Connection connection = Database.getConnection()){
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ?")){
@@ -175,7 +172,7 @@ public final class TimesheetFactory {
      * @param timesheet
      * @return statement.executeUpdate
      */
-    public static int updateHours(Timesheet timesheet){
+    public static int updateTimesheets(Timesheet timesheet){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE timesheet SET from_time = ?, to_time = ?, active = ? WHERE employee_id = ? AND hours_id = ?")) {
                 statement.setTimestamp(1,timesheet.getStartTime());
