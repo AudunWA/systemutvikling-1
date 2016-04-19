@@ -1,18 +1,20 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
-import no.ntnu.iie.stud.cateringstorm.gui.util.SimpleDateFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 /**
  * Created by EliasBrattli on 14/04/2016.
  */
-public class RegisterHoursDialog extends JDialog {
+public class RegisterTimesheetDialog extends JDialog {
     private JPanel mainPanel;
     private JPanel componentPanel;
     private JPanel buttonPanel;
@@ -25,7 +27,7 @@ public class RegisterHoursDialog extends JDialog {
     private JLabel bottomLabel;
     private JDatePanelImpl datePanel;
 
-    public RegisterHoursDialog() {
+    public RegisterTimesheetDialog() {
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
@@ -39,9 +41,12 @@ public class RegisterHoursDialog extends JDialog {
                 }
             }
         });*/
-        createSpinners();
+        setSpinners();
         okButton.addActionListener(e->{
-
+            onOK();
+        });
+        cancelButton.addActionListener(e->{
+            onCancel();
         });
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -82,10 +87,44 @@ public class RegisterHoursDialog extends JDialog {
         datePanel = new JDatePanelImpl(model,p);
 
     }
+    private Date getDate(){
+        return (Date)datePanel.getModel().getValue();
+    }
+    private Timestamp getFromTime(){
+        Date date = getDate();
+        Date spinnerTime = (Date)fromSpinner.getModel().getValue();
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        format.format(spinnerTime);
+        date.setTime(spinnerTime.getTime());
+        return new Timestamp(date.getTime());
+    }
+    private Timestamp getToTime(){
+        Date date = getDate();
+        Date spinnerTime = (Date)toSpinner.getModel().getValue();
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        format.format(spinnerTime);
+        date.setTime(spinnerTime.getTime());
+        return new Timestamp(date.getTime());
+    }
+    // FIXME: Dates from getFromTime() and getToTime() are wrong as soon as we start spinning the spinner. it imports spinner "null" date, 1970
     private void onOK(){
         // TODO: Implement onOK, sending hour sheet to database
+        System.out.println("FromTime :" + getFromTime());
+        System.out.println("ToTime :" + getToTime());
+        Timestamp fromTime = getFromTime();
+        Timestamp toTime = getToTime();
+        Date date = getDate();
+        if(fromTime.getTime() > toTime.getTime()){
+            JOptionPane.showMessageDialog(this,"Negative hours registered. To-ime must be higher than from time");
+        }
+        if(date == null){
+            JOptionPane.showMessageDialog(this,"A date must be selected");
+        } else if (date.after(new Date(System.currentTimeMillis()))) {
+            JOptionPane.showMessageDialog(this, "Error, you cannot pre-write hours.");
+            return;
+        }
     }
-    private void createSpinners(){
+    private void setSpinners(){
         SpinnerModel fromModel = new SpinnerDateModel();
         SpinnerModel toModel = new SpinnerDateModel();
 
@@ -102,11 +141,11 @@ public class RegisterHoursDialog extends JDialog {
     }
     public static void main(String[] args){
         final int HEIGHT = 400, WIDTH = 400;
-        RegisterHoursDialog dialog = new RegisterHoursDialog();
+        RegisterTimesheetDialog dialog = new RegisterTimesheetDialog();
         dialog.pack();
         dialog.setSize(WIDTH,HEIGHT);
         dialog.setVisible(true);
-        dialog.setTitle("Register hours");
+        dialog.setTitle("Register timesheet");
         dialog.setLocationRelativeTo(null);
         System.exit(0);
     }

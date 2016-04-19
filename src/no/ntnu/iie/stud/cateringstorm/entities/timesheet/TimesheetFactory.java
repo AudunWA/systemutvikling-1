@@ -1,4 +1,4 @@
-package no.ntnu.iie.stud.cateringstorm.entities.hours;
+package no.ntnu.iie.stud.cateringstorm.entities.timesheet;
 
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
@@ -10,78 +10,75 @@ import java.util.ArrayList;
 /**
  * Created by EliasBrattli on 14/04/2016.
  */
-public final class HoursFactory {
+public final class TimesheetFactory {
     private Employee thisEmployee = GlobalStorage.getLoggedInEmployee(); //Access to the respective employee
 
     /**
      * Creates customer from result.
      *
      * @param result
-     * @return Hours
+     * @return Timesheet
      * @throws SQLException
      */
-    private static Hours createTimesheetFromResultSet(ResultSet result) throws SQLException {
+    private static Timesheet createTimesheetFromResultSet(ResultSet result) throws SQLException {
 
-        int hoursId = result.getInt("hours_id");
+        int timesheetId = result.getInt("timesheet_id");
         int employeeId = result.getInt("employee_id");
         Timestamp fromTime = result.getTimestamp("from_time");
         Timestamp toTime = result.getTimestamp("to_time");
         boolean active = result.getBoolean("active");
-        return new Hours(hoursId, employeeId, fromTime, toTime, active);
+        return new Timesheet(timesheetId, employeeId, fromTime, toTime, active);
 
     }
 
     /**
-     * Creates an arraylist containing Hours
+     * Creates an arraylist containing Timesheet
      *
-     * @return ArrayList<Hours>
+     * @return ArrayList<Timesheet>
      */
-    public static ArrayList<Hours> getAllHours() {
-        // TODO: Implement method gathering all hours from table, only where employee ID equals this ID
-        ArrayList<Hours> hoursList = new ArrayList<>();
+    public static ArrayList<Timesheet> getAllTimesheets() {
+        // TODO: Implement method gathering all timesheet from table, only where employee ID equals this ID
+        ArrayList<Timesheet> timesheetList = new ArrayList<>();
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM hours")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet")) {
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
 
-                        hoursList.add(createTimesheetFromResultSet(result));
+                        timesheetList.add(createTimesheetFromResultSet(result));
                     }
-                    return hoursList;
+                    return timesheetList;
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
-        /*ArrayList<Hours> dummy = new ArrayList<>();
-        dummy.add(new Hours(1,1,new Timestamp(1460713371),new Timestamp(1460714371),true));
-        return dummy;*/
     }
 
     /**
-     * Gets all hours from a single employee
+     * Gets all timesheet from a single employee
      *
      * @param employeeId
      * @return Customer
      */
-    public static ArrayList<Hours> getHoursByEmployee(int employeeId) {
+    public static ArrayList<Timesheet> getTimesheetsByEmployee(int employeeId) {
 
-        ArrayList<Hours> hoursList = new ArrayList<>();
+        ArrayList<Timesheet> timesheetList = new ArrayList<>();
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM hours WHERE employee_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE employee_id = ?")) {
                 statement.setInt(1, employeeId);
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
 
-                        hoursList.add(createTimesheetFromResultSet(result));
+                        timesheetList.add(createTimesheetFromResultSet(result));
                     }
-                    return hoursList;
+                    return timesheetList;
                 }
             }
         } catch (SQLException e) {
@@ -91,12 +88,12 @@ public final class HoursFactory {
     }
     /**
      * Returns customers with column "Active" = true, on one employee
-     * @return ArrayList<Customer>
+     * @return ArrayList<Timesheet>
      */
-    public static ArrayList<Hours> getActiveHoursByEmployee(int employeeId){
-        ArrayList<Hours> hours = new ArrayList<>();
+    public static ArrayList<Timesheet> getActiveTimesheetsByEmployee(int employeeId){
+        ArrayList<Timesheet> hours = new ArrayList<>();
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM hours WHERE active LIKE true AND employee_id = ?")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ?")){
                 statement.setInt(1,employeeId);
                 statement.executeQuery();
                 try (ResultSet result = statement.getResultSet()){
@@ -113,11 +110,11 @@ public final class HoursFactory {
         return null;
     }
     /**
-     * Inserts a time sheet into the SQL table hours. Takes an hours object as arguement
+     * Inserts a time sheet into the SQL table timesheet. Takes an timesheet object as arguement
      * @param employeeId,fromTime,toTime,active
-     * @return Hours
+     * @return Timesheet
      */
-    public static Hours createTimesheet(int employeeId,Timestamp fromTime, Timestamp toTime, boolean active){
+    public static Timesheet createTimesheet(int employeeId, Timestamp fromTime, Timestamp toTime, boolean active){
 
         try (Connection connection = Database.getConnection()){
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO customer VALUES(DEFAULT,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS)){
@@ -142,7 +139,7 @@ public final class HoursFactory {
 
 
                 //statement.execute();
-                return new Hours(generatedId,employeeId,fromTime ,toTime,active);
+                return new Timesheet(generatedId,employeeId,fromTime ,toTime,active);
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -156,7 +153,7 @@ public final class HoursFactory {
      */
     public static int editTimesheetStatus(int hoursId,int employeeId, boolean active){
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("UPDATE hours SET active = ? WHERE employee_id= ? AND hours_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE timesheet SET active = ? WHERE employee_id= ? AND hours_id = ?")) {
 
                 statement.setBoolean(1, active);
                 statement.setInt(2, employeeId);
@@ -175,9 +172,9 @@ public final class HoursFactory {
      * @param timesheet
      * @return statement.executeUpdate
      */
-    public static int updateHours(Hours timesheet){
+    public static int updateTimesheets(Timesheet timesheet){
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("UPDATE hours SET from_time = ?, to_time = ?, active = ? WHERE employee_id = ? AND hours_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE timesheet SET from_time = ?, to_time = ?, active = ? WHERE employee_id = ? AND hours_id = ?")) {
                 statement.setTimestamp(1,timesheet.getStartTime());
                 statement.setTimestamp(2,timesheet.getEndTime());
                 statement.setBoolean(3,timesheet.isActive());

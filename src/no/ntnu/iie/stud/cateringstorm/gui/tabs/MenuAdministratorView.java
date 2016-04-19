@@ -5,21 +5,16 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;*/
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
-import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
-import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditDishDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddDishDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
-
-import javax.swing.*;
 
 /**
  * Created by kenan on 01.04.2016.
@@ -32,7 +27,7 @@ public class MenuAdministratorView extends JPanel {
     private JPanel mainPanel;
     private JButton exitButton;
     private JScrollPane dishPane;
-    private JTextField searchTextField;
+    private JTextField searchField;
     private JButton searchButton;
     private JCheckBox inactiveCheckBox;
 
@@ -88,7 +83,7 @@ public class MenuAdministratorView extends JPanel {
 
         searchButton.addActionListener(e -> {
             ArrayList<Dish> newRows;
-            if(searchTextField.getText().trim().equals("")) {
+            if(searchField.getText().trim().equals("")) {
                 if(inactiveCheckBox.isSelected()) {
                     newRows = DishFactory.getAllDishes();
                 } else {
@@ -96,17 +91,33 @@ public class MenuAdministratorView extends JPanel {
                 }
             } else {
                 if(inactiveCheckBox.isSelected()) {
-                    newRows = DishFactory.getAllDishesByQuery(searchTextField.getText());
+                    newRows = DishFactory.getAllDishesByQuery(searchField.getText());
                 } else {
-                    newRows = DishFactory.getActiveDishesByQuery(searchTextField.getText());
+                    newRows = DishFactory.getActiveDishesByQuery(searchField.getText());
                 }
             }
             tableModel.setRows(newRows);
+        });
+        searchField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setSearchField("");
+                searchButton.setEnabled(true);
+            }
         });
 
         dishTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
+    }
+    private void createSearchField(){
+        searchField = new JTextField(20);
+        setSearchField("Search for dishes...");
+        add(searchField);
+    }
+    private void setSearchField(String text){
+        searchField.setText(text);
+        searchField.setEnabled(true);
     }
 
     private void createUIComponents() {
@@ -114,7 +125,7 @@ public class MenuAdministratorView extends JPanel {
         createTable();
     }
     private void createTable(){
-        ArrayList<Dish> dishList = DishFactory.getAllDishes();
+        ArrayList<Dish> dishList = DishFactory.getActiveDishes();
         Integer[] columns = new Integer[] { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION }; // Columns can be changed
         tableModel = new DishTableModel(dishList, columns);
         dishTable = new JTable(tableModel);

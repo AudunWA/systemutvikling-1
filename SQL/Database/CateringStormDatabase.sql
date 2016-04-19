@@ -15,8 +15,8 @@ DROP TABLE IF EXISTS dish;
 DROP TABLE IF EXISTS dish_type;
 DROP TABLE IF EXISTS ingredient;
 
-DROP TABLE IF EXISTS hours_employee;
-DROP TABLE IF EXISTS hours;
+DROP TABLE IF EXISTS timesheet_employee;
+DROP TABLE IF EXISTS timesheet;
 DROP TABLE IF EXISTS chef;
 DROP TABLE IF EXISTS nutrition_exp;
 DROP TABLE IF EXISTS chauffeur;
@@ -79,14 +79,14 @@ FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
 PRIMARY KEY (employee_id)
 );
 
-CREATE TABLE hours(
-hours_id INTEGER AUTO_INCREMENT NOT NULL,
+CREATE TABLE timesheet(
+timesheet_id INTEGER AUTO_INCREMENT NOT NULL,
 employee_id INTEGER NOT NULL,
 from_time DATETIME NOT NULL,
 to_time DATETIME NOT NULL,
 active BOOLEAN NOT NULL,
 FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
-PRIMARY KEY (hours_id, employee_id)
+PRIMARY KEY (timesheet_id, employee_id)
 );
 
 

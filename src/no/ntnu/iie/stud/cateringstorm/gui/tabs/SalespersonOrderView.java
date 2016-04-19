@@ -7,6 +7,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddOrderDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddSubscriptionDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditOrderDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
@@ -56,6 +57,10 @@ public class SalespersonOrderView extends JPanel {
             editOrder(getSelectedOrder());
         });
 
+        newSubscriptionButton.addActionListener(e -> {
+            newSubscription();
+        });
+
         statusBox.addActionListener(e -> {
             setStatus();
         });
@@ -91,11 +96,23 @@ public class SalespersonOrderView extends JPanel {
         aoDialog.setVisible(true);
     }
 
+    private void newSubscription(){
+
+        AddSubscriptionDialog asDialog = new AddSubscriptionDialog();
+        final int WIDTH = 1300;
+        final int HEIGHT = 600;
+        asDialog.pack();
+        asDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        asDialog.setSize(WIDTH, HEIGHT);
+        asDialog.setLocationRelativeTo(null);
+        asDialog.setVisible(true);
+    }
+
     private void editOrder(Order order){
         if (order != null) {
             EditOrderDialog eoDialog = new EditOrderDialog(order);
-            final int WIDTH = 500;
-            final int HEIGHT = 400;
+            final int WIDTH = 300;
+            final int HEIGHT = 200;
             eoDialog.pack();
             eoDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             eoDialog.setSize(WIDTH, HEIGHT);

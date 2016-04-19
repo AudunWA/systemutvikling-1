@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class MapBackend {
+    private static final Coordinate HOME_LOCATION =  addressToPoint("Elgesetergate 1, Trondheim, Norway");
+
     public static void main(String[] args) {
 
         ArrayList<Coordinate> addressList = new ArrayList<>();
@@ -32,7 +34,7 @@ public class MapBackend {
 
         addressList.add(addressToPoint("Stibakken 2, Malvik, Norway"));
         addressList.add(addressToPoint("Valgrindvegen 12, Trondheim, Norway"));
-        addressList.add(addressToPoint("Anders tvereggensveg 2, Trondheim, Norway"));
+        addressList.add(addressToPoint("AndersBanan tvereggensveg 2, Trondheim, Norway"));
 
         pointList.add(midtByen);
         pointList.add(saksvik);
@@ -59,7 +61,6 @@ public class MapBackend {
         for (Coordinate ayy : getShortestRoute(addressList)) {
             System.out.println(ayy);
         }
-
     }
 
     public static Coordinate addressToPoint(String address) {
@@ -155,7 +156,6 @@ public class MapBackend {
     }
 
     public static double getTotalDistanceList(ArrayList<Coordinate> route) {
-
         double totalDistance = 0.0;
 
         for (int i = 0; i+1 < route.size(); i++){
@@ -164,8 +164,6 @@ public class MapBackend {
         totalDistance += distFrom(route.get(route.size()-1), route.get(0));
         return totalDistance;
     }
-
-    private static final Coordinate HOME_LOCATION =  addressToPoint("Elgesetergate 1, Trondheim, Norway");
 
     public static ArrayList<Coordinate> getRandomList(ArrayList<Coordinate> route) {
 

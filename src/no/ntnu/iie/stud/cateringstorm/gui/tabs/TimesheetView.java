@@ -2,9 +2,9 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
-import no.ntnu.iie.stud.cateringstorm.entities.hours.Hours;
-import no.ntnu.iie.stud.cateringstorm.entities.hours.HoursFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.HoursTableModel;
+import no.ntnu.iie.stud.cateringstorm.entities.timesheet.Timesheet;
+import no.ntnu.iie.stud.cateringstorm.entities.timesheet.TimesheetFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.TimesheetTableModel;
 import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import javax.swing.*;
@@ -13,17 +13,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.EventObject;
-import java.util.Objects;
-import javax.swing.event.*;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 
 /**
  * Created by EliasBrattli on 14/04/2016.
  */
-public class HoursView extends JPanel{
+public class TimesheetView extends JPanel{
 
     private JPanel mainPanel;
     private JPanel selectButtonPanel;
@@ -39,11 +34,11 @@ public class HoursView extends JPanel{
     private JScrollPane tablePane;
     private JLabel infoLabel3;
     private JButton refreshButton;
-    private HoursTableModel tableModel;
-    private ArrayList<Hours> hoursList;
+    private TimesheetTableModel tableModel;
+    private ArrayList<Timesheet> timesheetList;
     private int loggedInEmployeeId;
     //Constructor
-    public HoursView(int loggedInEmployeeId) {
+    public TimesheetView(int loggedInEmployeeId) {
         this.loggedInEmployeeId = loggedInEmployeeId;
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
@@ -77,36 +72,36 @@ public class HoursView extends JPanel{
         createTable();
     }
     private void createTable(){
-        //hoursList = HoursFactory.getAllHours();
+        //timesheetList = TimesheetFactory.getAllTimesheets();
         System.out.println(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR);
         Integer[] columns;
         if(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
-            hoursList = getHoursByEmployeeId();
-            columns = new Integer[]{HoursTableModel.COLUMN_HOURS_ID, HoursTableModel.COLUMN_START_TIME, HoursTableModel.COLUMN_END_TIME, HoursTableModel.COLUMN_ACTIVE};
+            timesheetList = getHoursByEmployeeId();
+            columns = new Integer[]{TimesheetTableModel.COLUMN_HOURS_ID, TimesheetTableModel.COLUMN_START_TIME, TimesheetTableModel.COLUMN_END_TIME, TimesheetTableModel.COLUMN_ACTIVE};
         }else{
-            hoursList = getActiveHoursByEmployeeId();
-            columns = new Integer[]{ HoursTableModel.COLUMN_HOURS_ID,HoursTableModel.COLUMN_START_TIME, HoursTableModel.COLUMN_END_TIME};
+            timesheetList = getActiveHoursByEmployeeId();
+            columns = new Integer[]{ TimesheetTableModel.COLUMN_HOURS_ID, TimesheetTableModel.COLUMN_START_TIME, TimesheetTableModel.COLUMN_END_TIME};
         }
-        //System.out.println(hoursList.get(0));
-        tableModel = new HoursTableModel(hoursList, columns);
+        //System.out.println(timesheetList.get(0));
+        tableModel = new TimesheetTableModel(timesheetList, columns);
         hoursTable = new JTable(tableModel);
         hoursTable.getTableHeader().setReorderingAllowed(false);
         tablePane = new JScrollPane(hoursTable);
         //hoursTable.setCellEditor(editor);
-        //TableColumn column = hoursTable.getColumnModel().getColumn(HoursTableModel.COLUMN_ACTIVE);
+        //TableColumn column = hoursTable.getColumnModel().getColumn(TimesheetTableModel.COLUMN_ACTIVE);
         //column.setCellEditor(new CellCheckboxEditor());
         hoursTable.setFillsViewportHeight(true);
     }
-    private Hours getSelectedHours(){
+    private Timesheet getSelectedHours(){
         int selectedRow = hoursTable.getSelectedRow();
         if(selectedRow > -1){
-            Hours hours = tableModel.getValue(selectedRow);
+            Timesheet timesheet = tableModel.getValue(selectedRow);
         }
         return null;
     }
-    private void editTimesheet(Hours hours){
-        // TODO: Open EditHoursDialog
-        if(hours == null){
+    private void editTimesheet(Timesheet timesheet){
+        // TODO: Open EditTimesheetDialog
+        if(timesheet == null){
             JOptionPane.showMessageDialog(null,"Please select a table row");
         }
     }
@@ -118,19 +113,19 @@ public class HoursView extends JPanel{
         // TODO: Use current time, register to-time
     }
     private void registerHours(){
-        // TODO: Open RegisterHoursDialog
+        // TODO: Open RegisterTimesheetDialog
     }
-    private void removeTimesheet(Hours hours){
+    private void removeTimesheet(Timesheet timesheet){
         // TODO: set Status of a time sheet to inactive. It's accessible to admin
-        if(hours == null){
+        if(timesheet == null){
             JOptionPane.showMessageDialog(null,"Please select a table row");
         }
     }
-    private ArrayList<Hours> getActiveHoursByEmployeeId(){
-        return HoursFactory.getActiveHoursByEmployee(loggedInEmployeeId);
+    private ArrayList<Timesheet> getActiveHoursByEmployeeId(){
+        return TimesheetFactory.getActiveTimesheetsByEmployee(loggedInEmployeeId);
     }
-    private ArrayList<Hours> getHoursByEmployeeId(){
-        return HoursFactory.getHoursByEmployee(loggedInEmployeeId);
+    private ArrayList<Timesheet> getHoursByEmployeeId(){
+        return TimesheetFactory.getTimesheetsByEmployee(loggedInEmployeeId);
     }
     private void refresh(){
         if(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
@@ -148,7 +143,7 @@ public class HoursView extends JPanel{
         final int WIDTH = 550, HEIGHT = 550;
         GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
         JFrame frame = new JFrame();
-        frame.add(new HoursView(GlobalStorage.getLoggedInEmployee().getEmployeeId()));
+        frame.add(new TimesheetView(GlobalStorage.getLoggedInEmployee().getEmployeeId()));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);

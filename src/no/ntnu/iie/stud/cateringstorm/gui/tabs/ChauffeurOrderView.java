@@ -53,7 +53,7 @@ public class ChauffeurOrderView extends JPanel {
                     setBackground(new Color(100,200,100));
                 } else if (temp.equals("Delivered")) {
                     setBackground(new Color(150,150,150));
-                } else if (temp.equals("Being delivered") && !priority){
+                } else if (temp.equals("Being delivered")){
                     setBackground(Color.ORANGE);
                 } else if (priority) {
                     setBackground(new Color(200,100,100));
@@ -103,10 +103,16 @@ public class ChauffeurOrderView extends JPanel {
             return;
         }
 
-        ArrayList<String> addresses = OrderFactory.getAllAddresses();
+        ArrayList<String> addresses = OrderFactory.getAllAvailableDeliveryAddresses();
+        ArrayList<Order> helpTable = OrderFactory.getAllAvailableOrdersChauffeur();
 
         while (addresses.size() > amount){
             addresses.remove(addresses.size() - 1);
+            helpTable.remove(helpTable.size() - 1);
+        }
+
+        for (Order ayy : helpTable){
+            OrderFactory.setOrderState(ayy.getOrderId(), 4);
         }
 
         ArrayList<Coordinate> addressToPoint = new ArrayList<>();
@@ -144,7 +150,7 @@ public class ChauffeurOrderView extends JPanel {
         if(selectedRow > -1) {
             orderTable.clearSelection();
 
-            orderTable.getModel().setValueAt((delivered) ? "Delivered" : "Not delivered", selectedRow, statusColumn);
+            orderTable.getModel().setValueAt((delivered) ? "Delivered" : "Being delivered", selectedRow, statusColumn);
         }
     }
     private void refresh(){

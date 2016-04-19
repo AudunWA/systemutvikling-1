@@ -19,7 +19,7 @@ public class FoodPackageAdminView extends JFrame {
     private JTable FoodPackageTable;
     private JButton viewFoodPackage;
     private JButton removeFoodPackageButton;
-    private JTextField searchTextField;
+    private JTextField searchField;
     private JButton searchButton;
     private JCheckBox inactiveCheckBox;
     private JButton addButton;
@@ -79,7 +79,7 @@ public class FoodPackageAdminView extends JFrame {
         });
         searchButton.addActionListener(e -> {
             ArrayList<FoodPackage> newRows;
-            if(searchTextField.getText().trim().equals("")) {
+            if(searchField.getText().trim().equals("")) {
                 if(inactiveCheckBox.isSelected()) {
                     newRows = FoodPackageFactory.getAllFoodPackages();
                 } else {
@@ -87,9 +87,9 @@ public class FoodPackageAdminView extends JFrame {
                 }
             } else {
                 if(inactiveCheckBox.isSelected()) {
-                    newRows = FoodPackageFactory.getAllFoodPackagesByQuery(searchTextField.getText());
+                    newRows = FoodPackageFactory.getAllFoodPackagesByQuery(searchField.getText());
                 } else {
-                    newRows = FoodPackageFactory.getActiveFoodPackagesByQuery(searchTextField.getText());
+                    newRows = FoodPackageFactory.getActiveFoodPackagesByQuery(searchField.getText());
                 }
             }
             tableModel.setRows(newRows);
@@ -111,6 +111,13 @@ public class FoodPackageAdminView extends JFrame {
                 JOptionPane.showMessageDialog(null, "Row is removed.");
             }
         });
+        searchField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setSearchField("");
+                searchButton.setEnabled(true);
+            }
+        });
 
         FoodPackageTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
@@ -130,6 +137,15 @@ public class FoodPackageAdminView extends JFrame {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
+    }
+    private void createSearchField(){
+        searchField = new JTextField(20);
+        setSearchField("Search foodpackages");
+        add(searchField);
+    }
+    private void setSearchField(String text){
+        searchField.setText(text);
+        searchField.setEnabled(true);
     }
     private void onCancel() {
 // add your code here if necessary
