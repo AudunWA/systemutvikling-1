@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
@@ -92,12 +93,16 @@ public class RegisterTimesheetDialog extends JDialog {
     private Timestamp getFromTime(){
         Date date = getDate();
         Date spinnerTime = (Date)fromSpinner.getModel().getValue();
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        format.format(spinnerTime);
         date.setTime(spinnerTime.getTime());
         return new Timestamp(date.getTime());
     }
     private Timestamp getToTime(){
         Date date = getDate();
         Date spinnerTime = (Date)toSpinner.getModel().getValue();
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        format.format(spinnerTime);
         date.setTime(spinnerTime.getTime());
         return new Timestamp(date.getTime());
     }
@@ -110,10 +115,10 @@ public class RegisterTimesheetDialog extends JDialog {
         Timestamp toTime = getToTime();
         Date date = getDate();
         if(fromTime.getTime() > toTime.getTime()){
-            JOptionPane.showMessageDialog(null,"Negative hours registered. To-ime must be higher than from time");
+            JOptionPane.showMessageDialog(this,"Negative hours registered. To-ime must be higher than from time");
         }
         if(date == null){
-            JOptionPane.showMessageDialog(null,"A date must be selected");
+            JOptionPane.showMessageDialog(this,"A date must be selected");
         } else if (date.after(new Date(System.currentTimeMillis()))) {
             JOptionPane.showMessageDialog(this, "Error, you cannot pre-write hours.");
             return;
