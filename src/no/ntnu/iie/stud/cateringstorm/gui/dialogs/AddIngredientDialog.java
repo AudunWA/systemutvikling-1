@@ -17,8 +17,8 @@ public class AddIngredientDialog extends JDialog {
     private boolean addedNewValue;
 
     private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
+    private JButton okButton;
+    private JButton cancelButton;
     private JTextField nameTextField;
     private JTextField descriptionTextField;
     private JTextField amountTextField;
@@ -30,15 +30,15 @@ public class AddIngredientDialog extends JDialog {
     public AddIngredientDialog() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(okButton);
 
-        buttonOK.addActionListener(new ActionListener() {
+        okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
+        cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
