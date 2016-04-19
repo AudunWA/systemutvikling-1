@@ -18,7 +18,11 @@ import javax.swing.table.TableCellEditor;
 
 /**
  * Created by EliasBrattli on 14/04/2016.
+ * TODO: Make a checkbox to show or hide active timesheets, which is to be enabled visible only if admin is logged in
+ * TODO: All work sessions must be auto-clocked out at the end of a day, if a new date as arrived
+ * FIXME: Somehow, only Date, and not Date + time is displayed in table.
  */
+
 public class TimesheetView extends JPanel{
 
     private JPanel mainPanel;
@@ -43,7 +47,16 @@ public class TimesheetView extends JPanel{
         this.loggedInEmployeeId = loggedInEmployeeId;
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
-        clockOutButton.setEnabled(false);
+
+        //If last Clock-in hasn't been clocked out, clock out.
+        if(TimesheetFactory.getUnfinishedTimeSheet(loggedInEmployeeId) != null){
+            clockInButton.setEnabled(false);
+            clockOutButton.setEnabled(true);
+        }else {
+            clockOutButton.setEnabled(false);
+            clockInButton.setEnabled(true);
+        }
+
         editButton.addActionListener(e -> {
             editTimesheet(getSelectedHours());
         });
