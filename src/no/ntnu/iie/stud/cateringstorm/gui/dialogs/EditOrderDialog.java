@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.Properties;
 
 public class EditOrderDialog extends JDialog {
-    private JPanel contentPane;
+    private JPanel mainPanel;
     private JTextField textField1;
     private JComboBox columnBox;
     private JButton saveChangesButton;
@@ -33,7 +33,7 @@ public class EditOrderDialog extends JDialog {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.order = order;
-        setContentPane(contentPane);
+        setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(saveChangesButton);
 
@@ -57,7 +57,7 @@ public class EditOrderDialog extends JDialog {
         });
 
 // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        mainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }

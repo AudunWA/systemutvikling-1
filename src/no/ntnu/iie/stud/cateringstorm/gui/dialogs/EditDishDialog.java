@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class EditDishDialog extends JDialog {
     private boolean addedNewValue;
 
-    private JPanel contentPane;
+    private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
     private JTextField editDescription;
@@ -25,7 +25,7 @@ public class EditDishDialog extends JDialog {
 
     public EditDishDialog(Dish dish) {
         this.dish = dish;
-        setContentPane(contentPane);
+        setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
@@ -50,7 +50,7 @@ public class EditDishDialog extends JDialog {
         });
 
 // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        mainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
