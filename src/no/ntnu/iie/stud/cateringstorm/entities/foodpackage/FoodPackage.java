@@ -8,7 +8,7 @@ public class FoodPackage {
     private String name;
     private double cost;
     private boolean active;
-
+    
     public int getFoodPackageId() {
         return foodPackageId;
     }
