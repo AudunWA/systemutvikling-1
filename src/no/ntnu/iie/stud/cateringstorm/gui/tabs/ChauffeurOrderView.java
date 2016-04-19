@@ -4,6 +4,7 @@ import no.ntnu.iie.stud.cateringstorm.Maps.MapBackend;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Coordinate;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -108,15 +109,25 @@ public class ChauffeurOrderView extends JPanel {
             addresses.remove(addresses.size() - 1);
         }
 
-        ArrayList<double[]> addressToPoint = new ArrayList<>();
+        ArrayList<Coordinate> addressToPoint = new ArrayList<>();
 
         for (int i = 0; i < addresses.size(); i++){
-            addressToPoint.add(MapBackend.addressToPoint(addresses.get(i)));
+            Coordinate coordinate = MapBackend.addressToPoint(addresses.get(i) + ", Trondheim, Norway");
+            if(coordinate == null) {
+                JOptionPane.showMessageDialog(this, "Address \"" + addresses.get(i) + "\" is troublesome.");
+                return;
+            }
+            addressToPoint.add(coordinate);
         }
 
-        MapBackend.getShortestRoute(addressToPoint);
+        addressToPoint = MapBackend.getShortestRoute(addressToPoint);
 
-
+        // Display map
+        JFrame mapFrame = new JFrame("Driving route");
+        MapView mapView = new MapView(addressToPoint);
+        mapFrame.add(mapView);
+        mapFrame.setSize(700, 500);
+        mapFrame.setVisible(true);
     }
 
     private void createComboBox(){
