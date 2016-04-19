@@ -22,12 +22,12 @@ public final class TimesheetFactory {
      */
     private static Timesheet createTimesheetFromResultSet(ResultSet result) throws SQLException {
 
-        int hoursId = result.getInt("hours_id");
+        int timesheetId = result.getInt("timesheet_id");
         int employeeId = result.getInt("employee_id");
         Timestamp fromTime = result.getTimestamp("from_time");
         Timestamp toTime = result.getTimestamp("to_time");
         boolean active = result.getBoolean("active");
-        return new Timesheet(hoursId, employeeId, fromTime, toTime, active);
+        return new Timesheet(timesheetId, employeeId, fromTime, toTime, active);
 
     }
 
