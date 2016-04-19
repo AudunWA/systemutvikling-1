@@ -60,7 +60,7 @@ public class SalespersonCustomerView extends JPanel{
         showInactiveCB.addActionListener(e->{
             refresh();
         });
-        
+
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
