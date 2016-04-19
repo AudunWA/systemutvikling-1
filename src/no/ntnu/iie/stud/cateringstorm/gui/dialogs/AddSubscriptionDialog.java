@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.Properties;
 
 public class AddSubscriptionDialog extends JDialog {
-    private JPanel contentPane;
+    private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
     private JButton addButton;
@@ -39,7 +39,7 @@ public class AddSubscriptionDialog extends JDialog {
     private ArrayList<FoodPackage> addedList;
 
     public AddSubscriptionDialog() {
-        setContentPane(contentPane);
+        setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
@@ -68,7 +68,7 @@ public class AddSubscriptionDialog extends JDialog {
         });
 
 // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        mainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }

@@ -6,6 +6,13 @@
     </constraints>
     <properties/>
     <border type="none"/>
-    <children/>
+    <children>
+      <component id="6fa86" class="javax.swing.JButton" binding="setDeliveredButton">
+        <constraints border-constraint="South"/>
+        <properties>
+          <text value="Set orders as delivered"/>
+        </properties>
+      </component>
+    </children>
   </grid>
 </form>

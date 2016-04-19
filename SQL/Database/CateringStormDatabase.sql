@@ -152,9 +152,9 @@ PRIMARY KEY (dish_id, food_package_id)
 
 CREATE TABLE customer(
 customer_id INTEGER AUTO_INCREMENT,
-surname VARCHAR(20) NOT NULL,
-forename VARCHAR(20) NOT NULL,
-address VARCHAR(20) NOT NULL,
+surname VARCHAR(100) NOT NULL,
+forename VARCHAR(50) NOT NULL,
+address VARCHAR(255) NOT NULL,
 active BOOLEAN NOT NULL,
 -- area_id INTEGER NOT NULL,
 phone VARCHAR(10) NOT NULL,

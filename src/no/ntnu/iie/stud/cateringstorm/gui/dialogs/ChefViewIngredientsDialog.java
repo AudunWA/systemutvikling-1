@@ -11,7 +11,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class ChefViewIngredientsDialog extends JDialog {
-    private JPanel contentPane;
+    private JPanel mainPanel;
     private JButton okButton;
     private JTable ingredientTable;
     private JScrollPane ingredientPane;
@@ -24,7 +24,7 @@ public class ChefViewIngredientsDialog extends JDialog {
 
     public ChefViewIngredientsDialog(Dish dish) {
         this.dish = dish;
-        setContentPane(contentPane);
+        setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
@@ -46,7 +46,7 @@ public class ChefViewIngredientsDialog extends JDialog {
         });
 
 // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        mainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }

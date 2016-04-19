@@ -11,7 +11,7 @@ public class EditFoodPackageDialog extends JDialog {
     // fixed
     private boolean addedNewValue;
 
-    private JPanel contentPane;
+    private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
     private JTextField nameTextField;
@@ -21,7 +21,7 @@ public class EditFoodPackageDialog extends JDialog {
 
     public EditFoodPackageDialog(FoodPackage foodPackage) {
         this.foodPackage = foodPackage;
-        setContentPane(contentPane);
+        setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
@@ -46,7 +46,7 @@ public class EditFoodPackageDialog extends JDialog {
         });
 
 // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        mainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }

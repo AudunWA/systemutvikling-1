@@ -10,26 +10,27 @@ import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Coordinate;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
 public class MapBackend {
+    private static final Coordinate HOME_LOCATION =  addressToPoint("Elgesetergate 1, Trondheim, Norway");
+
     public static void main(String[] args) {
 
-        ArrayList<double[]> addressList = new ArrayList<>();
-        ArrayList<double[]> pointList = new ArrayList<>();
+        ArrayList<Coordinate> addressList = new ArrayList<>();
+        ArrayList<Coordinate> pointList = new ArrayList<>();
 
-        double[] midtByen = new double[]{10.38980484008789, 63.4289094478486};
-        double[] saksvik = new double[]{10.612106323242188, 63.43380650358365};
-        double[] valgrind = new double[]{10.425596237182617, 63.41586854601292};
-        double[] noot = new double[]{10.353240966796875, 63.41774218303736};
-        double[] audun = new double[]{10.421905517578125, 63.394534542417105};
-        double[] plass1 = new double[]{10.42564343636363, 63.403443636363336};
-        double[] plass2 = new double[]{10.213435353535323, 63.44456663434353};
-
-        System.out.println(isAddressValid("Anders tvereggensveg 2, Trondheim, Norway"));
-        System.out.println(isAddressValid("Rikmansvegen2"));
+        Coordinate midtByen = new Coordinate(10.38980484008789, 63.4289094478486);
+        Coordinate saksvik = new Coordinate(10.612106323242188, 63.43380650358365);
+        Coordinate valgrind = new Coordinate(10.425596237182617, 63.41586854601292);
+        Coordinate noot = new Coordinate(10.353240966796875, 63.41774218303736);
+        Coordinate audun = new Coordinate(10.421905517578125, 63.394534542417105);
+        Coordinate plass1 = new Coordinate(10.42564343636363, 63.403443636363336);
+        Coordinate plass2 = new Coordinate(10.213435353535323, 63.44456663434353);
 
         addressList.add(addressToPoint("Stibakken 2, Malvik, Norway"));
         addressList.add(addressToPoint("Valgrindvegen 12, Trondheim, Norway"));
@@ -57,13 +58,12 @@ public class MapBackend {
 
         //System.out.println(getTotalDistanceList(getRandomList(pointList)));
 
-        for (double[] ayy : getShortestRoute(addressList)) {
-            System.out.println(ayy[0] + " " + ayy[1] + "     ");
+        for (Coordinate ayy : getShortestRoute(addressList)) {
+            System.out.println(ayy);
         }
-
     }
 
-    public static double[] addressToPoint(String address) {
+    public static Coordinate addressToPoint(String address) {
 
         Geocoder geocoder = new Geocoder();
         GeocoderRequest geoRequest = new GeocoderRequestBuilder().setAddress(address).getGeocoderRequest();
@@ -77,39 +77,36 @@ public class MapBackend {
 
         List<GeocoderResult> results = geocodeResponse.getResults();
 
+        if(geocodeResponse.getStatus() != GeocoderStatus.OK) {
+            System.err.println("Geocoder failed: " + geocodeResponse.getStatus());
+            return null;
+        }
+
         double latitude = results.get(0).getGeometry().getLocation().getLat().doubleValue();
         double longitude = results.get(0).getGeometry().getLocation().getLng().doubleValue();
 
         //System.out.println("Place: " + address + " At:   Latitude: " + latitude + " Longitude: " + longitude);
 
-        double[] latLong = new double[]{latitude, longitude};
-        return latLong;
+        return new Coordinate(latitude, longitude);
     }
 
 
     //fra nettet
-    public static double distFrom(double[] latlong1, double[] latlong2) {
-
-        double lat1 = latlong1[0];
-        double lng1 = latlong1[1];
-
-        double lat2 = latlong2[0];
-        double lng2 = latlong2[1];
-
+    public static double distFrom(Coordinate from, Coordinate to) {
         double earthRadius = 6371.0; // miles (or 6371.0 kilometers)
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLng = Math.toRadians(lng2 - lng1);
+        double dLat = Math.toRadians(to.getLatitude() - from.getLatitude());
+        double dLng = Math.toRadians(to.getLongitude() - from.getLongitude());
         double sindLat = Math.sin(dLat / 2);
         double sindLng = Math.sin(dLng / 2);
         double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
-                * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+                * Math.cos(Math.toRadians(from.getLatitude())) * Math.cos(Math.toRadians(to.getLatitude()));
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double dist = earthRadius * c;
 
         return dist;
     }
 
-    public static boolean isFirstAddressCloserToLast(double[] fromAddress1, double[] fromAddress2, double[] toAddress) {
+    public static boolean isFirstAddressCloserToLast(Coordinate fromAddress1, Coordinate fromAddress2, Coordinate toAddress) {
 
         if (distFrom(fromAddress1, toAddress) > distFrom(fromAddress2, toAddress)) {
             return false;
@@ -120,14 +117,14 @@ public class MapBackend {
         }
     }
 
-    public static ArrayList<double[]> createFastestRoute(ArrayList<double[]> route) {
+    public static ArrayList<Coordinate> createFastestRoute(ArrayList<Coordinate> route) {
 
         //init Arrays
-        ArrayList<double[]> sortedList = new ArrayList<>();
-        ArrayList<double[]> copy = new ArrayList<>(route);
+        ArrayList<Coordinate> sortedList = new ArrayList<>();
+        ArrayList<Coordinate> copy = new ArrayList<>(route);
 
         //First point
-        double[] startPoint = route.get(0);
+        Coordinate startPoint = route.get(0);
         sortedList.add(startPoint);
 
         sortedList.add(sortLoop(route, sortedList.get(0)));
@@ -140,10 +137,10 @@ public class MapBackend {
 
     }
 
-    public static ArrayList<double[]> getShortestRoute(ArrayList<double[]> route){
+    public static ArrayList<Coordinate> getShortestRoute(ArrayList<Coordinate> route){
 
-        ArrayList<double[]> lowestList = new ArrayList<>();
-        ArrayList<double[]> tempList;
+        ArrayList<Coordinate> lowestList = new ArrayList<>();
+        ArrayList<Coordinate> tempList;
         double lowest = 100000;
         double temp;
 
@@ -158,26 +155,7 @@ public class MapBackend {
         return lowestList;
     }
 
-    public static boolean isAddressValid(String address){
-
-        Geocoder geocoder = new Geocoder();
-        GeocoderRequest geoRequest = new GeocoderRequestBuilder().setAddress(address).getGeocoderRequest();
-        GeocodeResponse geocodeResponse = new GeocodeResponse();
-
-        try {
-            geocodeResponse = geocoder.geocode(geoRequest);
-        } catch (IOException ioe) {
-            System.out.println("error");
-        }
-
-        if (geocodeResponse.getStatus().equals(GeocoderStatus.ZERO_RESULTS)){
-            return false;
-        }
-        return true;
-    }
-
-    public static double getTotalDistanceList(ArrayList<double[]> route) {
-
+    public static double getTotalDistanceList(ArrayList<Coordinate> route) {
         double totalDistance = 0.0;
 
         for (int i = 0; i+1 < route.size(); i++){
@@ -187,12 +165,10 @@ public class MapBackend {
         return totalDistance;
     }
 
-    private static final double[] HOME_LOCATION =  new double[]{63.41910230000001, 10.3961772};
+    public static ArrayList<Coordinate> getRandomList(ArrayList<Coordinate> route) {
 
-    public static ArrayList<double[]> getRandomList(ArrayList<double[]> route) {
-
-        ArrayList<double[]> copy = new ArrayList<>(route);
-        ArrayList<double[]> randomList = new ArrayList<>();
+        ArrayList<Coordinate> copy = new ArrayList<>(route);
+        ArrayList<Coordinate> randomList = new ArrayList<>();
 
         Random generateRandomInteger = new Random();
         int random = 0;
@@ -214,10 +190,10 @@ public class MapBackend {
         return randomList;
     }
 
-    public static double[] sortLoop(ArrayList<double[]> route, double[] previousPoint) {
+    public static Coordinate sortLoop(ArrayList<Coordinate> route, Coordinate previousPoint) {
 
         ArrayList<Double> distanceTable = new ArrayList<>();
-        double[] point = new double[2];
+        Coordinate point = null;
 
         for (int i = 0; i < route.size(); i++) {
             if (distFrom(previousPoint, route.get(i)) != 0.0) {

@@ -25,7 +25,7 @@ import java.util.Properties;
 public class AddOrderDialog extends JDialog {
     private Employee employee;
 
-    private JPanel contentPane;
+    private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
     private JTextField forenameText;
@@ -50,7 +50,7 @@ public class AddOrderDialog extends JDialog {
 
     public AddOrderDialog(Employee employee) {
         this.employee = employee;
-        setContentPane(contentPane);
+        setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
@@ -96,7 +96,7 @@ public class AddOrderDialog extends JDialog {
         });
 
 // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        mainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
