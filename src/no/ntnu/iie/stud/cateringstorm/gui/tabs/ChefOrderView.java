@@ -6,6 +6,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.ChefMakeOrderDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -28,7 +29,7 @@ public class ChefOrderView extends JPanel {
     private JPanel cbPanel;
     private JButton refreshButton;
     private ArrayList<Order> orderList;
-    private   OrderTableModel tableModel;
+    private OrderTableModel tableModel;
 
     public ChefOrderView() {
         setLayout(new BorderLayout());
@@ -84,8 +85,10 @@ public class ChefOrderView extends JPanel {
             if (orderList.get(selectedRow).getStatus() < 2) {
                 orderTable.clearSelection();
                 orderTable.getModel().setValueAt((inProduction) ? "Ready for delivery" : "In production", selectedRow, statusColumn);
+                Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Orders status changed.", Toast.Style.SUCCESS).display();
             } else {
-                JOptionPane.showMessageDialog(this, "Error, chef can't change this status");
+                Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "You cannot change this status.", Toast.Style.ERROR).display();
+                //JOptionPane.showMessageDialog(this, "Error, chef can't change this status");
             }
         }
     }
@@ -112,6 +115,7 @@ public class ChefOrderView extends JPanel {
     private void refresh(){
         //  TODO: Implement a method updating table for new orders, and removing changed orders from table.
         tableModel.setRows(getChefArray());
+        Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
     }
 
     private static JTable getNewRenderedTable(final JTable table) {

@@ -6,6 +6,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddCustomerDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditCustomerDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.CustomerTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import sun.invoke.empty.Empty;
 
 
@@ -208,6 +209,7 @@ public class SalespersonCustomerView extends JPanel{
         }else {
             tableModel.setRows(getActiveCustomers());
         }
+        Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Customers refreshed.").display();
     }
 
     public static void main(String[] args){

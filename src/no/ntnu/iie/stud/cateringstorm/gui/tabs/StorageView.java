@@ -4,6 +4,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,8 +35,12 @@ public class StorageView extends JPanel {
             dialog.setVisible(true);
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             if(dialog.getAddedNewValue()) {
+                Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Ingredient added.", Toast.LENGTH_SHORT, Toast.Style.SUCCESS).display();
+
                 // Refresh data
                 tableModel.setRows(IngredientFactory.getAllIngredients());
+            } else {
+                Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Ingredient add failed.", Toast.LENGTH_SHORT, Toast.Style.ERROR).display();
             }
         });
 

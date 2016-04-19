@@ -37,7 +37,7 @@ public class MapView extends JPanel {
 
         addressList = MapBackend.getShortestRoute(addressList);
 
-        JFrame frame = new JFrame("JxBrowser - Hello World");
+        JFrame frame = new JFrame("Map");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(new MapView(addressList));
         frame.setSize(500, 400);
@@ -49,7 +49,7 @@ public class MapView extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        disableBrowserLogging();
+        //disableBrowserLogging();
 
         browser = new Browser();
         BrowserView view = new BrowserView(browser);
@@ -115,7 +115,7 @@ public class MapView extends JPanel {
      */
     private static String generateRouteJavascript(ArrayList<Coordinate> waypoints) {
         if(waypoints.size() < 3) {
-            throw new IllegalArgumentException("waypoints needs to contain at least 3 coordinates.");
+            throw new IllegalArgumentException("waypoints needs to contain at least 3 coordinates. Has " + waypoints.size());
         }
 
         String origin = generateLatLng(waypoints.get(0));

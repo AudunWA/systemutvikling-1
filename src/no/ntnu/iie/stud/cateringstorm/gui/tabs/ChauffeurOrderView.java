@@ -5,6 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Coordinate;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -156,6 +157,7 @@ public class ChauffeurOrderView extends JPanel {
     private void refresh(){
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
         getReadyOrders();
+        Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
     }
     private void getReadyOrders(){
         // TODO: Implement method loading orders with status "ready for delivery", changing status to "being delivered"

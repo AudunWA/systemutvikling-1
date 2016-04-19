@@ -10,11 +10,11 @@ import javax.swing.*;
  * Created by Audun on 09.03.2016.
  */
 public class LoginView extends JFrame {
-    private static final String WINDOW_TITLE = "LoginView";
+    private static final String WINDOW_TITLE = "Healthy Catering login";
 
     // Window dimensions
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 250;
+    private static final int WIDTH = 325;
+    private static final int HEIGHT = 150;
 
     private JPanel mainPanel;
     private JLabel usernameLabel;
@@ -52,7 +52,6 @@ public class LoginView extends JFrame {
                 dispose();
             }
         });
-        pack();
     }
 
     private void createUIComponents() {

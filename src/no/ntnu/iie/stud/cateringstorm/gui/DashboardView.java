@@ -4,6 +4,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.tabs.*;
 import no.ntnu.iie.stud.cateringstorm.gui.util.DynamicTabbedPane;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
 import java.awt.*;

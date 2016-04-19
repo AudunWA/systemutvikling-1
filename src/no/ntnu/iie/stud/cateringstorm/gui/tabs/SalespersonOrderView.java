@@ -11,6 +11,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddSubscriptionDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditOrderDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import javax.swing.*;
@@ -185,6 +186,7 @@ public class SalespersonOrderView extends JPanel {
     }
     private void refresh() {
         tableModel.setRows(OrderFactory.getAllOrders());
+        Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
     }
 
