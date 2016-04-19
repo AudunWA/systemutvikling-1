@@ -5,6 +5,9 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Properties;
 
 /**
@@ -36,19 +39,18 @@ public class EditTimesheetDialog extends JDialog{
                 }
             }
         });*/
-        createSpinners();
+        setSpinners();
         okButton.addActionListener(e->{
-
+            onOK();
         });
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         addWindowListener(new WindowAdapter() {
-                              public void windowClosing (WindowEvent e){
-                                  onCancel();
-                              }
-                          }
-        );
+              public void windowClosing (WindowEvent e){
+                  onCancel();
+              }
+                          });
 
         // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(new ActionListener() {
@@ -79,10 +81,29 @@ public class EditTimesheetDialog extends JDialog{
         datePanel = new JDatePanelImpl(model,p);
 
     }
+    private Date getDate(){
+        return (Date)datePanel.getModel().getValue();
+    }
+    private Timestamp getFromTime(){
+        Date date = getDate();
+        Time time = (Time)fromSpinner.getModel().getValue();
+        date.setTime(time.getTime());
+        return new Timestamp(date.getTime());
+    }
+    private Timestamp getToTime(){
+        Date date = getDate();
+        Time time = (Time)toSpinner.getModel().getValue();
+        date.setTime(time.getTime());
+        return new Timestamp(date.getTime());
+    }
+
     private void onOK(){
         // TODO: Implement onOK, sending hour sheet to database
+        System.out.println("FromTime :" + getFromTime());
+        System.out.println("ToTime :" + getToTime());
+
     }
-    private void createSpinners(){
+    private void setSpinners(){
         SpinnerModel fromModel = new SpinnerDateModel();
         SpinnerModel toModel = new SpinnerDateModel();
 
