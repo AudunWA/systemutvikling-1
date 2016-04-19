@@ -103,7 +103,7 @@ public class AddSubscriptionDialog extends JDialog {
     private void onAdd(){
 
         if (selectionTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
-            JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
+            JOptionPane.showMessageDialog(this, "Both tables selected. Error.");
             selectionTable.clearSelection();
             addedTable.clearSelection();
         } else {

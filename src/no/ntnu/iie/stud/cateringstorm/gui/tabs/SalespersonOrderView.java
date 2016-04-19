@@ -99,19 +99,20 @@ public class SalespersonOrderView extends JPanel {
     private void newSubscription(){
 
         AddSubscriptionDialog asDialog = new AddSubscriptionDialog();
-        final int WIDTH = 500;
-        final int HEIGHT = 400;
+        final int WIDTH = 1300;
+        final int HEIGHT = 600;
         asDialog.pack();
         asDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         asDialog.setSize(WIDTH, HEIGHT);
+        asDialog.setLocationRelativeTo(null);
         asDialog.setVisible(true);
     }
 
     private void editOrder(Order order){
         if (order != null) {
             EditOrderDialog eoDialog = new EditOrderDialog(order);
-            final int WIDTH = 1500;
-            final int HEIGHT = 1500;
+            final int WIDTH = 300;
+            final int HEIGHT = 200;
             eoDialog.pack();
             eoDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             eoDialog.setSize(WIDTH, HEIGHT);

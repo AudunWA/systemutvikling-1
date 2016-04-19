@@ -8,8 +8,8 @@ import java.awt.event.*;
 
 public class AddDishDialog extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
+    private JButton okButton;
+    private JButton cancelButton;
     private JTextField dishName;
     private JTextField dishDescription;
     private JComboBox activeStatus;
@@ -21,15 +21,15 @@ public class AddDishDialog extends JDialog {
     public AddDishDialog() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(okButton);
 
-        buttonOK.addActionListener(new ActionListener() {
+        okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
+        cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
@@ -51,7 +51,7 @@ public class AddDishDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
     private void createComboBoxType(){
-        Object[] status = {"Appetizer?","Main?","Desert?"};
+        Object[] status = {"Appetizer","Main course","Dessert"};
 
         dishType = new JComboBox(status);
         dishType.setSelectedIndex(0);

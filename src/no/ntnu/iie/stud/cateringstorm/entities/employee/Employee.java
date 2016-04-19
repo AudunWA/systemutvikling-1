@@ -3,6 +3,8 @@ package no.ntnu.iie.stud.cateringstorm.entities.employee;
 import no.ntnu.iie.stud.cateringstorm.gui.DashboardView;
 import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
+import javax.swing.*;
+
 /**
  * Contains the basic information about an employee
  * Created by Audun on 10.03.2016.
@@ -72,6 +74,7 @@ public class Employee {
         GlobalStorage.setLoggedInEmployee(this);
         DashboardView dashboardView = new DashboardView(this);
         dashboardView.setVisible(true);
+        dashboardView.setExtendedState(JFrame.MAXIMIZED_BOTH);
         dashboardView.setLocationRelativeTo(dashboardView.getParent());
     }
 
