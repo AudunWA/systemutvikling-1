@@ -26,8 +26,8 @@ public class AddOrderDialog extends JDialog {
     private Employee employee;
 
     private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
+    private JButton okButton;
+    private JButton cancelButton;
     private JTextField forenameText;
     private JLabel descriptionLabel;
     private JLabel portionsLabel;
@@ -52,9 +52,9 @@ public class AddOrderDialog extends JDialog {
         this.employee = employee;
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(okButton);
 
-        buttonOK.addActionListener(new ActionListener() {
+        okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
@@ -64,7 +64,7 @@ public class AddOrderDialog extends JDialog {
             public void actionPerformed(ActionEvent e) { onAdd(); }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
+        cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }

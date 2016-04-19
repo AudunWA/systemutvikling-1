@@ -6,7 +6,9 @@ import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
+
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
+
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 public class AddFoodPackageDialog extends JDialog {
     private JPanel mainPanel;
     private JButton addButton;
-    private JButton buttonCancel;
+    private JButton cancelButton;
     private JCheckBox isActive;
     private JTextField foodPackageNameTextField;
     private JTextField costTextField;
@@ -41,7 +43,7 @@ public class AddFoodPackageDialog extends JDialog {
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
+        cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }

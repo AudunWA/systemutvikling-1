@@ -12,11 +12,11 @@ import java.util.ArrayList;
 
 public class ChefViewIngredientsDialog extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
+    private JButton okButton;
     private JTable ingredientTable;
     private JScrollPane ingredientPane;
     private JLabel ingredientLabel;
-    private JButton buttonCancel;
+    private JButton cancelButton;
 
     private IngredientTableModel tableModel;
     private Dish dish;
@@ -26,12 +26,12 @@ public class ChefViewIngredientsDialog extends JDialog {
         this.dish = dish;
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        getRootPane().setDefaultButton(okButton);
 
         ingredientLabel.setText("Ingredients for: " + dish.getName());
 
 
-        buttonCancel.addActionListener(new ActionListener() {
+        cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
