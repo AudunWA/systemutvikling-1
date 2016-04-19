@@ -15,7 +15,8 @@
     </style>
 </head>
 <body>
-<div id="map"></div>
+<div id="map" style="float:right;width:70%; height:100%;overflow-y: hidden"></div>
+<div id="directionsPanel" style="float:left;width:30%;height:100%;overflow-y: scroll"></div>
 <script>
     var map;
     function initMap() {
@@ -23,6 +24,16 @@
             center: {lat: 63.430515, lng: 10.395053},
             zoom: 12
         });
+        directionsService = new google.maps.DirectionsService();
+
+        function initialize() {
+            directionsDisplay = new google.maps.DirectionsRenderer({
+                map: map
+            });
+            directionsDisplay.setPanel(document.getElementById("directionsPanel"));
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIzT1F8k5zGu71l5m9buVEpF75sBfJkd4&callback=initMap"
