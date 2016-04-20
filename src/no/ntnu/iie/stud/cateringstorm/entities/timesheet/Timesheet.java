@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.entities.timesheet;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by EliasBrattli on 14/04/2016.
@@ -32,6 +33,19 @@ public class Timesheet {
 
     public Timestamp getEndTime() {
         return endTime;
+    }
+
+    public String getFromTime(){
+        Timestamp time = getStartTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(time);
+    }public String getToTime(){
+        Timestamp time = getEndTime();
+        if(time!= null) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return format.format(time);
+        }
+        return "Not registered yet";
     }
 
     public void setStartTime(Timestamp startTime) {
