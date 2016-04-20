@@ -7,8 +7,14 @@ import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * GUI for displaying the inventory of ingredients to chefs and nutrition experts(?).
@@ -19,11 +25,12 @@ public class StorageView extends JPanel {
     private JPanel mainPanel;
     private JTable ingredientTable;
     private JButton incrementSupply;
-    private JTextField textField1;
     private JButton addIngredientButton;
-    private JTextField searchTextField;
-    private JButton searchButton;
+    private JTextField searchField;
+    private JButton refreshButton;
     private IngredientTableModel tableModel;
+
+    private ArrayList<Ingredient> ingredientList;
 
     public StorageView() {
         setLayout(new BorderLayout());
@@ -35,12 +42,52 @@ public class StorageView extends JPanel {
             dialog.setVisible(true);
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             if(dialog.getAddedNewValue()) {
+                //FIXME toast gives nullpointer
                 Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Ingredient added.", Toast.LENGTH_SHORT, Toast.Style.SUCCESS).display();
+                ingredientList = IngredientFactory.getAllIngredients();
 
                 // Refresh data
                 tableModel.setRows(IngredientFactory.getAllIngredients());
             } else {
                 Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Ingredient add failed.", Toast.LENGTH_SHORT, Toast.Style.ERROR).display();
+            }
+        });
+
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            public void searchDocument(){
+
+                ArrayList<Ingredient> copy = new ArrayList<>();
+
+                for (int i = 0; i < ingredientList.size(); i++) {
+                    if ((ingredientList.get(i).getName().toLowerCase().contains(searchField.getText().toLowerCase()) || (ingredientList.get(i).getName()).toLowerCase().contains(searchField.getText().toLowerCase()))){
+                        copy.add(ingredientList.get(i));
+
+                    }
+                }
+                tableModel.setRows(copy);
+
+            }
+        });
+
+        searchField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                searchField.setText("");
             }
         });
 
@@ -61,14 +108,9 @@ public class StorageView extends JPanel {
             }
         });
 
-        searchButton.addActionListener(e -> {
-            ArrayList<Ingredient> newRows;
-            if(searchTextField.getText().trim().equals("")) {
-                newRows = IngredientFactory.getAllIngredients();
-            } else {
-                newRows = IngredientFactory.getAllIngredientsByQuery(searchTextField.getText());
-            }
-            tableModel.setRows(newRows);
+        refreshButton.addActionListener(e -> {
+            ingredientList = IngredientFactory.getAllIngredients();
+            tableModel.setRows(ingredientList);
         });
     }
 
@@ -85,12 +127,35 @@ public class StorageView extends JPanel {
         createTable();
     }
 
+    private static JTable getNewRenderedTable(final JTable table) {
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            @Override
+            public Component getTableCellRendererComponent(JTable table,
+                                                           Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+                if (((Date)table.getValueAt(row,3)).before(new Date(System.currentTimeMillis() + 86400000 * 2))){
+                    setBackground(new Color(200,100,100));
+                } else if (((Date)table.getValueAt(row,3)).before(new Date(System.currentTimeMillis() + 86400000 * 10))){
+                    setBackground(Color.ORANGE);
+                } else {
+                    setBackground(table.getBackground());
+                    setForeground(table.getForeground());
+                }
+
+                return this;
+            }
+        });
+        return table;
+    }
+
     private void createTable(){
-        ArrayList<Ingredient> ingredients = IngredientFactory.getAllIngredients();
+        ingredientList = IngredientFactory.getAllIngredients();
         Integer[] columns = new Integer[] { IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION, IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_EXPIRE_DATE, IngredientTableModel.COLUMN_AMOUNT, IngredientTableModel.COLUMN_UNIT };
 
-        tableModel = new IngredientTableModel(ingredients, columns);
+        tableModel = new IngredientTableModel(ingredientList, columns);
         ingredientTable = new JTable(tableModel);
+        getNewRenderedTable(ingredientTable);
         ingredientTable.getTableHeader().setReorderingAllowed(false);
     }
 }

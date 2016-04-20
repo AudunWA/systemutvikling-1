@@ -67,13 +67,6 @@
               <text value="New subscription"/>
             </properties>
           </component>
-          <component id="a6103" class="javax.swing.JButton" binding="searchButton" default-binding="true">
-            <constraints/>
-            <properties>
-              <enabled value="false"/>
-              <text value="Search"/>
-            </properties>
-          </component>
           <component id="2609f" class="javax.swing.JTextField" binding="searchField" custom-create="true">
             <constraints/>
             <properties/>

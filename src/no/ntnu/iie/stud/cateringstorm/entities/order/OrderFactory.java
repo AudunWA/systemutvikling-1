@@ -3,6 +3,7 @@ package no.ntnu.iie.stud.cateringstorm.entities.order;
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.gui.util.DateUtil;
 
 import java.sql.*;
@@ -219,6 +220,8 @@ public final class OrderFactory {
             return false;
         }
     }
+
+
     /**10
      * Find orders by customer name.
      * @return An ArrayList containing all orders matching search
@@ -334,6 +337,25 @@ public final class OrderFactory {
         }
 
     }
+
+    /*
+    public static ArrayList<Ingredient> getAllIngredientsInOrder() {
+
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT ALL * FROM ingredient_dish WHERE dish_id = ") {
+                statement.executeQuery();
+            }
+
+
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    */
+
 
     public static boolean setOrderPortions(int orderId, int portions){
         try (Connection connection = Database.getConnection()) {
