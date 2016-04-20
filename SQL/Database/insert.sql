@@ -105,12 +105,12 @@ INSERT INTO subscription VALUES (default, DATE('2016-03-10'), DATE('2016-03-30')
 
 -- (order) --
 
-INSERT INTO _order VALUES (default, 'sunn ordre', '2016-03-12', '2016-03-10', 3, false,  6, 1,null, 0, null);
-INSERT INTO _order VALUES (default, 'kenans spesial', '2016-03-17', '2016-03-09', 3, false,  6,2,null,0, null);
-INSERT INTO _order VALUES (default, 'balansert ordre', '2016-03-12', '2016-03-09', 3, false,  6, 3, null,0, null);
-INSERT INTO _order VALUES (default, 'ekstra sunn ordre', '2016-03-17', '2016-03-08', 3, false,  6, 4, null,0, null);
-INSERT INTO _order VALUES (default, 'pølsefest', '2016-03-11', '2016-03-10', 3, false,  6, 5, null,0, null);
-INSERT INTO _order VALUES (default, 'helt super ordre', '2016-03-22', '2016-02-10', 3, false,  6, 6, null,0, null);
+INSERT INTO _order VALUES (default, 'sunn ordre', '2016-03-12', '2016-03-10', 3, false,  6, 1,null, 0, null, null);
+INSERT INTO _order VALUES (default, 'kenans spesial', '2016-03-17', '2016-03-09', 3, false,  6,2,null,0, null, null);
+INSERT INTO _order VALUES (default, 'balansert ordre', '2016-03-12', '2016-03-09', 3, false,  6, 3, null,0, null, null);
+INSERT INTO _order VALUES (default, 'ekstra sunn ordre', '2016-03-17', '2016-03-08', 3, false,  6, 4, null,0, null, null);
+INSERT INTO _order VALUES (default, 'pølsefest', '2016-03-11', '2016-03-10', 3, false,  6, 5, null,0, null, null);
+INSERT INTO _order VALUES (default, 'helt super ordre', '2016-03-22', '2016-02-10', 3, false,  6, 6, null,0, null, null);
 
 -- (_order_food_package) --
 
