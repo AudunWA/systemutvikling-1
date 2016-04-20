@@ -1,6 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.entities.timesheet;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,13 +13,13 @@ public class TimesheetFactoryTest {
     @Test
     public void testGetAllTimesheets() throws Exception {
         ArrayList<Timesheet> sheets = TimesheetFactory.getAllTimesheets();
-        org.junit.Assert.assertNotNull(sheets);
+        Assert.assertNotNull(sheets);
     }
 
     @Test
     public void testGetTimesheetsByEmployee() throws Exception {
         ArrayList<Timesheet> sheets = TimesheetFactory.getTimesheetsByEmployee(3);
-        org.junit.Assert.assertNotNull(sheets);
+        Assert.assertNotNull(sheets);
     }
 
     @Test
