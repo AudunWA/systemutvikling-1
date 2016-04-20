@@ -30,10 +30,12 @@ public class ChauffeurOrderView extends JPanel {
     private ComboBoxModel cbModel;
     private static ArrayList<Order> orderList = new ArrayList<Order>();
 
+    private OrderTableModel tableModel;
+
     private void createTable(){
-        orderList = OrderFactory.getAllOrdersChauffeur();
+        orderList = OrderFactory.getAllAvailableOrdersForChauffeurTable();
         Integer[] columns = new Integer[] {OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_CUSTOMER_NAME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_ADDRESS, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_DELIVERY_TIME};
-        OrderTableModel tableModel = new OrderTableModel(orderList, columns);
+        tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
         getNewRenderedTable(orderTable);
         orderTable.getTableHeader().setReorderingAllowed(false);
@@ -98,14 +100,24 @@ public class ChauffeurOrderView extends JPanel {
 
     private void makeDelivery(){
 
+        startDeliveryButton.setEnabled(false);
+
         int amount = (Integer)deliveryAmountSpinner.getValue();
         if (amount < 1 || amount > 10){
             JOptionPane.showMessageDialog(this, "Please add a valid amount of Orders \n (from 1 - 10)");
+            startDeliveryButton.setEnabled(true);
             return;
         }
 
         ArrayList<String> addresses = OrderFactory.getAllAvailableDeliveryAddresses();
         ArrayList<Order> helpTable = OrderFactory.getAllAvailableOrdersChauffeur();
+
+        if (helpTable.size() < amount){
+            JOptionPane.showMessageDialog(this, "This amount of orders is not available at this moment");
+            startDeliveryButton.setEnabled(true);
+            return;
+        }
+
 
         while (addresses.size() > amount){
             addresses.remove(addresses.size() - 1);
@@ -122,6 +134,7 @@ public class ChauffeurOrderView extends JPanel {
             Coordinate coordinate = MapBackend.addressToPoint(addresses.get(i) + ", Trondheim, Norway");
             if(coordinate == null) {
                 JOptionPane.showMessageDialog(this, "Address \"" + addresses.get(i) + "\" is troublesome.");
+                startDeliveryButton.setEnabled(true);
                 return;
             }
             addressToPoint.add(coordinate);
@@ -130,11 +143,11 @@ public class ChauffeurOrderView extends JPanel {
         addressToPoint = MapBackend.getShortestRoute(addressToPoint);
 
         // Display map
-        JFrame mapFrame = new JFrame("Driving route");
-        MapView mapView = new MapView(addressToPoint);
-        mapFrame.add(mapView);
-        mapFrame.setSize(700, 500);
-        mapFrame.setVisible(true);
+        MapView mapView = new MapView(addressToPoint, helpTable);
+        mapView.setSize(700, 500);
+        mapView.setVisible(true);
+
+        startDeliveryButton.setEnabled(true);
     }
 
     private void createComboBox(){
@@ -156,7 +169,8 @@ public class ChauffeurOrderView extends JPanel {
     }
     private void refresh(){
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
-        getReadyOrders();
+        orderList = OrderFactory.getAllAvailableOrdersForChauffeurTable();
+        tableModel.setRows(orderList);
         Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
     }
     private void getReadyOrders(){

@@ -4,6 +4,8 @@ import com.teamdev.jxbrowser.chromium.LoggerProvider;
 import com.teamdev.jxbrowser.chromium.events.*;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import no.ntnu.iie.stud.cateringstorm.Maps.MapBackend;
+import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
+import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Coordinate;
 
 import javax.swing.*;
@@ -20,12 +22,14 @@ import java.util.logging.Level;
  * Displays a map with driving routes for the chauffeur.
  * Created by Audun on 19.04.2016.
  */
-public class MapView extends JPanel {
+public class MapView extends JFrame {
     private final String MAP_PATH = "html/map.html";
 
     private JPanel mainPanel;
     private JButton setDeliveredButton;
     private Browser browser;
+
+    private ArrayList<Order> orders;
 
     public static void main(String[] args) {
         ArrayList<Coordinate> addressList = new ArrayList<>();
@@ -39,13 +43,14 @@ public class MapView extends JPanel {
 
         JFrame frame = new JFrame("Map");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.add(new MapView(addressList));
+        frame.add(new MapView(addressList, OrderFactory.getAllAvailableOrdersChauffeur()));
         frame.setSize(500, 400);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
-    public MapView(ArrayList<Coordinate> route) {
+    public MapView(ArrayList<Coordinate> route, ArrayList<Order> orders) {
+        this.orders = orders;
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
@@ -64,8 +69,23 @@ public class MapView extends JPanel {
             }
         });
 
+        setDeliveredButton.addActionListener(e ->{ setDelivered(); });
+
         browser.loadHTML(getMapHTML());
         mainPanel.add(view, BorderLayout.CENTER);
+    }
+
+    private void setDelivered(){
+
+        for (Order order : orders){
+            OrderFactory.setOrderState(order.getOrderId(), 2);
+        }
+
+        orders = OrderFactory.getAllAvailableOrdersForChauffeurTable();
+
+        setVisible(false);
+        dispose();
+
     }
 
     /**

@@ -124,7 +124,7 @@ public final class OrderFactory {
     public static ArrayList<Order> getAllOrdersChauffeur() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status = 0 || status > 2) && delivery_time > NOW() ORDER BY delivery_time")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status = 0) && delivery_time > NOW() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()){
@@ -155,7 +155,38 @@ public final class OrderFactory {
     public static ArrayList<Order> getAllAvailableOrdersChauffeur() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE status = 0 && delivery_time > NOW() ORDER BY delivery_time")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status = 0) && delivery_time > NOW() ORDER BY delivery_time")) {
+                statement.executeQuery();
+
+                try (ResultSet resultPreUpdate = statement.getResultSet()){
+                    while (resultPreUpdate.next()){
+
+                        if((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2*86400000))) == -1){
+                            try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
+                                statementUpdate.setInt(1, createOrderFromResultSet(resultPreUpdate).getOrderId());
+                                statementUpdate.execute();
+                            }
+                        }
+                    }
+                }
+                statement.executeQuery();
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        employees.add(createOrderFromResultSet(result));
+                    }
+                }
+            }
+            return employees;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ArrayList<Order> getAllAvailableOrdersForChauffeurTable() {
+        ArrayList<Order> employees = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status = 0 || status = 4) && delivery_time > NOW() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()){
