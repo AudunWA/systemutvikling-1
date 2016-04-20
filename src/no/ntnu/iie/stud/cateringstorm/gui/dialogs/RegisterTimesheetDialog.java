@@ -1,5 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
+import jdk.nashorn.internal.scripts.JO;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.timesheet.Timesheet;
@@ -15,6 +16,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -34,13 +36,16 @@ public class RegisterTimesheetDialog extends JDialog {
     private JLabel bottomLabel;
     private JDatePanelImpl datePanel;
     private int loggedInEmployeeId;
+    private ArrayList<Timesheet> timesheets;
+    private boolean registered;
     public RegisterTimesheetDialog(int loggedInEmployeeId) {
         this.loggedInEmployeeId = loggedInEmployeeId;
+        registered = false;
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
         setSpinners();
-
+        timesheets = TimesheetFactory.getActiveTimesheetsByEmployee(loggedInEmployeeId);
         okButton.addActionListener(e->{
             onOK();
         });
@@ -65,21 +70,37 @@ public class RegisterTimesheetDialog extends JDialog {
         }
         ,KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE,0),JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+    public boolean isRegistered(){
+        return registered;
+    }
     private void onCancel() {
         dispose();
     }
-    private boolean latestTimesheetIsToday(){
+    /*private boolean latestTimesheetIsToday(){
         Timesheet sheet = TimesheetFactory.getLatestTimeSheet(loggedInEmployeeId);
         if(sheet!= null && sheet.getToTime()!= null && TimesheetFactory.getUnfinishedTimeSheet(loggedInEmployeeId) == null){
-            if(LocalDate.now().isEqual(sheet.getToTime().toLocalDateTime().toLocalDate())){
-               return true;
-            }else{
-               return false;
+            return LocalDate.now().isEqual(sheet.getToTime().toLocalDateTime().toLocalDate());
+        }
+        return false;
+    }*/
+    private boolean sheetHasBeenRegistered(Timesheet sheet){
+        Date selectedDate = getDate();
+        if(sheet != null && sheet.getToTime() != null && selectedDate != null){
+            LocalDate localSelectedDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate sheetDate = sheet.getFromTime().toLocalDateTime().toLocalDate();
+            return localSelectedDate.isEqual(sheetDate);
+        }
+        return false;
+    }
+    private boolean selectedDateIsTaken(){
+        for (int i = 0; i < timesheets.size(); i++) {
+            if(sheetHasBeenRegistered(timesheets.get(i))){
+                return true;
             }
-        }return false;
+        }
+        return false;
     }
     public void createUIComponents() {
-        // TODO: Insert UI components
         createJDatePanel();
     }
     private void createJDatePanel(){
@@ -113,8 +134,10 @@ public class RegisterTimesheetDialog extends JDialog {
             JOptionPane.showMessageDialog(this,"A date must be selected");
         } else if (date.after(new Date(System.currentTimeMillis()))) {
             JOptionPane.showMessageDialog(this, "Error, you cannot pre-write hours.");
-        }else if(latestTimesheetIsToday()){
-            JOptionPane.showMessageDialog(this,"Error, a timesheet has already been registered at this date");
+        }/*else if(latestTimesheetIsToday()){
+            JOptionPane.showMessageDialog(this,"Error, a timesheet has already been registered today");
+        }*/else if(selectedDateIsTaken()){
+            JOptionPane.showMessageDialog(this,"Error, a timesheet has already been registered at selected date");
         }
         else{
             // Convert date to LocalDate, which is easier to work with
@@ -136,6 +159,7 @@ public class RegisterTimesheetDialog extends JDialog {
                 JOptionPane.showMessageDialog(this,"Negative hours registered. To-time must be higher than from time");
             }else{
                 Timesheet newSheet = TimesheetFactory.createTimesheet(loggedInEmployeeId,Timestamp.valueOf(localFromTime),Timestamp.valueOf(localToTime),true);
+                registered = true;
                 dispose();
             }
         }

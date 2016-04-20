@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -33,10 +34,11 @@ public class EditTimesheetDialog extends JDialog{
     private JPanel mainPanel;
     private int loggedInEmployeeId;
     private Timesheet selectedTimesheet;
-
+    private ArrayList<Timesheet> timesheets;
     public EditTimesheetDialog(int loggedInEmployeeId, Timesheet selectedTimesheet) {
         this.loggedInEmployeeId = loggedInEmployeeId;
         this.selectedTimesheet = selectedTimesheet;
+        timesheets = TimesheetFactory.getActiveTimesheetsByEmployee(loggedInEmployeeId);
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
@@ -91,6 +93,23 @@ public class EditTimesheetDialog extends JDialog{
         datePanel = new JDatePanelImpl(model,p);
 
     }
+    private boolean sheetHasBeenRegistered(Timesheet sheet){
+        Date selectedDate = getDate();
+        if(sheet != null && sheet.getToTime() != null && selectedDate != null){
+            LocalDate localSelectedDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate sheetDate = sheet.getFromTime().toLocalDateTime().toLocalDate();
+            return localSelectedDate.isEqual(sheetDate);
+        }
+        return false;
+    }
+    private boolean selectedDateIsTaken(){
+        for (int i = 0; i < timesheets.size(); i++) {
+            if(sheetHasBeenRegistered(timesheets.get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
     private Date getDate(){
         return (Date)datePanel.getModel().getValue();
     }
@@ -104,16 +123,13 @@ public class EditTimesheetDialog extends JDialog{
 
     private void onOK(){
         Date date = getDate();
-
+        Date selectedDate = (Date)selectedTimesheet.getFromTime();
         if(date == null){
             JOptionPane.showMessageDialog(this,"A date must be selected");
-        } else if (date.after(new Date(System.currentTimeMillis()))) {
-            JOptionPane.showMessageDialog(this, "Error, you cannot pre-write hours.");
-            return;
-        }else{
+        } else{
             // Convert date to LocalDate, which is easier to work with
             LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
+            LocalDate selectedLocaldate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             Timestamp spinnerFromTime = getSpinnerFromTime();
             Timestamp spinnerToTime = getSpinnerToTime();
 
@@ -124,11 +140,14 @@ public class EditTimesheetDialog extends JDialog{
             localFromTime = localDate.atTime(localFromTime.getHour(), localFromTime.getMinute());
             localToTime = localDate.atTime(localToTime.getHour(), localToTime.getMinute());
 
-
-
-            if(localToTime.isBefore(localFromTime)){
+            if(selectedDateIsTaken() && (!selectedLocaldate.isEqual(localDate))){
+                JOptionPane.showMessageDialog(this,"Error, a timesheet has already been registered at selected date");
+            }else if(localToTime.isBefore(localFromTime)){
                 JOptionPane.showMessageDialog(this,"Negative hours registered. To-time must be higher than from time");
-            }else{
+            }else if(localFromTime.isAfter(LocalDateTime.now()) || localToTime.isAfter(LocalDateTime.now())){
+                JOptionPane.showMessageDialog(this, "Error, you cannot pre-write hours.");
+            }
+            else{
                 selectedTimesheet.setFromTime(Timestamp.valueOf(localFromTime));
                 selectedTimesheet.setToTime(Timestamp.valueOf(localToTime));
                 int result = TimesheetFactory.updateTimesheet(selectedTimesheet);

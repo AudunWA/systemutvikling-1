@@ -46,7 +46,6 @@ public final class TimesheetFactory {
 
                 try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
-
                         timesheetList.add(createTimesheetFromResultSet(result));
                     }
                     return timesheetList;

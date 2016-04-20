@@ -23,7 +23,6 @@ import javax.swing.table.TableCellEditor;
 
 /**
  * Created by EliasBrattli on 14/04/2016.
- * TODO: Make a checkbox to show or hide active timesheets, which is to be enabled visible only if admin is logged in
  */
 
 public class TimesheetView extends JPanel{
@@ -235,7 +234,11 @@ public class TimesheetView extends JPanel{
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dialog.setTitle("Register timesheet");
         dialog.setLocationRelativeTo(null);
-        Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this),"New timesheet registered", Toast.Style.SUCCESS).display();
+        if(dialog.isRegistered()) {
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "New timesheet registered", Toast.Style.SUCCESS).display();
+        }else{
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Registration failed", Toast.Style.ERROR).display();
+        }
         refresh();
     }
     private void removeTimesheet(Timesheet timesheet){
