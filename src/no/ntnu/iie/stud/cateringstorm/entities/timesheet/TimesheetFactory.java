@@ -41,7 +41,7 @@ public final class TimesheetFactory {
         ArrayList<Timesheet> timesheetList = new ArrayList<>();
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet ORDER BY from_time")) {
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {
@@ -69,7 +69,7 @@ public final class TimesheetFactory {
         ArrayList<Timesheet> timesheetList = new ArrayList<>();
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE employee_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE employee_id = ? ORDER BY from_time")) {
                 statement.setInt(1, employeeId);
                 statement.executeQuery();
 
@@ -93,7 +93,7 @@ public final class TimesheetFactory {
     public static ArrayList<Timesheet> getActiveTimesheetsByEmployee(int employeeId){
         ArrayList<Timesheet> hours = new ArrayList<>();
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ?")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ? ORDER BY from_time")){
                 statement.setInt(1,employeeId);
                 statement.executeQuery();
                 try (ResultSet result = statement.getResultSet()){
@@ -166,7 +166,25 @@ public final class TimesheetFactory {
     public static Timesheet getUnfinishedTimeSheet(int employeeId){
         Timesheet sheet;
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ? AND to_time IS NULL")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ? AND to_time IS NULL ORDER BY from_time")){
+                statement.setInt(1,employeeId);
+                statement.executeQuery();
+                try (ResultSet result = statement.getResultSet()){
+                    if(result.next()) {
+                        sheet = createTimesheetFromResultSet(result);
+                        return sheet;
+                    }
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static Timesheet getLatestTimeSheet(int employeeId){
+        Timesheet sheet;
+        try (Connection connection = Database.getConnection()){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ? ORDER BY from_time DESC LIMIT 1")){
                 statement.setInt(1,employeeId);
                 statement.executeQuery();
                 try (ResultSet result = statement.getResultSet()){
@@ -189,8 +207,8 @@ public final class TimesheetFactory {
     public static int updateTimesheet(Timesheet timesheet){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE timesheet SET from_time = ?, to_time = ?, active = ? WHERE employee_id = ? AND timesheet_id = ?")) {
-                statement.setTimestamp(1,timesheet.getStartTime());
-                statement.setTimestamp(2,timesheet.getEndTime());
+                statement.setTimestamp(1,timesheet.getFromTime());
+                statement.setTimestamp(2,timesheet.getToTime());
                 statement.setBoolean(3,timesheet.isActive());
                 statement.setInt(4,timesheet.getEmployeeId());
                 statement.setInt(5,timesheet.getTimesheetId());

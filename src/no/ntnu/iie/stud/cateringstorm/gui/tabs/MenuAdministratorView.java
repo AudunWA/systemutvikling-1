@@ -10,8 +10,12 @@ import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddDishDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -30,6 +34,8 @@ public class MenuAdministratorView extends JPanel {
     private JTextField searchField;
     private JButton searchButton;
     private JCheckBox inactiveCheckBox;
+
+    private ArrayList<Dish> dishList;
 
     private DishTableModel tableModel;
 
@@ -63,6 +69,35 @@ public class MenuAdministratorView extends JPanel {
             // TODO: Update table, see StorageView
         });
 
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {searchDocument();}
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            public void searchDocument(){
+
+                ArrayList<Dish> copy = new ArrayList<>();
+
+                for (int i = 0; i < dishList.size(); i++) {
+                    if ((dishList.get(i).getName()).toLowerCase().contains(searchField.getText().toLowerCase()) || (dishList.get(i).getDescription()).toLowerCase().contains(searchField.getText().toLowerCase())){
+                        copy.add(dishList.get(i));
+
+                    }
+                }
+                tableModel.setRows(copy);
+
+            }
+        });
+
         removeDishButton.addActionListener(e -> {
             int selectedRow = dishTable.getSelectedRow();
             if(selectedRow == -1) {
@@ -81,22 +116,16 @@ public class MenuAdministratorView extends JPanel {
             }
         });
 
-        searchButton.addActionListener(e -> {
-            ArrayList<Dish> newRows;
-            if(searchField.getText().trim().equals("")) {
-                if(inactiveCheckBox.isSelected()) {
-                    newRows = DishFactory.getAllDishes();
-                } else {
-                    newRows = DishFactory.getActiveDishes();
-                }
-            } else {
-                if(inactiveCheckBox.isSelected()) {
-                    newRows = DishFactory.getAllDishesByQuery(searchField.getText());
-                } else {
-                    newRows = DishFactory.getActiveDishesByQuery(searchField.getText());
-                }
+        //Searches on enter key press
+        searchField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                search();
             }
-            tableModel.setRows(newRows);
+        });
+
+        searchButton.addActionListener(e -> {
+            search();
         });
         searchField.addMouseListener(new MouseAdapter() {
             @Override
@@ -125,11 +154,28 @@ public class MenuAdministratorView extends JPanel {
         createTable();
     }
     private void createTable(){
-        ArrayList<Dish> dishList = DishFactory.getActiveDishes();
+        dishList = DishFactory.getActiveDishes();
         Integer[] columns = new Integer[] { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION }; // Columns can be changed
         tableModel = new DishTableModel(dishList, columns);
         dishTable = new JTable(tableModel);
         dishTable.setFillsViewportHeight(true);
+    }
+    private void search() {
+        ArrayList<Dish> newRows;
+        if(searchField.getText().trim().equals("")) {
+            if(inactiveCheckBox.isSelected()) {
+                newRows = DishFactory.getAllDishes();
+            } else {
+                newRows = DishFactory.getActiveDishes();
+            }
+        } else {
+            if(inactiveCheckBox.isSelected()) {
+                newRows = DishFactory.getAllDishesByQuery(searchField.getText());
+            } else {
+                newRows = DishFactory.getActiveDishesByQuery(searchField.getText());
+            }
+        }
+        tableModel.setRows(newRows);
     }
 
     public static void main(String[] args){

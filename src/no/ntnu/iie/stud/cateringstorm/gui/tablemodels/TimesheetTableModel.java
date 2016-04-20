@@ -2,7 +2,6 @@ package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.timesheet.Timesheet;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -12,8 +11,8 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
 
     public static final int COLUMN_HOURS_ID = 0;
     public static final int COLUMN_EMPLOYEE_ID = 1;
-    public static final int COLUMN_START_TIME = 2;
-    public static final int COLUMN_END_TIME = 3;
+    public static final int COLUMN_FROM_TIME = 2;
+    public static final int COLUMN_TO_TIME = 3;
     public static final int COLUMN_ACTIVE = 4;
     public TimesheetTableModel(ArrayList<Timesheet> rows, Integer[] columns) {
         super(rows, columns);
@@ -27,9 +26,9 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
                 return "Timesheet ID";
             case COLUMN_EMPLOYEE_ID:
                 return "Customer ID";
-            case COLUMN_START_TIME:
+            case COLUMN_FROM_TIME:
                 return "Start time";
-            case COLUMN_END_TIME:
+            case COLUMN_TO_TIME:
                 return "End time";
             case COLUMN_ACTIVE:
                 return "Active";
@@ -48,10 +47,10 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
                 return value.getTimesheetId();
             case COLUMN_EMPLOYEE_ID:
                 return value.getEmployeeId();
-            case COLUMN_START_TIME:
-                return value.getStartTime();
-            case COLUMN_END_TIME:
-                return value.getStartTime();
+            case COLUMN_FROM_TIME:
+                return value.getFromTimeString();
+            case COLUMN_TO_TIME:
+                return value.getToTimeString();
             case COLUMN_ACTIVE:
                 return value.isActive();
             default:
@@ -67,10 +66,10 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
                 return int.class;
             case COLUMN_EMPLOYEE_ID:
                 return int.class;
-            case COLUMN_START_TIME:
-                return Timestamp.class;
-            case COLUMN_END_TIME:
-                return Timestamp.class;
+            case COLUMN_FROM_TIME:
+                return String.class;
+            case COLUMN_TO_TIME:
+                return String.class;
             case COLUMN_ACTIVE:
                 return Boolean.class;
             default:
@@ -89,9 +88,9 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
              case COLUMN_HOURS_ID:break;
              case COLUMN_EMPLOYEE_ID:
                  break;
-             case COLUMN_START_TIME:
+             case COLUMN_FROM_TIME:
                  break;
-             case COLUMN_END_TIME:
+             case COLUMN_TO_TIME:
                  break;
              case COLUMN_ACTIVE:
                  entity.setActive((Boolean)value);

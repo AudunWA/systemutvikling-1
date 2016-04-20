@@ -39,7 +39,7 @@ public class SalespersonCustomerView extends JPanel{
     private JPanel noselectButtonPanel;
     private CustomerTableModel tableModel;
 
-    private ArrayList<Customer> customers;
+    private ArrayList<Customer> customerList;
 
     public SalespersonCustomerView(){
         setLayout(new BorderLayout());
@@ -64,9 +64,7 @@ public class SalespersonCustomerView extends JPanel{
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void insertUpdate(DocumentEvent e) {
-                searchDocument();
-            }
+            public void insertUpdate(DocumentEvent e) {searchDocument();}
 
             @Override
             public void removeUpdate(DocumentEvent e) {
@@ -80,12 +78,11 @@ public class SalespersonCustomerView extends JPanel{
 
             public void searchDocument(){
 
-                customers = CustomerFactory.getActiveCustomers();
                 ArrayList<Customer> copy = new ArrayList<>();
 
-                for (int i = 0; i < customers.size(); i++) {
-                    if ((customers.get(i).getForename()).toLowerCase().contains(searchField.getText().toLowerCase()) || (customers.get(i).getSurname()).toLowerCase().contains(searchField.getText().toLowerCase())){
-                        copy.add(customers.get(i));
+                for (int i = 0; i < customerList.size(); i++) {
+                    if ((customerList.get(i).getForename()).toLowerCase().contains(searchField.getText().toLowerCase()) || (customerList.get(i).getSurname()).toLowerCase().contains(searchField.getText().toLowerCase())){
+                        copy.add(customerList.get(i));
 
                     }
                 }
@@ -98,7 +95,6 @@ public class SalespersonCustomerView extends JPanel{
              @Override
              public void mouseClicked(MouseEvent e) {
                  setSearchField("");
-                 searchButton.setEnabled(true);
              }
          });
         customerTable.getSelectionModel().addListSelectionListener(e -> {
@@ -122,7 +118,8 @@ public class SalespersonCustomerView extends JPanel{
         createSearchField();
     }
     public void createTable() {
-        ArrayList<Customer> customerList = getActiveCustomers();
+
+        customerList = getActiveCustomers();
 
         columns = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVE}; // Columns can be changed
 
@@ -141,6 +138,7 @@ public class SalespersonCustomerView extends JPanel{
         if(acDialog.hasAddedNewValue()){
             refresh();
         }
+        customerList = CustomerFactory.getActiveCustomers();
     }
     //Method opening a dialog for editing selected customer
     private void editCustomer(Customer customer){
@@ -183,17 +181,6 @@ public class SalespersonCustomerView extends JPanel{
     }
 
 
-    private void search(){
-        ArrayList<Customer> newRows;
-        if(searchField.getText().trim().equals("")) {
-            refresh();
-        } else {
-            newRows = CustomerFactory.getCustomersByQuery(searchField.getText());
-            tableModel.setRows(newRows);
-        }
-    }
-
-
     private ArrayList<Customer> getActiveCustomers(){
         return CustomerFactory.getActiveCustomers();
     }
@@ -210,6 +197,7 @@ public class SalespersonCustomerView extends JPanel{
             tableModel.setRows(getActiveCustomers());
         }
         Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Customers refreshed.").display();
+        customerList = CustomerFactory.getActiveCustomers();
     }
 
     public static void main(String[] args){

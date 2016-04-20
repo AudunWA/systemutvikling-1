@@ -15,6 +15,8 @@ import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -65,19 +67,47 @@ public class SalespersonOrderView extends JPanel {
         statusBox.addActionListener(e -> {
             setStatus();
         });
-        searchButton.addActionListener(e->{
-            search();
-        });
-        orderTable.getSelectionModel().addListSelectionListener(e -> {
-            //Get index from selected row
-        });
 
         searchField.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setSearchField("");
-                searchButton.setEnabled(true);
+                searchField.setText("");
             }
+        });
+
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            public void searchDocument(){
+
+                ArrayList<Order> copy = new ArrayList<>();
+
+                for (int i = 0; i < orderList.size(); i++) {
+                    if ((orderList.get(i).getCustomerName().toLowerCase().contains(searchField.getText().toLowerCase()) || (orderList.get(i).getCustomerAddress()).toLowerCase().contains(searchField.getText().toLowerCase()))){
+                        copy.add(orderList.get(i));
+
+                    }
+                }
+                tableModel.setRows(copy);
+
+            }
+        });
+
+        orderTable.getSelectionModel().addListSelectionListener(e -> {
+            //Get index from selected row
         });
     }
     private Order getSelectedOrder(){
@@ -95,6 +125,7 @@ public class SalespersonOrderView extends JPanel {
         aoDialog.setLocationRelativeTo(aoDialog.getParent());
 
         aoDialog.setVisible(true);
+        orderList = OrderFactory.getAllOrders();
     }
 
     private void newSubscription(){
@@ -174,19 +205,10 @@ public class SalespersonOrderView extends JPanel {
         searchField.setEnabled(true);
     }
 
-
-    private void search(){
-        ArrayList<Order> newRows;
-        if(searchField.getText().trim().equals("")) {
-            refresh();
-        } else {
-            newRows = OrderFactory.getOrdersByQuery(searchField.getText());
-            tableModel.setRows(newRows);
-        }
-    }
     private void refresh() {
         tableModel.setRows(OrderFactory.getAllOrders());
         Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
+        orderList = OrderFactory.getAllOrders();
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
     }
 
