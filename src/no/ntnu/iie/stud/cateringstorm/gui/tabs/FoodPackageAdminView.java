@@ -34,7 +34,9 @@ public class FoodPackageAdminView extends JFrame {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
+        /*
         searchField.getDocument().addDocumentListener(new DocumentListener() {
+
             @Override
             public void insertUpdate(DocumentEvent e) {
                 search();
@@ -50,6 +52,7 @@ public class FoodPackageAdminView extends JFrame {
                 search();
             }
         });
+        */
 
         addButton.addActionListener(e -> {
             AddFoodPackageDialog dialog = new AddFoodPackageDialog();
