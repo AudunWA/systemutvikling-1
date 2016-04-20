@@ -94,6 +94,10 @@ public class ChefOrderView extends JPanel {
     }
     private void viewOrder(){
         // TODO: Implement method opening a new tab DishInfoView, allowing user to view more information of a single
+        if (orderTable.getSelectedRow() < 0){
+            JOptionPane.showMessageDialog(this, "Please select a order");
+            return;
+        }
         int viewedOrderId = (Integer) orderTable.getModel().getValueAt(orderTable.getSelectedRow(), 0);
         if (OrderFactory.getOrder(viewedOrderId).getStatus() != 0 && OrderFactory.getOrder(viewedOrderId).getStatus() != 3) {
             OrderFactory.setOrderState(viewedOrderId, 3);
