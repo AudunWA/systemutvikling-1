@@ -91,10 +91,10 @@ public class TimesheetView extends JPanel{
         Integer[] columns;
         if(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
             timesheetList = getHoursByEmployeeId();
-            columns = new Integer[]{TimesheetTableModel.COLUMN_HOURS_ID, TimesheetTableModel.COLUMN_START_TIME, TimesheetTableModel.COLUMN_END_TIME, TimesheetTableModel.COLUMN_ACTIVE};
+            columns = new Integer[]{TimesheetTableModel.COLUMN_HOURS_ID, TimesheetTableModel.COLUMN_FROM_TIME, TimesheetTableModel.COLUMN_TO_TIME, TimesheetTableModel.COLUMN_ACTIVE};
         }else{
             timesheetList = getActiveHoursByEmployeeId();
-            columns = new Integer[]{ TimesheetTableModel.COLUMN_HOURS_ID, TimesheetTableModel.COLUMN_START_TIME, TimesheetTableModel.COLUMN_END_TIME};
+            columns = new Integer[]{ TimesheetTableModel.COLUMN_HOURS_ID, TimesheetTableModel.COLUMN_FROM_TIME, TimesheetTableModel.COLUMN_TO_TIME};
         }
         //System.out.println(timesheetList.get(0));
         tableModel = new TimesheetTableModel(timesheetList, columns);

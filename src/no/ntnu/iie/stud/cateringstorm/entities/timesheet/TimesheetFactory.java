@@ -41,7 +41,7 @@ public final class TimesheetFactory {
         ArrayList<Timesheet> timesheetList = new ArrayList<>();
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet ORDER BY from_time")) {
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {
@@ -69,7 +69,7 @@ public final class TimesheetFactory {
         ArrayList<Timesheet> timesheetList = new ArrayList<>();
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE employee_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE employee_id = ? ORDER BY from_time")) {
                 statement.setInt(1, employeeId);
                 statement.executeQuery();
 
@@ -93,7 +93,7 @@ public final class TimesheetFactory {
     public static ArrayList<Timesheet> getActiveTimesheetsByEmployee(int employeeId){
         ArrayList<Timesheet> hours = new ArrayList<>();
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ?")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ? ORDER BY from_time")){
                 statement.setInt(1,employeeId);
                 statement.executeQuery();
                 try (ResultSet result = statement.getResultSet()){
@@ -166,7 +166,7 @@ public final class TimesheetFactory {
     public static Timesheet getUnfinishedTimeSheet(int employeeId){
         Timesheet sheet;
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ? AND to_time IS NULL")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ? AND to_time IS NULL ORDER BY from_time")){
                 statement.setInt(1,employeeId);
                 statement.executeQuery();
                 try (ResultSet result = statement.getResultSet()){
