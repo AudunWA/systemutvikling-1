@@ -95,7 +95,6 @@ public class SalespersonCustomerView extends JPanel{
              @Override
              public void mouseClicked(MouseEvent e) {
                  setSearchField("");
-                 searchButton.setEnabled(true);
              }
          });
         customerTable.getSelectionModel().addListSelectionListener(e -> {
@@ -182,17 +181,6 @@ public class SalespersonCustomerView extends JPanel{
     }
 
 
-    private void search(){
-        ArrayList<Customer> newRows;
-        if(searchField.getText().trim().equals("")) {
-            refresh();
-        } else {
-            newRows = CustomerFactory.getCustomersByQuery(searchField.getText());
-            tableModel.setRows(newRows);
-        }
-    }
-
-
     private ArrayList<Customer> getActiveCustomers(){
         return CustomerFactory.getActiveCustomers();
     }
@@ -209,6 +197,7 @@ public class SalespersonCustomerView extends JPanel{
             tableModel.setRows(getActiveCustomers());
         }
         Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Customers refreshed.").display();
+        customerList = CustomerFactory.getActiveCustomers();
     }
 
     public static void main(String[] args){
