@@ -1,16 +1,19 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
+import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
+import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.timesheet.Timesheet;
+import no.ntnu.iie.stud.cateringstorm.entities.timesheet.TimesheetFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
+import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Properties;
@@ -30,22 +33,14 @@ public class RegisterTimesheetDialog extends JDialog {
     private JLabel topLabel;
     private JLabel bottomLabel;
     private JDatePanelImpl datePanel;
-
-    public RegisterTimesheetDialog() {
+    private int loggedInEmployeeId;
+    public RegisterTimesheetDialog(int loggedInEmployeeId) {
+        this.loggedInEmployeeId = loggedInEmployeeId;
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
-       /* spinner.addChangeListener(new ChangeListener() {
-
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                Date date = (Date) ((JSpinner) e.getSource()).getValue();
-                for (int i = 0; i < labels.length; i++) {
-                    labels[i].setText(formats[i].format(date));
-                }
-            }
-        });*/
         setSpinners();
+
         okButton.addActionListener(e->{
             onOK();
         });
@@ -73,7 +68,16 @@ public class RegisterTimesheetDialog extends JDialog {
     private void onCancel() {
         dispose();
     }
-
+    private boolean latestTimesheetIsToday(){
+        Timesheet sheet = TimesheetFactory.getLatestTimeSheet(loggedInEmployeeId);
+        if(sheet!= null && sheet.getToTime()!= null && TimesheetFactory.getUnfinishedTimeSheet(loggedInEmployeeId) == null){
+            if(LocalDate.now().isEqual(sheet.getToTime().toLocalDateTime().toLocalDate())){
+               return true;
+            }else{
+               return false;
+            }
+        }return false;
+    }
     public void createUIComponents() {
         // TODO: Insert UI components
         createJDatePanel();
@@ -94,13 +98,14 @@ public class RegisterTimesheetDialog extends JDialog {
     private Date getDate(){
         return (Date)datePanel.getModel().getValue();
     }
-    private Timestamp getFromTime(){
+    private Timestamp getSpinnerFromTime(){
         return new Timestamp(((Date)fromSpinner.getModel().getValue()).getTime());
     }
-    private Timestamp getToTime(){
+    private Timestamp getSpinnerToTime(){
         return new Timestamp(((Date)toSpinner.getModel().getValue()).getTime());
     }
 
+    // TODO: Check if any date selected has already got a timesheet registered, as we want no double saving.
     private void onOK(){
         Date date = getDate();
 
@@ -108,33 +113,40 @@ public class RegisterTimesheetDialog extends JDialog {
             JOptionPane.showMessageDialog(this,"A date must be selected");
         } else if (date.after(new Date(System.currentTimeMillis()))) {
             JOptionPane.showMessageDialog(this, "Error, you cannot pre-write hours.");
-            return;
+        }else if(latestTimesheetIsToday()){
+            JOptionPane.showMessageDialog(this,"Error, a timesheet has already been registered at this date");
         }
-        // Convert date to LocalDate, which is easier to work with
-        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        else{
+            // Convert date to LocalDate, which is easier to work with
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        Timestamp fromTime = getFromTime();
-        Timestamp toTime = getToTime();
+            Timestamp spinnerFromTime = getSpinnerFromTime();
+            Timestamp spinnerToTime = getSpinnerToTime();
 
-        // Extract only hours, and add them to the selected date (from date panel)
-        LocalDateTime localFromTime = fromTime.toLocalDateTime();
-        localFromTime = localDate.atTime(localFromTime.getHour(), localFromTime.getMinute());
-        LocalDateTime localToTime = toTime.toLocalDateTime();
-        localToTime = localDate.atTime(localToTime.getHour(), localToTime.getMinute());
+            // Extract only hours, and add them to the selected date (from date panel)
+            LocalDateTime localFromTime = spinnerFromTime.toLocalDateTime();
+            LocalDateTime localToTime = spinnerToTime.toLocalDateTime();
 
-        System.out.println("localFromTime :" + localFromTime);
-        System.out.println("localToTime :" + localToTime);
+            localFromTime = localDate.atTime(localFromTime.getHour(), localFromTime.getMinute());
+            localToTime = localDate.atTime(localToTime.getHour(), localToTime.getMinute());
 
-        if(localToTime.isBefore(localFromTime)){
-            JOptionPane.showMessageDialog(this,"Negative hours registered. To-time must be higher than from time");
-            return;
+
+
+            if(localToTime.isBefore(localFromTime)){
+                JOptionPane.showMessageDialog(this,"Negative hours registered. To-time must be higher than from time");
+            }else{
+                Timesheet newSheet = TimesheetFactory.createTimesheet(loggedInEmployeeId,Timestamp.valueOf(localFromTime),Timestamp.valueOf(localToTime),true);
+                dispose();
+            }
         }
-
     }
+
+    /**
+     * Method adding model and editor to JSpinners
+     */
     private void setSpinners(){
         SpinnerModel fromModel = new SpinnerDateModel();
         SpinnerModel toModel = new SpinnerDateModel();
-
         fromSpinner.setModel(fromModel);
         toSpinner.setModel(toModel);
         JComponent fromEditor = new JSpinner.DateEditor(fromSpinner,"HH:mm");
@@ -146,9 +158,15 @@ public class RegisterTimesheetDialog extends JDialog {
         }*/
 
     }
+
+    /**
+     * Test method
+     * @param args
+     */
     public static void main(String[] args){
         final int HEIGHT = 400, WIDTH = 400;
-        RegisterTimesheetDialog dialog = new RegisterTimesheetDialog();
+        GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
+        RegisterTimesheetDialog dialog = new RegisterTimesheetDialog(GlobalStorage.getLoggedInEmployee().getEmployeeId());
         dialog.pack();
         dialog.setSize(WIDTH,HEIGHT);
         dialog.setVisible(true);

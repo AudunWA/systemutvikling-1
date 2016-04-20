@@ -1,12 +1,18 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
+import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.timesheet.Timesheet;
+import no.ntnu.iie.stud.cateringstorm.entities.timesheet.TimesheetFactory;
+import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Properties;
 
@@ -25,20 +31,16 @@ public class EditTimesheetDialog extends JDialog{
     private JButton okButton;
     private JButton cancelButton;
     private JPanel mainPanel;
-    public EditTimesheetDialog() {
+    private int loggedInEmployeeId;
+    private Timesheet selectedTimesheet;
+
+    public EditTimesheetDialog(int loggedInEmployeeId, Timesheet selectedTimesheet) {
+        this.loggedInEmployeeId = loggedInEmployeeId;
+        this.selectedTimesheet = selectedTimesheet;
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
-       /* spinner.addChangeListener(new ChangeListener() {
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                Date date = (Date) ((JSpinner) e.getSource()).getValue();
-                for (int i = 0; i < labels.length; i++) {
-                    labels[i].setText(formats[i].format(date));
-                }
-            }
-        });*/
         setSpinners();
         okButton.addActionListener(e->{
             onOK();
@@ -54,12 +56,19 @@ public class EditTimesheetDialog extends JDialog{
 
         // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(new ActionListener() {
-                                             public void actionPerformed (ActionEvent e){
-                                                 onCancel();
-                                             }
-                                         }
-                ,KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE,0),JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+                 public void actionPerformed (ActionEvent e){
+                     onCancel();
+                 }
+             },KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE,0),JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+    public int getLoggedInEmployeeId() {
+        return loggedInEmployeeId;
+    }
+
+    public Timesheet getSelectedTimesheet() {
+        return selectedTimesheet;
+    }
+
     private void onCancel() {
         dispose();
     }
@@ -71,7 +80,8 @@ public class EditTimesheetDialog extends JDialog{
     private void createJDatePanel(){
         // Create date pickers
         UtilDateModel model = new UtilDateModel();
-
+        Date date = selectedTimesheet.getFromTime();
+        model.setValue(date);
         // Dunno
         Properties p = new Properties();
         p.put("text.today", "Today");
@@ -84,29 +94,60 @@ public class EditTimesheetDialog extends JDialog{
     private Date getDate(){
         return (Date)datePanel.getModel().getValue();
     }
-    private Timestamp getFromTime(){
-        Date date = getDate();
-        Time time = (Time)fromSpinner.getModel().getValue();
-        date.setTime(time.getTime());
-        return new Timestamp(date.getTime());
+    private Timestamp getSpinnerFromTime(){
+        return new Timestamp(((Date)fromSpinner.getModel().getValue()).getTime());
     }
-    private Timestamp getToTime(){
-        Date date = getDate();
-        Time time = (Time)toSpinner.getModel().getValue();
-        date.setTime(time.getTime());
-        return new Timestamp(date.getTime());
+    private Timestamp getSpinnerToTime(){
+        return new Timestamp(((Date)toSpinner.getModel().getValue()).getTime());
     }
+
 
     private void onOK(){
-        // TODO: Implement onOK, sending hour sheet to database
-        System.out.println("FromTime :" + getFromTime());
-        System.out.println("ToTime :" + getToTime());
+        Date date = getDate();
 
+        if(date == null){
+            JOptionPane.showMessageDialog(this,"A date must be selected");
+        } else if (date.after(new Date(System.currentTimeMillis()))) {
+            JOptionPane.showMessageDialog(this, "Error, you cannot pre-write hours.");
+            return;
+        }else{
+            // Convert date to LocalDate, which is easier to work with
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            Timestamp spinnerFromTime = getSpinnerFromTime();
+            Timestamp spinnerToTime = getSpinnerToTime();
+
+            // Extract only hours, and add them to the selected date (from date panel)
+            LocalDateTime localFromTime = spinnerFromTime.toLocalDateTime();
+            LocalDateTime localToTime = spinnerToTime.toLocalDateTime();
+
+            localFromTime = localDate.atTime(localFromTime.getHour(), localFromTime.getMinute());
+            localToTime = localDate.atTime(localToTime.getHour(), localToTime.getMinute());
+
+
+
+            if(localToTime.isBefore(localFromTime)){
+                JOptionPane.showMessageDialog(this,"Negative hours registered. To-time must be higher than from time");
+            }else{
+                selectedTimesheet.setFromTime(Timestamp.valueOf(localFromTime));
+                selectedTimesheet.setToTime(Timestamp.valueOf(localToTime));
+                int result = TimesheetFactory.updateTimesheet(selectedTimesheet);
+                if(result == 1){
+                    JOptionPane.showMessageDialog(null,selectedTimesheet);
+                }else{
+                    JOptionPane.showMessageDialog(null,"Something went wrong");
+                }
+                dispose();
+            }
+        }
     }
     private void setSpinners(){
         SpinnerModel fromModel = new SpinnerDateModel();
         SpinnerModel toModel = new SpinnerDateModel();
-
+        Date fromDate = selectedTimesheet.getFromTime();
+        Date toDate = selectedTimesheet.getToTime();
+        fromModel.setValue(fromDate);
+        toModel.setValue(toDate);
         fromSpinner.setModel(fromModel);
         toSpinner.setModel(toModel);
         JComponent fromEditor = new JSpinner.DateEditor(fromSpinner,"HH:mm");
@@ -120,7 +161,9 @@ public class EditTimesheetDialog extends JDialog{
     }
     public static void main(String[] args){
         final int HEIGHT = 400, WIDTH = 400;
-        RegisterTimesheetDialog dialog = new RegisterTimesheetDialog();
+        GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
+        int id = GlobalStorage.getLoggedInEmployee().getEmployeeId();
+        EditTimesheetDialog dialog = new EditTimesheetDialog(id, TimesheetFactory.getLatestTimeSheet(id));
         dialog.pack();
         dialog.setSize(WIDTH,HEIGHT);
         dialog.setVisible(true);
