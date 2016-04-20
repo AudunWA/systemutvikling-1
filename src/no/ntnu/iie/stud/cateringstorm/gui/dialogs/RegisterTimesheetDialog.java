@@ -130,7 +130,6 @@ public class RegisterTimesheetDialog extends JDialog {
             return;
         }
 
-        // TODO: Implement onOK, sending hour sheet to database
     }
     private void setSpinners(){
         SpinnerModel fromModel = new SpinnerDateModel();
