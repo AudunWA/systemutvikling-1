@@ -16,11 +16,11 @@ INSERT INTO employee VALUES (default, 'drammen', 'Håvard', 'Høydalsnes', 'Dram
 '87654321', 'rave@ravemail.com', 5,false,'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e','YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
 
 -- (employee types - includes all employee specialty tables) --
-INSERT INTO chef VALUES (2);
-INSERT INTO administrator VALUES (3);
-INSERT INTO nutrition_exp VALUES (4);
-INSERT INTO chauffeur VALUES (5);
-INSERT INTO salesperson VALUES (6);
+-- INSERT INTO chef VALUES (2);
+-- INSERT INTO administrator VALUES (3);
+-- INSERT INTO nutrition_exp VALUES (4);
+-- INSERT INTO chauffeur VALUES (5);
+-- INSERT INTO salesperson VALUES (6);
 
 -- (timesheet) --
 INSERT INTO timesheet VALUES (DEFAULT,1,'2015-12-31 11:30:45','2015-12-31 17:30:45',true);
@@ -90,14 +90,14 @@ INSERT INTO dish_food_package VALUES (6,3);
 -- INSERT INTO area VALUES (default, 'Klæbu');
 
 -- (customer) --
-INSERT INTO customer VALUES (default, 'Gates', 'Bill', 'Rikmannsvegen 2', true, '12345678', 'mail@m.com');
-INSERT INTO customer VALUES (default, 'Zuckerberg', 'Mark', 'Rikmannsvegen 3',true, '87654321' ,'testmail@testmail.com');
-INSERT INTO customer VALUES (default, 'Smith', 'Will', 'lerkendalvegen 5', true, '13245768' ,'ayy@lmao.mail');
+INSERT INTO customer VALUES (default, 'Gates', 'Bill', 'Jomfrugata 5', true, '12345678', 'mail@m.com');
+INSERT INTO customer VALUES (default, 'Zuckerberg', 'Mark', 'Vestre Moholt-tun 21',true, '87654321' ,'testmail@testmail.com');
+INSERT INTO customer VALUES (default, 'Smith', 'Will', 'Klosterenget 6', true, '13245768' ,'ayy@lmao.mail');
 INSERT INTO customer VALUES (default, 'Olsen', 'Karl', 'Klæbuvegen 3', true, '86754231' ,'trondheim@mail.com');
 INSERT INTO customer VALUES (default, 'Karlsen', 'Ole', 'Stibakken 2', true, '45362718' ,'mail@mail.mail');
 INSERT INTO customer VALUES (default, 'Berntsen', 'Bernt', 'Byåsvegen 4',true, '81726354' ,'noot@noot.noot');
 INSERT INTO customer VALUES (default, 'Arnsen', 'Gustaff', 'Kolstadvegen 3', true, '76543218' ,'eg@ekkje.sur');
-INSERT INTO customer VALUES (default, 'Olafdottir', 'Fredrikke', 'Hormonvegen 2',true, '647382816' ,'a@b.c');
+INSERT INTO customer VALUES (default, 'Olafdottir', 'Fredrikke', 'Sem Sælands vei 5',true, '647382816' ,'a@b.c');
 
 -- (subscription) --
 INSERT INTO subscription VALUES (default, DATE('2016-03-10'), DATE('2016-03-30'),400,1,true);
