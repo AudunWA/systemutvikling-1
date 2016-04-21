@@ -230,7 +230,7 @@ public final class IngredientFactory {
     public static ArrayList<Ingredient> getAllIngredientsInOrder(int orderId) {
         ArrayList<Ingredient> temp = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM ingredient NATURAL JOIN ingredient_dish NATURAL JOIN dish_food_package NATURAL JOIN _order_food_package NATURAL JOIN _order WHERE _order_food_package._order_id = ?; ")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM ingredient_dish NATURAL JOIN dish_food_package NATURAL JOIN _order_food_package NATURAL JOIN _order WHERE _order_food_package._order_id = ?; ")) {
 
                 statement.setInt(1, orderId);
                 statement.executeQuery();

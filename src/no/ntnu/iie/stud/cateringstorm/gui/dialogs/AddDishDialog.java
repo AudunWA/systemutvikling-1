@@ -1,9 +1,19 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
+import jdk.nashorn.internal.runtime.regexp.joni.exception.JOniException;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
+<<<<<<< HEAD
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDishFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientDishTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
+=======
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
+>>>>>>> 47f2e310eebbb7f56b820b9dad3746a0f102a46d
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -19,6 +29,19 @@ public class AddDishDialog extends JDialog {
     private JComboBox dishType;
     private JLabel dishNameLabel;
     private JLabel dishDescriptionLabel;
+<<<<<<< HEAD
+    private JScrollPane addedIngredientPane;
+    private JScrollPane selectionIngredientPane;
+    private JTable addedIngredientTable;
+    private JTable selectionIngredientTable;
+    private JButton addOrRemoveButton;
+    private JSpinner addRemoveSpinner;
+
+    private ArrayList<Ingredient> selectionList;
+    private ArrayList<IngredientDish> addedList;
+
+    private IngredientDishTableModel addedTableModel;
+=======
     private JTable addedTable;
     private JButton okButton;
     private JTable ingredientTable;
@@ -27,6 +50,7 @@ public class AddDishDialog extends JDialog {
     private ArrayList<Ingredient> ingredientList;
     private ArrayList<Dish> dishes = new ArrayList<>();
 
+>>>>>>> 47f2e310eebbb7f56b820b9dad3746a0f102a46d
 
 
     public AddDishDialog() {
@@ -40,6 +64,10 @@ public class AddDishDialog extends JDialog {
             }
         });
         */
+
+        addOrRemoveButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { onAR();}
+        });
 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -181,9 +209,71 @@ public class AddDishDialog extends JDialog {
 
     }
 
+    public void onAR(){
+
+        if ((Integer)addRemoveSpinner.getValue() < 1){
+            JOptionPane.showMessageDialog(this, "Please set a positive amount on the spinner");
+            return;
+        }
+
+        boolean check = true;
+
+        if (addedIngredientTable.getSelectedRow() > -1 && selectionIngredientTable.getSelectedRow() > -1){
+            JOptionPane.showMessageDialog(this, "Error, please only select one table at a time.");
+            addedIngredientTable.clearSelection();
+            selectionIngredientTable.clearSelection();
+            return;
+        } else if (addedIngredientTable.getSelectedRow() > -1){
+            if (addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() < (Integer)addRemoveSpinner.getValue() + 1) {
+                addedList.remove(addedIngredientTable.getSelectedRow());
+            } else {
+                addedList.get(addedIngredientTable.getSelectedRow()).setQuantity(addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() - (Integer)addRemoveSpinner.getValue());
+            }
+        } else if (selectionIngredientTable.getSelectedRow() > -1){
+            //addedList.add()
+            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(selectionIngredientTable.getSelectedRow()).getIngredientId()),null,(Integer)addRemoveSpinner.getValue(),selectionList.get(selectionIngredientTable.getSelectedRow()).getUnit());
+
+            for (int i = 0; i <addedList.size(); i++){
+                if (addedList.get(i).getIngredient().getIngredientId() == ingDish.getIngredient().getIngredientId()){
+                    addedList.get(i).setQuantity(addedList.get(i).getQuantity() + ingDish.getQuantity());
+                    check = false;
+                }
+            }
+
+            if (check){
+                addedList.add(ingDish);
+            }
+            addedTableModel.setRows(addedList);
+
+        }
+
+    }
+
+    public void onAdd(){
+        //TODO
+        //addedList.add(IngredientDishFactory.addIngredientToNewDish(selectionList.get(selectionIngredientTable.getSelectedRow()).getIngredient().getIngredientId(), (Integer)addRemoveSpinner.getValue(), selectionList.get(selectionIngredientTable.getSelectedRow()).getIngredient().getUnit()));
+    }
+
+    public void createTables(){
+
+        selectionList = IngredientFactory.getAllIngredients();
+        Integer[] columns = new Integer[]{IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_UNIT};
+        IngredientTableModel selectionTableModel = new IngredientTableModel(selectionList, columns);
+        selectionIngredientTable = new JTable(selectionTableModel);
+        selectionIngredientTable.getTableHeader().setReorderingAllowed(false);
+
+        addedList = new ArrayList<>();
+        Integer[] columnsForAdded = new Integer[]{IngredientDishTableModel.COLUMN_INGREDIENT_ID, IngredientDishTableModel.COLUMN_INGREDIENT_NAME, IngredientDishTableModel.COLUMN_QUANTITY, IngredientDishTableModel.COLUMN_UNIT};
+        addedTableModel = new IngredientDishTableModel(addedList, columnsForAdded);
+        addedIngredientTable = new JTable(addedTableModel);
+        addedIngredientTable.getTableHeader().setReorderingAllowed(false);
+
+    }
+
     private void createUIComponents() {
         // TODO: Custom initialization of UI components here
         createComboBoxType();
         createComboBoxActiveStatus();
+        createTables();
     }
 }
