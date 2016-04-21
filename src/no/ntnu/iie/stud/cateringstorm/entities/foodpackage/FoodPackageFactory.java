@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Audun on 16.03.2016.
@@ -268,6 +269,7 @@ public final class FoodPackageFactory {
 
         return new FoodPackage(foodPackageId, name, cost, active);
     }
+
     /**
      Runs an UPDATE-query of a foodpackage, with all its columns.
      * @param foodPackage The foodpackage to update
@@ -287,5 +289,70 @@ public final class FoodPackageFactory {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    /**
+     Runs an UPDATE-query of a foodpackage, with all its columns.
+     This overload also replaces all the dishes in the food package.
+     * @param foodPackage The foodpackage to update
+     * @param dishes The list of dishes to replace
+     * @return Boolean representing success or not
+     */
+    public static boolean updateFoodPackage(FoodPackage foodPackage, List<Dish> dishes) {
+        if (dishes == null) {
+            throw new IllegalArgumentException("dishes cannot be null.");
+        }
+
+        try (Connection connection = Database.getConnection()) {
+            // Start transaction
+            connection.setAutoCommit(false);
+
+            try {
+                // Update the food package itself
+                try (PreparedStatement statement = connection.prepareStatement("UPDATE food_package SET name = ?, cost = ?, active = ? WHERE food_package_id = ?")) {
+                    statement.setString(1, foodPackage.getName());
+                    statement.setDouble(2, foodPackage.getCost());
+                    statement.setBoolean(3, foodPackage.isActive());
+                    statement.setInt(4, foodPackage.getFoodPackageId());
+
+                    int affectedRows = statement.executeUpdate();
+                    if (affectedRows == 0) {
+                        connection.rollback();
+                        connection.setAutoCommit(true);
+                        return false; // No rows inserted
+                    }
+                }
+
+                // Delete all existing dishes for this food package
+                try (PreparedStatement statement = connection.prepareStatement("DELETE FROM dish_food_package WHERE food_package_id = ?")) {
+                    statement.setInt(1, foodPackage.getFoodPackageId());
+                    statement.executeUpdate();
+                }
+
+                // Add the dishes to the package
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish_food_package VALUES (?, ?)")) {
+                    for (Dish dish : dishes) {
+                        statement.setInt(1, dish.getDishId());
+                        statement.setInt(2, foodPackage.getFoodPackageId());
+                        statement.addBatch();
+                    }
+                    statement.executeBatch();
+                }
+            } catch (SQLException e) {
+                connection.rollback();
+                connection.setAutoCommit(true);
+                throw e;
+            }
+
+            // All good, commit all
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        // All good, return true
+        return true;
     }
 }

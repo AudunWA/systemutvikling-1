@@ -57,7 +57,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="146a5" class="javax.swing.JTextField" binding="nameTextField">
+          <component id="146a5" class="javax.swing.JTextField" binding="nameField">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -65,7 +65,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="122a4" class="javax.swing.JTextField" binding="costTextField">
+          <component id="122a4" class="javax.swing.JTextField" binding="costField">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -73,7 +73,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="11c25" class="javax.swing.JCheckBox" binding="isActive">
+          <component id="11c25" class="javax.swing.JCheckBox" binding="activeCheckbox">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -106,7 +106,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="fd041" class="javax.swing.JTable" binding="addedTable">
+          <component id="fd041" class="javax.swing.JTable" binding="leftSideTable" custom-create="true">
             <constraints/>
             <properties/>
           </component>
@@ -137,7 +137,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="6e5ce" class="javax.swing.JTable" binding="dishTable">
+          <component id="6e5ce" class="javax.swing.JTable" binding="rightSideTable" custom-create="true">
             <constraints/>
             <properties/>
           </component>

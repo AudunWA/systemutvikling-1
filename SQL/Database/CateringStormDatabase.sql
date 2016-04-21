@@ -130,10 +130,10 @@ PRIMARY KEY (ingredient_id, dish_id)
 
 CREATE TABLE food_package(
   food_package_id INTEGER AUTO_INCREMENT,
-name VARCHAR(20) NOT NULL,
-cost DOUBLE NOT NULL,
-active BOOLEAN NOT NULL,
-PRIMARY KEY (food_package_id)
+	name VARCHAR(64) NOT NULL,
+	cost DOUBLE NOT NULL,
+	active BOOLEAN NOT NULL,
+	PRIMARY KEY (food_package_id)
 );
 
 CREATE TABLE dish_food_package(
