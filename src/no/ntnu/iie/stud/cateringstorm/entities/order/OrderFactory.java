@@ -348,6 +348,8 @@ public final class OrderFactory {
                         if (result.next()) {
                             generatedId = result.getInt(1);
                         } else {
+                            connection.rollback();
+                            connection.setAutoCommit(true);
                             return null; // No ID?
                         }
                     }

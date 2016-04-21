@@ -152,9 +152,9 @@ public class OrderTableModel extends EntityTableModel<Order> {
             case COLUMN_DESCRIPTION:
                 return String.class;
             case COLUMN_DELIVERY_TIME:
-                return Timestamp.class;
+                return String.class;
             case COLUMN_ORDER_TIME:
-                return Timestamp.class;
+                return String.class;
             case COLUMN_PORTIONS:
                 return int.class;
             case COLUMN_PRIORITY:
@@ -179,8 +179,4 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
-    public void addOrder(Order order){
-        setRow(getRowCount(),order);
-    }
-
 }

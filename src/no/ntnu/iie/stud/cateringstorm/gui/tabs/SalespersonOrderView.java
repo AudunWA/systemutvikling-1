@@ -140,6 +140,13 @@ public class SalespersonOrderView extends JPanel {
         asDialog.setSize(WIDTH, HEIGHT);
         asDialog.setLocationRelativeTo(null);
         asDialog.setVisible(true);
+
+        if(asDialog.getSubscription() == null) {
+            // Failed
+            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Subscription not created.", Toast.Style.ERROR).display();
+        } else {
+            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Subscription created.", Toast.Style.SUCCESS).display();
+        }
     }
 
     private void editOrder(Order order){

@@ -68,6 +68,7 @@ public class DashboardView extends JFrame {
                 //tabPane.addTab("OrderInfoView", new OrderInfoView());
                 tabPane.addTab("Orders (chef)", getIconResource("ic_list_black_24dp_1x.png"), ChefOrderView.class);
                 tabPane.addTab("Orders (salesperson)", getIconResource("ic_list_black_24dp_1x.png"), SalespersonOrderView.class);
+                tabPane.addTab("Subscriptions", getIconResource("ic_update_black_24dp_1x.png"), SalespersonSubscriptionView.class);
                 tabPane.addTab("Delivery", getIconResource("ic_assignment_black_24dp_1x.png"), ChauffeurOrderView.class);
                 tabPane.addTab("Menu", getIconResource("ic_restaurant_menu_black_24dp_1x.png"), MenuAdministratorView.class);
                 tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), StorageView.class);
@@ -77,6 +78,7 @@ public class DashboardView extends JFrame {
                 break;
             case SALESPERSON:
                 tabPane.addTab("Orders", getIconResource("ic_list_black_24dp_1x.png"), SalespersonOrderView.class);
+                tabPane.addTab("Subscriptions", getIconResource("ic_update_black_24dp_1x.png"), SalespersonSubscriptionView.class);
                 tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), SalespersonCustomerView.class);
                 break;
         }
@@ -88,6 +90,8 @@ public class DashboardView extends JFrame {
      * @return An ImageIcon initialized with the loaded resource
      */
     private ImageIcon getIconResource(String path) {
+        path = "icons/" + path;
+
         ClassLoader loader = getClass().getClassLoader();
         if (loader == null) {
             System.err.println("Could not get class loader!");
