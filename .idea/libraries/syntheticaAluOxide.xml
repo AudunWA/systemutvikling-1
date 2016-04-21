@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="syntheticaAluOxide">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/syntheticaAluOxide.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

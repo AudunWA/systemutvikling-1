@@ -2,6 +2,8 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 //import no.ntnu.iie.stud.cateringstorm.gui.tabs.ChauffeurOrderView;
 
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.ChefMakeOrderDialog;
@@ -12,6 +14,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.font.TextAttribute;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -38,6 +41,9 @@ public class ChefOrderView extends JPanel {
         viewButton.addActionListener(e -> {
             viewOrder();
         });
+
+
+
         statusBox.addActionListener(e -> {
             setStatus();
         });
@@ -57,6 +63,7 @@ public class ChefOrderView extends JPanel {
     }
 
     private void createTable(){
+
         getChefArray();
 
         Integer[] columns = new Integer[] { OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_DELIVERY_TIME};
@@ -113,6 +120,8 @@ public class ChefOrderView extends JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Error this order is already made!");
         }
+
+        refresh();
     }
 
 

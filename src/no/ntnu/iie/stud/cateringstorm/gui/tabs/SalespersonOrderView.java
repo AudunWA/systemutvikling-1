@@ -75,6 +75,8 @@ public class SalespersonOrderView extends JPanel {
             }
         });
 
+
+
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {

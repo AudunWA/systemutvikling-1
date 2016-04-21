@@ -10,6 +10,8 @@ import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -59,8 +61,11 @@ public class ChauffeurOrderView extends JPanel {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
                 String temp = (String)table.getModel().getValueAt(row , 4);
+                Timestamp deliveryDate = (Timestamp)table.getModel().getValueAt(row, 6);
                 boolean priority = (boolean)table.getModel().getValueAt(row, 5);
-                if (temp.equals("Ready for delivery") && !priority) {
+                if (deliveryDate.toLocalDateTime().toLocalDate().isAfter(LocalDate.now())){
+                    setBackground(new Color(150,150,150));
+                } else if (temp.equals("Ready for delivery") && !priority) {
                     setBackground(new Color(100,200,100));
                 } else if (temp.equals("Delivered")) {
                     setBackground(new Color(150,150,150));

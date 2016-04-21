@@ -1,4 +1,4 @@
-package no.ntnu.iie.stud.cateringstorm.gui.tabs;
+/*package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
@@ -25,8 +25,13 @@ import java.util.ArrayList;
 
 /**
  * Created by Håvard
- */
+<<<<<<< HEAD:src/no/ntnu/iie/stud/cateringstorm/gui/tabs/EmployeeView.java
+
 public class EmployeeView extends JPanel{
+=======
+ *
+public class AdminEmployeeView extends JPanel{
+>>>>>>> a75d2043647158556919ad9ae744c8925a53e01e:src/no/ntnu/iie/stud/cateringstorm/gui/tabs/AdminEmployeeView.java
     private JPanel mainPanel;
     private JTable timesheetTable;
     private JButton refreshButton;
@@ -35,12 +40,12 @@ public class EmployeeView extends JPanel{
     private JTextField searchField;
     private TimesheetTableModel timesheetModel;
     private JScrollPane timesheetPane;
-    private JPanel noSelectButtonPanel;
+
 
     private ArrayList<Timesheet> timesheetList;
 
 
-    public EmployeeView(){
+    public AdminEmployeeView(){
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
@@ -48,9 +53,9 @@ public class EmployeeView extends JPanel{
             refresh();
         });
 
-        /*registerTimesheetButton.addActionListener(e -> {
+        registerTimesheetButton.addActionListener(e -> {
             registerTimesheet();
-        });*/
+        });
 
         editTimesheetButton.addActionListener(e -> {
             editTimesheet(getSelectedTimesheet());
@@ -80,11 +85,11 @@ public class EmployeeView extends JPanel{
             }
 
             public void searchDocument(){
-                /*ArrayList<Timesheet> copy = new ArrayList<>();
+                ArrayList<Timesheet> copy = new ArrayList<>();
 
                 for(int i = 0; i < timesheetList.size(); i++){
 
-                    }*/
+                    }
                 }
 
 
@@ -93,7 +98,7 @@ public class EmployeeView extends JPanel{
 
     }
 
-    /*private void registerTimesheet(Timesheet timesheet){
+    private void registerTimesheet(Timesheet timesheet){
         RegisterTimesheetDialog rtDialog = new RegisterTimesheetDialog(timesheet);
         final int WIDTH = 300;
         final int HEIGHT = 300;
@@ -104,7 +109,7 @@ public class EmployeeView extends JPanel{
 
         rtDialog.setVisible(true);
         timesheetList = TimesheetFactory.getAllTimesheets();
-    }*/
+    }
 
     private Timesheet getSelectedTimesheet(){
         return timesheetModel.getValue(timesheetTable.getSelectedRow());
@@ -163,11 +168,11 @@ public class EmployeeView extends JPanel{
         final int WIDTH = 1300;
         final int HEIGHT = 600;
         JFrame frame = new JFrame();
-        frame.add(new EmployeeView());
+        frame.add(new AdminEmployeeView());
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);
     }
 }
-/**/
+*/

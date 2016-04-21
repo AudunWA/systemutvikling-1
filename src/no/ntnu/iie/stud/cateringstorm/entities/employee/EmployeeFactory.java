@@ -93,7 +93,28 @@ public final class EmployeeFactory {
         }
         return null;
     }
+    /**
+     * Creates an arraylist containing all active employees from the SQL table employee
+     * @return Arraylist<Employee>
+     */
+    public static ArrayList<Employee> getActiveEmployees() {
+        ArrayList<Employee> employees = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM employee WHERE active LIKE TRUE")) {
+                statement.executeQuery();
 
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        employees.add(createEmployeeFromResultSet(result));
+                    }
+                }
+            }
+            return employees;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     /**
      * Creates an employee from result
      * @param result
@@ -109,8 +130,9 @@ public final class EmployeeFactory {
         String address = result.getString("address");
         String phone = result.getString("phone");
         String email = result.getString("email");
+        boolean active = result.getBoolean("active");
         EmployeeType employeeType = EmployeeType.getEmployeeType(employeeTypeId);
-        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType);
+        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType,active);
     }
 
     /**
@@ -149,7 +171,7 @@ public final class EmployeeFactory {
                     }
                 }
 
-                Employee employee = new Employee(generatedId, username, forename, surname, address, phoneNumber, email, type);
+                Employee employee = new Employee(generatedId, username, forename, surname, address, phoneNumber, email, type,true);
                 return employee;
             }
         } catch (SQLException e) {
@@ -171,11 +193,33 @@ public final class EmployeeFactory {
                 statement.setBoolean(1, active);
                 statement.setInt(2, employeeId);
 
-                statement.execute();
-                return employeeId;
-
+                return statement.executeUpdate();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    /**
+     *
+     * @param employee
+     * @return statement.executeUpdate
+     */
+    public static int updateEmployee(Employee employee){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE employee SET username = ?, forename = ?, surname = ?,address = ?,phone = ?,email = ?, employee_type = ?, active = ? WHERE employee_id = ?")) {
+                statement.setString(1,employee.getUsername());
+                statement.setString(2,employee.getForename());
+                statement.setString(3,employee.getSurname());
+                statement.setString(4,employee.getAddress());
+                statement.setString(5,employee.getPhoneNumber());
+                statement.setString(6,employee.getEmail());
+                statement.setInt(7,employee.getEmployeeType().getType());
+                statement.setBoolean(8,employee.isActive());
+                statement.setInt(9,employee.getEmployeeId());
+                return statement.executeUpdate();
+        }
+        } catch (SQLException e){
             e.printStackTrace();
             return -1;
         }
