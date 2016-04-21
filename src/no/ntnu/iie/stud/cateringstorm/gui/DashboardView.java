@@ -1,13 +1,16 @@
 package no.ntnu.iie.stud.cateringstorm.gui;
 
+import no.ntnu.iie.stud.cateringstorm.Main;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.tabs.*;
 import no.ntnu.iie.stud.cateringstorm.gui.util.DynamicTabbedPane;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -32,6 +35,7 @@ public class DashboardView extends JFrame {
         super();
         this.loggedInEmployee = loggedInEmployee;
 
+        Main.setApplicationIcon(this);
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

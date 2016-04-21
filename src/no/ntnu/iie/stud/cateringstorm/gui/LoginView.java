@@ -1,5 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.gui;
 
+import no.ntnu.iie.stud.cateringstorm.Main;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 
@@ -24,6 +25,7 @@ public class LoginView extends JFrame {
     private JButton loginButton;
 
     public LoginView() {
+        Main.setApplicationIcon(this);
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

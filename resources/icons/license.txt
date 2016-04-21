@@ -2,6 +2,6 @@ Google Material icons (all starting with ic_):
 From: https://github.com/google/material-design-icons
 License: https://raw.githubusercontent.com/google/material-design-icons/master/LICENSE
 
-package icon:
+Everything else:
 From: https://github.com/Templarian/MaterialDesign
 License: http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web
