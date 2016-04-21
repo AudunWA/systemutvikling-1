@@ -86,4 +86,31 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
             default: throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
+    @Override
+    public void setValueAt(Object value, int rowIndex, int columnIndex){
+        Employee entity = getValue(rowIndex);
+        int columnType = getColumnType(columnIndex);
+        switch (columnType){
+            case COLUMN_USERNAME:
+                break;
+            case COLUMN_FORENAME:
+                break;
+            case COLUMN_SURNAME:
+                break;
+            case COLUMN_ADDRESS:
+                break;
+            case COLUMN_PHONE:
+                break;
+            case COLUMN_EMAIL:
+                break;
+            case COLUMN_EMPLOYEE_TYPE:
+                break;
+            case COLUMN_FULL_NAME:
+                break;
+            case COLUMN_ACTIVE:
+                entity.setActive((Boolean)value);
+                break;
+            default: throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
+        }
+    }
 }
