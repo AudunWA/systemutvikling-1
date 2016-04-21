@@ -106,10 +106,10 @@ public class TimesheetView extends JPanel{
     }
 
     private void checkUnfinishedTimesheet(){
-        unFinishedSheet = TimesheetFactory.getUnfinishedTimeSheet(loggedInEmployeeId);
+        unFinishedSheet = TimesheetFactory.getLatestTimeSheet(loggedInEmployeeId);
 
         //If last Clock-in hasn't been clocked out, clock out.
-        if(unFinishedSheet != null){
+        if(unFinishedSheet != null && unFinishedSheet.getToTime()==null){
 
             if(new Timestamp(System.currentTimeMillis()).after(unFinishedSheet.getFromTime())){
                 LocalDateTime dateTime = unFinishedSheet.getFromTime().toLocalDateTime().toLocalDate().atTime(23,59);
@@ -136,7 +136,7 @@ public class TimesheetView extends JPanel{
     }
     private void checkLatestTimesheet(){
         Timesheet sheet = TimesheetFactory.getLatestTimeSheet(loggedInEmployeeId);
-        if(sheet!= null && sheet.getToTime()!= null && TimesheetFactory.getUnfinishedTimeSheet(loggedInEmployeeId) == null){
+        if(sheet!= null && sheet.getToTime()!= null){
             if(LocalDate.now().isEqual(sheet.getToTime().toLocalDateTime().toLocalDate())){
                 clockInButton.setEnabled(false);
                 clockOutButton.setEnabled(false);
@@ -189,8 +189,8 @@ public class TimesheetView extends JPanel{
     private void clockOut(){
         // TODO: Use current time, register to-time
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Timesheet sheet = TimesheetFactory.getUnfinishedTimeSheet(loggedInEmployeeId);
-        if(sheet != null) {
+        Timesheet sheet = TimesheetFactory.getLatestTimeSheet(loggedInEmployeeId);
+        if(sheet != null && sheet.getToTime() == null) {
             sheet.setToTime(time);
             int result = TimesheetFactory.updateTimesheet(sheet);
             if (result == 1) {
