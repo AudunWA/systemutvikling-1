@@ -34,11 +34,12 @@ public class AddDishDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(addButton);
 
-        addButton.addActionListener(new ActionListener() {
+        /*addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onAdd();
             }
         });
+        */
 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -86,6 +87,7 @@ public class AddDishDialog extends JDialog {
         activeStatus.setSelectedIndex(0);
     }
 
+    /*
     private void onAdd() {
         String name = dishName.getText();
         if (name.isEmpty()) {
@@ -129,6 +131,7 @@ public class AddDishDialog extends JDialog {
         }
         JOptionPane.showMessageDialog(this, dish);
     }
+    */
 
     private void onOk() {
         if (ingredientTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {

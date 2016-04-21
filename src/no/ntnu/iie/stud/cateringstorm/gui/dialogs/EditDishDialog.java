@@ -20,6 +20,9 @@ public class EditDishDialog extends JDialog {
     private JComboBox editStatus;
     private JLabel editNameLabel;
     private JLabel editDescriptionLabel;
+    private JTable addedTable;
+    private JTable dishTable;
+    private JButton swapButton;
     private Dish dish;
 
 
