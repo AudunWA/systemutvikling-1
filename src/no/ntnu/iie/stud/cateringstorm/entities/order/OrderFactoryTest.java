@@ -66,7 +66,7 @@ public class OrderFactoryTest {
     }
 
 
-    // TODO: Maybe test this
+    // TODO: Maybe test this further
     @Test
     public void testGetSalesForPeriod() throws Exception {
         HashMap<LocalDate, Double> sales = OrderFactory.getSalesForPeriod(LocalDate.now().minusDays(7), LocalDate.now());
