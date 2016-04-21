@@ -12,9 +12,10 @@ public class CustomerFactoryTest {
 
     @Test
     public void testViewSingleCustomer() throws Exception {
-
-        System.out.println(CustomerFactory.getCustomer(1).getForename());
-
+        Customer customer = CustomerFactory.createCustomer("Kirkhorn", "Knut",  "Hornindal", true, "999999","noot@hotmail.com"),
+        newCustomer = CustomerFactory.getCustomer(customer.getCustomerId());
+        Assert.assertNotNull(newCustomer);
+        Assert.assertEquals(customer.getCustomerId(),newCustomer.getCustomerId());
     }
 
     @Test
