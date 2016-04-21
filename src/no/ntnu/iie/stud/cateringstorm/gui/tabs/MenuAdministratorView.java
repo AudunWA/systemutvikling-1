@@ -5,9 +5,11 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;*/
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditDishDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddDishDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
+import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -24,6 +26,8 @@ import java.util.ArrayList;
  * Created by kenan on 01.04.2016.
  */
 public class MenuAdministratorView extends JPanel {
+    private static final Integer[] COLUMNS = new Integer[] { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION };
+    private static final Integer[] ADMIN_COLUMNS = new Integer[] { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION, DishTableModel.COLUMN_ACTIVE };
     private JButton addDishButton;
     private JButton editDishButton;
     private JButton removeDishButton;
@@ -155,8 +159,11 @@ public class MenuAdministratorView extends JPanel {
     }
     private void createTable(){
         dishList = DishFactory.getActiveDishes();
-        Integer[] columns = new Integer[] { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION }; // Columns can be changed
-        tableModel = new DishTableModel(dishList, columns);
+        if(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
+            tableModel = new DishTableModel(dishList, ADMIN_COLUMNS);
+        } else {
+            tableModel = new DishTableModel(dishList, COLUMNS);
+        }
         dishTable = new JTable(tableModel);
         dishTable.setFillsViewportHeight(true);
     }
