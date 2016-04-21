@@ -86,6 +86,17 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
             default: throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        int columnType = getColumnType(columnIndex);
+        switch (columnType) {
+            case COLUMN_ACTIVE:
+                return true;
+        }
+        return super.isCellEditable(rowIndex, columnIndex);
+    }
+
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex){
         Employee entity = getValue(rowIndex);
@@ -109,6 +120,7 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
                 break;
             case COLUMN_ACTIVE:
                 entity.setActive((Boolean)value);
+                fireTableCellUpdated(rowIndex, columnIndex);
                 break;
             default: throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }

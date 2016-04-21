@@ -4,7 +4,8 @@ import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.util.*;
 
 /**
  * Created by Chris on 30.03.2016.
@@ -150,7 +151,8 @@ public final class IngredientFactory {
      * @param expireDate
      * @return
      */
-    public static Ingredient createIngredient(String name, String description, double amount, String unit, boolean vegetarian, Timestamp arrivalDate, Date expireDate) {
+    /*int ingredientId, Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount, String unit*/
+    public static Ingredient createIngredient(Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount,String unit) {
         int generatedId; // The AUTO_INCREMENT from INSERT
 
         try (Connection connection = Database.getConnection()) {

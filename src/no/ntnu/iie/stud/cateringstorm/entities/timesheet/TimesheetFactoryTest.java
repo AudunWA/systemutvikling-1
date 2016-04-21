@@ -45,21 +45,38 @@ public class TimesheetFactoryTest {
     @Test
     public void testEditTimesheetStatus() throws Exception {
         Timesheet sheet = new Timesheet(100,3,new Timestamp(System.currentTimeMillis()-10),new Timestamp(System.currentTimeMillis()),true);
-
+        sheet = TimesheetFactory.createTimesheet(sheet.getEmployeeId(),sheet.getFromTime(),sheet.getToTime(),sheet.isActive());
+        int result = TimesheetFactory.editTimesheetStatus(sheet.getTimesheetId(),sheet.getEmployeeId(),false);
+        Assert.assertEquals(1,result);
     }
 
-    @Test
+    /*@Test
     public void testGetUnfinishedTimeSheet() throws Exception {
-
-    }
+        Timesheet sheet = TimesheetFactory.createTimesheet(3,new Timestamp(System.currentTimeMillis()-10),true),
+        unfinishedSheet = TimesheetFactory.getUnfinishedTimeSheet(sheet.getEmployeeId());
+        Assert.assertNotNull(unfinishedSheet);
+        Assert.assertEquals(sheet.getTimesheetId(),unfinishedSheet.getTimesheetId());
+        Assert.assertEquals(sheet.getEmployeeId(),unfinishedSheet.getEmployeeId());
+    }*/
 
     @Test
     public void testGetLatestTimeSheet() throws Exception {
-
+        Timesheet sheet = TimesheetFactory.createTimesheet(3,new Timestamp(System.currentTimeMillis()-1),new Timestamp(System.currentTimeMillis()),true),
+        latestTimesheet = TimesheetFactory.getLatestTimeSheet(sheet.getEmployeeId());
+        Assert.assertNotNull(latestTimesheet);
+        Assert.assertEquals(sheet.getEmployeeId(),latestTimesheet.getEmployeeId());
+        Assert.assertEquals(sheet.getFromTime(),latestTimesheet.getFromTime());
     }
 
     @Test
     public void testUpdateTimesheet() throws Exception {
-
+        Timesheet sheet = TimesheetFactory.createTimesheet(3,new Timestamp(System.currentTimeMillis()-1),new Timestamp(System.currentTimeMillis()),true);
+        sheet = TimesheetFactory.getLatestTimeSheet(sheet.getEmployeeId());
+        Timestamp newFromTime = new Timestamp(System.currentTimeMillis());
+        sheet.setFromTime(newFromTime);
+        int result = TimesheetFactory.updateTimesheet(sheet);
+        Assert.assertEquals(1,result);
+        sheet = TimesheetFactory.getLatestTimeSheet(sheet.getEmployeeId());
+        Assert.assertNotEquals(newFromTime,sheet.getFromTime());
     }
 }

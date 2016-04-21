@@ -207,7 +207,7 @@ public final class EmployeeFactory {
      */
     public static int updateEmployee(Employee employee){
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("UPDATE employee SET username = ?, forename = ?, surname = ?,address = ?,phone = ?,email = ?, employee_type = ?, active = ? WHERE employee_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE employee SET username = ?, forename = ?, surname = ?,address = ?,phone = ?,email = ?, e_type_id = ?, active = ? WHERE employee_id = ?")) {
                 statement.setString(1,employee.getUsername());
                 statement.setString(2,employee.getForename());
                 statement.setString(3,employee.getSurname());

@@ -141,7 +141,7 @@ public class AddFoodPackageDialog extends JDialog {
         }
 
         if (dishes.size() < 1) {
-            JOptionPane.showMessageDialog(this, "Please add package(s)");
+            JOptionPane.showMessageDialog(this, "Please add dish(s))");
             return;
         }
 

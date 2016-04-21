@@ -36,6 +36,20 @@ public final class DateUtil {
     }
 
     /**
+     Creates a Integer representation of the input day.
+     * @param weekdayFormatted The day (Monday = 0)
+     * @return A Integer representation of the formatted day, or -1 if invalid.
+     */
+    public static int parseWeekday(String weekdayFormatted) {
+        for (int i = 0; i < WEEKDAYS.length; i++) {
+            if(WEEKDAYS[i].equals(weekdayFormatted)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
      Formats our own relative time format to hh:ss.
      * @param relativeTime Seconds after midnight.
      * @return A String containing the formatted time.
