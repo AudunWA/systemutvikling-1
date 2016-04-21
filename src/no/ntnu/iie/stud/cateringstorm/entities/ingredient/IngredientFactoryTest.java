@@ -37,7 +37,7 @@ public class IngredientFactoryTest {
     @Test
     public void testShowExpired() throws Exception {
         for (Ingredient ingredient : IngredientFactory.getExpiredIngredients()){
-            Assert.assertEquals(true,new Date(System.currentTimeMillis()).after(ingredient.getExpireDate()));
+            Assert.assertTrue(new Date(System.currentTimeMillis()).after(ingredient.getExpireDate()));
         }
     }
 

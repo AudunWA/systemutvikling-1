@@ -65,7 +65,7 @@ public class EmployeeFactoryTest {
        int result = EmployeeFactory.editEmployeeStatus(test.getEmployeeId(), false);
         Assert.assertEquals(result,1);
         test = EmployeeFactory.getEmployee(test.getUsername());
-        Assert.assertEquals(false,test.isActive());
+        Assert.assertTrue(!test.isActive());
     }
     @Test
     public void testUpdateEmployee() throws Exception {

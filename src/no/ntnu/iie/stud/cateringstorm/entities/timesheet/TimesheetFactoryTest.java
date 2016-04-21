@@ -28,7 +28,7 @@ public class TimesheetFactoryTest {
         ArrayList<Timesheet> sheets = TimesheetFactory.getActiveTimesheetsByEmployee(3);
         Assert.assertNotNull(sheets);
         for (int i = 0; i < sheets.size() ; i++) {
-            Assert.assertEquals(sheets.get(i).isActive(),true);
+            Assert.assertTrue(sheets.get(i).isActive());
         }
     }
 
@@ -61,7 +61,7 @@ public class TimesheetFactoryTest {
 
     @Test
     public void testGetLatestTimeSheet() throws Exception {
-        Timesheet sheet = TimesheetFactory.createTimesheet(3,new Timestamp(System.currentTimeMillis()-1),new Timestamp(System.currentTimeMillis()),true),
+        Timesheet sheet = TimesheetFactory.createTimesheet(3,new Timestamp(System.currentTimeMillis()-1001),new Timestamp(System.currentTimeMillis()),true),
         latestTimesheet = TimesheetFactory.getLatestTimeSheet(sheet.getEmployeeId());
         Assert.assertNotNull(latestTimesheet);
         Assert.assertEquals(sheet.getEmployeeId(),latestTimesheet.getEmployeeId());
