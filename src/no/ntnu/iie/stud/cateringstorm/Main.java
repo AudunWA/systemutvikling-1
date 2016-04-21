@@ -1,5 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm;
 
+import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.gui.LoginView;
 
@@ -21,6 +22,15 @@ public class Main {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             System.out.println("Failed to set OS GUI style, now using default style.");
+        }
+
+        try
+        {
+            UIManager.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
 
         LoginView loginVIew = new LoginView();
