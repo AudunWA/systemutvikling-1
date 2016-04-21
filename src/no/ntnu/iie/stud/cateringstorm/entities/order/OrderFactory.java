@@ -65,7 +65,7 @@ public final class OrderFactory {
     public static ArrayList<String> getAllAvailableDeliveryAddresses(){
         ArrayList<String> addresses = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM _order NATURAL JOIN customer WHERE (status = 0) && delivery_time > NOW() ORDER BY delivery_time")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM _order NATURAL JOIN customer WHERE (status = 0) && DATE(delivery_time) = CURDATE() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {
@@ -184,7 +184,7 @@ public final class OrderFactory {
     public static ArrayList<Order> getAllAvailableOrdersChauffeur() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status = 0) && delivery_time > NOW() ORDER BY delivery_time")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE status = 0 && DATE(delivery_time) = CURDATE() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()){
