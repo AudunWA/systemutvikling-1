@@ -34,11 +34,12 @@ public class AddDishDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(addButton);
 
-        addButton.addActionListener(new ActionListener() {
+        /*addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onAdd();
             }
         });
+        */
 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
