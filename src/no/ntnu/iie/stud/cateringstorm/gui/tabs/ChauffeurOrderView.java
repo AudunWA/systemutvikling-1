@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -34,6 +35,13 @@ public class ChauffeurOrderView extends JPanel {
 
     private void createTable(){
         orderList = OrderFactory.getAllAvailableOrdersForChauffeurTable();
+        for (int i = 0; i < orderList.size(); i++){
+            if (OrderFactory.getDeliveryStart(orderList.get(i).getOrderId()) != null) {
+                if (OrderFactory.getDeliveryStart(orderList.get(i).getOrderId()).before(new Date(System.currentTimeMillis() - 3600000 * 3))) {
+                    OrderFactory.setOrderState(orderList.get(i).getOrderId(), 0);
+                }
+            }
+        }
         Integer[] columns = new Integer[] {OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_CUSTOMER_NAME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_ADDRESS, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_DELIVERY_TIME};
         tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
@@ -126,6 +134,7 @@ public class ChauffeurOrderView extends JPanel {
 
         for (Order ayy : helpTable){
             OrderFactory.setOrderState(ayy.getOrderId(), 4);
+            OrderFactory.setDeliveryStart(ayy.getOrderId());
         }
 
         ArrayList<Coordinate> addressToPoint = new ArrayList<>();
@@ -171,6 +180,13 @@ public class ChauffeurOrderView extends JPanel {
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
         orderList = OrderFactory.getAllAvailableOrdersForChauffeurTable();
         tableModel.setRows(orderList);
+        for (int i = 0; i < orderList.size(); i++){
+            if (OrderFactory.getDeliveryStart(i) != null) {
+                if (OrderFactory.getDeliveryStart(i).after(new Date(System.currentTimeMillis() + 3600000 * 3))) {
+                    OrderFactory.setOrderState(i, 0);
+                }
+            }
+        }
         Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
     }
     private void getReadyOrders(){

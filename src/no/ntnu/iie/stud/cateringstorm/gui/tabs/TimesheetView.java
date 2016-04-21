@@ -4,6 +4,8 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.entities.timesheet.Timesheet;
 import no.ntnu.iie.stud.cateringstorm.entities.timesheet.TimesheetFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditTimesheetDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.RegisterTimesheetDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.TimesheetTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
@@ -21,9 +23,6 @@ import javax.swing.table.TableCellEditor;
 
 /**
  * Created by EliasBrattli on 14/04/2016.
- * TODO: Make a checkbox to show or hide active timesheets, which is to be enabled visible only if admin is logged in
- * TODO: All work sessions must be auto-clocked out at the end of a day, if a new date as arrived
- * FIXME: Somehow, only Date, and not Date + time is displayed in table.
  */
 
 public class TimesheetView extends JPanel{
@@ -42,6 +41,7 @@ public class TimesheetView extends JPanel{
     private JScrollPane tablePane;
     private JLabel infoLabel3;
     private JButton refreshButton;
+    private JCheckBox showInactiveCB;
     private TimesheetTableModel tableModel;
     private ArrayList<Timesheet> timesheetList;
     private int loggedInEmployeeId;
@@ -53,6 +53,8 @@ public class TimesheetView extends JPanel{
         add(mainPanel, BorderLayout.CENTER);
         checkUnfinishedTimesheet();
         checkLatestTimesheet();
+        showInactiveCB.setVisible(false);
+        refresh();
         editButton.addActionListener(e -> {
             editTimesheet(getSelectedTimesheet());
         });
@@ -74,7 +76,9 @@ public class TimesheetView extends JPanel{
         hoursTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
-
+        showInactiveCB.addActionListener(e->{
+            refresh();
+        });
 
     }
     private void createUIComponents() {
@@ -83,7 +87,6 @@ public class TimesheetView extends JPanel{
     }
     private void createTable(){
         //timesheetList = TimesheetFactory.getAllTimesheets();
-        System.out.println(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR);
         Integer[] columns;
         if(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
             timesheetList = getTimesheetsByEmployeeId();
@@ -92,7 +95,6 @@ public class TimesheetView extends JPanel{
             timesheetList = getActiveTimesheetsByEmployeeId();
             columns = new Integer[]{ TimesheetTableModel.COLUMN_HOURS_ID, TimesheetTableModel.COLUMN_FROM_TIME, TimesheetTableModel.COLUMN_TO_TIME};
         }
-        //System.out.println(timesheetList.get(0));
         tableModel = new TimesheetTableModel(timesheetList, columns);
         hoursTable = new JTable(tableModel);
         hoursTable.getTableHeader().setReorderingAllowed(false);
@@ -128,17 +130,17 @@ public class TimesheetView extends JPanel{
         int selectedRow = hoursTable.getSelectedRow();
         if(selectedRow > -1){
             Timesheet timesheet = tableModel.getValue(selectedRow);
+            return timesheet;
         }
         return null;
     }
     private void checkLatestTimesheet(){
         Timesheet sheet = TimesheetFactory.getLatestTimeSheet(loggedInEmployeeId);
-        System.out.println("sheet: "+sheet);
         if(sheet!= null && sheet.getToTime()!= null && TimesheetFactory.getUnfinishedTimeSheet(loggedInEmployeeId) == null){
             if(LocalDate.now().isEqual(sheet.getToTime().toLocalDateTime().toLocalDate())){
                 clockInButton.setEnabled(false);
                 clockOutButton.setEnabled(false);
-                clockManuallyButton.setEnabled(false);
+                clockManuallyButton.setEnabled(true);
             }else{
                 clockInButton.setEnabled(true);
                 clockOutButton.setEnabled(false);
@@ -150,6 +152,16 @@ public class TimesheetView extends JPanel{
         // TODO: Open EditTimesheetDialog
         if(timesheet == null){
             JOptionPane.showMessageDialog(null,"Please select a table row");
+        }else{
+            final int HEIGHT = 400, WIDTH = 400;
+            GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
+            EditTimesheetDialog dialog = new EditTimesheetDialog(loggedInEmployeeId, timesheet);
+            dialog.pack();
+            dialog.setSize(WIDTH,HEIGHT);
+            dialog.setVisible(true);
+            dialog.setTitle("Edit timesheet");
+            dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            dialog.setLocationRelativeTo(this);
         }
     }
 
@@ -214,11 +226,29 @@ public class TimesheetView extends JPanel{
     }
     private void registerTimesheet(){
         // TODO: Open RegisterTimesheetDialog
+        final int HEIGHT = 400, WIDTH = 400;
+        RegisterTimesheetDialog dialog = new RegisterTimesheetDialog(loggedInEmployeeId);
+        dialog.pack();
+        dialog.setSize(WIDTH,HEIGHT);
+        dialog.setVisible(true);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        dialog.setTitle("Register timesheet");
+        dialog.setLocationRelativeTo(null);
+        if(dialog.isRegistered()) {
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "New timesheet registered", Toast.Style.SUCCESS).display();
+        }else{
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Registration failed", Toast.Style.ERROR).display();
+        }
+        refresh();
     }
     private void removeTimesheet(Timesheet timesheet){
         // TODO: set Status of a time sheet to inactive. It's accessible to admin
         if(timesheet == null){
             JOptionPane.showMessageDialog(null,"Please select a table row");
+        }else{
+            JOptionPane.showConfirmDialog(null,"Are you sure?");
+            TimesheetFactory.editTimesheetStatus(timesheet.getTimesheetId(),timesheet.getEmployeeId(),false);
+            refresh();
         }
     }
     private ArrayList<Timesheet> getActiveTimesheetsByEmployeeId(){
@@ -228,12 +258,18 @@ public class TimesheetView extends JPanel{
         return TimesheetFactory.getTimesheetsByEmployee(loggedInEmployeeId);
     }
     private void refresh(){
+        checkLatestTimesheet();
         if(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
-            tableModel.setRows(getTimesheetsByEmployeeId());
-            checkLatestTimesheet();
+            showInactiveCB.setVisible(true);
+            if(showInactiveCB.isSelected()) {
+                tableModel.setRows(getTimesheetsByEmployeeId());
+            }else{
+                tableModel.setRows(getActiveTimesheetsByEmployeeId());
+            }
+
         }else{
+            showInactiveCB.setVisible(false);
             tableModel.setRows(getActiveTimesheetsByEmployeeId());
-            checkLatestTimesheet();
         }
     }
     public int getLoggedInEmployeeId() {
