@@ -4,16 +4,11 @@ import jdk.nashorn.internal.runtime.regexp.joni.exception.JOniException;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
-<<<<<<< HEAD
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
-import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDishFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientDishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
-=======
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
->>>>>>> 47f2e310eebbb7f56b820b9dad3746a0f102a46d
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -29,7 +24,9 @@ public class AddDishDialog extends JDialog {
     private JComboBox dishType;
     private JLabel dishNameLabel;
     private JLabel dishDescriptionLabel;
-<<<<<<< HEAD
+
+    private JButton okButton;
+
     private JScrollPane addedIngredientPane;
     private JScrollPane selectionIngredientPane;
     private JTable addedIngredientTable;
@@ -41,16 +38,6 @@ public class AddDishDialog extends JDialog {
     private ArrayList<IngredientDish> addedList;
 
     private IngredientDishTableModel addedTableModel;
-=======
-    private JTable addedTable;
-    private JButton okButton;
-    private JTable ingredientTable;
-
-    private ArrayList<Ingredient> addedList;
-    private ArrayList<Ingredient> ingredientList;
-    private ArrayList<Dish> dishes = new ArrayList<>();
-
->>>>>>> 47f2e310eebbb7f56b820b9dad3746a0f102a46d
 
 
     public AddDishDialog() {
@@ -77,10 +64,10 @@ public class AddDishDialog extends JDialog {
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { onOk(); }
         });
-        addedTable.getSelectionModel().addListSelectionListener(e -> {
+        addedIngredientTable.getSelectionModel().addListSelectionListener(e -> {
 
         });
-        ingredientTable.getSelectionModel().addListSelectionListener(e -> {
+        selectionIngredientTable.getSelectionModel().addListSelectionListener(e -> {
 
         });
 
@@ -162,51 +149,41 @@ public class AddDishDialog extends JDialog {
     */
 
     private void onOk() {
-        if (ingredientTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
-            JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
-            ingredientTable.clearSelection();
-            addedTable.clearSelection();
-        } else {
-            if (ingredientTable.getSelectedRow() > -1) {
-                boolean check = true;
-                for (Ingredient ingredients : addedList) {
-                    if (ingredients.getIngredientId() == (ingredientTable.getSelectedRow() + 1)) {
-                        check = false;
-                    }
-                }
-                if (check) {
-                    addedList.add(ingredientList.get(ingredientTable.getSelectedRow()));
-                    ((EntityTableModel) addedTable.getModel()).setRows(addedList);
-                    ingredientTable.clearSelection();
-                } else {
-                    JOptionPane.showMessageDialog(this, "This ingredient is already added.");
-                    ingredientTable.clearSelection();
-                }
-            } else if (addedTable.getSelectedRow() > -1 && !ingredientTable.isColumnSelected(1) && !ingredientTable.isColumnSelected(2)) {
-                addedList.remove(addedTable.getSelectedRow());
-                ((EntityTableModel) addedTable.getModel()).setRows(addedList);
-                addedTable.clearSelection();
-            } else {
-                JOptionPane.showMessageDialog(this, "Please unselect the ingredient list. Do this by clicking with ctrl down.");
-                addedTable.clearSelection();
-            }
-        }
+        //if (ingredientTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
+        //    JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
+        //    ingredientTable.clearSelection();
+        //    addedTable.clearSelection();
+        //} else {
+        //    if (ingredientTable.getSelectedRow() > -1) {
+        //        boolean check = true;
+                //for (Ingredient ingredients : addedList) {
+                //    if (ingredients.getIngredientId() == (ingredientTable.getSelectedRow() + 1)) {
+                //        check = false;
+                //    }
+                //}
+                //if (check) {
+                 //   addedList.add(ingredientList.get(ingredientTable.getSelectedRow()));
+                 //   ((EntityTableModel) addedTable.getModel()).setRows(addedList);
+                  //  ingredientTable.clearSelection();
+          //      } else {
+            //        JOptionPane.showMessageDialog(this, "This ingredient is already added.");
+              //      ingredientTable.clearSelection();
+                //}
+           // } else if (addedTable.getSelectedRow() > -1 && !ingredientTable.isColumnSelected(1) && !ingredientTable.isColumnSelected(2)) {
+              //  addedList.remove(addedTable.getSelectedRow());
+                //((EntityTableModel) addedTable.getModel()).setRows(addedList);
+               // addedTable.clearSelection();
+            //} else {
+              //  JOptionPane.showMessageDialog(this, "Please unselect the ingredient list. Do this by clicking with ctrl down.");
+               // addedTable.clearSelection();
+           // }
+       // }
 
     }
 
     private void onCancel() {
 // add your code here if necessary
         dispose();
-    }
-
-    public static void main(String[] args) {
-        final int WIDTH = 700;
-        final int HEIGHT = 600;
-        AddDishDialog dialog = new AddDishDialog();
-        dialog.setSize(WIDTH, HEIGHT);
-        dialog.setVisible(true);
-        System.exit(0);
-
     }
 
     public void onAR(){
@@ -275,5 +252,15 @@ public class AddDishDialog extends JDialog {
         createComboBoxType();
         createComboBoxActiveStatus();
         createTables();
+    }
+
+    public static void main(String[] args) {
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+        AddDishDialog dialog = new AddDishDialog();
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setVisible(true);
+        System.exit(0);
+
     }
 }
