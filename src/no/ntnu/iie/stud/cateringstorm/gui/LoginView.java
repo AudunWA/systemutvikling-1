@@ -3,6 +3,8 @@ package no.ntnu.iie.stud.cateringstorm.gui;
 import no.ntnu.iie.stud.cateringstorm.Main;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
 
@@ -33,27 +35,32 @@ public class LoginView extends JFrame {
 
         getRootPane().setDefaultButton(loginButton);
 
-        loginButton.addActionListener(e -> {
-            // Handle login attempt
-            String usernameInput = usernameField.getText();
-            String passwordInput = new String(passwordField.getPassword());
+        loginButton.addActionListener(e -> onLoginClick());
+    }
 
-            Employee employee = EmployeeFactory.getEmployee(usernameInput, passwordInput);
-            if (employee == null) {
-                // Login failed
-                JOptionPane.showMessageDialog(this, "Login attempt failed!");
-                return;
-            } else {
-                usernameField.setEnabled(false);
-                passwordField.setEnabled(false);
-                loginButton.setEnabled(false);
+    /**
+     * Called when login button has been pressed
+     */
+    private void onLoginClick() {
+        // Handle login attempt
+        String usernameInput = usernameField.getText();
+        String passwordInput = new String(passwordField.getPassword());
 
-                JOptionPane.showMessageDialog(this, "Hello, " + employee.getFullName() + "!");
-                employee.onSuccessfulLogin();
-                setVisible(false);
-                dispose();
-            }
-        });
+        Employee employee = EmployeeFactory.getEmployee(usernameInput, passwordInput);
+        if (employee == null || (!employee.isActive() && employee.getEmployeeType() != EmployeeType.ADMINISTRATOR)) {
+            // Login failed
+            Toast.makeText(this, "Login attempt failed!", Toast.Style.ERROR).display();
+            return;
+        } else {
+            usernameField.setEnabled(false);
+            passwordField.setEnabled(false);
+            loginButton.setEnabled(false);
+
+            JOptionPane.showMessageDialog(this, "Hello, " + employee.getFullName() + "!");
+            employee.onSuccessfulLogin();
+            setVisible(false);
+            dispose();
+        }
     }
 
     private void createUIComponents() {

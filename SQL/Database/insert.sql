@@ -9,7 +9,7 @@ INSERT INTO employee_type VALUES (6, 'laundry staff', 60);
 -- (employee) --
 INSERT INTO employee VALUES (default, 'nootnoot', 'Knut', 'Kirkhorn', 'Pinguveien 23', '12345678', 'pingu@pingumail.com', 6,true,'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e','YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
 INSERT INTO employee VALUES (default, 'eliasbs', 'Elias', 'Sørensen', 'Valgrindvegen', '88888888', 'dragonslayer69@hotmail.com', 1,true,'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e','YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
-INSERT INTO employee VALUES (default, 'chechter', 'Christian', 'Echtermeyer', 'Stibakken 2', '99258217', 'chrech.birr@gmail.com', 4,false,'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e','YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
+INSERT INTO employee VALUES (default, 'chechter', 'Christian', 'Echtermeyer', 'Stibakken 2', '99258217', 'chrech.birr@gmail.com', 4,true,'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e','YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
 INSERT INTO employee VALUES (default, 'pisken', 'Kenan', 'Mahic', 'Kolstad', '123232323', 'kenanpølser@pølsefest.no', 3,true,'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e','YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
 INSERT INTO employee VALUES (default, 'vebjørn', 'Audun', 'Arbo', 'Trondheim', '69696969', 'glassmesteren@knusemail.com', 2,true,'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e','YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
 INSERT INTO employee VALUES (default, 'drammen', 'Håvard', 'Høydalsnes', 'Drammen',

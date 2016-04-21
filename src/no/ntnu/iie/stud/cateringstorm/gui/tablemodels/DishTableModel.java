@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
                 break;
             case COLUMN_ACTIVE:
                 entity.setActive((Boolean)value);
+                DishFactory.editDishStatus(entity.getDishId(), entity.isActive());
                 break;
             case COLUMN_TYPE_TEXT:
                 if(value.equals(status0)) {
