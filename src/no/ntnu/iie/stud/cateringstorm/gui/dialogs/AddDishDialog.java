@@ -65,9 +65,15 @@ public class AddDishDialog extends JDialog {
             public void actionPerformed(ActionEvent e) { onOk(); }
         });
         addedIngredientTable.getSelectionModel().addListSelectionListener(e -> {
+            if(!e.getValueIsAdjusting()) {
+                return;
+            }
             selectionIngredientTable.clearSelection();
         });
         selectionIngredientTable.getSelectionModel().addListSelectionListener(e -> {
+            if(!e.getValueIsAdjusting()) {
+                return;
+            }
             addedIngredientTable.clearSelection();
         });
 
