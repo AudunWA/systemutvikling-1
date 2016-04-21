@@ -6,6 +6,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDishFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientDishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
@@ -110,15 +111,31 @@ public class AddDishDialog extends JDialog {
 
     private void onOk(){
 
-        String dishName;
+        String name;
         String description;
-        int dishType;
+        int type;
         boolean active;
 
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
-        for (int i = 0; i < addedList.size(); i++){
-            ingredients.add(addedList.get(i).getIngredient());
+        name = dishName.getText();
+        if (name.equals("")){
+            JOptionPane.showMessageDialog(this, "Dish name must be filled in");
+            return;
         }
+        description = dishDescription.getText();
+        type = dishType.getSelectedIndex()+1;
+        if (activeStatus.equals("Active")){
+            active = true;
+        } else {
+            active = false;
+        }
+
+        String Joutput = "The following ingredients have been added to the dish: " + name + "\n";
+
+        for (IngredientDish ayy : IngredientDishFactory.createDish(addedList, name, description, type, active)){
+            Joutput += "Ingredient: " + ayy.getIngredient().getName() + " " + ayy.getQuantity() + ayy.getUnit() + ".\n";
+        }
+
+        JOptionPane.showMessageDialog(this, Joutput);
 
     }
 
