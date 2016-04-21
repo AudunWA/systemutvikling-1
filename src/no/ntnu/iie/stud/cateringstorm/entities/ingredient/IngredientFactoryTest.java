@@ -41,14 +41,20 @@ public class IngredientFactoryTest {
         }
     }
 
-    //Fixme: Add new ingredients in a new dish
     @Test
     public void testViewAllIngredientByDishId() throws Exception {
-        Dish dish = DishFactory.getDish(1);
+        ArrayList<Ingredient> ingredList = new ArrayList<>();
+        ingredList.add(IngredientFactory.getIngredient(1));
+        ingredList.add(IngredientFactory.getIngredient(2));
+        ingredList.add(IngredientFactory.getIngredient(3));
+        ingredList.add(IngredientFactory.getIngredient(4));
+        Dish dish = DishFactory.createDish("Testname","Test desc",2,true,ingredList);
+        Assert.assertNotNull(dish);// FIXME: Maybe abundant?
         ArrayList<Ingredient> ingredients = IngredientFactory.getIngredients(dish.getDishId());
         Assert.assertNotNull(ingredients);
         for (int i = 0; i < ingredients.size(); i++) {
             Assert.assertNotNull(ingredients.get(i));
+            Assert.assertEquals(ingredients.get(i).getIngredientId(),ingredList.get(i).getIngredientId());
         }
     }
 
