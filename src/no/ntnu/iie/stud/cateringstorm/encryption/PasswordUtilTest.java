@@ -5,6 +5,7 @@ import org.junit.Test;
 
 /**
  * Created by Audun on 10.03.2016.
+ * All methods: @throws Exception
  */
 public class PasswordUtilTest {
 

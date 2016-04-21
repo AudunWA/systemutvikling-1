@@ -207,7 +207,11 @@ public final class CustomerFactory {
         }
     }
 
-    // FIXME: There is something wrong with database connection?
+    /**
+     *
+     * @param customer
+     * @return int
+     */
     public static int updateCustomer(Customer customer){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE customer SET  surname = ?,forename = ?, address = ?, active = ?, phone = ?, email = ? WHERE customer_id = ?")) {

@@ -38,15 +38,76 @@ public class IngredientDishFactory {
                 statement.setString(4, unit);
 
                 int affectedRows = statement.executeUpdate();
-                if (affectedRows == 0) {
-                    return false; // No rows inserted
-                }
+                return affectedRows > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
+    }
+
+    public static ArrayList<IngredientDish> createDish(ArrayList<IngredientDish> ingredientDishes, String name, String description, int dishType, boolean active){
+
+        int generatedId;
+        ArrayList<IngredientDish> returnList = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try {
+                connection.setAutoCommit(false);
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish VALUES(DEFAULT, ?, ?, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+                    statement.setString(1, name);
+                    statement.setString(2, description);
+                    statement.setInt(3, dishType);
+                    statement.setBoolean(4, active);
+
+                    int affectedRows = statement.executeUpdate();
+                    if (affectedRows == 0) {
+                        connection.rollback();
+                        connection.setAutoCommit(true);
+                        return null;
+                    }
+                    try (ResultSet result = statement.getGeneratedKeys()) {
+                        if (result.next()) {
+                            generatedId = result.getInt(1);
+                        } else {
+                            connection.rollback();
+                            connection.setAutoCommit(true);
+                            return null; // No ID?
+                        }
+                    }
+                }
+
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO ingredient_dish VALUES(?,?,?,?)")) {
+
+                    for (IngredientDish ingDish : ingredientDishes) {
+                        statement.setInt(1, ingDish.getIngredient().getIngredientId());
+                        statement.setInt(2, generatedId);
+                        statement.setInt(3, ingDish.getQuantity());
+                        statement.setString(4, ingDish.getUnit());
+                        statement.addBatch();
+                        returnList.add(new IngredientDish(IngredientFactory.getIngredient(ingDish.getIngredient().getIngredientId()), DishFactory.getDish(generatedId), ingDish.getQuantity(), ingDish.getUnit()));
+                    }
+                    statement.executeBatch();
+                }
+            } catch (SQLException e){
+                connection.rollback();
+                connection.setAutoCommit(true);
+                throw e;
+            }
+
+            //All good, commence commit
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
+        return returnList;
+
+
+
     }
 
     public static IngredientDish addIngredientToNewDish(int ingredientId, int quantity, String unit){

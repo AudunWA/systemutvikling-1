@@ -2,6 +2,8 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
+import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddCustomerDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditCustomerDialog;
@@ -45,7 +47,6 @@ public class SalespersonCustomerView extends JPanel{
     private CustomerTableModel tableModel;
 
     private ArrayList<Customer> customerList;
-
     public SalespersonCustomerView(){
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
@@ -210,6 +211,7 @@ public class SalespersonCustomerView extends JPanel{
         // Window dimensions
         final int WIDTH = 1200;
         final int HEIGHT = 600;
+        GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
         JFrame frame = new JFrame();
         frame.add(new SalespersonCustomerView());
         frame.setVisible(true);

@@ -317,7 +317,7 @@ public final class OrderFactory {
 
         Timestamp orderTime = new Timestamp(System.currentTimeMillis());
         int generatedId;
-
+        int initalStatus = 1;
         try (Connection connection = Database.getConnection()) {
 
             try {
@@ -334,7 +334,7 @@ public final class OrderFactory {
                     statement.setBoolean(5, priority);
                     statement.setInt(6, salespersonId);
                     statement.setInt(7, customerId);
-                    statement.setInt(8, 1);
+                    statement.setInt(8, initalStatus);
 
                     int affectedRows = statement.executeUpdate();
 

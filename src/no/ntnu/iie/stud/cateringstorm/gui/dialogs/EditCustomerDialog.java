@@ -32,6 +32,7 @@ public class EditCustomerDialog extends JDialog{
         setModal(true);
         getRootPane().setDefaultButton(saveButton);//Consider not using this for safety reasons
         setLocationRelativeTo(getParent());
+
         saveButton.addActionListener(e->{
             onOK();
         });
@@ -84,7 +85,7 @@ public class EditCustomerDialog extends JDialog{
                     break;
                 case COLUMN_EMAIL:
                     customer.setEmail(input);
-                    break;
+
                 default: return;
             }
             int updatedId = CustomerFactory.updateCustomer(customer);
