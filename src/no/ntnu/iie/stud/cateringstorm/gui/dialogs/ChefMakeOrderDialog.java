@@ -4,6 +4,8 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
@@ -27,6 +29,8 @@ public class ChefMakeOrderDialog extends JDialog {
     private FoodPackageTableModel foodTableModel;
     private Order order;
     private ArrayList<Dish> dishList;
+    private ArrayList<Ingredient> ingredientsInOrder;
+    private ArrayList<Ingredient> ingredients;
 
     public ChefMakeOrderDialog(Order order) {
         this.order = order;
@@ -82,6 +86,16 @@ public class ChefMakeOrderDialog extends JDialog {
     private void onOK() {
 // add your code here
         OrderFactory.setOrderState(order.getOrderId(), 0);
+        int viewedOrderId = order.getOrderId();
+        ingredientsInOrder = IngredientFactory.getAllIngredientsInOrder(viewedOrderId);
+        for(int i = 0; i < ingredientsInOrder.size(); i++) {
+            int id = ingredientsInOrder.get(i).getIngredientId();
+            double usedAmount = ingredientsInOrder.get(i).getAmount();
+            ingredients = IngredientFactory.getAllIngredients();
+            double storageAmount = ingredients.get(i).getAmount();
+            double newAmount = storageAmount - usedAmount;
+            IngredientFactory.updateIngredientAmount(id, newAmount);
+        }
         dispose();
     }
 
