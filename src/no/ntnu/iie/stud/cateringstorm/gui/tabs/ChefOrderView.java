@@ -2,6 +2,8 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 //import no.ntnu.iie.stud.cateringstorm.gui.tabs.ChauffeurOrderView;
 
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.ChefMakeOrderDialog;
@@ -12,6 +14,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.font.TextAttribute;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -30,6 +33,8 @@ public class ChefOrderView extends JPanel {
     private JButton refreshButton;
     private ArrayList<Order> orderList;
     private OrderTableModel tableModel;
+    private ArrayList<Ingredient> ingredientsInOrder;
+    private ArrayList<Ingredient> ingredients;
 
     public ChefOrderView() {
         setLayout(new BorderLayout());
@@ -90,6 +95,16 @@ public class ChefOrderView extends JPanel {
                 orderTable.clearSelection();
                 orderTable.getModel().setValueAt((inProduction) ? "Ready for delivery" : "In production", selectedRow, statusColumn);
                 Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Orders status changed.", Toast.Style.SUCCESS).display();
+                int viewedOrderId = tableModel.getValue(orderTable.getSelectedRow()).getOrderId();
+                ingredientsInOrder = IngredientFactory.getAllIngredientsInOrder(viewedOrderId);
+                for(int i = 0; i < ingredientsInOrder.size(); i++) {
+                    int id = ingredientsInOrder.get(i).getIngredientId();
+                    double usedAmount = ingredientsInOrder.get(i).getAmount();
+                    ingredients = IngredientFactory.getAllIngredients();
+                    double storageAmount = ingredients.get(i).getAmount();
+                    double newAmount = storageAmount - usedAmount;
+                    IngredientFactory.updateIngredientAmount(id, newAmount);
+                }
             } else {
                 Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "You cannot change this status.", Toast.Style.ERROR).display();
                 //JOptionPane.showMessageDialog(this, "Error, chef can't change this status");

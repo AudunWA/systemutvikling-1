@@ -2,6 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.entities.ingredient;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  * Created by Audun on 11.03.2016.
