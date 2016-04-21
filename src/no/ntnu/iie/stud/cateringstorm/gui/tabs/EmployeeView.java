@@ -1,4 +1,4 @@
-package no.ntnu.iie.stud.cateringstorm.gui.tabs;
+/*package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Håvard
- */
+
 public class EmployeeView extends JPanel{
     private JPanel mainPanel;
     private JTable timesheetTable;
@@ -50,7 +50,7 @@ public class EmployeeView extends JPanel{
 
         /*registerTimesheetButton.addActionListener(e -> {
             registerTimesheet();
-        });*/
+        });
 
         editTimesheetButton.addActionListener(e -> {
             editTimesheet(getSelectedTimesheet());
@@ -84,7 +84,7 @@ public class EmployeeView extends JPanel{
 
                 for(int i = 0; i < timesheetList.size(); i++){
 
-                    }*/
+                    }
                 }
 
 
@@ -104,7 +104,7 @@ public class EmployeeView extends JPanel{
 
         rtDialog.setVisible(true);
         timesheetList = TimesheetFactory.getAllTimesheets();
-    }*/
+    }
 
     private Timesheet getSelectedTimesheet(){
         return timesheetModel.getValue(timesheetTable.getSelectedRow());
@@ -170,4 +170,4 @@ public class EmployeeView extends JPanel{
         frame.setLocationRelativeTo(null);
     }
 }
-/**/
+*/
