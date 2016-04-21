@@ -17,6 +17,9 @@ public class EditFoodPackageDialog extends JDialog {
     private JTextField nameTextField;
     private JTextField costTextField;
     private JCheckBox isActive;
+    private JTable addedTable;
+    private JTable dishTable;
+    private JButton swapButton;
     private FoodPackage foodPackage;
 
     public EditFoodPackageDialog(FoodPackage foodPackage) {
