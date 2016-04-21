@@ -14,8 +14,7 @@ public final class TimesheetFactory {
     private Employee thisEmployee = GlobalStorage.getLoggedInEmployee(); //Access to the respective employee
 
     /**
-     * Creates customer from result.
-     *
+     * Creates customer from ResultSet
      * @param result
      * @return Timesheet
      * @throws SQLException
@@ -209,6 +208,12 @@ public final class TimesheetFactory {
         }
         return null;
     }*/
+
+    /**
+     * Returns latest registered timesheet for an employee, accessing it for editing or completion
+     * @param employeeId
+     * @return Timesheet
+     */
     public static Timesheet getLatestTimeSheet(int employeeId){
         Timesheet sheet;
         try (Connection connection = Database.getConnection()){
