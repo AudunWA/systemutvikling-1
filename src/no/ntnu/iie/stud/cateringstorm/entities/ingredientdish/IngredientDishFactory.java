@@ -38,15 +38,12 @@ public class IngredientDishFactory {
                 statement.setString(4, unit);
 
                 int affectedRows = statement.executeUpdate();
-                if (affectedRows == 0) {
-                    return false; // No rows inserted
-                }
+                return affectedRows > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 
     public static IngredientDish addIngredientToNewDish(int ingredientId, int quantity, String unit){
