@@ -28,7 +28,7 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
         return rows.get(rowIndex);
     }
 
-    protected int getColumnType(int index) { return columns.get(index); }
+    protected int getColumnType(int columnIndex) { return columns.get(columnIndex); }
 
     public void setRows(ArrayList<T> rows) {
         this.rows = rows;

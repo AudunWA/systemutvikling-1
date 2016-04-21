@@ -19,8 +19,8 @@ public class Employee {
     private String phoneNumber;
     private String email;
     private EmployeeType employeeType;
-
-    public Employee(int employeeId, String username, String forename, String surname, String address, String phoneNumber, String email, EmployeeType employeeType) {
+    private boolean active;
+    public Employee(int employeeId, String username, String forename, String surname, String address, String phoneNumber, String email, EmployeeType employeeType,boolean active) {
         this.employeeId = employeeId;
         this.username = username;
         this.forename = forename;
@@ -29,6 +29,7 @@ public class Employee {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.employeeType = employeeType;
+        this.active = active;
     }
 
     public String getUsername() {
@@ -63,10 +64,31 @@ public class Employee {
         return employeeId;
     }
 
+    public boolean isActive(){
+        return active;
+    }
+
     public String getFullName() {
         return forename + " " + surname;
     }
 
+    public String getEmployeeTypeString(){
+        switch (getEmployeeType()){
+            case EMPLOYEE:
+                return "Employee";
+            case NUTRITION_EXPERT:
+                return "Nutrition expert";
+            case SALESPERSON:
+                return "Sales person";
+            case CHAUFFEUR:
+                return "Chauffeur";
+            case CHEF:
+                return "Chef";
+            case ADMINISTRATOR:
+                return "Administrator";
+            default: return "Employee";
+        }
+    }
     /**
      * Called on successful login attempt.
      */
