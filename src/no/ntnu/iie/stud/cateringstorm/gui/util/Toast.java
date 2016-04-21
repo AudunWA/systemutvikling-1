@@ -1,5 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.gui.util;
 
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
@@ -9,9 +10,6 @@ import java.awt.geom.RoundRectangle2D;
  * Displays a small text popup (The code has been modified for our use)
  * Created by Audun on 19.04.2016.
  */
-import java.awt.Color;
-import java.awt.GridBagLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -37,13 +35,18 @@ public class Toast extends JDialog {
     private final int CHARACTER_LENGTH_MULTIPLIER = 7;
     private final int DISTANCE_FROM_PARENT_BOTTOM = 100;
 
-    private JFrame mOwner;
+    private Component mOwner;
     private String mText;
     private int mDuration;
     private Color mBackgroundColor = Color.BLACK;
     private Color mForegroundColor = Color.WHITE;
 
     public Toast(JFrame owner){
+        super(owner);
+        mOwner = owner;
+    }
+
+    public Toast(JDialog owner){
         super(owner);
         mOwner = owner;
     }
@@ -139,7 +142,15 @@ public class Toast extends JDialog {
         return makeText(owner, text, LENGTH_SHORT);
     }
 
+    public static Toast makeText(JDialog owner, String text){
+        return makeText(owner, text, LENGTH_SHORT);
+    }
+
     public static Toast makeText(JFrame owner, String text, Style style){
+        return makeText(owner, text, LENGTH_SHORT, style);
+    }
+
+    public static Toast makeText(JDialog owner, String text, Style style){
         return makeText(owner, text, LENGTH_SHORT, style);
     }
 
@@ -147,8 +158,21 @@ public class Toast extends JDialog {
         return makeText(owner, text, duration, Style.NORMAL);
     }
 
+    public static Toast makeText(JDialog owner, String text, int duration){
+        return makeText(owner, text, duration, Style.NORMAL);
+    }
+
     public static Toast makeText(JFrame owner, String text, int duration, Style style){
         Toast toast = new Toast(owner);
+        return initializeToast(toast, text, duration, style);
+    }
+
+    public static Toast makeText(JDialog owner, String text, int duration, Style style){
+        Toast toast = new Toast(owner);
+        return initializeToast(toast, text, duration, style);
+    }
+
+    private static Toast initializeToast(Toast toast, String text, int duration, Style style) {
         toast.mText = text;
         toast.mDuration = duration;
 
@@ -158,23 +182,19 @@ public class Toast extends JDialog {
             toast.mBackgroundColor = ERROR_RED;
         if (style == Style.NORMAL)
             toast.mBackgroundColor = NORMAL_BLACK;
-
         return toast;
     }
 
     public void display(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    createGUI();
-                    fadeIn();
-                    Thread.sleep(mDuration);
-                    fadeOut();
-                }
-                catch(Exception ex){
-                    ex.printStackTrace();
-                }
+        new Thread(() -> {
+            try{
+                createGUI();
+                fadeIn();
+                Thread.sleep(mDuration);
+                fadeOut();
+            }
+            catch(Exception ex){
+                ex.printStackTrace();
             }
         }).start();
     }
