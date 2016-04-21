@@ -397,26 +397,6 @@ public final class OrderFactory {
         }
 
     }
-
-    /*
-    public static ArrayList<Ingredient> getAllIngredientsInOrder() {
-
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
-        try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT ALL * FROM ingredient_dish WHERE dish_id = ") {
-                statement.executeQuery();
-            }
-
-
-
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-    */
-
-
     public static boolean setOrderPortions(int orderId, int portions){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET portions = ? WHERE _order_id = ?")) {
