@@ -50,6 +50,14 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
     }
 
     /**
+     Updates the GUI values for the selected row.
+     * @param rowIndex Which row index to update
+     */
+    public void updateRow(int rowIndex) {
+        fireTableRowsUpdated(rowIndex, rowIndex);
+    }
+
+    /**
      Removes a row from the table, then refreshes the GUI.
      * @param rowIndex Which row index to remove
      */
