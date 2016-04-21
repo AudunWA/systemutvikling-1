@@ -30,7 +30,7 @@ public class TimesheetFactoryTest {
         ArrayList<Timesheet> sheets = TimesheetFactory.getActiveTimesheetsByEmployee(3);
         Assert.assertNotNull(sheets);
         for (int i = 0; i < sheets.size() ; i++) {
-            Assert.assertEquals(sheets.get(i).isActive(),true);
+            Assert.assertTrue(sheets.get(i).isActive());
         }
     }
 
