@@ -28,7 +28,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
     }
     @Override
     public String getColumnName(int columnIndex){
-        int columnType = columnIndex;
+        int columnType = getColumnType(columnIndex);
         switch (columnType) {
             case COLUMN_CUSTOMER_ID :
                 return "Customer ID";
@@ -101,11 +101,20 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
         }
     }
 
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        int columnType = getColumnType(columnIndex);
+        switch (columnType) {
+            case COLUMN_ACTIVE:
+                return true;
+        }
+        return super.isCellEditable(rowIndex, columnIndex);
+    }
 
     @Override
-    public void setValueAt(Object value, int row, int column) {
-        Customer entity = getValue(row);
-        int columnType = getColumnType(column);
+    public void setValueAt(Object value, int rowIndex, int columnIndex) {
+        Customer entity = getValue(rowIndex);
+        int columnType = getColumnType(columnIndex);
         switch(columnType){
             case COLUMN_CUSTOMER_ID :
                 break;
@@ -122,6 +131,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
                 break;
             case COLUMN_ACTIVE:
                 entity.setActive((Boolean)value);
+                fireTableCellUpdated(rowIndex, columnIndex);
                 break;
             case COLUMN_EMAIL:
                 break;
