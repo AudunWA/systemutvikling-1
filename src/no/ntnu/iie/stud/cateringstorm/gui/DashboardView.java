@@ -108,7 +108,7 @@ public class DashboardView extends JFrame {
         } catch (Exception e) {}
 
         DashboardView view = new DashboardView(new Employee(-1, "Test", "Forename", "Surname", "Address",
-                "Phone", "Email", EmployeeType.ADMINISTRATOR));
+                "Phone", "Email", EmployeeType.ADMINISTRATOR,true));
         view.setVisible(true);
     }
 }
