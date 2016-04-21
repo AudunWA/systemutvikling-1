@@ -28,7 +28,7 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
         return rows.get(rowIndex);
     }
 
-    protected int getColumnType(int index) { return columns.get(index); }
+    protected int getColumnType(int columnIndex) { return columns.get(columnIndex); }
 
     public void setRows(ArrayList<T> rows) {
         this.rows = rows;
@@ -46,6 +46,14 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
         }
 
         rows.set(rowIndex, value);
+        fireTableRowsUpdated(rowIndex, rowIndex);
+    }
+
+    /**
+     Updates the GUI values for the selected row.
+     * @param rowIndex Which row index to update
+     */
+    public void updateRow(int rowIndex) {
         fireTableRowsUpdated(rowIndex, rowIndex);
     }
 

@@ -39,7 +39,7 @@ public class AddOrderDialog extends JDialog {
     private JCheckBox priorityBox;
     private JTextField surnameText;
     private JSpinner portionsSlider;
-    private JComboBox customerList;
+    private JComboBox customerComboBox;
     private JTable packageTable;
     private JTable addedTable;
     private JButton addButton;
@@ -67,6 +67,29 @@ public class AddOrderDialog extends JDialog {
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
+            }
+        });
+
+        customerComboBox.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                customerComboBox.removeAllItems();
+                refreshComboBox();
+            }
+        });
+
+        customerComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (customerComboBox.getSelectedIndex() == CustomerFactory.getAllCustomers().size()){
+                    AddCustomerDialog acDialog = new AddCustomerDialog();
+                    acDialog.pack();
+                    acDialog.setLocationRelativeTo(null);
+                    final int WIDTH = 350, HEIGHT = 500;
+                    acDialog.setSize(WIDTH,HEIGHT);
+                    acDialog.setVisible(true);
+                    acDialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                }
             }
         });
 
@@ -139,7 +162,7 @@ public class AddOrderDialog extends JDialog {
 
     private void onAdd(){
 
-        int customerIndex = customerList.getSelectedIndex();
+        int customerIndex = customerComboBox.getSelectedIndex();
         if (customerIndex == CustomerFactory.getAllCustomers().size()){
             AddCustomerDialog add = new AddCustomerDialog();
             final int WIDTH = 500;
@@ -151,9 +174,9 @@ public class AddOrderDialog extends JDialog {
             add.setVisible(true);
             if(add.hasAddedNewValue()){
                 System.out.println("added");
-                customerList.addItem(new String(CustomerFactory.getCustomer(CustomerFactory.getAllCustomers().size()).getSurname() + ", " + CustomerFactory.getCustomer(CustomerFactory.getAllCustomers().size()).getForename()));
-                customerList.removeItem("New customer");
-                customerList.addItem("New customer");
+                customerComboBox.addItem(new String(CustomerFactory.getCustomer(CustomerFactory.getAllCustomers().size()).getSurname() + ", " + CustomerFactory.getCustomer(CustomerFactory.getAllCustomers().size()).getForename()));
+                customerComboBox.removeItem("New customer");
+                customerComboBox.addItem("New customer");
             }
         } else {
             Customer customer = CustomerFactory.getCustomer(customerIndex + 1);
@@ -223,10 +246,17 @@ public class AddOrderDialog extends JDialog {
         dispose();
     }
 
-    private void createComboBox(){
-        customerList = new JComboBox();
+    private void refreshComboBox(){
         for (int i = 0; i < CustomerFactory.getAllCustomers().size(); i++) {
-            customerList.addItem(new String (CustomerFactory.getCustomer(i+1).getSurname()) + ", " + CustomerFactory.getCustomer(i+1).getForename());
+            customerComboBox.addItem(new String (CustomerFactory.getCustomer(i+1).getSurname()) + ", " + CustomerFactory.getCustomer(i+1).getForename());
+        }
+        customerComboBox.addItem("New customer");
+    }
+
+    private void createComboBox(){
+        customerComboBox = new JComboBox();
+        for (int i = 0; i < CustomerFactory.getAllCustomers().size(); i++) {
+            customerComboBox.addItem(new String (CustomerFactory.getCustomer(i+1).getSurname()) + ", " + CustomerFactory.getCustomer(i+1).getForename());
         }
     }
 
@@ -247,7 +277,7 @@ public class AddOrderDialog extends JDialog {
         createComboBox();
 
         //TODO make the combo box open add new customer when selected
-        customerList.addItem("New customer");
+        customerComboBox.addItem("New customer");
 
         foodList = FoodPackageFactory.getAllFoodPackages();
         Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST};

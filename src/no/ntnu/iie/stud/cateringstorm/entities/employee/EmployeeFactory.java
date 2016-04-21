@@ -110,7 +110,7 @@ public final class EmployeeFactory {
         String phone = result.getString("phone");
         String email = result.getString("email");
         EmployeeType employeeType = EmployeeType.getEmployeeType(employeeTypeId);
-        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType);
+        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType,true);
     }
 
     /**
@@ -149,7 +149,7 @@ public final class EmployeeFactory {
                     }
                 }
 
-                Employee employee = new Employee(generatedId, username, forename, surname, address, phoneNumber, email, type);
+                Employee employee = new Employee(generatedId, username, forename, surname, address, phoneNumber, email, type,true);
                 return employee;
             }
         } catch (SQLException e) {
