@@ -162,7 +162,7 @@ public class FoodPackageAdminView extends JPanel {
 
     private void createTable(){
         ArrayList<FoodPackage> foodpackageList = FoodPackageFactory.getActiveFoodPackages();
-        Integer[] columns = new Integer[] { FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_NAME }; // Columns can be changed
+        Integer[] columns = new Integer[] { FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST, FoodPackageTableModel.COLUMN_ACTIVE }; // Columns can be changed
         tableModel = new FoodPackageTableModel(foodpackageList, columns);
         FoodPackageTable = new JTable(tableModel);
         FoodPackageTable.setFillsViewportHeight(true);
