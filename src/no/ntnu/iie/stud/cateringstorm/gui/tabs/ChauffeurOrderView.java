@@ -64,7 +64,7 @@ public class ChauffeurOrderView extends JPanel {
                 Timestamp deliveryDate = (Timestamp)table.getModel().getValueAt(row, 6);
                 boolean priority = (boolean)table.getModel().getValueAt(row, 5);
                 if (deliveryDate.toLocalDateTime().toLocalDate().isAfter(LocalDate.now())){
-                    setBackground(new Color(100,100,100));
+                    setBackground(new Color(150,150,150));
                 } else if (temp.equals("Ready for delivery") && !priority) {
                     setBackground(new Color(100,200,100));
                 } else if (temp.equals("Delivered")) {
