@@ -2,18 +2,17 @@ package no.ntnu.iie.stud.cateringstorm.entities.customer;
 
 /**
  * Created by Audun on 11.03.2016.
+ * Class for entity customer in MySQL Database
  */
 public class Customer {
     private int customerId;
     private String forename;
     private String surname;
     private String address;
-
-
-
     private boolean active;
     private String phone;
     private String email;
+
     public Customer(int customerId, String surname, String forename, String address, boolean active, String phone, String email) {
         this.customerId = customerId;
         this.forename = forename;
@@ -53,6 +52,11 @@ public class Customer {
         return email;
     }
 
+    /**
+     * Method is intended to produce a more user friendly value
+     * as an alternative value in GUI JTable.
+     * @return String
+     */
     public String getActiveText(){
         return (isActive())?"Active":"Not active";
     }
@@ -71,7 +75,6 @@ public class Customer {
 
     public void setActive(boolean active) {
         this.active = active;
-        CustomerFactory.editCustomerStatus(getCustomerId(),active);
     }
 
     public void setPhone(String phone) {

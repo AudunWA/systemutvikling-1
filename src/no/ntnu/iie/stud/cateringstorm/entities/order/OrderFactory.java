@@ -307,9 +307,7 @@ public final class OrderFactory {
             }
             return temp;
         }
-    /*int orderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority,
-    int salespersonId, Customer customer, int recurringOrderId, int status, int chauffeurId)*/
-    // FIXME : Echterbug
+
     public static Order createOrder(String description, Timestamp deliveryTime, int portions, boolean priority,
                                     int salespersonId, int customerId, int chauffeurId, ArrayList<Integer> packageId) {
         Customer customer = CustomerFactory.getCustomer(customerId);
