@@ -27,7 +27,7 @@ public class StorageView extends JPanel {
     private JButton incrementSupply;
     private JButton addIngredientButton;
     private JTextField searchField;
-    private JButton searchButton;
+    private JButton refreshButton;
     private IngredientTableModel tableModel;
 
     private ArrayList<Ingredient> ingredientList;
@@ -42,7 +42,9 @@ public class StorageView extends JPanel {
             dialog.setVisible(true);
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             if(dialog.getAddedNewValue()) {
+                //FIXME toast gives nullpointer
                 Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Ingredient added.", Toast.LENGTH_SHORT, Toast.Style.SUCCESS).display();
+                ingredientList = IngredientFactory.getAllIngredients();
 
                 // Refresh data
                 tableModel.setRows(IngredientFactory.getAllIngredients());
@@ -106,14 +108,9 @@ public class StorageView extends JPanel {
             }
         });
 
-        searchButton.addActionListener(e -> {
-            ArrayList<Ingredient> newRows;
-            if(searchField.getText().trim().equals("")) {
-                newRows = IngredientFactory.getAllIngredients();
-            } else {
-                newRows = IngredientFactory.getAllIngredientsByQuery(searchField.getText());
-            }
-            tableModel.setRows(newRows);
+        refreshButton.addActionListener(e -> {
+            ingredientList = IngredientFactory.getAllIngredients();
+            tableModel.setRows(ingredientList);
         });
     }
 

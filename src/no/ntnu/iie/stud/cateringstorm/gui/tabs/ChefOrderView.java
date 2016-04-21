@@ -43,6 +43,9 @@ public class ChefOrderView extends JPanel {
         viewButton.addActionListener(e -> {
             viewOrder();
         });
+
+
+
         statusBox.addActionListener(e -> {
             setStatus();
         });
@@ -62,6 +65,7 @@ public class ChefOrderView extends JPanel {
     }
 
     private void createTable(){
+
         getChefArray();
 
         Integer[] columns = new Integer[] { OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_DELIVERY_TIME};
@@ -109,6 +113,10 @@ public class ChefOrderView extends JPanel {
     }
     private void viewOrder(){
         // TODO: Implement method opening a new tab DishInfoView, allowing user to view more information of a single
+        if (orderTable.getSelectedRow() < 0){
+            JOptionPane.showMessageDialog(this, "Please select a order");
+            return;
+        }
         int viewedOrderId = (Integer) orderTable.getModel().getValueAt(orderTable.getSelectedRow(), 0);
         if (OrderFactory.getOrder(viewedOrderId).getStatus() != 0 && OrderFactory.getOrder(viewedOrderId).getStatus() != 3) {
             OrderFactory.setOrderState(viewedOrderId, 3);
@@ -124,6 +132,8 @@ public class ChefOrderView extends JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Error this order is already made!");
         }
+
+        refresh();
     }
 
 

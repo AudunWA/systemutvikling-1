@@ -75,6 +75,8 @@ public class SalespersonOrderView extends JPanel {
             }
         });
 
+
+
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -208,6 +210,7 @@ public class SalespersonOrderView extends JPanel {
     private void refresh() {
         tableModel.setRows(OrderFactory.getAllOrders());
         Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
+        orderList = OrderFactory.getAllOrders();
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
     }
 

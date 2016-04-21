@@ -49,35 +49,35 @@ PRIMARY KEY (employee_id),
 UNIQUE KEY (username)
 );
 
-CREATE TABLE salesperson(
-employee_id INTEGER,
-FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
-PRIMARY KEY (employee_id)
-);
+-- CREATE TABLE salesperson(
+-- employee_id INTEGER,
+-- FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
+-- PRIMARY KEY (employee_id)
+-- );
 
-CREATE TABLE administrator(
-employee_id INTEGER,
-FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
-PRIMARY KEY (employee_id)
-);
+-- CREATE TABLE administrator(
+-- employee_id INTEGER,
+-- FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
+-- PRIMARY KEY (employee_id)
+-- );
 
-CREATE TABLE chauffeur(
-employee_id INTEGER,
-FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
-PRIMARY KEY (employee_id)
-);
+-- CREATE TABLE chauffeur(
+-- employee_id INTEGER,
+-- FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
+-- PRIMARY KEY (employee_id)
+-- );
 
-CREATE TABLE nutrition_exp(
-employee_id INTEGER,
-FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
-PRIMARY KEY (employee_id)
-);
+-- CREATE TABLE nutrition_exp(
+-- employee_id INTEGER,
+-- FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
+-- PRIMARY KEY (employee_id)
+-- );
 
-CREATE TABLE chef(
-employee_id INTEGER,
-FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
-PRIMARY KEY (employee_id)
-);
+-- CREATE TABLE chef(
+-- employee_id INTEGER,
+-- FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
+-- PRIMARY KEY (employee_id)
+-- );
 
 CREATE TABLE timesheet(
 timesheet_id INTEGER AUTO_INCREMENT NOT NULL,
@@ -184,10 +184,12 @@ CREATE TABLE subscription_food_package(
 
 CREATE TABLE recurring_order(
 	rec_order_id INTEGER AUTO_INCREMENT,
-	week_day INTEGER NOT NULL,
-	relative_time INTEGER NOT NULL,
+--	week_day INTEGER NOT NULL,
+--	relative_time INTEGER NOT NULL,
 	subscription_id INTEGER NOT NULL,
+	food_package_id INTEGER NOT NULL,
 	FOREIGN KEY (subscription_id) REFERENCES subscription(subscription_id),
+	FOREIGN KEY (food_package_id) REFERENCES food_package(food_package_id),
 	PRIMARY KEY (rec_order_id)
 );
 
@@ -205,6 +207,7 @@ customer_id INTEGER NOT NULL,
 rec_order_id INTEGER,
 status TINYINT NOT NULL,
 chauffeur_id INTEGER,
+delivery_start_time DATETIME,
 FOREIGN KEY (rec_order_id) REFERENCES recurring_order(rec_order_id) ON UPDATE CASCADE,
 FOREIGN KEY (salesperson_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
 FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON UPDATE CASCADE,

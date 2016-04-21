@@ -48,9 +48,9 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
             case COLUMN_EMPLOYEE_ID:
                 return value.getEmployeeId();
             case COLUMN_FROM_TIME:
-                return value.getFromTime();
+                return value.getFromTimeString();
             case COLUMN_TO_TIME:
-                return value.getToTime();
+                return value.getToTimeString();
             case COLUMN_ACTIVE:
                 return value.isActive();
             default:
