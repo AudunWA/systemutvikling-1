@@ -220,9 +220,8 @@ public class AddDishDialog extends JDialog {
             if (check){
                 addedList.add(ingDish);
             }
-            addedTableModel.setRows(addedList);
-
         }
+        addedTableModel.setRows(addedList);
 
     }
 
