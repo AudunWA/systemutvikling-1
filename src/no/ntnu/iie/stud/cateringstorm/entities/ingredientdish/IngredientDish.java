@@ -5,6 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 
 /**
  * Created by Chris on 21.04.2016.
+ * Joint class of MySQL entities ingredient and dish, containing a quantity.
  */
 public class IngredientDish {
     private final Ingredient ingredient;
@@ -19,8 +20,8 @@ public class IngredientDish {
         this.unit = unit;
     }
 
-    public void setQuantity(int newQuantity){
-        quantity = newQuantity;
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
     }
 
     public Ingredient getIngredient() {

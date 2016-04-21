@@ -186,6 +186,7 @@ public final class CustomerFactory {
 
     /**
      * Edits the status of a customer (if the customer is active or not)
+     * With status "inactive", the customer is essentially counted as deleted in the system
      * @param customerId
      * @param active
      * @return int
@@ -208,7 +209,7 @@ public final class CustomerFactory {
     }
 
     /**
-     *
+     * Method for editing a customer's details
      * @param customer
      * @return int
      */

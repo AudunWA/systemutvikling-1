@@ -189,9 +189,14 @@ public final class IngredientFactory {
         return ingredient;
     }
 
+    /**
+     *
+     * @param dishId
+     * @return Arraylist<Ingredient>
+     */
     public static ArrayList<Ingredient> getIngredients(int dishId){
 
-        ArrayList<Ingredient> temp = new ArrayList<>();
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
 
         try (Connection connection = Database.getConnection()){
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM ingredient INNER JOIN ingredient_dish ON (ingredient.ingredient_id = ingredient_dish.ingredient_id) WHERE ingredient_dish.dish_id = ?;")){
@@ -203,16 +208,23 @@ public final class IngredientFactory {
                 try (ResultSet result = statement.getResultSet()){
                     while (result.next()){
 
-                        temp.add(createIngredientFromResultSet(result));
+                        ingredients.add(createIngredientFromResultSet(result));
                     }
+                    return ingredients;
                 }
             }
         } catch (SQLException e){
             e.printStackTrace();
         }
-        return temp;
+        return ingredients;
     }
 
+    /**
+     *
+     * @param ingredientId
+     * @param newAmount
+     * @return  int affected row
+     */
     public static int updateIngredientAmount(int ingredientId, double newAmount){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE ingredient SET amount = ? WHERE ingredient_id = ?")) {
@@ -227,6 +239,12 @@ public final class IngredientFactory {
             return 0;
         }
     }
+
+    /**
+     * Method returning all ingredients withing a selected order
+     * @param orderId
+     * @return ArrayList<Ingredient>
+     */
     public static ArrayList<Ingredient> getAllIngredientsInOrder(int orderId) {
         ArrayList<Ingredient> temp = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
