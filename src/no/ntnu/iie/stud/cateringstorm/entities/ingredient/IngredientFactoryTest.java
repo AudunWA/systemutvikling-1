@@ -12,23 +12,23 @@ import java.sql.Timestamp;
 public class IngredientFactoryTest {
 
     @Test
-    public void testViewSingleIngredient() throws Exception {
-        System.out.println(IngredientFactory.getIngredient(1));
-
+    public void testGetIngredient() throws Exception {
+        Assert.assertNotNull(IngredientFactory.getIngredient(1));
     }
 
     @Test
     public void testGetAllIngredients() throws Exception {
-        for (Ingredient ingredient : IngredientFactory.getAllIngredients()){
-            System.out.println(ingredient);
-        }
+        Assert.assertNotNull(IngredientFactory.getAllIngredients());
     }
 
     @Test
-    public void testInsertNewIngredient() throws Exception {
-        Ingredient ingredient = IngredientFactory.createIngredient("Unit test", "Unit test", 8008135, "testunit", false, new Timestamp(System.currentTimeMillis() - 10*(86400000)), new Date(System.currentTimeMillis() + 10*(86400000)));
-        Assert.assertNotNull(ingredient);
-        System.out.println("ingredient = " + ingredient);
+    public void testCreateIngredient() throws Exception {
+        /*int ingredientId, Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount, String unit*/
+        Ingredient ingredient = new Ingredient(1, new Timestamp(System.currentTimeMillis() - 10*(86400000)),"TestIngredient","Test desc",true, new Date(System.currentTimeMillis() + 10*(86400000)),100,"Kg"),
+        testIngredient= IngredientFactory.createIngredient(ingredient.getArrivalDate(),ingredient.getName(),ingredient.getDescription(),ingredient.isVegetarian(),ingredient.getExpireDate(),ingredient.getAmount(),ingredient.getUnit());
+        Assert.assertNotNull(testIngredient);
+        Assert.assertEquals(ingredient.getName(),testIngredient.getName());
+        Assert.assertEquals(ingredient.getAmount(),testIngredient.getAmount(),0.001);
     }
 
     @Test

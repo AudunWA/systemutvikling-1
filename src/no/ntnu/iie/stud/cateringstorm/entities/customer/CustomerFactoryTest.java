@@ -22,26 +22,18 @@ public class CustomerFactoryTest {
     public void testGetAllCustomers() throws Exception {
         ArrayList<Customer> list = CustomerFactory.getAllCustomers();
         Assert.assertNotNull(list);
-        for (Customer customer : list){
-
-            System.out.println(customer);
-
-        }
     }
     @Test
     public void testGetCustomersByQuery()throws Exception {
         ArrayList<Customer> list = CustomerFactory.getCustomersByQuery("test");
         Assert.assertNotNull(list);
-        for(Customer c: list){
-            System.out.println(c);
-        }
     }
     @Test
     public void testGetActiveCustomers() throws Exception {
         ArrayList<Customer> list = CustomerFactory.getActiveCustomers();
         Assert.assertNotNull(list);
-        for(Customer c : list){
-            System.out.println(c);
+        for (int i = 0; i < list.size(); i++) {
+            Assert.assertEquals(true,list.get(i).isActive());
         }
     }
     @Test
