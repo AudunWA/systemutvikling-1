@@ -65,10 +65,10 @@ public class AddDishDialog extends JDialog {
             public void actionPerformed(ActionEvent e) { onOk(); }
         });
         addedIngredientTable.getSelectionModel().addListSelectionListener(e -> {
-
+            selectionIngredientTable.clearSelection();
         });
         selectionIngredientTable.getSelectionModel().addListSelectionListener(e -> {
-
+            addedIngredientTable.clearSelection();
         });
 
 
@@ -102,53 +102,21 @@ public class AddDishDialog extends JDialog {
         activeStatus.setSelectedIndex(0);
     }
 
-    /*
-    private void onAdd() {
-        String name = dishName.getText();
-        if (name.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in a name.");
-            return;
-        }
+    private void onOk(){
 
-        String description = dishDescription.getText();
-        if (description.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in a description.");
-            return;
-        }
-
-        int type = dishType.getSelectedIndex() + 1;
-
-        boolean active = activeStatus.getSelectedIndex()<1;
-
-        ArrayList<Integer> test = new ArrayList<>();
-        test.add(ingredientTable.getSelectedRow() + 1);
-
-        dishes.add(new Dish(0, name, description, type, active));
-
-        int check = DishFactory.getAllDishes().size();
+        String dishName;
+        String description;
+        int dishType;
+        boolean active;
 
         ArrayList<Ingredient> ingredients = new ArrayList<>();
-        for (int k = 0; k < addedList.size(); k++) {
-            ingredients.add(addedList.get(k));
+        for (int i = 0; i < addedList.size(); i++){
+            ingredients.add(addedList.get(i).getIngredient());
         }
 
-        if (ingredients.size() < 1) {
-            JOptionPane.showMessageDialog(this, "Please add package(s)");
-            return;
-        }
-
-        Dish dish = DishFactory.createDish(name, description, type, active, ingredients);
-
-        if (DishFactory.getAllDishes().size() > check) {
-            JOptionPane.showMessageDialog(this, "Add successful");
-            addedList = new ArrayList<>();
-            ((EntityTableModel) addedTable.getModel()).setRows(addedList);
-        }
-        JOptionPane.showMessageDialog(this, dish);
     }
-    */
 
-    private void onOk() {
+    //private void onOk() {
         //if (ingredientTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
         //    JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
         //    ingredientTable.clearSelection();
@@ -179,7 +147,7 @@ public class AddDishDialog extends JDialog {
            // }
        // }
 
-    }
+    //}
 
     private void onCancel() {
 // add your code here if necessary
@@ -195,12 +163,7 @@ public class AddDishDialog extends JDialog {
 
         boolean check = true;
 
-        if (addedIngredientTable.getSelectedRow() > -1 && selectionIngredientTable.getSelectedRow() > -1){
-            JOptionPane.showMessageDialog(this, "Error, please only select one table at a time.");
-            addedIngredientTable.clearSelection();
-            selectionIngredientTable.clearSelection();
-            return;
-        } else if (addedIngredientTable.getSelectedRow() > -1){
+        if (addedIngredientTable.getSelectedRow() > -1){
             if (addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() < (Integer)addRemoveSpinner.getValue() + 1) {
                 addedList.remove(addedIngredientTable.getSelectedRow());
             } else {
@@ -262,4 +225,49 @@ public class AddDishDialog extends JDialog {
         System.exit(0);
 
     }
+    /*
+    private void onAdd() {
+        String name = dishName.getText();
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in a name.");
+            return;
+        }
+
+        String description = dishDescription.getText();
+        if (description.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in a description.");
+            return;
+        }
+
+        int type = dishType.getSelectedIndex() + 1;
+
+        boolean active = activeStatus.getSelectedIndex()<1;
+
+        ArrayList<Integer> test = new ArrayList<>();
+        test.add(ingredientTable.getSelectedRow() + 1);
+
+        dishes.add(new Dish(0, name, description, type, active));
+
+        int check = DishFactory.getAllDishes().size();
+
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        for (int k = 0; k < addedList.size(); k++) {
+            ingredients.add(addedList.get(k));
+        }
+
+        if (ingredients.size() < 1) {
+            JOptionPane.showMessageDialog(this, "Please add package(s)");
+            return;
+        }
+
+        Dish dish = DishFactory.createDish(name, description, type, active, ingredients);
+
+        if (DishFactory.getAllDishes().size() > check) {
+            JOptionPane.showMessageDialog(this, "Add successful");
+            addedList = new ArrayList<>();
+            ((EntityTableModel) addedTable.getModel()).setRows(addedList);
+        }
+        JOptionPane.showMessageDialog(this, dish);
+    }
+    */
 }
