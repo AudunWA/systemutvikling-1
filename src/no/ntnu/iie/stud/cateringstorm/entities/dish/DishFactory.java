@@ -1,6 +1,9 @@
 package no.ntnu.iie.stud.cateringstorm.entities.dish;
 
 import no.ntnu.iie.stud.cateringstorm.database.Database;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
+import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrder;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -224,6 +227,60 @@ public final class DishFactory {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static Dish createDish(String name, String description, int dishType, boolean active, ArrayList<Ingredient> ingredients){
+        int generatedId;
+
+        try (Connection connection = Database.getConnection()) {
+            try {
+                connection.setAutoCommit(false);
+
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish VALUES(DEFAULT, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)){
+                    statement.setString(1, name);
+                    statement.setString(2, description);
+                    statement.setInt(3, dishType);
+                    statement.setBoolean(4, active);
+
+                    int affectedRows = statement.executeUpdate();
+
+                    if (affectedRows == 0) {
+                        connection.rollback();
+                        connection.setAutoCommit(true);
+                        return null;
+                    }
+
+                    generatedId = Database.getGeneratedKeys(statement);
+                    if(generatedId == -1) {
+                        connection.rollback();
+                        connection.setAutoCommit(true);
+                        return null;
+                    }
+                }
+
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO ingredient_dish VALUES (?, ?, ?)")) {
+                    for (Ingredient ingredient : ingredients) {
+                        statement.setInt(1, ingredient.getIngredientId());
+                        statement.setInt(2, generatedId);
+                        statement.setDouble(3, ingredient.getAmount()); // TODO: Not right, right?
+                    }
+                    statement.executeBatch();
+                }
+            } catch (SQLException e){
+                connection.rollback();
+                connection.setAutoCommit(true);
+                throw e;
+            }
+
+            //All good, commence commit
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return new Dish(generatedId, name, description, dishType, active);
     }
 
     /**

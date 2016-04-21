@@ -2,11 +2,13 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddCustomerDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditCustomerDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.CustomerTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
+import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 import sun.invoke.empty.Empty;
 
 
@@ -24,6 +26,9 @@ import java.util.ArrayList;
 
 // TODO: Implement email, phone and address verification, and checking that names do not contain numbers and such!
 public class SalespersonCustomerView extends JPanel{
+    private static final Integer[] COLUMNS = new Integer[]{CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVE}; // Columns can be changed
+    private static final Integer[] ADMIN_COLUMNS = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVE}; // Columns can be changed
+
     private JPanel mainPanel;
     private JTable customerTable;
     private JButton addButton;
@@ -111,8 +116,6 @@ public class SalespersonCustomerView extends JPanel{
         return null;
     }
 
-    private Integer[] columns = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVE}; // Columns can be changed
-
     private void createUIComponents() {
         createTable();
         createSearchField();
@@ -121,9 +124,12 @@ public class SalespersonCustomerView extends JPanel{
 
         customerList = getActiveCustomers();
 
-        columns = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME,CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVE}; // Columns can be changed
+        if(GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
+            tableModel = new CustomerTableModel(customerList, ADMIN_COLUMNS);
+        } else {
+            tableModel = new CustomerTableModel(customerList, COLUMNS);
+        }
 
-        tableModel = new CustomerTableModel(customerList, columns);
         customerTable = new JTable(tableModel);
         customerTable.getTableHeader().setReorderingAllowed(false);
         customerTable.setFillsViewportHeight(true);
