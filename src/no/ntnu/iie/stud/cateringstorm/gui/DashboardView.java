@@ -86,7 +86,7 @@ public class DashboardView extends JFrame {
                 tabPane.addTab("Food packages", getIconResource("package_1x.png"), FoodPackageAdminView.class);
                 tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), StorageView.class);
                 tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), SalespersonCustomerView.class);
-                tabPane.addTab("Employees", getIconResource("ic_account_circle_black_24dp_1x.png"), AdminEmployeeView.class); // TODO: Replace placeholder icon
+                tabPane.addTab("Employees", getIconResource("ic_accessibility_black_24dp_1x.png"), AdminEmployeeView.class); // TODO: Replace placeholder icon
                 //tabPane.addTab("FoodPackageInfoview", new FoodPackageInfoView());
                 tabPane.addTab("Statistics", getIconResource("ic_insert_chart_black_24dp_1x.png"), StatisticsView.class);
                 break;
