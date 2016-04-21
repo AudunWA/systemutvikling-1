@@ -25,8 +25,13 @@ import java.util.ArrayList;
 
 /**
  * Created by Håvard
+<<<<<<< HEAD:src/no/ntnu/iie/stud/cateringstorm/gui/tabs/EmployeeView.java
+
+public class EmployeeView extends JPanel{
+=======
  *
 public class AdminEmployeeView extends JPanel{
+>>>>>>> a75d2043647158556919ad9ae744c8925a53e01e:src/no/ntnu/iie/stud/cateringstorm/gui/tabs/AdminEmployeeView.java
     private JPanel mainPanel;
     private JTable timesheetTable;
     private JButton refreshButton;
