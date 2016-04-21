@@ -86,6 +86,7 @@ public class AddDishDialog extends JDialog {
         activeStatus.setSelectedIndex(0);
     }
 
+    /*
     private void onAdd() {
         String name = dishName.getText();
         if (name.isEmpty()) {
@@ -129,6 +130,7 @@ public class AddDishDialog extends JDialog {
         }
         JOptionPane.showMessageDialog(this, dish);
     }
+    */
 
     private void onOk() {
         if (ingredientTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
