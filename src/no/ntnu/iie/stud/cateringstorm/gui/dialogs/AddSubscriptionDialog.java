@@ -5,6 +5,8 @@ import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrder;
+import no.ntnu.iie.stud.cateringstorm.entities.subscription.Subscription;
+import no.ntnu.iie.stud.cateringstorm.entities.subscription.SubscriptionFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.RecurringOrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.DateUtil;
@@ -29,8 +31,6 @@ public class AddSubscriptionDialog extends JDialog {
     private JButton okButton;
     private JButton cancelButton;
     private JButton addButton;
-    private JTable selectedPackagesTable;
-    private JTable availablePackagesTable;
     private JDatePickerImpl fromDate;
     private JDatePickerImpl toDate;
     private JComboBox<String> dayComboBox;
@@ -39,12 +39,16 @@ public class AddSubscriptionDialog extends JDialog {
     private JSpinner amountSpinner;
     private JSpinner timeSpinner;
 
+    private JTable availablePackagesTable;
+    private FoodPackageTableModel availabelpackagesModel;
+
+    private JTable selectedPackagesTable;
     private RecurringOrderTableModel selectedPackagesModel;
 
     private double cost;
 
-    private ArrayList<FoodPackage> foodList;
-    private ArrayList<RecurringOrder> addedList;
+    private ArrayList<FoodPackage> foodList; // TODO: Replace with table model methods
+    private Subscription subscription;
 
     public AddSubscriptionDialog() {
         setContentPane(mainPanel);
@@ -154,17 +158,11 @@ public class AddSubscriptionDialog extends JDialog {
      * Called when OK button is pressed.
      */
     private void onOK() {
-        String day = (String) dayComboBox.getSelectedItem();
         Customer customer = (Customer) customerComboBox.getSelectedItem();
+        java.sql.Date startDate = new java.sql.Date(((Date) fromDate.getModel().getValue()).getTime());
+        java.sql.Date endDate = new java.sql.Date(((Date) toDate.getModel().getValue()).getTime());
 
-        Date temp = (Date) fromDate.getModel().getValue();
-        Timestamp fromDate = new Timestamp(temp.getTime());
-
-        Date temp2 = (Date) toDate.getModel().getValue();
-        Timestamp toDate = new Timestamp(temp2.getTime());
-
-        //TODO add query here (remember to add a try-catch)
-
+        subscription = SubscriptionFactory.createSubscription(startDate, endDate, customer, cost, selectedPackagesModel.getRowsClone());
         dispose();
     }
 
@@ -184,8 +182,9 @@ public class AddSubscriptionDialog extends JDialog {
             FoodPackage selectedFoodPackage = foodList.get(availablePackagesTable.getSelectedRow());
             RecurringOrder existingRecurringOrder = null;
             int existingRecurringOrderIndex = -1;
-            for (int i = 0; i < addedList.size(); i++) {
-                RecurringOrder recurringOrder = addedList.get(i);
+            ArrayList<RecurringOrder> recurringOrders = selectedPackagesModel.getRowsClone();
+            for (int i = 0; i < recurringOrders.size(); i++) {
+                RecurringOrder recurringOrder = recurringOrders.get(i);
                 if (recurringOrder.getFoodPackageId() == selectedFoodPackage.getFoodPackageId()) {
                     existingRecurringOrder = recurringOrder;
                     existingRecurringOrderIndex = i;
@@ -196,29 +195,28 @@ public class AddSubscriptionDialog extends JDialog {
                 // Create a new recurring order and add it
                 int relativeTime = DateUtil.convertToRelativeTime(DateUtil.convertDate((Date) timeSpinner.getModel().getValue()).toLocalTime());
                 RecurringOrder newOrder = new RecurringOrder(-1, -1, selectedFoodPackage.getFoodPackageId(), dayComboBox.getSelectedIndex(), relativeTime, 1, selectedFoodPackage);
-                addedList.add(newOrder);
-                selectedPackagesModel.setRows(addedList);
+                selectedPackagesModel.addRow(newOrder);
 
             } else {
                 // Increment existing with one
                 existingRecurringOrder.incrementAmount();
                 selectedPackagesModel.updateRow(existingRecurringOrderIndex);
             }
-            cost += FoodPackageFactory.getFoodPackageCost(addedList.get(addedList.size() - 1).getFoodPackageId());
+            cost += selectedFoodPackage.getCost();
             costField.setText("Cost: " + cost);
         } else if (selectedPackagesTable.getSelectedRow() > -1) {
-            cost -= FoodPackageFactory.getFoodPackageCost(addedList.get(selectedPackagesTable.getSelectedRow()).getFoodPackageId());
+            RecurringOrder selectedRecurringOrder = selectedPackagesModel.getValue(selectedPackagesTable.getSelectedRow());
+
+            cost -= selectedRecurringOrder.getFoodPackageCost();
             costField.setText("Cost: " + cost);
 
-            RecurringOrder recurringOrder = selectedPackagesModel.getValue(selectedPackagesTable.getSelectedRow());
-
-            if(recurringOrder.getAmount() > 1) {
+            if(selectedRecurringOrder.getAmount() > 1) {
                 // Decrement
-                recurringOrder.decrementAmount();
+                selectedRecurringOrder.decrementAmount();
                 selectedPackagesModel.updateRow(selectedPackagesTable.getSelectedRow());
             } else {
-                addedList.remove(selectedPackagesTable.getSelectedRow());
-                selectedPackagesModel.setRows(addedList);
+                // Remove
+                selectedPackagesModel.removeRow(selectedPackagesTable.getSelectedRow());
                 selectedPackagesTable.clearSelection();
             }
         } else {
@@ -289,16 +287,14 @@ public class AddSubscriptionDialog extends JDialog {
     public void createPackageSelectionTable() {
         foodList = FoodPackageFactory.getAllFoodPackages();
         Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST};
-        FoodPackageTableModel table = new FoodPackageTableModel(foodList, columns);
-        availablePackagesTable = new JTable(table);
+        availabelpackagesModel = new FoodPackageTableModel(foodList, columns);
+        availablePackagesTable = new JTable(availabelpackagesModel);
         availablePackagesTable.getTableHeader().setReorderingAllowed(false);
 
-        addedList = new ArrayList<>();
         Integer[] addedColumns = new Integer[]{RecurringOrderTableModel.COLUMN_FOOD_PACKAGE_NAME, RecurringOrderTableModel.COLUMN_AMOUNT, RecurringOrderTableModel.COLUMN_FOOD_PACKAGE_COST, RecurringOrderTableModel.COLUMN_WEEKDAY, RecurringOrderTableModel.COLUMN_RELATIVE_TIME};
-        selectedPackagesModel = new RecurringOrderTableModel(addedList, addedColumns);
+        selectedPackagesModel = new RecurringOrderTableModel(new ArrayList<>(), addedColumns);
         selectedPackagesTable = new JTable(selectedPackagesModel);
         selectedPackagesTable.getTableHeader().setReorderingAllowed(false);
-
     }
 
     private static final int MIN_HOURS_BETWEEN_ORDERS = 1;
@@ -311,7 +307,7 @@ public class AddSubscriptionDialog extends JDialog {
      * @return If any order is set to be delivered within MIN_HOURS_BETWEEN_ORDERS hours of the new one, return false.
      */
     private boolean isValidAdd(int newWeekday, int newRelativeTime) {
-        for (RecurringOrder recurringOrder : addedList) {
+        for (RecurringOrder recurringOrder : selectedPackagesModel.getRowsClone()) {
             if (recurringOrder.getWeekday() == newWeekday) {
                 LocalDateTime recurringOrderLocalTime = DateUtil.convertRelativeTime(recurringOrder.getRelativeTime());
                 LocalDateTime newRelativeLocalTime = DateUtil.convertRelativeTime(newRelativeTime);
@@ -328,5 +324,9 @@ public class AddSubscriptionDialog extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    public Subscription getSubscription() {
+        return subscription;
     }
 }

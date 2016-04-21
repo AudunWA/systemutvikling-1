@@ -94,9 +94,9 @@ public class IngredientTableModel extends EntityTableModel<Ingredient> {
             case COLUMN_VEGETARIAN:
                 return boolean.class;
             case COLUMN_ARRIVAL_DATE:
-                return Timestamp.class;
+                return String.class;
             case COLUMN_EXPIRE_DATE:
-                return Date.class;
+                return String.class;
             case COLUMN_AMOUNT:
                 return double.class;
             case COLUMN_UNIT:

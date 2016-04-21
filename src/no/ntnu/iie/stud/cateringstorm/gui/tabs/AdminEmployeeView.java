@@ -117,15 +117,15 @@ public class AdminEmployeeView extends JPanel{
 
     private void editTimesheet(Timesheet timesheet){
         if(timesheet != null){
-            EditTimesheetDialog etDialog = new EditTimesheetDialog();
+            //EditTimesheetDialog etDialog = new EditTimesheetDialog();
             final int WIDTH = 300;
             final int HEIGHT = 200;
-            etDialog.pack();
-            etDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            etDialog.setSize(WIDTH, HEIGHT);
-            etDialog.setLocationRelativeTo(etDialog.getParent());
+            //etDialog.pack();
+            //etDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            //etDialog.setSize(WIDTH, HEIGHT);
+            //etDialog.setLocationRelativeTo(etDialog.getParent());
 
-            etDialog.setVisible(true);
+            //etDialog.setVisible(true);
         } else{
             JOptionPane.showMessageDialog(this, "Please select a row in the timesheet table.");
         }
