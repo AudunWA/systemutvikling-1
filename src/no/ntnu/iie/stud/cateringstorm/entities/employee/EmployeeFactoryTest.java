@@ -73,7 +73,7 @@ public class EmployeeFactoryTest {
         String newAddress = "New testaddress 9";
         test = new Employee(test.getEmployeeId(),test.getUsername(),test.getForename(),test.getSurname(),newAddress,test.getPhoneNumber(),test.getEmail(),test.getEmployeeType(),test.isActive());
         int result = EmployeeFactory.updateEmployee(test);
-        Assert.assertEquals(result,1);
+        Assert.assertEquals(1,result);
         test = EmployeeFactory.getEmployee(test.getUsername());
         Assert.assertEquals(test.getAddress(),newAddress);
     }

@@ -111,8 +111,8 @@ public class AddIngredientDialog extends JDialog {
         // Insert the ingredient
         Timestamp arrivalTime = new Timestamp(arrivalDate.getTime());
         Date expireDateSql = new Date(expireDate.getTime());
-
-        Ingredient ingredient = IngredientFactory.createIngredient(name, description, amount, unit, vegetarian, arrivalTime, expireDateSql);
+        /*Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount,String unit*/
+        Ingredient ingredient = IngredientFactory.createIngredient( arrivalTime,name, description, vegetarian, expireDateSql,amount, unit);
         if (ingredient == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
         } else {

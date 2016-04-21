@@ -27,45 +27,52 @@ public class OrderFactoryTest {
     public void testGetAllOrders() throws Exception {
         ArrayList<Order> orders = OrderFactory.getAllOrders();
         Assert.assertNotNull(orders);
-        for (Order order : orders) {
-            System.out.println(order);
+        for (int i = 0; i < orders.size(); i++) {
+            Assert.assertNotNull(orders.get(i));
+            Assert.assertEquals(true,orders.get(i) instanceof Order);//FIXME: Redundant?
         }
     }
     @Test
     public void testGetOrdersByQuery() throws Exception {
-        ArrayList<Order> orders = OrderFactory.getOrdersByQuery("Mark");
+        String testName = "Mark";
+        ArrayList<Order> orders = OrderFactory.getOrdersByQuery(testName);
         Assert.assertNotNull(orders);
         for(Order order: orders){
-            System.out.println(order);
+            Assert.assertEquals(testName,order.getCustomerName());
         }
     }
     @Test
-    public void testSetOrderState() throws Exception {
-        OrderFactory.setOrderState(1, 1);
-        OrderFactory.setOrderState(2, 2);
-        OrderFactory.setOrderState(3, 0);
-        OrderFactory.setOrderState(4, 1);
-
-    }
-
-    @Test
     public void testCreateOrder() throws Exception {
 
-        ArrayList<Integer> tall = new ArrayList<>();
-        tall.add(1);
-        tall.add(2);
-        tall.add(3);
+        ArrayList<Integer> numbers = new ArrayList<>();
+        numbers.add(1);
+        numbers.add(2);
+        numbers.add(3);
 
-        OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, tall);
+        OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, numbers);
 
     }
+    @Test
+    public void testSetOrderState() throws Exception {
+        ArrayList<Integer> numbers = new ArrayList<>();
+        numbers.add(1);
+        numbers.add(2);
+        numbers.add(3);
+        Order test1 = OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, numbers);
+        OrderFactory.setOrderState(test1.getOrderId(), 2);
+        Order test2 = OrderFactory.getOrder(test1.getOrderId());
+        Assert.assertNotEquals(test1.getStatus(),test2.getStatus());
+        Assert.assertEquals(2,test2.getStatus());
+    }
 
+
+    // TODO: Maybe test this further
     @Test
     public void testGetSalesForPeriod() throws Exception {
         HashMap<LocalDate, Double> sales = OrderFactory.getSalesForPeriod(LocalDate.now().minusDays(7), LocalDate.now());
         Assert.assertNotNull(sales);
-        for(Map.Entry<LocalDate, Double> entry : sales.entrySet()) {
+        /*for(Map.Entry<LocalDate, Double> entry : sales.entrySet()) {
             System.out.println("Sales entry: " + entry.getKey() + ", " + entry.getValue());
-        }
+        }*/
     }
 }

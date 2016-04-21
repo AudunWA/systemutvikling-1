@@ -4,7 +4,8 @@ import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.util.*;
 
 /**
  * Created by Chris on 30.03.2016.
@@ -150,7 +151,8 @@ public final class IngredientFactory {
      * @param expireDate
      * @return
      */
-    public static Ingredient createIngredient(String name, String description, double amount, String unit, boolean vegetarian, Timestamp arrivalDate, Date expireDate) {
+    /*int ingredientId, Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount, String unit*/
+    public static Ingredient createIngredient(Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount,String unit) {
         int generatedId; // The AUTO_INCREMENT from INSERT
 
         try (Connection connection = Database.getConnection()) {
@@ -228,13 +230,16 @@ public final class IngredientFactory {
     public static ArrayList<Ingredient> getAllIngredientsInOrder(int orderId) {
         ArrayList<Ingredient> temp = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM ingredient NATURAL JOIN ingredient_dish NATURAL JOIN dish_food_package NATURAL JOIN _order_food_package NATURAL JOIN _order WHERE _order_food_package._order_id = ?; ")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM \n" +
+                    "ingredient INNER JOIN ingredient_dish ON ingredient.ingredient_id = ingredient_dish.ingredient_id\n" +
+                    "INNER JOIN dish_food_package ON ingredient_dish.dish_id = dish_food_package.dish_id\n" +
+                    "INNER JOIN _order_food_package ON dish_food_package.food_package_id = _order_food_package.food_package_id WHERE _order_food_package._order_id = ?; ")) {
 
                 statement.setInt(1, orderId);
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {
-                    if (result.next()) {
+                    while (result.next()) {
                         temp.add(createIngredientFromResultSet(result));
                     }
                 }

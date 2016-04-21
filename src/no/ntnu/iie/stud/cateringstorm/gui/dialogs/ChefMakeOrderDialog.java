@@ -87,7 +87,10 @@ public class ChefMakeOrderDialog extends JDialog {
 // add your code here
         OrderFactory.setOrderState(order.getOrderId(), 0);
         int viewedOrderId = order.getOrderId();
+
         ingredientsInOrder = IngredientFactory.getAllIngredientsInOrder(viewedOrderId);
+
+        //FIXME KENAN CODE
         for(int i = 0; i < ingredientsInOrder.size(); i++) {
             int id = ingredientsInOrder.get(i).getIngredientId();
             double usedAmount = ingredientsInOrder.get(i).getAmount();

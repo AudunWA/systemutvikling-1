@@ -2,9 +2,12 @@ package no.ntnu.iie.stud.cateringstorm.entities.foodpackage;
 
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
+import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -28,17 +31,27 @@ public class FoodPackageFactoryTest {
     public void testGetAllFoodPackages() throws Exception {
         ArrayList<FoodPackage> foodPackages = FoodPackageFactory.getAllFoodPackages();
         Assert.assertNotNull(foodPackages);
-        for (FoodPackage foodPackage : foodPackages) {
+        /*for (FoodPackage foodPackage : foodPackages) {
             System.out.println(foodPackage);
-        }
+        }*/
     }
 
     @Test
     public void testGetFoodPackages() throws Exception {
-        ArrayList<FoodPackage> foodPackages = FoodPackageFactory.getFoodPackages(1);
+
+        ArrayList<Dish> dishes = DishFactory.getAllDishes();
+        FoodPackage foodPackage = FoodPackageFactory.createFoodPackage("Unit test package1", 8135, dishes),
+        foodPackage2 = FoodPackageFactory.createFoodPackage("Unit test package2", 8145, dishes);
+        //Filling arraylist
+        ArrayList<Integer> numbers = new ArrayList<>();
+        numbers.add(foodPackage.getFoodPackageId());
+        numbers.add(foodPackage2.getFoodPackageId());
+        //Creating test order
+        Order order = OrderFactory.createOrder("TestGetFoodPackageOrder", new Timestamp(System.currentTimeMillis()-888 + 8600000), 3, false, 6, 4, 5, numbers);
+        ArrayList<FoodPackage> foodPackages = FoodPackageFactory.getFoodPackages(order.getOrderId());
         Assert.assertNotNull(foodPackages);
-        for (FoodPackage foodPackage : foodPackages) {
-            System.out.println(foodPackage);
+        for (int i = 0;i < foodPackages.size();i++) {
+            Assert.assertEquals((int)numbers.get(i),foodPackages.get(i).getFoodPackageId());
         }
     }
 
@@ -47,6 +60,6 @@ public class FoodPackageFactoryTest {
         ArrayList<Dish> dishes = DishFactory.getAllDishes();
         FoodPackage foodPackage = FoodPackageFactory.createFoodPackage("Unit test package", 8008135, dishes);
         Assert.assertNotNull(foodPackage);
-        System.out.println(foodPackage);
+        //System.out.println(foodPackage);
     }
 }

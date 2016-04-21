@@ -165,8 +165,13 @@ public class EditTimesheetDialog extends JDialog{
         SpinnerModel toModel = new SpinnerDateModel();
         Date fromDate = selectedTimesheet.getFromTime();
         Date toDate = selectedTimesheet.getToTime();
-        fromModel.setValue(fromDate);
-        toModel.setValue(toDate);
+        if(toDate != null) {
+            fromModel.setValue(fromDate);
+            toModel.setValue(toDate);
+        }else{
+            fromModel.setValue(fromDate);
+            toModel.setValue(new Date(System.currentTimeMillis()));
+        }
         fromSpinner.setModel(fromModel);
         toSpinner.setModel(toModel);
         JComponent fromEditor = new JSpinner.DateEditor(fromSpinner,"HH:mm");
