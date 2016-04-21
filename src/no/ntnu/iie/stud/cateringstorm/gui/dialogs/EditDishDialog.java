@@ -2,11 +2,11 @@ package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 public class EditDishDialog extends JDialog {
     private boolean addedNewValue;
@@ -14,16 +14,17 @@ public class EditDishDialog extends JDialog {
     private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
-    private JTextField editDescription;
-    private JTextField editName;
-    private JComboBox editType;
-    private JComboBox editStatus;
-    private JLabel editNameLabel;
-    private JLabel editDescriptionLabel;
-    private JTable addedTable;
-    private JTable dishTable;
+    private JTextField descriptionField;
+    private JTextField nameField;
+    private JComboBox<String> typeComboBox;
+    private JComboBox<String> statusComboBox;
     private JButton swapButton;
     private Dish dish;
+
+    private JTable currentIngredientsTable;
+
+    private JTable availableDishTable;
+    private DishTableModel availableDishModel;
 
 
     public EditDishDialog(Dish dish) {
@@ -32,19 +33,11 @@ public class EditDishDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        okButton.addActionListener(e -> onOK());
 
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        cancelButton.addActionListener(e -> onCancel());
 
-// call onCancel() when cross is clicked
+        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -52,49 +45,62 @@ public class EditDishDialog extends JDialog {
             }
         });
 
-// call onCancel() on ESCAPE
-        mainPanel.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        // call onCancel() on ESCAPE
+        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        createComboBoxType();
+        createComboBoxActiveStatus();
+        fillTables();
     }
 
     private void createComboBoxType(){
-        Object[] status = {"Appetizer","Main course","Dessert"};
+        String[] status = {"Appetizer","Main course","Dessert"};
 
-        editType = new JComboBox(status);
-        editType.setSelectedIndex(0);
+        typeComboBox = new JComboBox<>(status);
+        typeComboBox.setSelectedIndex(0);
     }
 
     private void createComboBoxActiveStatus(){
-        Object[] status = {"Active","Not active"};
+        String[] status = {"Active","Not active"};
 
-        editStatus = new JComboBox(status);
-        editStatus.setSelectedIndex(0);
+        statusComboBox = new JComboBox<>(status);
+        statusComboBox.setSelectedIndex(0);
+    }
+
+    private static final Integer[] COLUMNS_AVAILABE_DISHES = { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION };
+
+    private void fillTables() {
+        // Available dishes (all active ones)
+        availableDishModel = new DishTableModel(DishFactory.getActiveDishes(), COLUMNS_AVAILABE_DISHES);
+        availableDishTable = new JTable(availableDishModel);
+
+        // Current dishes
+        currentIngredientsTable = new JTable();
     }
 
     private void onOK() {
-
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
         if(dialogResult == 0) {
 
-            String name = editName.getText();
+            String name = nameField.getText();
             if (name.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please fill in a name.");
                 return;
             }
 
-            String description = editDescription.getText();
+            String description = descriptionField.getText();
             if (description.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please fill in a description.");
                 return;
             }
 
-            int type = editType.getSelectedIndex() + 1;
+            int type = typeComboBox.getSelectedIndex() + 1;
 
-            boolean active = editStatus.getSelectedIndex() < 1;
+            boolean active = statusComboBox.getSelectedIndex() < 1;
 
             dish.setName(name);
             dish.setDescription(description);
@@ -124,20 +130,14 @@ public class EditDishDialog extends JDialog {
         dispose();
     }
 
+    public boolean getAddedNewValue() {
+        return addedNewValue;
+    }
+
     public static void main(String[] args) {
         EditDishDialog dialog = new EditDishDialog(null);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-        createComboBoxType();
-        createComboBoxActiveStatus();
-    }
-
-    public boolean getAddedNewValue() {
-        return addedNewValue;
     }
 }
