@@ -1,10 +1,13 @@
 package no.ntnu.iie.stud.cateringstorm.entities.ingredient;
 
+import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  * Created by Chris on 30.03.2016.
@@ -34,18 +37,19 @@ public class IngredientFactoryTest {
     @Test
     public void testShowExpired() throws Exception {
         for (Ingredient ingredient : IngredientFactory.getExpiredIngredients()){
-            System.out.println(ingredient);
+            Assert.assertEquals(true,new Date(System.currentTimeMillis()).after(ingredient.getExpireDate()));
         }
     }
 
+    //Fixme: Add new ingredients in a new dish
     @Test
     public void testViewAllIngredientByDishId() throws Exception {
-
-        for (Ingredient ingredient : IngredientFactory.getIngredients(1)) {
-
-            System.out.println(ingredient);
+        Dish dish = DishFactory.getDish(1);
+        ArrayList<Ingredient> ingredients = IngredientFactory.getIngredients(dish.getDishId());
+        Assert.assertNotNull(ingredients);
+        for (int i = 0; i < ingredients.size(); i++) {
+            Assert.assertNotNull(ingredients.get(i));
         }
-
     }
 
     @Test
