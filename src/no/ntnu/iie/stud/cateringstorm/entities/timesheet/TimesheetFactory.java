@@ -183,8 +183,7 @@ public final class TimesheetFactory {
                 statement.setBoolean(1, active);
                 statement.setInt(2, employeeId);
                 statement.setInt(3,timesheetId);
-                statement.execute();
-                return employeeId;
+                return statement.executeUpdate();
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -192,10 +191,10 @@ public final class TimesheetFactory {
         }
     }
 
-    public static Timesheet getUnfinishedTimeSheet(int employeeId){
+   /* public static Timesheet getUnfinishedTimeSheet(int employeeId){
         Timesheet sheet;
         try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ? AND to_time IS NULL ORDER BY from_time")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM timesheet WHERE active LIKE true AND employee_id = ? AND to_time IS NULL ORDER BY from_time desc")){
                 statement.setInt(1,employeeId);
                 statement.executeQuery();
                 try (ResultSet result = statement.getResultSet()){
@@ -209,7 +208,7 @@ public final class TimesheetFactory {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
     public static Timesheet getLatestTimeSheet(int employeeId){
         Timesheet sheet;
         try (Connection connection = Database.getConnection()){
