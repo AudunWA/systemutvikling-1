@@ -307,7 +307,9 @@ public final class OrderFactory {
             }
             return temp;
         }
-
+    /*int orderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority,
+    int salespersonId, Customer customer, int recurringOrderId, int status, int chauffeurId)*/
+    // FIXME : Echterbug
     public static Order createOrder(String description, Timestamp deliveryTime, int portions, boolean priority,
                                     int salespersonId, int customerId, int chauffeurId, ArrayList<Integer> packageId) {
         Customer customer = CustomerFactory.getCustomer(customerId);
@@ -317,7 +319,7 @@ public final class OrderFactory {
 
         Timestamp orderTime = new Timestamp(System.currentTimeMillis());
         int generatedId;
-
+        int initalStatus = 1;
         try (Connection connection = Database.getConnection()) {
 
             try {
@@ -334,7 +336,7 @@ public final class OrderFactory {
                     statement.setBoolean(5, priority);
                     statement.setInt(6, salespersonId);
                     statement.setInt(7, customerId);
-                    statement.setInt(8, 1);
+                    statement.setInt(8, initalStatus);
 
                     int affectedRows = statement.executeUpdate();
 
