@@ -76,7 +76,7 @@ public class DeliveredOrdersChart extends ChartPanel {
 
         // Increment y-values of dates containing orders
         for(Order order : orders) {
-            LocalDate date = DateUtil.convertDate(order.getDeliveryDate());
+            LocalDate date = DateUtil.convertDate(order.getDeliveryDate()).toLocalDate();
             if(date.isBefore(startLocalDate) || date.isAfter(endLocalDate)) {
                 continue; // Outside range, ignore
             }
@@ -107,7 +107,7 @@ public class DeliveredOrdersChart extends ChartPanel {
 
         // Increment y-values of dates containing orders
         for(Order order : orders) {
-            LocalDate date = DateUtil.convertDate(order.getOrderDate());
+            LocalDate date = DateUtil.convertDate(order.getOrderDate()).toLocalDate();
             if(date.isBefore(startTime) || date.isAfter(endTime)) {
                 continue; // Outside range, ignore
             }
