@@ -33,6 +33,35 @@ public final class OrderFactory {
         return null;
     }
 
+    public static Timestamp getDeliveryStart(int orderId) {
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT delivery_start_time FROM `_order` WHERE `_order_id` = ?")) {
+                statement.setInt(1, orderId);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    if (result.next()) {
+                        return result.getTimestamp("delivery_start_time");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void setDeliveryStart(int orderId) {
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET delivery_start_time = NOW() WHERE _order_id = ?")) {
+                statement.setInt(1, orderId);
+                statement.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static ArrayList<String> getAllAvailableDeliveryAddresses(){
         ArrayList<String> addresses = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -295,7 +324,7 @@ public final class OrderFactory {
 
                 connection.setAutoCommit(false);
 
-                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, null, ?, null);", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, null, ?, null, null);", PreparedStatement.RETURN_GENERATED_KEYS)) {
 
                     //Insert data
                     statement.setString(1, description);
