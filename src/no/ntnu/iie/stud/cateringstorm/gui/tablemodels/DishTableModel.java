@@ -79,6 +79,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
             case COLUMN_DESCRIPTION:
                 break;
             case COLUMN_ACTIVE:
+                entity.setActive((Boolean)value);
                 break;
             case COLUMN_TYPE_TEXT:
                 if(value.equals(status0)) {
@@ -97,6 +98,16 @@ public class DishTableModel extends EntityTableModel<Dish> {
     }
 
     @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        int columnType = getColumnType(columnIndex);
+        switch (columnType) {
+            case COLUMN_ACTIVE:
+                return true;
+        }
+        return super.isCellEditable(rowIndex, columnIndex);
+    }
+
+    @Override
     public Class<?> getColumnClass(int columnIndex) {
         int columnType = getColumnType(columnIndex);
         switch (columnType) {
@@ -109,7 +120,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
             case COLUMN_DESCRIPTION:
                 return String.class;
             case COLUMN_ACTIVE:
-                return boolean.class;
+                return Boolean.class;
             case COLUMN_TYPE_TEXT:
                 return String.class;
             default:
