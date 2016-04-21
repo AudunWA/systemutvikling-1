@@ -130,8 +130,9 @@ public final class EmployeeFactory {
         String address = result.getString("address");
         String phone = result.getString("phone");
         String email = result.getString("email");
+        boolean active = result.getBoolean("active");
         EmployeeType employeeType = EmployeeType.getEmployeeType(employeeTypeId);
-        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType,true);
+        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType,active);
     }
 
     /**
@@ -192,9 +193,7 @@ public final class EmployeeFactory {
                 statement.setBoolean(1, active);
                 statement.setInt(2, employeeId);
 
-                statement.execute();
-                return employeeId;
-
+                return statement.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -219,10 +218,10 @@ public final class EmployeeFactory {
                 statement.setBoolean(8,employee.isActive());
                 statement.setInt(9,employee.getEmployeeId());
                 return statement.executeUpdate();
-            }
+        }
         } catch (SQLException e){
             e.printStackTrace();
-            return 0;
+            return -1;
         }
     }
 }

@@ -70,6 +70,35 @@ public class Employee {
     public void setActive(boolean active){
         this.active = active;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setForename(String forename) {
+        this.forename = forename;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setEmployeeType(EmployeeType employeeType) {
+        this.employeeType = employeeType;
+    }
+
     public String getFullName() {
         return forename + " " + surname;
     }
