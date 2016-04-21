@@ -26,5 +26,6 @@
     <orderEntry type="library" name="google-api-services-coordinate-v1-rev55-1.21.0" level="project" />
     <orderEntry type="library" name="com.google.code.geocoder-java:geocoder-java:0.161" level="project" />
     <orderEntry type="library" name="license" level="project" />
+    <orderEntry type="library" name="weblaf-complete-1.29" level="project" />
   </component>
 </module>

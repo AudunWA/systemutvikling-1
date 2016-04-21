@@ -1,5 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm;
 
+import com.alee.laf.WebLookAndFeel;
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.gui.LoginView;
 
@@ -17,11 +18,13 @@ public class Main {
      */
     public static void main(String[] args) {
         // Makes the GUI same style as current OS :)
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            System.out.println("Failed to set OS GUI style, now using default style.");
-        }
+        //try {
+        //    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        //} catch (Exception e) {
+        //    System.out.println("Failed to set OS GUI style, now using default style.");
+        //}
+
+        WebLookAndFeel.install();
 
         LoginView loginVIew = new LoginView();
         loginVIew.setVisible(true);

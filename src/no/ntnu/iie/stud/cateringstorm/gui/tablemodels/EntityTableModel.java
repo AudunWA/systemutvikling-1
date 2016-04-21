@@ -69,6 +69,19 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
         fireTableRowsDeleted(rowIndex, rowIndex);
     }
 
+    /**
+     Adds a row to the table, then refreshes the GUI.
+     * @param value The new value to add
+     */
+    public void addRow(T value) {
+        rows.add(value);
+        fireTableRowsInserted(rows.size(), rows.size());
+    }
+
+    public ArrayList<T> getRowsClone() {
+        return (ArrayList<T>)rows.clone();
+    }
+
     @Override
     public final int getRowCount() {
         return rows.size();
