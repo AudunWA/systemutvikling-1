@@ -185,7 +185,7 @@ public class EditFoodPackageDialog extends JDialog {
     public static void main(String[] args) {
         final int height = 700;
         final int width = 600;
-        EditFoodPackageDialog dialog = new EditFoodPackageDialog(FoodPackageFactory.getFoodPackage(1));
+        EditFoodPackageDialog dialog = new EditFoodPackageDialog(null);
         dialog.pack();
         dialog.setVisible(true);
         dialog.setSize(width, height);

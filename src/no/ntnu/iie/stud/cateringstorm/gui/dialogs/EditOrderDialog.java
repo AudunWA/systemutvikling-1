@@ -165,7 +165,7 @@ public class EditOrderDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        EditOrderDialog dialog = new EditOrderDialog(OrderFactory.getOrder(4));
+        EditOrderDialog dialog = new EditOrderDialog(null);
         dialog.pack();
         dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         dialog.setVisible(true);

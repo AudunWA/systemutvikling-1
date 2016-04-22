@@ -79,12 +79,6 @@
             </constraints>
             <properties/>
           </component>
-          <component id="be750" class="javax.swing.JComboBox" binding="statusComboBox" custom-create="true">
-            <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-          </component>
           <component id="f6c6b" class="javax.swing.JLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -101,6 +95,14 @@
               <text value="Description"/>
             </properties>
           </component>
+          <component id="2904e" class="javax.swing.JCheckBox" binding="statusComboBox">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Active?"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <scrollpane id="a75c6">
@@ -110,13 +112,13 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="9e473" class="javax.swing.JTable" binding="currentIngredientsTable" custom-create="true">
+          <component id="9e473" class="javax.swing.JTable" binding="leftSideTable" custom-create="true">
             <constraints/>
             <properties/>
           </component>
         </children>
       </scrollpane>
-      <grid id="3e3d6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="3e3d6" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -126,11 +128,17 @@
         <children>
           <component id="c76e2" class="javax.swing.JButton" binding="swapButton">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="&lt;-&gt;"/>
             </properties>
+          </component>
+          <component id="3de18" class="javax.swing.JSpinner" binding="addRemoveSpinner">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
           </component>
         </children>
       </grid>
@@ -141,7 +149,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="10d57" class="javax.swing.JTable" binding="availableDishTable" custom-create="true">
+          <component id="10d57" class="javax.swing.JTable" binding="rightSideTable" custom-create="true">
             <constraints/>
             <properties/>
           </component>
