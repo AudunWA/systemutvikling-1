@@ -3,18 +3,12 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
-import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
-import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  * Created by kenan on 07.04.2016.
@@ -78,20 +72,8 @@ public class FoodPackageInfoView extends JFrame {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-    private void onCancel() {
-// add your code here if necessary
-        dispose();
-    }
 
-    private void createTable(){
-        ArrayList<Dish> dishList = DishFactory.getDishes(foodPackage.getFoodPackageId());
-        Integer[] columns = new Integer[] { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION }; // Columns can be changed
-        tableModel = new DishTableModel(dishList, columns);
-        dishTable = new JTable(tableModel);
-        dishTable.setFillsViewportHeight(true);
-    }
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // Window dimensions
         final int WIDTH = 700;
         final int HEIGHT = 600;
@@ -102,6 +84,19 @@ public class FoodPackageInfoView extends JFrame {
         dialog.setLocationRelativeTo(null);//Puts window in middle of screen
         System.exit(0);
 
+    }
+
+    private void onCancel() {
+// add your code here if necessary
+        dispose();
+    }
+
+    private void createTable() {
+        ArrayList<Dish> dishList = DishFactory.getDishes(foodPackage.getFoodPackageId());
+        Integer[] columns = new Integer[]{DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION}; // Columns can be changed
+        tableModel = new DishTableModel(dishList, columns);
+        dishTable = new JTable(tableModel);
+        dishTable.setFillsViewportHeight(true);
     }
 
     private void createUIComponents() {

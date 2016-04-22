@@ -20,7 +20,8 @@ public class Employee {
     private String email;
     private EmployeeType employeeType;
     private boolean active;
-    public Employee(int employeeId, String username, String forename, String surname, String address, String phoneNumber, String email, EmployeeType employeeType,boolean active) {
+
+    public Employee(int employeeId, String username, String forename, String surname, String address, String phoneNumber, String email, EmployeeType employeeType, boolean active) {
         this.employeeId = employeeId;
         this.username = username;
         this.forename = forename;
@@ -36,75 +37,76 @@ public class Employee {
         return username;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public String getForename() {
-        return forename;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public EmployeeType getEmployeeType() {
-        return employeeType;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-    public boolean isActive(){
-        return active;
-    }
-    public void setActive(boolean active){
-        this.active = active;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public void setForename(String forename) {
-        this.forename = forename;
+    public String getSurname() {
+        return surname;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    public String getForename() {
+        return forename;
+    }
+
+    public void setForename(String forename) {
+        this.forename = forename;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public EmployeeType getEmployeeType() {
+        return employeeType;
     }
 
     public void setEmployeeType(EmployeeType employeeType) {
         this.employeeType = employeeType;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public String getFullName() {
         return forename + " " + surname;
     }
 
-    public String getEmployeeTypeString(){
-        switch (getEmployeeType()){
+    public String getEmployeeTypeString() {
+        switch (getEmployeeType()) {
             case EMPLOYEE:
                 return "Employee";
             case NUTRITION_EXPERT:
@@ -117,9 +119,11 @@ public class Employee {
                 return "Chef";
             case ADMINISTRATOR:
                 return "Administrator";
-            default: return "Employee";
+            default:
+                return "Employee";
         }
     }
+
     /**
      * Called on successful login attempt.
      */

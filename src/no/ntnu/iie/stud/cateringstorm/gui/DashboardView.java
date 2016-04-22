@@ -5,12 +5,8 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.tabs.*;
 import no.ntnu.iie.stud.cateringstorm.gui.util.DynamicTabbedPane;
-import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -45,14 +41,26 @@ public class DashboardView extends JFrame {
         //pack();
     }
 
+    public static void main(String[] args) {
+        // Makes the GUI same style as current OS :)
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+        }
+
+        DashboardView view = new DashboardView(new Employee(-1, "Test", "Forename", "Surname", "Address",
+                "Phone", "Email", EmployeeType.ADMINISTRATOR, true));
+        view.setVisible(true);
+    }
+
     private void fillTabPane() {
         ClassLoader loader = getClass().getClassLoader();
-        if(loader == null) {
+        if (loader == null) {
             System.err.println("Could not get class loader, aborting tab creation!");
             return;
         }
         tabPane.addTab("Home", getIconResource("ic_home_black_24dp_1x.png"), HomeView.class);
-
+        tabPane.addTab("Timesheet", getIconResource("timetable_1x.png"), TimesheetView.class);
         switch (loggedInEmployee.getEmployeeType()) {
             case EMPLOYEE:
                 break;
@@ -94,7 +102,8 @@ public class DashboardView extends JFrame {
     }
 
     /**
-     Helper method for creating ImageIcons from project resources
+     * Helper method for creating ImageIcons from project resources
+     *
      * @param path The resource path (image)
      * @return An ImageIcon initialized with the loaded resource
      */
@@ -113,16 +122,5 @@ public class DashboardView extends JFrame {
             return new ImageIcon();
         }
         return new ImageIcon(resource);
-    }
-
-    public static void main(String[] args) {
-        // Makes the GUI same style as current OS :)
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {}
-
-        DashboardView view = new DashboardView(new Employee(-1, "Test", "Forename", "Surname", "Address",
-                "Phone", "Email", EmployeeType.ADMINISTRATOR,true));
-        view.setVisible(true);
     }
 }

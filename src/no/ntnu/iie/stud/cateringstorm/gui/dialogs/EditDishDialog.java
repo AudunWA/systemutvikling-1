@@ -4,20 +4,20 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
-import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
-
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class EditDishDialog extends JDialog {
+    private static final Integer[] COLUMNS_AVAILABLE_INGREDIENTS = {IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION};
+    private static final Integer[] COLUMNS_AVAILABE_DISHES = {DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION};
     private boolean addedNewValue;
-    private static final Integer[] COLUMNS_AVAILABLE_INGREDIENTS = { IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION };
-
     private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
@@ -27,14 +27,11 @@ public class EditDishDialog extends JDialog {
     private JCheckBox statusCheckBox;
     private JButton swapButton;
     private Dish dish;
-
     private JTable leftSideTable;
     private IngredientTableModel leftSideModel;
-
     private JTable rightSideTable;
     private JSpinner addRemoveSpinner;
     private IngredientTableModel rightTableModel;
-
 
     public EditDishDialog(Dish dish) {
         this.dish = dish;
@@ -62,21 +59,25 @@ public class EditDishDialog extends JDialog {
         loadData();
     }
 
+    public static void main(String[] args) {
+        EditDishDialog dialog = new EditDishDialog(null);
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
         createComboBoxType();
         createTables();
     }
 
-    private void createComboBoxType(){
-        String[] status = {"Appetizer","Main course","Dessert"};
+    private void createComboBoxType() {
+        String[] status = {"Appetizer", "Main course", "Dessert"};
 
         typeComboBox = new JComboBox<>(status);
         typeComboBox.setSelectedIndex(0);
     }
-
-
-    private static final Integer[] COLUMNS_AVAILABE_DISHES = { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION };
 
     private void createTables() {
         // Available dishes (all active ones)
@@ -91,7 +92,7 @@ public class EditDishDialog extends JDialog {
     private void onOK() {
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
-        if(dialogResult == 0) {
+        if (dialogResult == 0) {
 
             String name = nameField.getText();
             if (name.isEmpty()) {
@@ -139,6 +140,7 @@ public class EditDishDialog extends JDialog {
         statusCheckBox.setSelected(dish.isActive());
 
     }
+
     private void onSwap() {
         if ((Integer) addRemoveSpinner.getValue() < 1) {
             JOptionPane.showMessageDialog(this, "Please set a positive amount on the spinner");
@@ -188,12 +190,5 @@ public class EditDishDialog extends JDialog {
 
     public boolean getAddedNewValue() {
         return addedNewValue;
-    }
-
-    public static void main(String[] args) {
-        EditDishDialog dialog = new EditDishDialog(null);
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
     }
 }

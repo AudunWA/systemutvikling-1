@@ -14,11 +14,11 @@ public class IngredientDishTableModel extends EntityTableModel<IngredientDish> {
     public static final int COLUMN_UNIT = 3;
     public static final int COLUMN_INGREDIENT_NAME = 4;
 
-    public IngredientDishTableModel(ArrayList<IngredientDish> rows){
+    public IngredientDishTableModel(ArrayList<IngredientDish> rows) {
         super(rows);
     }
 
-    public IngredientDishTableModel(ArrayList<IngredientDish> rows, Integer[] columns){
+    public IngredientDishTableModel(ArrayList<IngredientDish> rows, Integer[] columns) {
         super(rows, columns);
     }
 

@@ -53,14 +53,21 @@ public class ChefViewIngredientsDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    private void onCancel(){
+    public static void main(String[] args) {
+        ChefViewIngredientsDialog dialog = new ChefViewIngredientsDialog(DishFactory.getDish(2));
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
+    private void onCancel() {
         dispose();
     }
 
-    private void createTable(){
+    private void createTable() {
 
         ingredientList = IngredientFactory.getIngredients(dish.getDishId());
-        Integer[] columns = new Integer[] {IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION};
+        Integer[] columns = new Integer[]{IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION};
         tableModel = new IngredientTableModel(ingredientList, columns);
         ingredientTable = new JTable(tableModel);
 
@@ -70,16 +77,8 @@ public class ChefViewIngredientsDialog extends JDialog {
 
     }
 
-
     private void createUIComponents() {
         // TODO: place custom component creation code here
         createTable();
-    }
-
-    public static void main(String[] args) {
-        ChefViewIngredientsDialog dialog = new ChefViewIngredientsDialog(DishFactory.getDish(2));
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
     }
 }

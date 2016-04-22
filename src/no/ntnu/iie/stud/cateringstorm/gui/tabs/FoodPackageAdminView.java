@@ -8,10 +8,9 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
@@ -61,7 +60,7 @@ public class FoodPackageAdminView extends JPanel {
         });
         editButton.addActionListener(e -> {
             int selectedRow = FoodPackageTable.getSelectedRow();
-            if(selectedRow == -1) {
+            if (selectedRow == -1) {
                 return;
             }
 
@@ -71,10 +70,10 @@ public class FoodPackageAdminView extends JPanel {
             dialog.pack();
             dialog.setVisible(true);
 
-            if(dialog.getAddedNewValue()) {
+            if (dialog.getAddedNewValue()) {
                 // Refresh data
                 refreshTable();
-                Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Food package updated.", Toast.Style.SUCCESS).display();
+                Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Food package updated.", Toast.Style.SUCCESS).display();
             }
         });
 
@@ -105,13 +104,13 @@ public class FoodPackageAdminView extends JPanel {
         });
         removeFoodPackageButton.addActionListener(e -> {
             int selectedRow = FoodPackageTable.getSelectedRow();
-            if(selectedRow == -1) {
+            if (selectedRow == -1) {
                 return;
             }
 
             int dialogButton = JOptionPane.YES_NO_OPTION;
             int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
-            if(dialogResult == 0) {
+            if (dialogResult == 0) {
                 FoodPackage foodPackage = tableModel.getValue(selectedRow);
                 foodPackage.setActive(false);
                 FoodPackageFactory.updateFoodPackage(foodPackage);
@@ -132,50 +131,6 @@ public class FoodPackageAdminView extends JPanel {
             //Get index from selected row
         });
     }
-    private void createSearchField(){
-        searchField = new JTextField(20);
-        setSearchField("Search for food packages");
-        add(searchField);
-    }
-    private void setSearchField(String text){
-        searchField.setText(text);
-        searchField.setEnabled(true);
-    }
-
-    public void search() {
-        ArrayList<FoodPackage> newRows;
-        if(searchField.getText().trim().equals("")) {
-            if(inactiveCheckBox.isSelected()) {
-                newRows = FoodPackageFactory.getAllFoodPackages();
-            } else {
-                newRows = FoodPackageFactory.getActiveFoodPackages();
-            }
-        } else {
-            if(inactiveCheckBox.isSelected()) {
-                newRows = FoodPackageFactory.getAllFoodPackagesByQuery(searchField.getText());
-            } else {
-                newRows = FoodPackageFactory.getActiveFoodPackagesByQuery(searchField.getText());
-            }
-        }
-        tableModel.setRows(newRows);
-    }
-
-    private void createTable(){
-        ArrayList<FoodPackage> foodpackageList = FoodPackageFactory.getActiveFoodPackages();
-        Integer[] columns = new Integer[] { FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST, FoodPackageTableModel.COLUMN_ACTIVE }; // Columns can be changed
-        tableModel = new FoodPackageTableModel(foodpackageList, columns);
-        FoodPackageTable = new JTable(tableModel);
-        FoodPackageTable.setFillsViewportHeight(true);
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-        createTable();
-    }
-
-    private void refreshTable() {
-        tableModel.setRows(FoodPackageFactory.getAllFoodPackages());
-    }
 
     public static void main(String[] args) {
         final int WIDTH = 700;
@@ -188,5 +143,51 @@ public class FoodPackageAdminView extends JPanel {
         frame.setVisible(true);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);//Puts window in middle of screen
+    }
+
+    private void createSearchField() {
+        searchField = new JTextField(20);
+        setSearchField("Search for food packages");
+        add(searchField);
+    }
+
+    private void setSearchField(String text) {
+        searchField.setText(text);
+        searchField.setEnabled(true);
+    }
+
+    public void search() {
+        ArrayList<FoodPackage> newRows;
+        if (searchField.getText().trim().equals("")) {
+            if (inactiveCheckBox.isSelected()) {
+                newRows = FoodPackageFactory.getAllFoodPackages();
+            } else {
+                newRows = FoodPackageFactory.getActiveFoodPackages();
+            }
+        } else {
+            if (inactiveCheckBox.isSelected()) {
+                newRows = FoodPackageFactory.getAllFoodPackagesByQuery(searchField.getText());
+            } else {
+                newRows = FoodPackageFactory.getActiveFoodPackagesByQuery(searchField.getText());
+            }
+        }
+        tableModel.setRows(newRows);
+    }
+
+    private void createTable() {
+        ArrayList<FoodPackage> foodpackageList = FoodPackageFactory.getActiveFoodPackages();
+        Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST, FoodPackageTableModel.COLUMN_ACTIVE}; // Columns can be changed
+        tableModel = new FoodPackageTableModel(foodpackageList, columns);
+        FoodPackageTable = new JTable(tableModel);
+        FoodPackageTable.setFillsViewportHeight(true);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        createTable();
+    }
+
+    private void refreshTable() {
+        tableModel.setRows(FoodPackageFactory.getAllFoodPackages());
     }
 }

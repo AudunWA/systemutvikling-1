@@ -8,11 +8,11 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 public final class GlobalStorage {
     private static Employee loggedInEmployee;
 
-    public static void setLoggedInEmployee(Employee loggedInEmployee) {
-        GlobalStorage.loggedInEmployee = loggedInEmployee;
-    }
-
     public static Employee getLoggedInEmployee() {
         return loggedInEmployee;
+    }
+
+    public static void setLoggedInEmployee(Employee loggedInEmployee) {
+        GlobalStorage.loggedInEmployee = loggedInEmployee;
     }
 }

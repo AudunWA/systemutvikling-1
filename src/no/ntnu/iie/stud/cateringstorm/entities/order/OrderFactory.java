@@ -3,8 +3,6 @@ package no.ntnu.iie.stud.cateringstorm.entities.order;
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
-import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
-import no.ntnu.iie.stud.cateringstorm.gui.util.DateUtil;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -18,7 +16,11 @@ import java.util.HashMap;
 public final class OrderFactory {
 
     /**
-     *
+     * Used in the method below
+     */
+    private static final String salesForPeriodQuery = "SELECT DATE(`_order`.`_order_time`) AS date, SUM(cost) AS sales FROM `_order_food_package` INNER JOIN `food_package` USING(food_package_id) INNER JOIN `_order` USING(`_order_id`) WHERE DATE(`_order`.`_order_time`) BETWEEN ? AND ? GROUP BY DATE(`_order`.`_order_time`);";
+
+    /**
      * @param orderId
      * @return Order
      */
@@ -41,7 +43,6 @@ public final class OrderFactory {
     }
 
     /**
-     *
      * @param orderId
      * @return Timestamp
      */
@@ -65,6 +66,7 @@ public final class OrderFactory {
 
     /**
      * Set start of delivery to time current time method is called
+     *
      * @param orderId
      */
     public static void setDeliveryStart(int orderId) {
@@ -80,9 +82,10 @@ public final class OrderFactory {
 
     /**
      * Get currently relevant addresses
+     *
      * @return ArrayList<String>
      */
-    public static ArrayList<String> getAllAvailableDeliveryAddresses(){
+    public static ArrayList<String> getAllAvailableDeliveryAddresses() {
         ArrayList<String> addresses = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM _order NATURAL JOIN customer WHERE (status = 0) && DATE(delivery_time) = CURDATE() ORDER BY delivery_time")) {
@@ -103,9 +106,10 @@ public final class OrderFactory {
 
     /**
      * Get every address existing in database
+     *
      * @return ArrayList<String>
      */
-    public static ArrayList<String> getAllAddresses(){
+    public static ArrayList<String> getAllAddresses() {
         ArrayList<String> addresses = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT address FROM _order NATURAL JOIN customer WHERE (status = 0 || status > 2) && delivery_time > NOW() ORDER BY delivery_time")) {
@@ -126,6 +130,7 @@ public final class OrderFactory {
 
     /**
      * Get all orders, regardless of status
+     *
      * @return ArrayList<Order>
      */
     public static ArrayList<Order> getAllOrders() {
@@ -150,6 +155,7 @@ public final class OrderFactory {
     /**
      * Getting all order relevant for chefs, with relevant statuses
      * Excluding orders being delivered and orders already delivered.
+     *
      * @return ArrayList<Order>
      */
     public static ArrayList<Order> getAllOrdersChef() {
@@ -158,10 +164,10 @@ public final class OrderFactory {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status < 2 || status = 3) && delivery_time > NOW() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
-                try (ResultSet resultPreUpdate = statement.getResultSet()){
-                    while (resultPreUpdate.next()){
+                try (ResultSet resultPreUpdate = statement.getResultSet()) {
+                    while (resultPreUpdate.next()) {
 
-                        if((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2*86400000))) == -1){
+                        if ((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
                             try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
                                 statementUpdate.setInt(1, createOrderFromResultSet(resultPreUpdate).getOrderId());
                                 statementUpdate.execute();
@@ -185,6 +191,7 @@ public final class OrderFactory {
 
     /**
      * TODO: Remove if not used at deadline
+     *
      * @return ArrayList<Order>
      */
     public static ArrayList<Order> getAllOrdersChauffeur() {
@@ -193,10 +200,10 @@ public final class OrderFactory {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status = 0) && delivery_time > NOW() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
-                try (ResultSet resultPreUpdate = statement.getResultSet()){
-                    while (resultPreUpdate.next()){
+                try (ResultSet resultPreUpdate = statement.getResultSet()) {
+                    while (resultPreUpdate.next()) {
 
-                        if((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2*86400000))) == -1){
+                        if ((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
                             try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
                                 statementUpdate.setInt(1, createOrderFromResultSet(resultPreUpdate).getOrderId());
                                 statementUpdate.execute();
@@ -220,6 +227,7 @@ public final class OrderFactory {
 
     /**
      * Sending all available orders to chauffeur
+     *
      * @return ArrayList<Order>
      */
     public static ArrayList<Order> getAllAvailableOrdersChauffeur() {
@@ -228,10 +236,10 @@ public final class OrderFactory {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE status = 0 && DATE(delivery_time) = CURDATE() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
-                try (ResultSet resultPreUpdate = statement.getResultSet()){
-                    while (resultPreUpdate.next()){
+                try (ResultSet resultPreUpdate = statement.getResultSet()) {
+                    while (resultPreUpdate.next()) {
 
-                        if((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2*86400000))) == -1){
+                        if ((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
                             try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
                                 statementUpdate.setInt(1, createOrderFromResultSet(resultPreUpdate).getOrderId());
                                 statementUpdate.execute();
@@ -255,6 +263,7 @@ public final class OrderFactory {
 
     /**
      * Making available for map view for chauffeurs
+     *
      * @return ArrayList<Order>
      */
     public static ArrayList<Order> getAllAvailableOrdersForChauffeurTable() {
@@ -263,10 +272,10 @@ public final class OrderFactory {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status = 0 || status = 4) && delivery_time > NOW() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
-                try (ResultSet resultPreUpdate = statement.getResultSet()){
-                    while (resultPreUpdate.next()){
+                try (ResultSet resultPreUpdate = statement.getResultSet()) {
+                    while (resultPreUpdate.next()) {
 
-                        if((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2*86400000))) == -1){
+                        if ((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
                             try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
                                 statementUpdate.setInt(1, createOrderFromResultSet(resultPreUpdate).getOrderId());
                                 statementUpdate.execute();
@@ -289,7 +298,6 @@ public final class OrderFactory {
     }
 
     /**
-     *
      * @param result
      * @return
      * @throws SQLException
@@ -308,7 +316,7 @@ public final class OrderFactory {
         int chauffeurId = result.getInt("chauffeur_id");
 
         Customer customer = CustomerFactory.getCustomer(customerId);
-        if(customer == null) {
+        if (customer == null) {
             throw new NullPointerException("customer is null, check customerId.");
         }
 
@@ -316,12 +324,11 @@ public final class OrderFactory {
     }
 
     /**
-     *
      * @param orderID
      * @param status
      * @return
      */
-    public static boolean setOrderState(int orderID, int status){
+    public static boolean setOrderState(int orderID, int status) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET status = ? WHERE _order_id = ?")) {
 
@@ -330,41 +337,41 @@ public final class OrderFactory {
                 return statement.executeUpdate() == 1;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-
-    /**10
+    /**
+     * 10
      * Find orders by customer name.
+     *
      * @return An ArrayList containing all orders matching search
      */
 
-    public static ArrayList<Order> getOrdersByQuery(String searchQuery){
+    public static ArrayList<Order> getOrdersByQuery(String searchQuery) {
 
-            ArrayList<Order> temp = new ArrayList<>();
-            String input = searchQuery.trim();
-            try (Connection connection = Database.getConnection()){
-                try (PreparedStatement statement = connection.prepareStatement("select o.* from _order o join customer c ON (o.customer_id LIKE c.customer_id) where concat_ws(' ',c.forename,c.surname) like ?;")){
-                    statement.setString(1, '%' + input + '%');
-                    statement.executeQuery();
+        ArrayList<Order> temp = new ArrayList<>();
+        String input = searchQuery.trim();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("select o.* from _order o join customer c ON (o.customer_id LIKE c.customer_id) where concat_ws(' ',c.forename,c.surname) like ?;")) {
+                statement.setString(1, '%' + input + '%');
+                statement.executeQuery();
 
-                    try (ResultSet result = statement.getResultSet()){
-                        while (result.next()){
-                            temp.add(createOrderFromResultSet(result));
-                        }
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        temp.add(createOrderFromResultSet(result));
                     }
                 }
-            } catch (SQLException e){
-                e.printStackTrace();
             }
-            return temp;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return temp;
+    }
 
     /**
-     *
      * @param description
      * @param deliveryTime
      * @param portions
@@ -378,7 +385,7 @@ public final class OrderFactory {
     public static Order createOrder(String description, Timestamp deliveryTime, int portions, boolean priority,
                                     int salespersonId, int customerId, int chauffeurId, ArrayList<Integer> packageId) {
         Customer customer = CustomerFactory.getCustomer(customerId);
-        if(customer == null) {
+        if (customer == null) {
             return null;
         }
 
@@ -429,9 +436,9 @@ public final class OrderFactory {
                         statement.setInt(2, numbers);
                         statement.addBatch();
                     }
-                        statement.executeBatch();
+                    statement.executeBatch();
                 }
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 connection.rollback();
                 connection.setAutoCommit(true);
                 throw e;
@@ -450,12 +457,11 @@ public final class OrderFactory {
     }
 
     /**
-     *
      * @param orderId
      * @param newDate
      * @return boolean
      */
-    public static boolean setOrderDate(int orderId, Timestamp newDate){
+    public static boolean setOrderDate(int orderId, Timestamp newDate) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET delivery_time = ? WHERE _order_id = ?")) {
 
@@ -466,7 +472,7 @@ public final class OrderFactory {
                 return statement.executeUpdate() == 1;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
@@ -474,12 +480,11 @@ public final class OrderFactory {
     }
 
     /**
-     *
      * @param orderId
      * @param portions
      * @return boolean
      */
-    public static boolean setOrderPortions(int orderId, int portions){
+    public static boolean setOrderPortions(int orderId, int portions) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET portions = ? WHERE _order_id = ?")) {
 
@@ -489,7 +494,7 @@ public final class OrderFactory {
                 return statement.executeUpdate() == 1;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
@@ -497,12 +502,11 @@ public final class OrderFactory {
     }
 
     /**
-     *
      * @param orderId
      * @param description
      * @return boolean
      */
-    public static boolean setOrderDescription(int orderId, String description){
+    public static boolean setOrderDescription(int orderId, String description) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET description = ? WHERE _order_id = ?")) {
 
@@ -511,7 +515,7 @@ public final class OrderFactory {
 
                 return statement.executeUpdate() == 1;
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
@@ -519,11 +523,10 @@ public final class OrderFactory {
     }
 
     /**
-     *
      * @param orderID
      * @return ArrayList<Integer>
      */
-    public static ArrayList<Integer> getPackages(int orderID){
+    public static ArrayList<Integer> getPackages(int orderID) {
         ArrayList<Integer> packages = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT food_package_id FROM _order_food_package WHERE _order_id = ?")) {
@@ -546,11 +549,12 @@ public final class OrderFactory {
     /**
      * For orders to be set at a higher priority as specified in problem description
      * If a big event in need of orders comes up, it is to be prioritized above all other pending orders on the same date
+     *
      * @param orderID
      * @param priority
      * @return boolean
      */
-    public static boolean setOrderPriority(int orderID, boolean priority){
+    public static boolean setOrderPriority(int orderID, boolean priority) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET priority = ? WHERE _order_id = ?")) {
 
@@ -559,19 +563,13 @@ public final class OrderFactory {
 
                 return statement.executeUpdate() == 1;
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
     /**
-     * Used in the method below
-     */
-    private static final String salesForPeriodQuery = "SELECT DATE(`_order`.`_order_time`) AS date, SUM(cost) AS sales FROM `_order_food_package` INNER JOIN `food_package` USING(food_package_id) INNER JOIN `_order` USING(`_order_id`) WHERE DATE(`_order`.`_order_time`) BETWEEN ? AND ? GROUP BY DATE(`_order`.`_order_time`);";
-
-    /**
-     *
      * @param startDate
      * @param endDate
      * @return HashMap<LocalDate, Double>

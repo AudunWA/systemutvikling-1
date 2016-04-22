@@ -7,8 +7,6 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EmployeeTableModel;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 
 
@@ -75,6 +73,16 @@ public class EditEmployeeDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    public static void main(String[] args) {
+        final int WIDTH = 500;
+        final int HEIGHT = 300;
+        EditEmployeeDialog dialog = new EditEmployeeDialog(null);
+        dialog.pack();
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setLocationRelativeTo(dialog.getParent());
+        dialog.setVisible(true);
+        System.exit(0);
+    }
 
     private void onOK() {
         final int COLUMN_USERNAME = 0;
@@ -180,11 +188,9 @@ public class EditEmployeeDialog extends JDialog {
 
     }
 
-
     private int getChoice() {
         return editEmployeeInfoCB.getSelectedIndex();
     }
-
 
     private void emptyTextField(String text) {
         if (inputField.getText().equals(text)) {
@@ -243,23 +249,23 @@ public class EditEmployeeDialog extends JDialog {
             case COLUMN_ADMINISTRATOR:
                 return EmployeeType.ADMINISTRATOR;
 
-            default: return EmployeeType.EMPLOYEE;
+            default:
+                return EmployeeType.EMPLOYEE;
         }
     }
 
-
-    private void createCheckBox(){
+    private void createCheckBox() {
 
     }
 
-    private void createTextField(){
+    private void createTextField() {
         inputField = new JTextField(20);
         inputField.setText("Choose a value in a combobox below");
         inputField.setEnabled(false);
         add(inputField);
     }
 
-    private void createUIComponents(){
+    private void createUIComponents() {
         createComboBox();
         createComboBox2();
         createCheckBox();
@@ -268,18 +274,6 @@ public class EditEmployeeDialog extends JDialog {
 
     public boolean getAddedNewValue() {
         return addedNewValue;
-    }
-
-
-    public static void main(String[] args) {
-        final int WIDTH = 500;
-        final int HEIGHT = 300;
-        EditEmployeeDialog dialog = new EditEmployeeDialog(null);
-        dialog.pack();
-        dialog.setSize(WIDTH, HEIGHT);
-        dialog.setLocationRelativeTo(dialog.getParent());
-        dialog.setVisible(true);
-        System.exit(0);
     }
 
 }

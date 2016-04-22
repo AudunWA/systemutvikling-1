@@ -6,7 +6,6 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 public class AddEmployeeDialog extends JDialog {
@@ -69,14 +68,23 @@ public class AddEmployeeDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    private void createComboBoxType(){
+    public static void main(String[] args) {
+        final int WIDTH = 1000;
+        final int HEIGHT = 1000;
+        AddEmployeeDialog dialog = new AddEmployeeDialog();
+        dialog.pack();
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setVisible(true);
+        dialog.setLocationRelativeTo(dialog.getParent());
+        System.exit(0);
+    }
+
+    private void createComboBoxType() {
         Object[] status = {"Employee", "Chef", "Chauffeur", ""};
 
         etBox = new JComboBox(status);
         etBox.setSelectedIndex(0);
     }
-
-
 
     private void onOK() {
         String username = usernameField.getText();
@@ -90,7 +98,7 @@ public class AddEmployeeDialog extends JDialog {
 
         EmployeeType employeeType = EmployeeType.getEmployeeType(selectedIndex);
 
-        if (username.isEmpty()){
+        if (username.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in a username.");
             return;
         }
@@ -100,22 +108,22 @@ public class AddEmployeeDialog extends JDialog {
             return;
         }
 
-        if (surname.isEmpty()){
+        if (surname.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in a surname");
             return;
         }
 
-        if (address.isEmpty()){
+        if (address.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in an address.");
             return;
         }
 
-        if (phone.isEmpty()){
+        if (phone.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in a phone number.");
             return;
         }
 
-        if (email.isEmpty()){
+        if (email.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in an email.");
             return;
         }
@@ -123,38 +131,25 @@ public class AddEmployeeDialog extends JDialog {
 
         Employee employee = EmployeeFactory.createEmployee(username, password, surname, forename, address, phone, email, employeeType);
         addedNewValue = true;
-        if(employee == null){
+        if (employee == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again.");
         } else {
             JOptionPane.showMessageDialog(this, employee);
-       }
+        }
 
         dispose();
     }
 
-    public boolean hasAddedNewValue(){
+    public boolean hasAddedNewValue() {
         return addedNewValue;
     }
-
 
     private void onCancel() {
 // add your code here if necessary
         dispose();
     }
 
-    private void createUIComponents(){
+    private void createUIComponents() {
         createComboBoxType();
-    }
-
-
-    public static void main(String[] args) {
-        final int WIDTH = 1000;
-        final int HEIGHT = 1000;
-        AddEmployeeDialog dialog = new AddEmployeeDialog();
-        dialog.pack();
-        dialog.setSize(WIDTH, HEIGHT);
-        dialog.setVisible(true);
-        dialog.setLocationRelativeTo(dialog.getParent());
-        System.exit(0);
     }
 }

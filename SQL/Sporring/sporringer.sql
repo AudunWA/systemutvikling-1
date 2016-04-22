@@ -1,6 +1,6 @@
-
 -- SHOW MENU --
 
-SELECT name FROM dish;
+SELECT name
+FROM dish;
 
 -- fortsettelse --

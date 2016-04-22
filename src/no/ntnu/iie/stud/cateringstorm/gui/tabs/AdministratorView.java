@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * Created by kenan on 16.03.2016.
  */
-public class AdministratorView extends JFrame{
+public class AdministratorView extends JFrame {
     private static final String WINDOW_TITLE = "Employee Overview";
 
     private static final int WIDTH = 300;

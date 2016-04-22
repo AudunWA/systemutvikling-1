@@ -1,7 +1,9 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
+
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.LoggerProvider;
-import com.teamdev.jxbrowser.chromium.events.*;
+import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
+import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import no.ntnu.iie.stud.cateringstorm.Maps.MapBackend;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
@@ -31,24 +33,6 @@ public class MapView extends JFrame {
 
     private ArrayList<Order> orders;
 
-    public static void main(String[] args) {
-        ArrayList<Coordinate> addressList = new ArrayList<>();
-        addressList.add(MapBackend.addressToPoint("Stibakken 2, Malvik, Norway"));
-        addressList.add(MapBackend.addressToPoint("Valgrindvegen 12, Trondheim, Norway"));
-        addressList.add(MapBackend.addressToPoint("Anders tvereggensveg 2, Trondheim, Norway"));
-        addressList.add(MapBackend.addressToPoint("Eidsvolls gate 35, Trondheim, Norway"));
-        addressList.add(MapBackend.addressToPoint("Venusvegen 1, Trondheim, Norway"));
-
-        addressList = MapBackend.getShortestRoute(addressList);
-
-        JFrame frame = new JFrame("Map");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.add(new MapView(addressList, OrderFactory.getAllAvailableOrdersChauffeur()));
-        frame.setSize(500, 400);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
-
     public MapView(ArrayList<Coordinate> route, ArrayList<Order> orders) {
         this.orders = orders;
         setLayout(new BorderLayout());
@@ -69,77 +53,45 @@ public class MapView extends JFrame {
             }
         });
 
-        setDeliveredButton.addActionListener(e ->{ setDelivered(); });
+        setDeliveredButton.addActionListener(e -> {
+            setDelivered();
+        });
 
         browser.loadHTML(getMapHTML());
         mainPanel.add(view, BorderLayout.CENTER);
     }
 
-    private void setDelivered(){
+    public static void main(String[] args) {
+        ArrayList<Coordinate> addressList = new ArrayList<>();
+        addressList.add(MapBackend.addressToPoint("Stibakken 2, Malvik, Norway"));
+        addressList.add(MapBackend.addressToPoint("Valgrindvegen 12, Trondheim, Norway"));
+        addressList.add(MapBackend.addressToPoint("Anders tvereggensveg 2, Trondheim, Norway"));
+        addressList.add(MapBackend.addressToPoint("Eidsvolls gate 35, Trondheim, Norway"));
+        addressList.add(MapBackend.addressToPoint("Venusvegen 1, Trondheim, Norway"));
 
-        for (Order order : orders){
-            OrderFactory.setOrderState(order.getOrderId(), 2);
-        }
+        addressList = MapBackend.getShortestRoute(addressList);
 
-        orders = OrderFactory.getAllAvailableOrdersForChauffeurTable();
-
-        setVisible(false);
-        dispose();
-
+        JFrame frame = new JFrame("Map");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(new MapView(addressList, OrderFactory.getAllAvailableOrdersChauffeur()));
+        frame.setSize(500, 400);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     /**
-     * Disables most, if not all logging done by JxBrowser.
-     */
-    private void disableBrowserLogging() {
-        LoggerProvider.setLevel(Level.OFF);
-    }
-
-    /**
-     * Resets the zoom level to the default value
-     */
-    private void resetZoom() {
-        browser.executeJavaScript("map.setZoom(12)");
-    }
-
-    /**
-     Loads the map HTML from the project resources
-     * @return A String containing the HTML
-     */
-    private String getMapHTML() {
-        ClassLoader loader = getClass().getClassLoader();
-        if (loader == null) {
-            System.err.println("Could not get class loader!");
-            return null;
-        }
-
-        URL resource = loader.getResource(MAP_PATH);
-        if (resource == null) {
-            System.err.println("Could not get resource \"" + MAP_PATH + "\"");
-            return null;
-        }
-        try {
-            return new String(Files.readAllBytes(Paths.get(resource.toURI())));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     Generates a Javascript snippet for rendering the driving route.
+     * Generates a Javascript snippet for rendering the driving route.
+     *
      * @param waypoints The waypoints of the route
      * @return A String containing Javascript code
      */
     private static String generateRouteJavascript(ArrayList<Coordinate> waypoints) {
-        if(waypoints.size() < 3) {
+        if (waypoints.size() < 3) {
             throw new IllegalArgumentException("waypoints needs to contain at least 3 coordinates. Has " + waypoints.size());
         }
 
         String origin = generateLatLng(waypoints.get(0));
-        String destination = generateLatLng(waypoints.get(waypoints.size()-1));
+        String destination = generateLatLng(waypoints.get(waypoints.size() - 1));
 
         StringBuilder waypointsBuilder = new StringBuilder("[");
 
@@ -166,11 +118,66 @@ public class MapView extends JFrame {
     }
 
     /**
-     Utility function for generating google.maps.LatLng objects
+     * Utility function for generating google.maps.LatLng objects
+     *
      * @param coordinate The coordinate to convert
      * @return A String representation of the google.maps.LatLng object
      */
     private static String generateLatLng(Coordinate coordinate) {
         return "new google.maps.LatLng(" + coordinate.getLatitude() + "," + coordinate.getLongitude() + ")";
+    }
+
+    private void setDelivered() {
+
+        for (Order order : orders) {
+            OrderFactory.setOrderState(order.getOrderId(), 2);
+        }
+
+        orders = OrderFactory.getAllAvailableOrdersForChauffeurTable();
+
+        setVisible(false);
+        dispose();
+
+    }
+
+    /**
+     * Disables most, if not all logging done by JxBrowser.
+     */
+    private void disableBrowserLogging() {
+        LoggerProvider.setLevel(Level.OFF);
+    }
+
+    /**
+     * Resets the zoom level to the default value
+     */
+    private void resetZoom() {
+        browser.executeJavaScript("map.setZoom(12)");
+    }
+
+    /**
+     * Loads the map HTML from the project resources
+     *
+     * @return A String containing the HTML
+     */
+    private String getMapHTML() {
+        ClassLoader loader = getClass().getClassLoader();
+        if (loader == null) {
+            System.err.println("Could not get class loader!");
+            return null;
+        }
+
+        URL resource = loader.getResource(MAP_PATH);
+        if (resource == null) {
+            System.err.println("Could not get resource \"" + MAP_PATH + "\"");
+            return null;
+        }
+        try {
+            return new String(Files.readAllBytes(Paths.get(resource.toURI())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -2,8 +2,8 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddIngredientDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
@@ -41,15 +41,15 @@ public class StorageView extends JPanel {
             dialog.pack();
             dialog.setVisible(true);
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            if(dialog.getAddedNewValue()) {
+            if (dialog.getAddedNewValue()) {
                 //FIXME toast gives nullpointer
-                Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Ingredient added.", Toast.LENGTH_SHORT, Toast.Style.SUCCESS).display();
+                Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Ingredient added.", Toast.LENGTH_SHORT, Toast.Style.SUCCESS).display();
                 ingredientList = IngredientFactory.getAllIngredients();
 
                 // Refresh data
                 tableModel.setRows(IngredientFactory.getAllIngredients());
             } else {
-                Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Ingredient add failed.", Toast.LENGTH_SHORT, Toast.Style.ERROR).display();
+                Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Ingredient add failed.", Toast.LENGTH_SHORT, Toast.Style.ERROR).display();
             }
         });
 
@@ -69,12 +69,12 @@ public class StorageView extends JPanel {
                 searchDocument();
             }
 
-            public void searchDocument(){
+            public void searchDocument() {
 
                 ArrayList<Ingredient> copy = new ArrayList<>();
 
                 for (int i = 0; i < ingredientList.size(); i++) {
-                    if ((ingredientList.get(i).getName().toLowerCase().contains(searchField.getText().toLowerCase()) || (ingredientList.get(i).getName()).toLowerCase().contains(searchField.getText().toLowerCase()))){
+                    if ((ingredientList.get(i).getName().toLowerCase().contains(searchField.getText().toLowerCase()) || (ingredientList.get(i).getName()).toLowerCase().contains(searchField.getText().toLowerCase()))) {
                         copy.add(ingredientList.get(i));
 
                     }
@@ -93,7 +93,7 @@ public class StorageView extends JPanel {
 
         incrementSupply.addActionListener(e -> {
             int selectedRow = ingredientTable.getSelectedRow();
-            if(selectedRow == -1) {
+            if (selectedRow == -1) {
                 return;
             }
 
@@ -101,7 +101,7 @@ public class StorageView extends JPanel {
             ingredient.incrementAmount();
             int affectedRows = IngredientFactory.updateIngredientAmount(ingredient.getIngredientId(), ingredient.getAmount());
 
-            if(affectedRows == 1) {
+            if (affectedRows == 1) {
                 tableModel.setRow(selectedRow, ingredient);
             } else {
                 // TODO: Log error?
@@ -123,20 +123,16 @@ public class StorageView extends JPanel {
         frame.setLocationRelativeTo(null);
     }
 
-    private void createUIComponents() {
-        createTable();
-    }
-
     private static JTable getNewRenderedTable(final JTable table) {
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table,
                                                            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-                if (((Date)table.getValueAt(row,3)).before(new Date(System.currentTimeMillis() + 86400000 * 2))){
-                    setBackground(new Color(200,100,100));
-                } else if (((Date)table.getValueAt(row,3)).before(new Date(System.currentTimeMillis() + 86400000 * 10))){
+                if (((Date) table.getValueAt(row, 3)).before(new Date(System.currentTimeMillis() + 86400000 * 2))) {
+                    setBackground(new Color(200, 100, 100));
+                } else if (((Date) table.getValueAt(row, 3)).before(new Date(System.currentTimeMillis() + 86400000 * 10))) {
                     setBackground(Color.ORANGE);
                 } else {
                     setBackground(table.getBackground());
@@ -149,9 +145,13 @@ public class StorageView extends JPanel {
         return table;
     }
 
-    private void createTable(){
+    private void createUIComponents() {
+        createTable();
+    }
+
+    private void createTable() {
         ingredientList = IngredientFactory.getAllIngredients();
-        Integer[] columns = new Integer[] { IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION, IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_EXPIRE_DATE, IngredientTableModel.COLUMN_AMOUNT, IngredientTableModel.COLUMN_UNIT };
+        Integer[] columns = new Integer[]{IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION, IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_EXPIRE_DATE, IngredientTableModel.COLUMN_AMOUNT, IngredientTableModel.COLUMN_UNIT};
 
         tableModel = new IngredientTableModel(ingredientList, columns);
         ingredientTable = new JTable(tableModel);

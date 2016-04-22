@@ -1,13 +1,9 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
-import jdk.nashorn.internal.runtime.regexp.joni.exception.JOniException;
-import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
-import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDishFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientDishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 
@@ -54,7 +50,9 @@ public class AddDishDialog extends JDialog {
         */
 
         addOrRemoveButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { onAR();}
+            public void actionPerformed(ActionEvent e) {
+                onAR();
+            }
         });
 
         cancelButton.addActionListener(new ActionListener() {
@@ -63,21 +61,22 @@ public class AddDishDialog extends JDialog {
             }
         });
         okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { onOk(); }
+            public void actionPerformed(ActionEvent e) {
+                onOk();
+            }
         });
         addedIngredientTable.getSelectionModel().addListSelectionListener(e -> {
-            if(!e.getValueIsAdjusting()) {
+            if (!e.getValueIsAdjusting()) {
                 return;
             }
             selectionIngredientTable.clearSelection();
         });
         selectionIngredientTable.getSelectionModel().addListSelectionListener(e -> {
-            if(!e.getValueIsAdjusting()) {
+            if (!e.getValueIsAdjusting()) {
                 return;
             }
             addedIngredientTable.clearSelection();
         });
-
 
 
 // call onCancel() when cross is clicked
@@ -95,21 +94,65 @@ public class AddDishDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-    private void createComboBoxType(){
-        Object[] status = {"Appetizer","Main course","Dessert"};
+
+    public static void main(String[] args) {
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+        AddDishDialog dialog = new AddDishDialog();
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setVisible(true);
+        System.exit(0);
+
+    }
+
+    private void createComboBoxType() {
+        Object[] status = {"Appetizer", "Main course", "Dessert"};
 
         dishType = new JComboBox(status);
         dishType.setSelectedIndex(0);
     }
 
-    private void createComboBoxActiveStatus(){
-        Object[] status = {"Active","Not active"};
+    private void createComboBoxActiveStatus() {
+        Object[] status = {"Active", "Not active"};
 
         activeStatus = new JComboBox(status);
         activeStatus.setSelectedIndex(0);
     }
 
-    private void onOk(){
+    //private void onOk() {
+    //if (ingredientTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
+    //    JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
+    //    ingredientTable.clearSelection();
+    //    addedTable.clearSelection();
+    //} else {
+    //    if (ingredientTable.getSelectedRow() > -1) {
+    //        boolean check = true;
+    //for (Ingredient ingredients : addedList) {
+    //    if (ingredients.getIngredientId() == (ingredientTable.getSelectedRow() + 1)) {
+    //        check = false;
+    //    }
+    //}
+    //if (check) {
+    //   addedList.add(ingredientList.get(ingredientTable.getSelectedRow()));
+    //   ((EntityTableModel) addedTable.getModel()).setRows(addedList);
+    //  ingredientTable.clearSelection();
+    //      } else {
+    //        JOptionPane.showMessageDialog(this, "This ingredient is already added.");
+    //      ingredientTable.clearSelection();
+    //}
+    // } else if (addedTable.getSelectedRow() > -1 && !ingredientTable.isColumnSelected(1) && !ingredientTable.isColumnSelected(2)) {
+    //  addedList.remove(addedTable.getSelectedRow());
+    //((EntityTableModel) addedTable.getModel()).setRows(addedList);
+    // addedTable.clearSelection();
+    //} else {
+    //  JOptionPane.showMessageDialog(this, "Please unselect the ingredient list. Do this by clicking with ctrl down.");
+    // addedTable.clearSelection();
+    // }
+    // }
+
+    //}
+
+    private void onOk() {
 
         String name;
         String description;
@@ -117,21 +160,17 @@ public class AddDishDialog extends JDialog {
         boolean active;
 
         name = dishName.getText();
-        if (name.equals("")){
+        if (name.equals("")) {
             JOptionPane.showMessageDialog(this, "Dish name must be filled in");
             return;
         }
         description = dishDescription.getText();
-        type = dishType.getSelectedIndex()+1;
-        if (activeStatus.equals("Active")){
-            active = true;
-        } else {
-            active = false;
-        }
+        type = dishType.getSelectedIndex() + 1;
+        active = activeStatus.equals("Active");
 
         String Joutput = "The following ingredients have been added to the dish: " + name + "\n";
 
-        for (IngredientDish ayy : IngredientDishFactory.createDish(addedList, name, description, type, active)){
+        for (IngredientDish ayy : IngredientDishFactory.createDish(addedList, name, description, type, active)) {
             Joutput += "Ingredient: " + ayy.getIngredient().getName() + " " + ayy.getQuantity() + ayy.getUnit() + ".\n";
         }
 
@@ -139,71 +178,38 @@ public class AddDishDialog extends JDialog {
 
     }
 
-    //private void onOk() {
-        //if (ingredientTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
-        //    JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
-        //    ingredientTable.clearSelection();
-        //    addedTable.clearSelection();
-        //} else {
-        //    if (ingredientTable.getSelectedRow() > -1) {
-        //        boolean check = true;
-                //for (Ingredient ingredients : addedList) {
-                //    if (ingredients.getIngredientId() == (ingredientTable.getSelectedRow() + 1)) {
-                //        check = false;
-                //    }
-                //}
-                //if (check) {
-                 //   addedList.add(ingredientList.get(ingredientTable.getSelectedRow()));
-                 //   ((EntityTableModel) addedTable.getModel()).setRows(addedList);
-                  //  ingredientTable.clearSelection();
-          //      } else {
-            //        JOptionPane.showMessageDialog(this, "This ingredient is already added.");
-              //      ingredientTable.clearSelection();
-                //}
-           // } else if (addedTable.getSelectedRow() > -1 && !ingredientTable.isColumnSelected(1) && !ingredientTable.isColumnSelected(2)) {
-              //  addedList.remove(addedTable.getSelectedRow());
-                //((EntityTableModel) addedTable.getModel()).setRows(addedList);
-               // addedTable.clearSelection();
-            //} else {
-              //  JOptionPane.showMessageDialog(this, "Please unselect the ingredient list. Do this by clicking with ctrl down.");
-               // addedTable.clearSelection();
-           // }
-       // }
-
-    //}
-
     private void onCancel() {
 // add your code here if necessary
         dispose();
     }
 
-    public void onAR(){
+    public void onAR() {
 
-        if ((Integer)addRemoveSpinner.getValue() < 1){
+        if ((Integer) addRemoveSpinner.getValue() < 1) {
             JOptionPane.showMessageDialog(this, "Please set a positive amount on the spinner");
             return;
         }
 
         boolean check = true;
 
-        if (addedIngredientTable.getSelectedRow() > -1){
-            if (addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() < (Integer)addRemoveSpinner.getValue() + 1) {
+        if (addedIngredientTable.getSelectedRow() > -1) {
+            if (addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() < (Integer) addRemoveSpinner.getValue() + 1) {
                 addedList.remove(addedIngredientTable.getSelectedRow());
             } else {
-                addedList.get(addedIngredientTable.getSelectedRow()).setQuantity(addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() - (Integer)addRemoveSpinner.getValue());
+                addedList.get(addedIngredientTable.getSelectedRow()).setQuantity(addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() - (Integer) addRemoveSpinner.getValue());
             }
-        } else if (selectionIngredientTable.getSelectedRow() > -1){
+        } else if (selectionIngredientTable.getSelectedRow() > -1) {
             //addedList.add()
-            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(selectionIngredientTable.getSelectedRow()).getIngredientId()),null,(Integer)addRemoveSpinner.getValue(),selectionList.get(selectionIngredientTable.getSelectedRow()).getUnit());
+            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(selectionIngredientTable.getSelectedRow()).getIngredientId()), null, (Integer) addRemoveSpinner.getValue(), selectionList.get(selectionIngredientTable.getSelectedRow()).getUnit());
 
-            for (int i = 0; i <addedList.size(); i++){
-                if (addedList.get(i).getIngredient().getIngredientId() == ingDish.getIngredient().getIngredientId()){
+            for (int i = 0; i < addedList.size(); i++) {
+                if (addedList.get(i).getIngredient().getIngredientId() == ingDish.getIngredient().getIngredientId()) {
                     addedList.get(i).setQuantity(addedList.get(i).getQuantity() + ingDish.getQuantity());
                     check = false;
                 }
             }
 
-            if (check){
+            if (check) {
                 addedList.add(ingDish);
             }
         }
@@ -211,12 +217,12 @@ public class AddDishDialog extends JDialog {
 
     }
 
-    public void onAdd(){
+    public void onAdd() {
         //TODO
         //addedList.add(IngredientDishFactory.addIngredientToNewDish(selectionList.get(selectionIngredientTable.getSelectedRow()).getIngredient().getIngredientId(), (Integer)addRemoveSpinner.getValue(), selectionList.get(selectionIngredientTable.getSelectedRow()).getIngredient().getUnit()));
     }
 
-    public void createTables(){
+    public void createTables() {
 
         selectionList = IngredientFactory.getAllIngredients();
         Integer[] columns = new Integer[]{IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_UNIT};
@@ -237,16 +243,6 @@ public class AddDishDialog extends JDialog {
         createComboBoxType();
         createComboBoxActiveStatus();
         createTables();
-    }
-
-    public static void main(String[] args) {
-        final int WIDTH = 700;
-        final int HEIGHT = 600;
-        AddDishDialog dialog = new AddDishDialog();
-        dialog.setSize(WIDTH, HEIGHT);
-        dialog.setVisible(true);
-        System.exit(0);
-
     }
     /*
     private void onAdd() {

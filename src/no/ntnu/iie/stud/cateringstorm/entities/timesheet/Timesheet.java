@@ -12,7 +12,8 @@ public class Timesheet {
     private Timestamp fromTime;
     private Timestamp toTime;
     private boolean active;
-    public Timesheet(int timesheetId, int employeeId, Timestamp fromTime, Timestamp toTime, boolean active){
+
+    public Timesheet(int timesheetId, int employeeId, Timestamp fromTime, Timestamp toTime, boolean active) {
         this.timesheetId = timesheetId;
         this.employeeId = employeeId;
         this.fromTime = fromTime;
@@ -23,6 +24,7 @@ public class Timesheet {
     public int getTimesheetId() {
         return timesheetId;
     }
+
     public int getEmployeeId() {
         return employeeId;
     }
@@ -31,37 +33,41 @@ public class Timesheet {
         return fromTime;
     }
 
-    public Timestamp getToTime() {
-        return toTime;
-    }
-
-    public String getFromTimeString(){
-        Timestamp time = getFromTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return format.format(time);
-    }public String getToTimeString(){
-        Timestamp time = getToTime();
-        if(time!= null) {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return format.format(time);
-        }
-        return "Not registered yet";
-    }
-
     public void setFromTime(Timestamp fromTime) {
         this.fromTime = fromTime;
+    }
+
+    public Timestamp getToTime() {
+        return toTime;
     }
 
     public void setToTime(Timestamp toTime) {
         this.toTime = toTime;
     }
 
+    public String getFromTimeString() {
+        Timestamp time = getFromTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(time);
+    }
+
+    public String getToTimeString() {
+        Timestamp time = getToTime();
+        if (time != null) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return format.format(time);
+        }
+        return "Not registered yet";
+    }
+
     public boolean isActive() {
         return active;
     }
-    public void setActive(boolean active){
+
+    public void setActive(boolean active) {
         this.active = active;
     }
+
     @Override
     public String toString() {
         return "Timesheet{" +

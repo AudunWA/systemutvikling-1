@@ -6,7 +6,6 @@ import no.ntnu.iie.stud.cateringstorm.gui.statistics.DeliveredOrdersChart;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 /**
  * Displays various statistics about the system.

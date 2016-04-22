@@ -4,8 +4,6 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.StringJoiner;
 
 /**
  * Created by EliasBrattli on 04/04/2016.
@@ -68,12 +66,12 @@ public class DishTableModel extends EntityTableModel<Dish> {
     }
 
     @Override
-    public void setValueAt(Object value, int row, int column){
+    public void setValueAt(Object value, int row, int column) {
         Dish entity = getValue(row);
         int columnType = getColumnType(column);
         String status0 = "Appetiser", status1 = "Main course", status2 = "Dessert";
         // Keeping a few empty cases should an expansion be necessary
-        switch (columnType){
+        switch (columnType) {
             case COLUMN_ID:
                 break;
             case COLUMN_TYPE_ID:
@@ -83,22 +81,22 @@ public class DishTableModel extends EntityTableModel<Dish> {
             case COLUMN_DESCRIPTION:
                 break;
             case COLUMN_ACTIVE:
-                entity.setActive((Boolean)value);
+                entity.setActive((Boolean) value);
                 DishFactory.editDishStatus(entity.getDishId(), entity.isActive());
                 break;
             case COLUMN_TYPE_TEXT:
-                if(value.equals(status0)) {
+                if (value.equals(status0)) {
                     entity.setDishType(1);
-                }else if(value.equals(status1)){
+                } else if (value.equals(status1)) {
                     entity.setDishType(2);
-                }else if(value.equals(status2)){
+                } else if (value.equals(status2)) {
                     entity.setDishType(3);
-                }else{
+                } else {
                     entity.setDishType(-1);
                 }
                 break;
         }
-        fireTableCellUpdated(row,column);
+        fireTableCellUpdated(row, column);
 
     }
 

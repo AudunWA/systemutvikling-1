@@ -1,10 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
-import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.subscription.Subscription;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
