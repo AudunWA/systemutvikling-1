@@ -13,6 +13,7 @@ public class IngredientDishTableModel extends EntityTableModel<IngredientDish> {
     public static final int COLUMN_QUANTITY = 2;
     public static final int COLUMN_UNIT = 3;
     public static final int COLUMN_INGREDIENT_NAME = 4;
+    public static final int COLUMN_DISH_NAME = 5;
 
     public IngredientDishTableModel(ArrayList<IngredientDish> rows){
         super(rows);
@@ -36,6 +37,8 @@ public class IngredientDishTableModel extends EntityTableModel<IngredientDish> {
                 return "Unit";
             case COLUMN_INGREDIENT_NAME:
                 return "Ingredient name";
+            case COLUMN_DISH_NAME:
+                return "Dish name";
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
@@ -57,6 +60,8 @@ public class IngredientDishTableModel extends EntityTableModel<IngredientDish> {
                 return value.getUnit();
             case COLUMN_INGREDIENT_NAME:
                 return value.getIngredient().getName();
+            case COLUMN_DISH_NAME:
+                return value.getDish().getName();
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
@@ -75,6 +80,8 @@ public class IngredientDishTableModel extends EntityTableModel<IngredientDish> {
             case COLUMN_UNIT:
                 return String.class;
             case COLUMN_INGREDIENT_NAME:
+                return String.class;
+            case COLUMN_DISH_NAME:
                 return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");

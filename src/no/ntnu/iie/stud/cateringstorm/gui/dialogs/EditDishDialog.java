@@ -5,9 +5,9 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDishFactory;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientDishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
-import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class EditDishDialog extends JDialog {
     private boolean addedNewValue;
-    private static final Integer[] COLUMNS_AVAILABLE_INGREDIENTS = { IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION };
+    private static final Integer[] COLUMNS_AVAILABLE_INGREDIENTS = {IngredientDishTableModel.COLUMN_DISH_NAME, IngredientDishTableModel.COLUMN_INGREDIENT_ID, IngredientDishTableModel.COLUMN_INGREDIENT_NAME, IngredientDishTableModel.COLUMN_QUANTITY, IngredientDishTableModel.COLUMN_UNIT};
 
     private JPanel mainPanel;
     private JButton okButton;
@@ -26,14 +26,19 @@ public class EditDishDialog extends JDialog {
     private JComboBox<String> typeComboBox;
     private JCheckBox statusCheckBox;
     private JButton swapButton;
-    private Dish dish;
 
-    private JTable leftSideTable;
-    private IngredientTableModel leftSideModel;
+    private JTable addedIngredientTable;
+    private IngredientDishTableModel leftSideModel;
 
     private JTable rightSideTable;
     private JSpinner addRemoveSpinner;
     private IngredientTableModel rightTableModel;
+
+    ArrayList<IngredientDish> copy = IngredientDishFactory.getAllIngredientDishes();
+    ArrayList<IngredientDish> addedList;
+    ArrayList<Ingredient> selectionList;
+
+    private Dish dish;
 
 
     public EditDishDialog(Dish dish) {
@@ -75,17 +80,19 @@ public class EditDishDialog extends JDialog {
         typeComboBox.setSelectedIndex(0);
     }
 
-
-    private static final Integer[] COLUMNS_AVAILABE_DISHES = { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION };
-
     private void createTables() {
         // Available dishes (all active ones)
-        rightTableModel = new IngredientTableModel(IngredientFactory.getAllIngredients(), COLUMNS_AVAILABLE_INGREDIENTS);
+
+        selectionList = IngredientFactory.getAllIngredients();
+        rightTableModel = new IngredientTableModel(selectionList, COLUMNS_AVAILABLE_INGREDIENTS);
         rightSideTable = new JTable(rightTableModel);
+        rightSideTable.getTableHeader().setReorderingAllowed(false);
 
         // Current dishes
-        leftSideModel = new IngredientTableModel(IngredientFactory.getIngredients(dish.getDishId()), COLUMNS_AVAILABLE_INGREDIENTS);
-        leftSideTable = new JTable(leftSideModel);
+        addedList = IngredientDishFactory.getAllIngredientsDishesInOrder(dish.getDishId());
+        leftSideModel = new IngredientDishTableModel(addedList, COLUMNS_AVAILABLE_INGREDIENTS);
+        addedIngredientTable = new JTable(leftSideModel);
+        addedIngredientTable.getTableHeader().setReorderingAllowed(false);
     }
 
     private void onOK() {
@@ -119,7 +126,6 @@ public class EditDishDialog extends JDialog {
                 JOptionPane.showMessageDialog(this, "Dish was not update, please try again later.");
             }
 
-
             if (dish == null) {
                 JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
             } else {
@@ -140,45 +146,44 @@ public class EditDishDialog extends JDialog {
 
     }
     private void onSwap() {
-        if ((Integer) addRemoveSpinner.getValue() < 1) {
+
+        if ((Integer)addRemoveSpinner.getValue() < 1) {
             JOptionPane.showMessageDialog(this, "Please set a positive amount on the spinner");
             return;
             // Check if both tables are selected (shouldn't really happen, but we check anyways)
         }
-        if (leftSideTable.getSelectedRow() > -1 && rightSideTable.getSelectedRow() > -1) {
+        if (addedIngredientTable.getSelectedRow() > -1 && rightSideTable.getSelectedRow() > -1) {
             JOptionPane.showMessageDialog(this, "Both tables selected. Error.");
-            leftSideTable.clearSelection();
+            addedIngredientTable.clearSelection();
             rightSideTable.clearSelection();
             return;
         }
+
+        if (addedIngredientTable.getSelectedRow() > -1) {
+            if (addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() < (Integer) addRemoveSpinner.getValue() + 1) {
+                addedList.remove(addedIngredientTable.getSelectedRow());
+            } else {
+                addedList.get(addedIngredientTable.getSelectedRow()).setQuantity(addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() - (Integer) addRemoveSpinner.getValue());
+            }
+        }
+
+        boolean check = true;
+
         if (rightSideTable.getSelectedRow() > -1) {
-            Ingredient rightSideSelectedIngredient = rightTableModel.getValue(rightSideTable.getSelectedRow());
-            Ingredient existingLeftSideIngredient = null;
-            ArrayList<Ingredient> ingredients = leftSideModel.getRowsClone();
-            for (Ingredient ingredient : ingredients) {
-                if (dish.getDishId() == rightSideSelectedIngredient.getIngredientId()) {
-                    existingLeftSideIngredient = ingredient;
-                    break;
+            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(rightSideTable.getSelectedRow()).getIngredientId()),null,(Integer)addRemoveSpinner.getValue(),selectionList.get(rightSideTable.getSelectedRow()).getUnit());
+
+            for (int i = 0; i <addedList.size(); i++){
+                if (addedList.get(i).getIngredient().getIngredientId() == ingDish.getIngredient().getIngredientId()){
+                    addedList.get(i).setQuantity(addedList.get(i).getQuantity() + ingDish.getQuantity());
+                    check = false;
                 }
             }
 
-            if (existingLeftSideIngredient == null) {
-                // Add ingredient to left side
-                leftSideModel.addRow(rightSideSelectedIngredient);
-            } else {
-                // Show error
-                Toast.makeText(this, "Ingredient already added.", Toast.Style.ERROR).display();
-                return;
+            if (check){
+                addedList.add(ingDish);
             }
-        } else if (leftSideTable.getSelectedRow() > -1) {
-            Ingredient leftSelectedIngredient = leftSideModel.getValue(leftSideTable.getSelectedRow());
-
-            leftSideModel.removeRow(leftSideTable.getSelectedRow());
-            leftSideTable.clearSelection();
-
-        } else {
-            Toast.makeText(this, "Select a row.", Toast.Style.ERROR).display();
         }
+        leftSideModel.setRows(addedList);
     }
 
     private void onCancel() {
