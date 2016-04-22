@@ -6,6 +6,8 @@ import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
@@ -29,7 +31,7 @@ public class ChefMakeOrderDialog extends JDialog {
     private FoodPackageTableModel foodTableModel;
     private Order order;
     private ArrayList<Dish> dishList;
-    private ArrayList<Ingredient> ingredientsInOrder;
+    private ArrayList<IngredientDish> ingredientsInOrder;
     private ArrayList<Ingredient> ingredients;
 
     public ChefMakeOrderDialog(Order order) {
@@ -88,17 +90,31 @@ public class ChefMakeOrderDialog extends JDialog {
         OrderFactory.setOrderState(order.getOrderId(), 0);
         int viewedOrderId = order.getOrderId();
 
-        ingredientsInOrder = IngredientFactory.getAllIngredientsInOrder(viewedOrderId);
+        ingredientsInOrder = IngredientDishFactory.getAllIngredientsDishesInOrder(viewedOrderId);
+        ingredients = IngredientFactory.getAllIngredients();
 
-        //FIXME KENAN CODE
-        for(int i = 0; i < ingredientsInOrder.size(); i++) {
+        /*for(int i = 0; i < ingredientsInOrder.size(); i++) {
             int id = ingredientsInOrder.get(i).getIngredientId();
             double usedAmount = ingredientsInOrder.get(i).getAmount();
             ingredients = IngredientFactory.getAllIngredients();
             double storageAmount = ingredients.get(i).getAmount();
             double newAmount = storageAmount - usedAmount;
             IngredientFactory.updateIngredientAmount(id, newAmount);
+        }*/
+        //FIXME THE INGREDIENTS GET THE AMOUNT IN STORAGE INSTEAD OF QUANTITY!!!!!!!!!!
+        for (int i = 0; i < ingredientsInOrder.size(); i++) {
+            for (int k = 0; k < ingredients.size(); k++){
+                if (ingredientsInOrder.get(i).getIngredient().getIngredientId() == ingredients.get(k).getIngredientId()){
+                    //System.out.println("BEFORE||||" + "Ingredient: " + ingredients.get(k).getName() + " Amount:" + ingredients.get(k).getAmount());
+                    //System.out.println("INGREDIENT_IN_ORDER|||||" + "Ingredient" + ingredientsInOrder.get(i).getIngredient().getName() + " Amount:" + ingredientsInOrder.get(i).getQuantity());
+                    double newAmount = ingredients.get(k).getAmount() - ingredientsInOrder.get(i).getQuantity();
+                    //System.out.println("Ingredient: " + ingredients.get(k).getName() + " Amount: " + newAmount);
+                    IngredientFactory.updateIngredientAmount(ingredients.get(k).getIngredientId(), newAmount);
+                }
+            }
         }
+
+
         dispose();
     }
 

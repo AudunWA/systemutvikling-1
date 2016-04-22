@@ -4,6 +4,8 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
+import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.ChefMakeOrderDialog;
@@ -33,6 +35,9 @@ public class ChefOrderView extends JPanel {
     private JButton refreshButton;
     private ArrayList<Order> orderList;
     private OrderTableModel tableModel;
+
+    private ArrayList<IngredientDish> ingredientsInOrder;
+    private ArrayList<Ingredient> ingredients;
 
     public ChefOrderView() {
         setLayout(new BorderLayout());
@@ -103,6 +108,30 @@ public class ChefOrderView extends JPanel {
         // TODO: Implement method opening a new tab DishInfoView, allowing user to view more information of a single
         if (orderTable.getSelectedRow() < 0){
             JOptionPane.showMessageDialog(this, "Please select a order");
+            return;
+        }
+        int currentId = (Integer)orderTable.getValueAt(orderTable.getSelectedRow(), 0);
+
+        String JOutput = "Not enough ingredients in storage for this order";
+        boolean empty = false;
+
+        ingredientsInOrder = IngredientDishFactory.getAllIngredientsDishesInOrder(currentId);
+        ingredients = IngredientFactory.getAllIngredients();
+
+        for (int i = 0; i < ingredientsInOrder.size(); i++) {
+            for (int k = 0; k < ingredients.size(); k++){
+                if (ingredientsInOrder.get(i).getIngredient().getIngredientId() == ingredients.get(k).getIngredientId()){
+                    if (ingredientsInOrder.get(i).getQuantity() > ingredients.get(k).getAmount()){
+                        double newAmount = ingredients.get(k).getAmount() - ingredientsInOrder.get(i).getQuantity();
+                        empty = true;
+                        JOutput += "\n Dish: " + ingredientsInOrder.get(i).getDish().getName() + " Missing ingredient: " + ingredients.get(k).getName() + " - Missing amount: " + newAmount;
+                    }
+                }
+            }
+        }
+
+        if (empty){
+            JOptionPane.showMessageDialog(this, JOutput);
             return;
         }
         int viewedOrderId = (Integer) orderTable.getModel().getValueAt(orderTable.getSelectedRow(), 0);

@@ -105,9 +105,29 @@ public class IngredientDishFactory {
 
 
         return returnList;
+    }
 
+    public static ArrayList<IngredientDish> getAllIngredientsDishesInOrder(int orderId) {
+        ArrayList<IngredientDish> temp = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM \n" +
+                    "ingredient INNER JOIN ingredient_dish ON ingredient.ingredient_id = ingredient_dish.ingredient_id\n" +
+                    "INNER JOIN dish_food_package ON ingredient_dish.dish_id = dish_food_package.dish_id\n" +
+                    "INNER JOIN _order_food_package ON dish_food_package.food_package_id = _order_food_package.food_package_id WHERE _order_food_package._order_id = ?; ")) {
 
+                statement.setInt(1, orderId);
+                statement.executeQuery();
 
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        temp.add(createIngredientDishFromResultSet(result));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return temp;
     }
 
     public static IngredientDish addIngredientToNewDish(int ingredientId, int quantity, String unit){
