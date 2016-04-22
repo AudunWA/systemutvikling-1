@@ -31,7 +31,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="Search for foodpackages..."/>
+              <text value="Search for food packages"/>
             </properties>
           </component>
           <component id="f73" class="javax.swing.JCheckBox" binding="inactiveCheckBox">

@@ -211,15 +211,6 @@ public class EditEmployeeDialog extends JDialog {
     }
 
     private void createComboBox2() {
-        /*ArrayList<Employee> employeeList = EmployeeFactory.getAllEmployees();
-        Integer[] columns = new Integer[]{EmployeeTableModel.COLUMN_EMPLOYEE_TYPE};
-        tableModel = new EmployeeTableModel(employeeList, columns);
-        Object[] choices = new Object[tableModel.getColumnCount()];
-
-        for (int i = 0; i < columns.length; i++) {
-            choices[i] = (new String(tableModel.getColumnName(i)));
-        }*/
-
         Object[] choices = {"Employee", "Nutrition expert", "Salesperson", "Chauffeur", "Chef", "Administrator"};
 
         editEmployeeTypeCB = new JComboBox(choices);

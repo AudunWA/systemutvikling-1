@@ -181,7 +181,7 @@ public class AdminEmployeeView extends JPanel{
 
     private void createSearchField(){
         searchField = new JTextField(20);
-        setSearchField("Search by employee name");
+        setSearchField("Search for employee");
         add(searchField);
     }
 

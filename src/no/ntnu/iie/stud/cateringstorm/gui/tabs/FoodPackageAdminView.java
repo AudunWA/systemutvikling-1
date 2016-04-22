@@ -134,7 +134,7 @@ public class FoodPackageAdminView extends JPanel {
     }
     private void createSearchField(){
         searchField = new JTextField(20);
-        setSearchField("Search foodpackages");
+        setSearchField("Search for food packages");
         add(searchField);
     }
     private void setSearchField(String text){
