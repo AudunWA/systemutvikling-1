@@ -1,10 +1,8 @@
 package no.ntnu.iie.stud.cateringstorm.gui.util;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -48,7 +46,7 @@ public class DynamicTabbedPane extends JTabbedPane {
 
                 // Instance created, load it
                 setComponentAt(selectedIndex, (Component) instances.get(selectedIndex));
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

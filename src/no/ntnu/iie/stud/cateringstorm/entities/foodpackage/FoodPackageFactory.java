@@ -16,6 +16,7 @@ import java.util.List;
 public final class FoodPackageFactory {
     /**
      * Shows a single _package object given the id
+     *
      * @param foodPackageId
      * @return FoodPackage if foodPackageID matches
      */
@@ -39,6 +40,7 @@ public final class FoodPackageFactory {
 
     /**
      * Creates an arraylist of all the _package objects in the SQL table _package
+     *
      * @return arraylist of all the packages
      */
     public static ArrayList<FoodPackage> getAllFoodPackages() {
@@ -59,18 +61,20 @@ public final class FoodPackageFactory {
         }
         return null;
     }
+
     /**
      * Gets all foodpackages with name matching a query.
+     *
      * @return An ArrayList containing all foodpackages matched.
      */
     public static ArrayList<FoodPackage> getAllFoodPackagesByQuery(String searchQuery) {
         ArrayList<FoodPackage> foodPackages = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM food_package WHERE name LIKE ?")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM food_package WHERE name LIKE ?")) {
                 statement.setString(1, '%' + searchQuery + '%');
                 statement.executeQuery();
 
-                try (ResultSet result = statement.getResultSet()){
+                try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
                         foodPackages.add(createFoodPackageFromResultSet(result));
                     }
@@ -79,24 +83,26 @@ public final class FoodPackageFactory {
                 return foodPackages;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
+
     /**
      * Gets all active foodpackes with name matching a query.
+     *
      * @return An ArrayList containing all foodpackages matched.
      */
     public static ArrayList<FoodPackage> getActiveFoodPackagesByQuery(String searchQuery) {
         ArrayList<FoodPackage> foodPackages = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM food_package WHERE name LIKE ? AND active = TRUE")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM food_package WHERE name LIKE ? AND active = TRUE")) {
                 statement.setString(1, '%' + searchQuery + '%');
                 statement.executeQuery();
 
-                try (ResultSet result = statement.getResultSet()){
+                try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
                         foodPackages.add(createFoodPackageFromResultSet(result));
                     }
@@ -105,23 +111,25 @@ public final class FoodPackageFactory {
                 return foodPackages;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
+
     /**
      * Creates an arraylist of the active foodpackages in the SQL table foodpackages
+     *
      * @return ArrayList<FoodPackage>
      */
-    public static ArrayList<FoodPackage> getActiveFoodPackages(){
+    public static ArrayList<FoodPackage> getActiveFoodPackages() {
         ArrayList<FoodPackage> foodPackages = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM food_package WHERE active = TRUE")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM food_package WHERE active = TRUE")) {
                 statement.executeQuery();
 
-                try (ResultSet result = statement.getResultSet()){
+                try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
 
                         foodPackages.add(createFoodPackageFromResultSet(result));
@@ -131,14 +139,14 @@ public final class FoodPackageFactory {
                 return foodPackages;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public static double getFoodPackageCost(int foodPackageId){
+    public static double getFoodPackageCost(int foodPackageId) {
 
         double price = -1;
         try (Connection connection = Database.getConnection()) {
@@ -160,7 +168,8 @@ public final class FoodPackageFactory {
     }
 
     /**
-     Gets all the food packages for a specified order.
+     * Gets all the food packages for a specified order.
+     *
      * @param orderId The ID of the order
      * @return A list of all the food packages
      */
@@ -187,9 +196,10 @@ public final class FoodPackageFactory {
     }
 
     /**
-     Inserts a new food package, including its dishes, into the database.
-     * @param name The food package name
-     * @param cost The cost of the food package
+     * Inserts a new food package, including its dishes, into the database.
+     *
+     * @param name   The food package name
+     * @param cost   The cost of the food package
      * @param dishes A list of the dishes
      * @return A FoodPackage object representing the new food package, or null if an error occurred.
      */
@@ -257,6 +267,7 @@ public final class FoodPackageFactory {
 
     /**
      * Creates a FoodPackage object from result
+     *
      * @param result
      * @return FoodPackage
      * @throws SQLException
@@ -271,7 +282,8 @@ public final class FoodPackageFactory {
     }
 
     /**
-     Runs an UPDATE-query of a foodpackage, with all its columns.
+     * Runs an UPDATE-query of a foodpackage, with all its columns.
+     *
      * @param foodPackage The foodpackage to update
      * @return An integer representing affected rows
      */
@@ -285,17 +297,18 @@ public final class FoodPackageFactory {
 
                 return statement.executeUpdate();
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return 0;
         }
     }
 
     /**
-     Runs an UPDATE-query of a foodpackage, with all its columns.
-     This overload also replaces all the dishes in the food package.
+     * Runs an UPDATE-query of a foodpackage, with all its columns.
+     * This overload also replaces all the dishes in the food package.
+     *
      * @param foodPackage The foodpackage to update
-     * @param dishes The list of dishes to replace
+     * @param dishes      The list of dishes to replace
      * @return Boolean representing success or not
      */
     public static boolean updateFoodPackage(FoodPackage foodPackage, List<Dish> dishes) {

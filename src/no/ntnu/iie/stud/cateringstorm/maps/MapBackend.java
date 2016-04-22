@@ -12,12 +12,14 @@ import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Coordinate;
 
-import javax.swing.*;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class MapBackend {
-    private static final Coordinate HOME_LOCATION =  addressToPoint("Elgesetergate 1, Trondheim, Norway");
+    private static final Coordinate HOME_LOCATION = addressToPoint("Elgesetergate 1, Trondheim, Norway");
 
     public static void main(String[] args) {
 
@@ -77,7 +79,7 @@ public class MapBackend {
 
         List<GeocoderResult> results = geocodeResponse.getResults();
 
-        if(geocodeResponse.getStatus() != GeocoderStatus.OK) {
+        if (geocodeResponse.getStatus() != GeocoderStatus.OK) {
             System.err.println("Geocoder failed: " + geocodeResponse.getStatus());
             return null;
         }
@@ -137,7 +139,7 @@ public class MapBackend {
 
     }
 
-    public static ArrayList<Coordinate> getShortestRoute(ArrayList<Coordinate> route){
+    public static ArrayList<Coordinate> getShortestRoute(ArrayList<Coordinate> route) {
 
         ArrayList<Coordinate> lowestList = new ArrayList<>();
         ArrayList<Coordinate> tempList;
@@ -147,7 +149,7 @@ public class MapBackend {
         for (int i = 0; i < 1000; i++) {
             tempList = getRandomList(route);
             temp = getTotalDistanceList(tempList);
-            if (temp < lowest){
+            if (temp < lowest) {
                 lowest = temp;
                 lowestList = tempList;
             }
@@ -158,10 +160,10 @@ public class MapBackend {
     public static double getTotalDistanceList(ArrayList<Coordinate> route) {
         double totalDistance = 0.0;
 
-        for (int i = 0; i+1 < route.size(); i++){
-            totalDistance += distFrom(route.get(i), route.get(i+1));
+        for (int i = 0; i + 1 < route.size(); i++) {
+            totalDistance += distFrom(route.get(i), route.get(i + 1));
         }
-        totalDistance += distFrom(route.get(route.size()-1), route.get(0));
+        totalDistance += distFrom(route.get(route.size() - 1), route.get(0));
         return totalDistance;
     }
 
@@ -176,7 +178,7 @@ public class MapBackend {
         randomList.add(HOME_LOCATION);
 
 
-        for (int i = 0; i < route.size(); i++){
+        for (int i = 0; i < route.size(); i++) {
 
             random = generateRandomInteger.nextInt(copy.size());
 

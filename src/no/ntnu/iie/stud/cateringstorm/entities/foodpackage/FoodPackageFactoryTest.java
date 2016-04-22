@@ -41,17 +41,17 @@ public class FoodPackageFactoryTest {
 
         ArrayList<Dish> dishes = DishFactory.getAllDishes();
         FoodPackage foodPackage = FoodPackageFactory.createFoodPackage("Unit test package1", 8135, dishes),
-        foodPackage2 = FoodPackageFactory.createFoodPackage("Unit test package2", 8145, dishes);
+                foodPackage2 = FoodPackageFactory.createFoodPackage("Unit test package2", 8145, dishes);
         //Filling arraylist
         ArrayList<Integer> numbers = new ArrayList<>();
         numbers.add(foodPackage.getFoodPackageId());
         numbers.add(foodPackage2.getFoodPackageId());
         //Creating test order
-        Order order = OrderFactory.createOrder("TestGetFoodPackageOrder", new Timestamp(System.currentTimeMillis()-888 + 8600000), 3, false, 6, 4, 5, numbers);
+        Order order = OrderFactory.createOrder("TestGetFoodPackageOrder", new Timestamp(System.currentTimeMillis() - 888 + 8600000), 3, false, 6, 4, 5, numbers);
         ArrayList<FoodPackage> foodPackages = FoodPackageFactory.getFoodPackages(order.getOrderId());
         Assert.assertNotNull(foodPackages);
-        for (int i = 0;i < foodPackages.size();i++) {
-            Assert.assertEquals((int)numbers.get(i),foodPackages.get(i).getFoodPackageId());
+        for (int i = 0; i < foodPackages.size(); i++) {
+            Assert.assertEquals((int) numbers.get(i), foodPackages.get(i).getFoodPackageId());
         }
     }
 

@@ -1,6 +1,5 @@
 package no.ntnu.iie.stud.cateringstorm.entities.order;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,9 +7,6 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Audun on 11.03.2016.
@@ -32,15 +28,17 @@ public class OrderFactoryTest {
             Assert.assertTrue(orders.get(i) instanceof Order);//FIXME: Redundant?
         }
     }
+
     @Test
     public void testGetOrdersByQuery() throws Exception {
         String testName = "Mark";
         ArrayList<Order> orders = OrderFactory.getOrdersByQuery(testName);
         Assert.assertNotNull(orders);
-        for(Order order: orders){
+        for (Order order : orders) {
             Assert.assertTrue(order.getCustomerName().contains(testName));
         }
     }
+
     @Test
     public void testCreateOrder() throws Exception {
 
@@ -48,9 +46,10 @@ public class OrderFactoryTest {
         numbers.add(1);
         numbers.add(2);
         numbers.add(3);
-       Order order = OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, numbers);
+        Order order = OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, numbers);
         Assert.assertNotNull(order);
     }
+
     @Test
     public void testSetOrderState() throws Exception {
         ArrayList<Integer> numbers = new ArrayList<>();
@@ -60,8 +59,8 @@ public class OrderFactoryTest {
         Order test1 = OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, numbers);
         OrderFactory.setOrderState(test1.getOrderId(), 2);
         Order test2 = OrderFactory.getOrder(test1.getOrderId());
-        Assert.assertNotEquals(test1.getStatus(),test2.getStatus());
-        Assert.assertEquals(2,test2.getStatus());
+        Assert.assertNotEquals(test1.getStatus(), test2.getStatus());
+        Assert.assertEquals(2, test2.getStatus());
     }
 
 

@@ -1,6 +1,5 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
-import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrder;
 import no.ntnu.iie.stud.cateringstorm.gui.util.DateUtil;
 
@@ -18,6 +17,7 @@ public class RecurringOrderTableModel extends EntityTableModel<RecurringOrder> {
     public static final int COLUMN_FOOD_PACKAGE_NAME = 5;
     public static final int COLUMN_FOOD_PACKAGE_COST = 6;
     public static final int COLUMN_AMOUNT = 7;
+
     public RecurringOrderTableModel(ArrayList<RecurringOrder> rows, Integer[] columns) {
         super(rows, columns);
     }

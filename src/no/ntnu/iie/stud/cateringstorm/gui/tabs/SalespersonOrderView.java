@@ -1,15 +1,11 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
-import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
-import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
-import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddOrderDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddSubscriptionDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditOrderDialog;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
@@ -26,6 +22,8 @@ import java.util.ArrayList;
  * Created by kenan on 30.03.2016.
  */
 public class SalespersonOrderView extends JPanel {
+    private static ArrayList<Order> orderList = new ArrayList<Order>();
+    OrderTableModel tableModel;
     private JPanel mainPanel;
     private JScrollPane orderPane;
     private JButton viewButton;
@@ -40,9 +38,6 @@ public class SalespersonOrderView extends JPanel {
     private JButton searchButton;
     private JTextField searchField;
     private JButton newSubscriptionButton;
-    OrderTableModel tableModel;
-
-    private static ArrayList<Order> orderList = new ArrayList<Order>();
 
     public SalespersonOrderView() {
         setLayout(new BorderLayout());
@@ -76,7 +71,6 @@ public class SalespersonOrderView extends JPanel {
         });
 
 
-
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -93,12 +87,12 @@ public class SalespersonOrderView extends JPanel {
                 searchDocument();
             }
 
-            public void searchDocument(){
+            public void searchDocument() {
 
                 ArrayList<Order> copy = new ArrayList<>();
 
                 for (int i = 0; i < orderList.size(); i++) {
-                    if ((orderList.get(i).getCustomerName().toLowerCase().contains(searchField.getText().toLowerCase()) || (orderList.get(i).getCustomerAddress()).toLowerCase().contains(searchField.getText().toLowerCase()))){
+                    if ((orderList.get(i).getCustomerName().toLowerCase().contains(searchField.getText().toLowerCase()) || (orderList.get(i).getCustomerAddress()).toLowerCase().contains(searchField.getText().toLowerCase()))) {
                         copy.add(orderList.get(i));
 
                     }
@@ -112,11 +106,25 @@ public class SalespersonOrderView extends JPanel {
             //Get index from selected row
         });
     }
-    private Order getSelectedOrder(){
+
+    // FIXME: Add possibility to expand mainFrame for table
+    public static void main(String[] args) {
+        // Window dimensions
+        final int WIDTH = 1300;
+        final int HEIGHT = 600;
+        JFrame frame = new JFrame();
+        frame.add(new SalespersonOrderView());
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
+    }
+
+    private Order getSelectedOrder() {
         return tableModel.getValue(orderTable.getSelectedRow());
     }
 
-    private void addOrder(Employee employee){
+    private void addOrder(Employee employee) {
         // TODO: Open AddOrderDialog
         AddOrderDialog aoDialog = new AddOrderDialog(employee);
         final int WIDTH = 1000;
@@ -130,7 +138,7 @@ public class SalespersonOrderView extends JPanel {
         orderList = OrderFactory.getAllOrders();
     }
 
-    private void newSubscription(){
+    private void newSubscription() {
 
         AddSubscriptionDialog asDialog = new AddSubscriptionDialog();
         final int WIDTH = 1300;
@@ -141,15 +149,15 @@ public class SalespersonOrderView extends JPanel {
         asDialog.setLocationRelativeTo(null);
         asDialog.setVisible(true);
 
-        if(asDialog.getSubscription() == null) {
+        if (asDialog.getSubscription() == null) {
             // Failed
-            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Subscription not created.", Toast.Style.ERROR).display();
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Subscription not created.", Toast.Style.ERROR).display();
         } else {
-            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Subscription created.", Toast.Style.SUCCESS).display();
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Subscription created.", Toast.Style.SUCCESS).display();
         }
     }
 
-    private void editOrder(Order order){
+    private void editOrder(Order order) {
         if (order != null) {
             EditOrderDialog eoDialog = new EditOrderDialog(order);
             final int WIDTH = 300;
@@ -174,7 +182,7 @@ public class SalespersonOrderView extends JPanel {
 
     private void createTable() {
         orderList = OrderFactory.getAllOrders();
-        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_CUSTOMER_NAME,OrderTableModel.COLUMN_ADDRESS, OrderTableModel.COLUMN_STATUS_TEXT};
+        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_DELIVERY_TIME, OrderTableModel.COLUMN_ORDER_TIME, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_CUSTOMER_NAME, OrderTableModel.COLUMN_ADDRESS, OrderTableModel.COLUMN_STATUS_TEXT};
         tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
@@ -204,33 +212,22 @@ public class SalespersonOrderView extends JPanel {
             }
         }
     }
-    private void createSearchField(){
+
+    private void createSearchField() {
         searchField = new JTextField(20);
         setSearchField("Search by customer name");
         add(searchField);
     }
-    private void setSearchField(String text){
+
+    private void setSearchField(String text) {
         searchField.setText(text);
         searchField.setEnabled(true);
     }
 
     private void refresh() {
         tableModel.setRows(OrderFactory.getAllOrders());
-        Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
+        Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
         orderList = OrderFactory.getAllOrders();
         // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
-    }
-
-    // FIXME: Add possibility to expand mainFrame for table
-    public static void main(String[] args) {
-        // Window dimensions
-        final int WIDTH = 1300;
-        final int HEIGHT = 600;
-        JFrame frame = new JFrame();
-        frame.add(new SalespersonOrderView());
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
     }
 }

@@ -22,7 +22,8 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
     }
 
     /**
-     *  Gives a description for each selected column
+     * Gives a description for each selected column
+     *
      * @param column
      * @return String
      */
@@ -45,6 +46,7 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
 
     /**
      * Gives selected value of an entity
+     *
      * @param rowIndex
      * @param columnIndex
      * @return Object
@@ -73,8 +75,8 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
         int columnType = getColumnType(columnIndex);
         FoodPackage entity = getValue(rowIndex);
         // Column containing status is only one to be edited.
-        if(columnType == COLUMN_ACTIVE) {
-            entity.setActive((Boolean)aValue);
+        if (columnType == COLUMN_ACTIVE) {
+            entity.setActive((Boolean) aValue);
             FoodPackageFactory.updateFoodPackage(entity);
             fireTableCellUpdated(rowIndex, columnIndex);
         } else {

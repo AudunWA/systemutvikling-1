@@ -2,7 +2,6 @@ package no.ntnu.iie.stud.cateringstorm.entities.dish;
 
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
-import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,11 +16,12 @@ public final class DishFactory {
 
     /**
      * Creates a Dish object from result
+     *
      * @param result
      * @return Dish
      * @throws SQLException
      */
-    private static Dish createDishFromResultSet(ResultSet result) throws SQLException{
+    private static Dish createDishFromResultSet(ResultSet result) throws SQLException {
         int dishId = result.getInt("dish_id");
         String name = result.getString("name");
         String desc = result.getString("description");
@@ -33,17 +33,18 @@ public final class DishFactory {
 
     /**
      * Gets a single dish from the SQL table dish by giving its ID
+     *
      * @param dishId
      * @return Dish
      */
-    public static Dish getDish(int dishId){
+    public static Dish getDish(int dishId) {
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE dish_id = ?")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE dish_id = ?")) {
 
                 statement.setInt(1, dishId);
                 statement.executeQuery();
 
-                try (ResultSet result = statement.getResultSet()){
+                try (ResultSet result = statement.getResultSet()) {
                     if (result.next()) {
 
                         return createDishFromResultSet(result);
@@ -52,7 +53,7 @@ public final class DishFactory {
                 }
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -61,15 +62,16 @@ public final class DishFactory {
 
     /**
      * Creates an Arraylist of all the dishes in the SQL table dish
+     *
      * @return ArrayList<Dish>
      */
-    public static ArrayList<Dish> getAllDishes(){
+    public static ArrayList<Dish> getAllDishes() {
         ArrayList<Dish> dishes = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish")) {
                 statement.executeQuery();
 
-                try (ResultSet result = statement.getResultSet()){
+                try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
 
                         dishes.add(createDishFromResultSet(result));
@@ -79,7 +81,7 @@ public final class DishFactory {
                 return dishes;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -88,16 +90,17 @@ public final class DishFactory {
 
     /**
      * Gets all dishes with name matching a query.
+     *
      * @return An ArrayList containing all dishes matched.
      */
     public static ArrayList<Dish> getAllDishesByQuery(String searchQuery) {
         ArrayList<Dish> dishes = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE name LIKE ?")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE name LIKE ?")) {
                 statement.setString(1, '%' + searchQuery + '%');
                 statement.executeQuery();
 
-                try (ResultSet result = statement.getResultSet()){
+                try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
                         dishes.add(createDishFromResultSet(result));
                     }
@@ -106,7 +109,7 @@ public final class DishFactory {
                 return dishes;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -115,16 +118,17 @@ public final class DishFactory {
 
     /**
      * Gets all active dishes with name matching a query.
+     *
      * @return An ArrayList containing all dishes matched.
      */
     public static ArrayList<Dish> getActiveDishesByQuery(String searchQuery) {
         ArrayList<Dish> dishes = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE name LIKE ? AND active = TRUE")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE name LIKE ? AND active = TRUE")) {
                 statement.setString(1, '%' + searchQuery + '%');
                 statement.executeQuery();
 
-                try (ResultSet result = statement.getResultSet()){
+                try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
                         dishes.add(createDishFromResultSet(result));
                     }
@@ -133,7 +137,7 @@ public final class DishFactory {
                 return dishes;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -142,19 +146,20 @@ public final class DishFactory {
 
     /**
      * Gets all dishes of a food package
+     *
      * @param foodPackageId The ID of the food package
      * @return ArrayList with all the Dishes<Dish>
      */
-    public static ArrayList<Dish> getDishes(int foodPackageId){
+    public static ArrayList<Dish> getDishes(int foodPackageId) {
         ArrayList<Dish> dishes = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish" +
                     " INNER JOIN dish_food_package USING (dish_id)" +
-                    " WHERE dish_food_package.food_package_id = ?")){
+                    " WHERE dish_food_package.food_package_id = ?")) {
                 statement.setInt(1, foodPackageId);
                 statement.executeQuery();
 
-                try (ResultSet result = statement.getResultSet()){
+                try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
                         dishes.add(createDishFromResultSet(result));
                     }
@@ -162,7 +167,7 @@ public final class DishFactory {
                 }
                 return dishes;
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -171,15 +176,16 @@ public final class DishFactory {
 
     /**
      * Creates an arraylist of the active dishes in the SQL table dish
+     *
      * @return ArrayList<Dish>
      */
-    public static ArrayList<Dish> getActiveDishes(){
+    public static ArrayList<Dish> getActiveDishes() {
         ArrayList<Dish> dishes = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE active = TRUE")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM dish WHERE active = TRUE")) {
                 statement.executeQuery();
 
-                try (ResultSet result = statement.getResultSet()){
+                try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
 
                         dishes.add(createDishFromResultSet(result));
@@ -189,17 +195,17 @@ public final class DishFactory {
                 return dishes;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public static Dish createDish(String name, String description, int dishType, boolean active){
+    public static Dish createDish(String name, String description, int dishType, boolean active) {
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish VALUES(DEFAULT, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)){
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish VALUES(DEFAULT, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
                 statement.setString(1, name);
                 statement.setString(2, description);
                 statement.setInt(3, dishType);
@@ -223,20 +229,20 @@ public final class DishFactory {
                 return dish;
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static Dish createDish(String name, String description, int dishType, boolean active, ArrayList<Ingredient> ingredients){
+    public static Dish createDish(String name, String description, int dishType, boolean active, ArrayList<Ingredient> ingredients) {
         int generatedId;
 
         try (Connection connection = Database.getConnection()) {
             try {
                 connection.setAutoCommit(false);
 
-                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish VALUES(DEFAULT, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)){
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO dish VALUES(DEFAULT, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
                     statement.setString(1, name);
                     statement.setString(2, description);
                     statement.setInt(3, dishType);
@@ -251,7 +257,7 @@ public final class DishFactory {
                     }
 
                     generatedId = Database.getGeneratedKeys(statement);
-                    if(generatedId == -1) {
+                    if (generatedId == -1) {
                         connection.rollback();
                         connection.setAutoCommit(true);
                         return null;
@@ -266,7 +272,7 @@ public final class DishFactory {
                     }
                     statement.executeBatch();
                 }
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 connection.rollback();
                 connection.setAutoCommit(true);
                 throw e;
@@ -285,11 +291,12 @@ public final class DishFactory {
 
     /**
      * Edits the status of a dish (If the dish is active or not)
+     *
      * @param dishId
      * @param active
      * @return int
      */
-    public static int editDishStatus(int dishId, boolean active){
+    public static int editDishStatus(int dishId, boolean active) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.dish SET active = ? WHERE dish.dish_id = ?")) {
 
@@ -299,29 +306,29 @@ public final class DishFactory {
                 return statement.executeUpdate();
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         }
     }
 
-    public static int editDishDescription(int dishId, String text){
+    public static int editDishDescription(int dishId, String text) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.dish SET description = ? WHERE dish.dish_id = ?")) {
 
                 statement.setString(1, text);
                 statement.setInt(2, dishId);
 
-              return statement.executeUpdate();
+                return statement.executeUpdate();
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         }
 
     }
 
-    public static int editDishName(int dishId, String text){
+    public static int editDishName(int dishId, String text) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.dish SET name = ? WHERE dish.dish_id = ?")) {
 
@@ -330,14 +337,15 @@ public final class DishFactory {
 
                 return statement.executeUpdate();
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         }
     }
 
     /**
-     Runs an UPDATE-query of a dish, with all its columns.
+     * Runs an UPDATE-query of a dish, with all its columns.
+     *
      * @param dish The dish to update
      * @return An integer representing affected rows
      */
@@ -352,7 +360,7 @@ public final class DishFactory {
 
                 return statement.executeUpdate();
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return 0;
         }

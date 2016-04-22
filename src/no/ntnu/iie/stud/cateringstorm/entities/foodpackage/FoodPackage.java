@@ -9,6 +9,13 @@ public class FoodPackage {
     private double cost;
     private boolean active;
 
+    public FoodPackage(int foodPackageId, String name, double cost, boolean active) {
+        this.foodPackageId = foodPackageId;
+        this.name = name;
+        this.cost = cost;
+        this.active = active;
+    }
+
     public int getFoodPackageId() {
         return foodPackageId;
     }
@@ -34,13 +41,6 @@ public class FoodPackage {
     }
 
     public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public FoodPackage(int foodPackageId, String name, double cost, boolean active) {
-        this.foodPackageId = foodPackageId;
-        this.name = name;
-        this.cost = cost;
         this.active = active;
     }
 

@@ -1,11 +1,8 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
-import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
-import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.subscription.Subscription;
 import no.ntnu.iie.stud.cateringstorm.entities.subscription.SubscriptionFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddSubscriptionDialog;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.SubscriptionTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
@@ -79,7 +76,7 @@ public class SalespersonSubscriptionView extends JPanel {
                 searchDocument();
             }
 
-            public void searchDocument(){
+            public void searchDocument() {
 
                 ArrayList<Subscription> copy = new ArrayList<>();
 
@@ -98,11 +95,24 @@ public class SalespersonSubscriptionView extends JPanel {
             //Get index from selected row
         });
     }
-    private Subscription getSelectedSubscription(){
+
+    public static void main(String[] args) {
+        // Window dimensions
+        final int WIDTH = 1300;
+        final int HEIGHT = 600;
+        JFrame frame = new JFrame();
+        frame.add(new SalespersonSubscriptionView());
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
+    }
+
+    private Subscription getSelectedSubscription() {
         return tableModel.getValue(orderTable.getSelectedRow());
     }
 
-    private void newSubscription(){
+    private void newSubscription() {
         AddSubscriptionDialog asDialog = new AddSubscriptionDialog();
         final int WIDTH = 1300;
         final int HEIGHT = 600;
@@ -112,15 +122,15 @@ public class SalespersonSubscriptionView extends JPanel {
         asDialog.setLocationRelativeTo(null);
         asDialog.setVisible(true);
 
-        if(asDialog.getSubscription() == null) {
+        if (asDialog.getSubscription() == null) {
             // Failed
-            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Subscription not created.", Toast.Style.ERROR).display();
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Subscription not created.", Toast.Style.ERROR).display();
         } else {
-            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Subscription created.", Toast.Style.SUCCESS).display();
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Subscription created.", Toast.Style.SUCCESS).display();
         }
     }
 
-    private void editSubscription(Subscription subscription){
+    private void editSubscription(Subscription subscription) {
         // TODO?
     }
 
@@ -146,30 +156,19 @@ public class SalespersonSubscriptionView extends JPanel {
         statusBox.setSelectedIndex(0);
     }
 
-    private void createSearchField(){
+    private void createSearchField() {
         searchField = new JTextField(20);
         setSearchField("Search by customer name");
         add(searchField);
     }
-    private void setSearchField(String text){
+
+    private void setSearchField(String text) {
         searchField.setText(text);
         searchField.setEnabled(true);
     }
 
     private void refresh() {
         tableModel.setRows(SubscriptionFactory.getAllSubscriptions());
-        Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Subscriptions refreshed.").display();
-    }
-
-    public static void main(String[] args) {
-        // Window dimensions
-        final int WIDTH = 1300;
-        final int HEIGHT = 600;
-        JFrame frame = new JFrame();
-        frame.add(new SalespersonSubscriptionView());
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
+        Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Subscriptions refreshed.").display();
     }
 }

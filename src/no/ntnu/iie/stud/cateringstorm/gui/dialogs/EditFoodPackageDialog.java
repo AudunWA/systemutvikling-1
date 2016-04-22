@@ -8,11 +8,13 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class EditFoodPackageDialog extends JDialog {
-    private static final Integer[] COLUMNS_AVAILABLE_DISHES = { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION };
+    private static final Integer[] COLUMNS_AVAILABLE_DISHES = {DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION};
 
     // fixed
     private boolean addedNewValue;
@@ -56,18 +58,28 @@ public class EditFoodPackageDialog extends JDialog {
         loadData();
     }
 
+    public static void main(String[] args) {
+        final int height = 700;
+        final int width = 600;
+        EditFoodPackageDialog dialog = new EditFoodPackageDialog(null);
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setSize(width, height);
+        System.exit(0);
+    }
+
     /**
      * Fills up the components with data from the food package.
      * Table data is not loaded here, but in createTables().
      */
     private void loadData() {
         nameField.setText(foodPackage.getName());
-        costField.setText(((Double)foodPackage.getCost()).toString());
+        costField.setText(((Double) foodPackage.getCost()).toString());
         activeCheckbox.setSelected(foodPackage.isActive());
     }
 
     private void createUIComponents() {
-       createTables();
+        createTables();
     }
 
     /**
@@ -120,9 +132,9 @@ public class EditFoodPackageDialog extends JDialog {
 //                selectedRecurringOrder.decrementAmount();
 //                selectedPackagesModel.updateRow(selectedPackagesTable.getSelectedRow());
 //            } else {
-                // Remove
-                leftSideModel.removeRow(leftSideTable.getSelectedRow());
-                leftSideTable.clearSelection();
+            // Remove
+            leftSideModel.removeRow(leftSideTable.getSelectedRow());
+            leftSideTable.clearSelection();
 //            }
         } else {
             Toast.makeText(this, "Select a row.", Toast.Style.ERROR).display();
@@ -180,15 +192,5 @@ public class EditFoodPackageDialog extends JDialog {
 
     private void onCancel() {
         dispose();
-    }
-
-    public static void main(String[] args) {
-        final int height = 700;
-        final int width = 600;
-        EditFoodPackageDialog dialog = new EditFoodPackageDialog(FoodPackageFactory.getFoodPackage(1));
-        dialog.pack();
-        dialog.setVisible(true);
-        dialog.setSize(width, height);
-        System.exit(0);
     }
 }

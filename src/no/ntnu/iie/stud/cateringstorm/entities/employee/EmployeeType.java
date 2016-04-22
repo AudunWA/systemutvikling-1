@@ -18,10 +18,6 @@ public enum EmployeeType {
         this.type = type;
     }
 
-    public int getType() {
-        return type;
-    }
-
     public static EmployeeType getEmployeeType(int type) {
         switch (type) {
             case 0:
@@ -39,5 +35,9 @@ public enum EmployeeType {
             default:
                 return EMPLOYEE;
         }
+    }
+
+    public int getType() {
+        return type;
     }
 }

@@ -49,6 +49,7 @@ public class EmployeeFactoryTest {
 
     /**
      * Generates a new employee with a random username
+     *
      * @throws Exception
      */
     @Test
@@ -62,19 +63,20 @@ public class EmployeeFactoryTest {
         //Test is initially active
         Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT);
 
-       int result = EmployeeFactory.editEmployeeStatus(test.getEmployeeId(), false);
-        Assert.assertEquals(result,1);
+        int result = EmployeeFactory.editEmployeeStatus(test.getEmployeeId(), false);
+        Assert.assertEquals(result, 1);
         test = EmployeeFactory.getEmployee(test.getUsername());
         Assert.assertTrue(!test.isActive());
     }
+
     @Test
     public void testUpdateEmployee() throws Exception {
         Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Testaddress", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT);
         String newAddress = "New testaddress 9";
-        test = new Employee(test.getEmployeeId(),test.getUsername(),test.getForename(),test.getSurname(),newAddress,test.getPhoneNumber(),test.getEmail(),test.getEmployeeType(),test.isActive());
+        test = new Employee(test.getEmployeeId(), test.getUsername(), test.getForename(), test.getSurname(), newAddress, test.getPhoneNumber(), test.getEmail(), test.getEmployeeType(), test.isActive());
         int result = EmployeeFactory.updateEmployee(test);
-        Assert.assertEquals(1,result);
+        Assert.assertEquals(1, result);
         test = EmployeeFactory.getEmployee(test.getUsername());
-        Assert.assertEquals(test.getAddress(),newAddress);
+        Assert.assertEquals(test.getAddress(), newAddress);
     }
 }

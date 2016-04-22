@@ -6,7 +6,10 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +17,7 @@ import java.util.ArrayList;
  */
 public class IngredientDishFactory {
 
-    private static IngredientDish createIngredientDishFromResultSet(ResultSet resultSet) throws SQLException{
+    private static IngredientDish createIngredientDishFromResultSet(ResultSet resultSet) throws SQLException {
 
         int ingredientId = resultSet.getInt("ingredient_id");
         int dishId = resultSet.getInt("dish_id");
@@ -23,10 +26,10 @@ public class IngredientDishFactory {
         Ingredient ingredient = IngredientFactory.getIngredient(ingredientId);
         Dish dish = DishFactory.getDish(dishId);
 
-        return new IngredientDish(ingredient,dish,quantity,unit);
+        return new IngredientDish(ingredient, dish, quantity, unit);
     }
 
-    public static boolean addIngredientToDish(int ingredientId, int dishId, int quantity, String unit){
+    public static boolean addIngredientToDish(int ingredientId, int dishId, int quantity, String unit) {
 
         try (Connection connection = Database.getConnection()) {
             // Add the ingredient itself and get ID
@@ -46,7 +49,7 @@ public class IngredientDishFactory {
         }
     }
 
-    public static ArrayList<IngredientDish> createDish(ArrayList<IngredientDish> ingredientDishes, String name, String description, int dishType, boolean active){
+    public static ArrayList<IngredientDish> createDish(ArrayList<IngredientDish> ingredientDishes, String name, String description, int dishType, boolean active) {
 
         int generatedId;
         ArrayList<IngredientDish> returnList = new ArrayList<>();
@@ -89,7 +92,7 @@ public class IngredientDishFactory {
                     }
                     statement.executeBatch();
                 }
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 connection.rollback();
                 connection.setAutoCommit(true);
                 throw e;
@@ -130,7 +133,7 @@ public class IngredientDishFactory {
         return temp;
     }
 
-    public static IngredientDish addIngredientToNewDish(int ingredientId, int quantity, String unit){
+    public static IngredientDish addIngredientToNewDish(int ingredientId, int quantity, String unit) {
 
         int generatedId;
 
@@ -161,22 +164,22 @@ public class IngredientDishFactory {
         return new IngredientDish(IngredientFactory.getIngredient(ingredientId), DishFactory.getDish(generatedId), quantity, unit);
     }
 
-    public static ArrayList<IngredientDish> getAllIngredientDishes(){
+    public static ArrayList<IngredientDish> getAllIngredientDishes() {
 
         ArrayList<IngredientDish> temp = new ArrayList<>();
 
-        try (Connection connection = Database.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM ingredient_dish")){
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM ingredient_dish")) {
 
                 statement.executeQuery();
 
-                try (ResultSet result = statement.getResultSet()){
-                    while (result.next()){
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
                         temp.add(createIngredientDishFromResultSet(result));
                     }
                 }
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return temp;

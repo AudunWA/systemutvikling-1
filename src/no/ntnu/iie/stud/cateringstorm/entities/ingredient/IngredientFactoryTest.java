@@ -27,16 +27,16 @@ public class IngredientFactoryTest {
     @Test
     public void testCreateIngredient() throws Exception {
         /*int ingredientId, Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount, String unit*/
-        Ingredient ingredient = new Ingredient(1, new Timestamp(System.currentTimeMillis() - 10*(86400000)),"TestIngredient","Test desc",true, new Date(System.currentTimeMillis() + 10*(86400000)),100,"Kg"),
-        testIngredient= IngredientFactory.createIngredient(ingredient.getArrivalDate(),ingredient.getName(),ingredient.getDescription(),ingredient.isVegetarian(),ingredient.getExpireDate(),ingredient.getAmount(),ingredient.getUnit());
+        Ingredient ingredient = new Ingredient(1, new Timestamp(System.currentTimeMillis() - 10 * (86400000)), "TestIngredient", "Test desc", true, new Date(System.currentTimeMillis() + 10 * (86400000)), 100, "Kg"),
+                testIngredient = IngredientFactory.createIngredient(ingredient.getArrivalDate(), ingredient.getName(), ingredient.getDescription(), ingredient.isVegetarian(), ingredient.getExpireDate(), ingredient.getAmount(), ingredient.getUnit());
         Assert.assertNotNull(testIngredient);
-        Assert.assertEquals(ingredient.getName(),testIngredient.getName());
-        Assert.assertEquals(ingredient.getAmount(),testIngredient.getAmount(),0.001);
+        Assert.assertEquals(ingredient.getName(), testIngredient.getName());
+        Assert.assertEquals(ingredient.getAmount(), testIngredient.getAmount(), 0.001);
     }
 
     @Test
     public void testShowExpired() throws Exception {
-        for (Ingredient ingredient : IngredientFactory.getExpiredIngredients()){
+        for (Ingredient ingredient : IngredientFactory.getExpiredIngredients()) {
             Assert.assertTrue(new Date(System.currentTimeMillis()).after(ingredient.getExpireDate()));
         }
     }
@@ -48,13 +48,13 @@ public class IngredientFactoryTest {
         ingredList.add(IngredientFactory.getIngredient(2));
         ingredList.add(IngredientFactory.getIngredient(3));
         ingredList.add(IngredientFactory.getIngredient(4));
-        Dish dish = DishFactory.createDish("Testname","Test desc",2,true,ingredList);
+        Dish dish = DishFactory.createDish("Testname", "Test desc", 2, true, ingredList);
         Assert.assertNotNull(dish);// FIXME: Maybe abundant?
         ArrayList<Ingredient> ingredients = IngredientFactory.getIngredients(dish.getDishId());
         Assert.assertNotNull(ingredients);
         for (int i = 0; i < ingredients.size(); i++) {
             Assert.assertNotNull(ingredients.get(i));
-            Assert.assertEquals(ingredients.get(i).getIngredientId(),ingredList.get(i).getIngredientId());
+            Assert.assertEquals(ingredients.get(i).getIngredientId(), ingredList.get(i).getIngredientId());
         }
     }
 

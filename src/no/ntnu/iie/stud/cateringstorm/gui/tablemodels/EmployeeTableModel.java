@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by EliasBrattli on 21/04/2016.
  */
 
-public class EmployeeTableModel extends EntityTableModel<Employee>{
+public class EmployeeTableModel extends EntityTableModel<Employee> {
     public static final int COLUMN_USERNAME = 0;
     public static final int COLUMN_FORENAME = 1;
     public static final int COLUMN_SURNAME = 2;
@@ -21,13 +21,14 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
     public static final int COLUMN_FULL_NAME = 7;
     public static final int COLUMN_ACTIVE = 8;
 
-    public EmployeeTableModel(ArrayList<Employee> rows, Integer[] columns){
-        super(rows,columns);
+    public EmployeeTableModel(ArrayList<Employee> rows, Integer[] columns) {
+        super(rows, columns);
     }
+
     @Override
-    public String getColumnName(int columnIndex){
+    public String getColumnName(int columnIndex) {
         int columnType = getColumnType(columnIndex);
-        switch (columnType){
+        switch (columnType) {
             case COLUMN_USERNAME:
                 return "Username";
             case COLUMN_FORENAME:
@@ -46,7 +47,8 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
                 return "Name";
             case COLUMN_ACTIVE:
                 return "Active";
-            default: throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
+            default:
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 
@@ -57,10 +59,10 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
     }
 
     @Override
-    public Object getValueAt(int rowIndex,int columnIndex){
+    public Object getValueAt(int rowIndex, int columnIndex) {
         Employee value = getValue(rowIndex);
         int columnType = getColumnType(columnIndex);
-        switch (columnType){
+        switch (columnType) {
             case COLUMN_USERNAME:
                 return value.getUsername();
             case COLUMN_FORENAME:
@@ -79,7 +81,8 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
                 return value.getFullName();
             case COLUMN_ACTIVE:
                 return value.isActive();
-            default: throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
+            default:
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 
@@ -95,10 +98,10 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
     }
 
     @Override
-    public void setValueAt(Object value, int rowIndex, int columnIndex){
+    public void setValueAt(Object value, int rowIndex, int columnIndex) {
         Employee entity = getValue(rowIndex);
         int columnType = getColumnType(columnIndex);
-        switch (columnType){
+        switch (columnType) {
             case COLUMN_USERNAME:
                 break;
             case COLUMN_FORENAME:
@@ -116,13 +119,14 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
             case COLUMN_FULL_NAME:
                 break;
             case COLUMN_ACTIVE:
-                if(entity.getEmployeeType() != EmployeeType.ADMINISTRATOR) { // Can't deactivate admins
+                if (entity.getEmployeeType() != EmployeeType.ADMINISTRATOR) { // Can't deactivate admins
                     entity.setActive((Boolean) value);
                     EmployeeFactory.updateEmployee(entity);
                     fireTableCellUpdated(rowIndex, columnIndex);
                 }
                 break;
-            default: throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
+            default:
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
 }

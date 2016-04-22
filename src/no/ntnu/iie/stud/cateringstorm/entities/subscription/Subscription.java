@@ -1,7 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.entities.subscription;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 /**
  * Created by Audun on 21.04.2016.

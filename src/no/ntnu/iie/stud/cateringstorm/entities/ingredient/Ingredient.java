@@ -2,7 +2,6 @@ package no.ntnu.iie.stud.cateringstorm.entities.ingredient;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 
 /**
  * Created by Audun on 11.03.2016.
@@ -16,6 +15,17 @@ public class Ingredient {
     private Date expireDate;
     private double amount;
     private String unit;
+
+    public Ingredient(int ingredientId, Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount, String unit) {
+        this.ingredientId = ingredientId;
+        this.name = name;
+        this.description = description;
+        this.vegetarian = vegetarian;
+        this.arrivalDate = arrivalDate;
+        this.expireDate = expireDate;
+        this.amount = amount;
+        this.unit = unit;
+    }
 
     public int getIngredientId() {
         return ingredientId;
@@ -41,22 +51,8 @@ public class Ingredient {
         return expireDate;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
     public void incrementAmount() {
         this.amount++;
-    }
-
-    public Ingredient(int ingredientId, Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount, String unit) {
-        this.ingredientId = ingredientId;
-        this.name = name;
-        this.description = description;
-        this.vegetarian = vegetarian;
-        this.arrivalDate = arrivalDate;
-        this.expireDate = expireDate;
-        this.amount = amount;
-        this.unit = unit;
     }
 
     @Override
@@ -75,6 +71,10 @@ public class Ingredient {
 
     public double getAmount() {
         return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     public String getUnit() {

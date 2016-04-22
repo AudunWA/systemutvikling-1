@@ -1,7 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
-import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
  * Created by EliasBrattli on 16/03/2016.
  * Fixed by Kenan on 08.04.16
  */
-public class DishInfoView extends JFrame{
+public class DishInfoView extends JFrame {
     private JButton editRowButton;
     private JPanel mainPanel;
     private JButton addRowButton;
@@ -52,20 +51,8 @@ public class DishInfoView extends JFrame{
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-    private void onCancel() {
-// add your code here if necessary
-        dispose();
-    }
 
-    private void createTable(){
-        ArrayList<Ingredient> ingredientList = IngredientFactory.getIngredients(dish.getDishId());
-        Integer[] columns = new Integer[] {IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION }; // Columns can be changed
-        tableModel = new IngredientTableModel(ingredientList, columns);
-        ingredientTable = new JTable(tableModel);
-        ingredientTable.setFillsViewportHeight(true);
-    }
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // Window dimensions
         final int WIDTH = 700;
         final int HEIGHT = 600;
@@ -74,6 +61,19 @@ public class DishInfoView extends JFrame{
         dialog.setVisible(true);
         dialog.setSize(WIDTH, HEIGHT);
         dialog.setLocationRelativeTo(null);//Puts window in middle of screen
+    }
+
+    private void onCancel() {
+// add your code here if necessary
+        dispose();
+    }
+
+    private void createTable() {
+        ArrayList<Ingredient> ingredientList = IngredientFactory.getIngredients(dish.getDishId());
+        Integer[] columns = new Integer[]{IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION}; // Columns can be changed
+        tableModel = new IngredientTableModel(ingredientList, columns);
+        ingredientTable = new JTable(tableModel);
+        ingredientTable.setFillsViewportHeight(true);
     }
 
     private void createUIComponents() {

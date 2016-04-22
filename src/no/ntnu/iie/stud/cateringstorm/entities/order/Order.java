@@ -20,6 +20,20 @@ public class Order {
     private boolean priority;
     private int status;
 
+    public Order(int orderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, int salespersonId, Customer customer, int recurringOrderId, int status, int chauffeurId) {
+        this.orderId = orderId;
+        this.customer = customer;
+        this.recurringOrderId = recurringOrderId;
+        this.description = description;
+        this.deliveryDate = deliveryDate;
+        this.orderDate = orderDate;
+        this.portions = portions;
+        this.priority = priority;
+        this.status = status;
+        this.chauffeurId = chauffeurId;
+        this.salespersonId = salespersonId;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -35,20 +49,6 @@ public class Order {
                 ", priority=" + priority +
                 ", status=" + status +
                 '}';
-    }
-
-    public Order(int orderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, int salespersonId, Customer customer, int recurringOrderId, int status, int chauffeurId) {
-        this.orderId = orderId;
-        this.customer = customer;
-        this.recurringOrderId = recurringOrderId;
-        this.description = description;
-        this.deliveryDate = deliveryDate;
-        this.orderDate = orderDate;
-        this.portions = portions;
-        this.priority = priority;
-        this.status = status;
-        this.chauffeurId = chauffeurId;
-        this.salespersonId = salespersonId;
     }
 
     public int getSalespersonId() {
@@ -80,6 +80,10 @@ public class Order {
         return deliveryDate;
     }
 
+    public void setDeliveryDate(Timestamp deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
     public Timestamp getOrderDate() {
         return orderDate;
     }
@@ -87,32 +91,30 @@ public class Order {
     public int getPortions() {
         return portions;
     }
-    public boolean isPriority(){
-        return priority;
-    }
-
-    public int getStatus(){
-        return status;
-    }
-
-    public void setDeliveryDate(Timestamp deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
 
     public void setPortions(int portions) {
         this.portions = portions;
     }
 
-    public void setStatus(int status){
-        this.status = status;
-        OrderFactory.setOrderState(orderId,status);
-    }
-    public String findPriority() {
-        return (isPriority())?"Priority":"Ordinary";
+    public boolean isPriority() {
+        return priority;
     }
 
-    public String deliveryStatus(){
-        if (getStatus() == 0){
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+        OrderFactory.setOrderState(orderId, status);
+    }
+
+    public String findPriority() {
+        return (isPriority()) ? "Priority" : "Ordinary";
+    }
+
+    public String deliveryStatus() {
+        if (getStatus() == 0) {
             return "Ready for delivery";
         } else if (getStatus() == 1) {
             return "Ready for production";

@@ -1,29 +1,21 @@
 package no.ntnu.iie.stud.cateringstorm.gui.statistics;
 
-import javafx.scene.chart.Chart;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.util.DateUtil;
-import no.ntnu.iie.stud.cateringstorm.gui.util.OrderTimestampComparator;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.Dataset;
-import org.jfree.data.xy.DefaultXYDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAmount;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Audun on 14.04.2016.
@@ -35,7 +27,7 @@ public class DeliveredOrdersChart extends ChartPanel {
 
         // Set Y-axis to only display whole numbers
         CategoryPlot plot = getChart().getCategoryPlot();
-        NumberAxis numberAxis = (NumberAxis)plot.getRangeAxis();
+        NumberAxis numberAxis = (NumberAxis) plot.getRangeAxis();
         numberAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
     }
 
@@ -52,7 +44,7 @@ public class DeliveredOrdersChart extends ChartPanel {
     private static CategoryDataset generateCategoryDataset() {
         // Get all orders // TODO: Delivered only
         ArrayList<Order> orders = OrderFactory.getAllOrders();
-        if(orders == null) {
+        if (orders == null) {
             return null; // TODO: Throw exception or log error?
         }
 
@@ -75,9 +67,9 @@ public class DeliveredOrdersChart extends ChartPanel {
 
 
         // Increment y-values of dates containing orders
-        for(Order order : orders) {
+        for (Order order : orders) {
             LocalDate date = DateUtil.convertDate(order.getDeliveryDate()).toLocalDate();
-            if(date.isBefore(startLocalDate) || date.isAfter(endLocalDate)) {
+            if (date.isBefore(startLocalDate) || date.isAfter(endLocalDate)) {
                 continue; // Outside range, ignore
             }
 
@@ -90,7 +82,7 @@ public class DeliveredOrdersChart extends ChartPanel {
     private static CategoryDataset generateCategoryDatasetOrderTime(LocalDate startTime, LocalDate endTime) {
         // Get all orders
         ArrayList<Order> orders = OrderFactory.getAllOrders();
-        if(orders == null) {
+        if (orders == null) {
             return null; // TODO: Throw exception or log error?
         }
 
@@ -106,9 +98,9 @@ public class DeliveredOrdersChart extends ChartPanel {
 
 
         // Increment y-values of dates containing orders
-        for(Order order : orders) {
+        for (Order order : orders) {
             LocalDate date = DateUtil.convertDate(order.getOrderDate()).toLocalDate();
-            if(date.isBefore(startTime) || date.isAfter(endTime)) {
+            if (date.isBefore(startTime) || date.isAfter(endTime)) {
                 continue; // Outside range, ignore
             }
 
@@ -121,7 +113,7 @@ public class DeliveredOrdersChart extends ChartPanel {
     private static CategoryDataset generateIncomeDataset(LocalDate startTime, LocalDate endTime) {
         // Get all orders
         HashMap<LocalDate, Double> salesMap = OrderFactory.getSalesForPeriod(startTime, endTime);
-        if(salesMap == null) {
+        if (salesMap == null) {
             return null; // TODO: Throw exception or log error?
         }
 
@@ -137,9 +129,9 @@ public class DeliveredOrdersChart extends ChartPanel {
 
 
         // Increment y-values of dates containing orders
-        for(Map.Entry<LocalDate, Double> sale : salesMap.entrySet()) {
+        for (Map.Entry<LocalDate, Double> sale : salesMap.entrySet()) {
             LocalDate date = sale.getKey();
-            if(date.isBefore(startTime) || date.isAfter(endTime)) {
+            if (date.isBefore(startTime) || date.isAfter(endTime)) {
                 continue; // Outside range, ignore
             }
             dataset.setValue(sale.getValue(), "income", formatter.format(date));

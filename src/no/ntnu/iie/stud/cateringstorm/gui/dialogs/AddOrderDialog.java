@@ -61,7 +61,9 @@ public class AddOrderDialog extends JDialog {
         });
 
         addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { onAdd(); }
+            public void actionPerformed(ActionEvent e) {
+                onAdd();
+            }
         });
 
         cancelButton.addActionListener(new ActionListener() {
@@ -81,12 +83,12 @@ public class AddOrderDialog extends JDialog {
         customerComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (customerComboBox.getSelectedIndex() == CustomerFactory.getAllCustomers().size()){
+                if (customerComboBox.getSelectedIndex() == CustomerFactory.getAllCustomers().size()) {
                     AddCustomerDialog acDialog = new AddCustomerDialog();
                     acDialog.pack();
                     acDialog.setLocationRelativeTo(null);
                     final int WIDTH = 350, HEIGHT = 500;
-                    acDialog.setSize(WIDTH,HEIGHT);
+                    acDialog.setSize(WIDTH, HEIGHT);
                     acDialog.setVisible(true);
                     acDialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 }
@@ -126,6 +128,14 @@ public class AddOrderDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    public static void main(String[] args) {
+        AddOrderDialog dialog = new AddOrderDialog(EmployeeFactory.getEmployee("drammen"));
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setTitle("Order central");
+        System.exit(0);
+    }
+
     private void onOK() {
 // add your code here
 
@@ -160,10 +170,10 @@ public class AddOrderDialog extends JDialog {
         }
     }
 
-    private void onAdd(){
+    private void onAdd() {
 
         int customerIndex = customerComboBox.getSelectedIndex();
-        if (customerIndex == CustomerFactory.getAllCustomers().size()){
+        if (customerIndex == CustomerFactory.getAllCustomers().size()) {
             AddCustomerDialog add = new AddCustomerDialog();
             final int WIDTH = 500;
             final int HEIGHT = 400;
@@ -172,7 +182,7 @@ public class AddOrderDialog extends JDialog {
             add.setSize(WIDTH, HEIGHT);
             add.setLocationRelativeTo(add.getParent());
             add.setVisible(true);
-            if(add.hasAddedNewValue()){
+            if (add.hasAddedNewValue()) {
                 System.out.println("added");
                 customerComboBox.addItem(new String(CustomerFactory.getCustomer(CustomerFactory.getAllCustomers().size()).getSurname() + ", " + CustomerFactory.getCustomer(CustomerFactory.getAllCustomers().size()).getForename()));
                 customerComboBox.removeItem("New customer");
@@ -185,7 +195,7 @@ public class AddOrderDialog extends JDialog {
             int customerId = CustomerFactory.getIdFromName(customerForename, customerSurname);
 
             String description = descriptionText.getText();
-            if (description.length() > 200){
+            if (description.length() > 200) {
                 JOptionPane.showMessageDialog(this, "The description is too long.");
                 return;
             }
@@ -246,17 +256,17 @@ public class AddOrderDialog extends JDialog {
         dispose();
     }
 
-    private void refreshComboBox(){
+    private void refreshComboBox() {
         for (int i = 0; i < CustomerFactory.getAllCustomers().size(); i++) {
-            customerComboBox.addItem(new String (CustomerFactory.getCustomer(i+1).getSurname()) + ", " + CustomerFactory.getCustomer(i+1).getForename());
+            customerComboBox.addItem(new String(CustomerFactory.getCustomer(i + 1).getSurname()) + ", " + CustomerFactory.getCustomer(i + 1).getForename());
         }
         customerComboBox.addItem("New customer");
     }
 
-    private void createComboBox(){
+    private void createComboBox() {
         customerComboBox = new JComboBox();
         for (int i = 0; i < CustomerFactory.getAllCustomers().size(); i++) {
-            customerComboBox.addItem(new String (CustomerFactory.getCustomer(i+1).getSurname()) + ", " + CustomerFactory.getCustomer(i+1).getForename());
+            customerComboBox.addItem(new String(CustomerFactory.getCustomer(i + 1).getSurname()) + ", " + CustomerFactory.getCustomer(i + 1).getForename());
         }
     }
 
@@ -291,13 +301,5 @@ public class AddOrderDialog extends JDialog {
         addedTable = new JTable(addedObjects);
         packageTable.getTableHeader().setReorderingAllowed(false);
 
-    }
-
-    public static void main(String[] args) {
-        AddOrderDialog dialog = new AddOrderDialog(EmployeeFactory.getEmployee("drammen"));
-        dialog.pack();
-        dialog.setVisible(true);
-        dialog.setTitle("Order central");
-        System.exit(0);
     }
 }
