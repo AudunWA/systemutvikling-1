@@ -36,7 +36,7 @@ public class MenuAdministratorView extends JPanel {
     private JButton exitButton;
     private JScrollPane dishPane;
     private JTextField searchField;
-    private JButton searchButton;
+    private JButton refreshButton;
     private JCheckBox inactiveCheckBox;
 
     private ArrayList<Dish> dishList;
@@ -51,6 +51,7 @@ public class MenuAdministratorView extends JPanel {
             AddDishDialog dialog = new AddDishDialog();
             dialog.pack();
             dialog.setVisible(true);
+            dishList = DishFactory.getActiveDishes();
         });
 
         editDishButton.addActionListener(e -> {
@@ -67,10 +68,14 @@ public class MenuAdministratorView extends JPanel {
 
             if (dialog.getAddedNewValue()) {
                 // Refresh data
-                refreshTable();
+                refresh();
             }
 
             // TODO: Update table, see StorageView
+        });
+
+        refreshButton.addActionListener(e -> {
+            refresh();
         });
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
@@ -130,14 +135,10 @@ public class MenuAdministratorView extends JPanel {
             }
         });
 
-        searchButton.addActionListener(e -> {
-            search();
-        });
         searchField.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 setSearchField("");
-                searchButton.setEnabled(true);
             }
         });
 
@@ -203,8 +204,8 @@ public class MenuAdministratorView extends JPanel {
         tableModel.setRows(newRows);
     }
 
-    private void refreshTable() {
-        tableModel.setRows(DishFactory.getAllDishes());
+    private void refresh() {
+        tableModel.setRows(DishFactory.getActiveDishes());
     }
 }
 
