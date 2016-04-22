@@ -289,15 +289,14 @@ public final class DishFactory {
      * @param active
      * @return int
      */
-    public static int editDish(int dishId, boolean active){
+    public static int editDishStatus(int dishId, boolean active){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.dish SET active = ? WHERE dish.dish_id = ?")) {
 
                 statement.setBoolean(1, active);
                 statement.setInt(2, dishId);
 
-                statement.execute();
-                return dishId;
+                return statement.executeUpdate();
 
             }
         } catch (SQLException e){
@@ -306,38 +305,34 @@ public final class DishFactory {
         }
     }
 
-    public static String editDishDescription(int dishId, String text){
+    public static int editDishDescription(int dishId, String text){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.dish SET description = ? WHERE dish.dish_id = ?")) {
 
                 statement.setString(1, text);
                 statement.setInt(2, dishId);
 
-                statement.execute();
-                return text;
-
+              return statement.executeUpdate();
             }
         } catch (SQLException e){
             e.printStackTrace();
-            return null;
+            return -1;
         }
 
     }
 
-    public static String editDishName(int dishId, String text){
+    public static int editDishName(int dishId, String text){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE g_tdat1006_t6.dish SET name = ? WHERE dish.dish_id = ?")) {
 
                 statement.setString(1, text);
                 statement.setInt(2, dishId);
 
-                statement.execute();
-                return text;
-
+                return statement.executeUpdate();
             }
         } catch (SQLException e){
             e.printStackTrace();
-            return null;
+            return -1;
         }
     }
 

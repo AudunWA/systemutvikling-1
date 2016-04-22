@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -28,7 +30,7 @@ public class TimesheetFactoryTest {
         ArrayList<Timesheet> sheets = TimesheetFactory.getActiveTimesheetsByEmployee(3);
         Assert.assertNotNull(sheets);
         for (int i = 0; i < sheets.size() ; i++) {
-            Assert.assertEquals(sheets.get(i).isActive(),true);
+            Assert.assertTrue(sheets.get(i).isActive());
         }
     }
 
@@ -61,7 +63,8 @@ public class TimesheetFactoryTest {
 
     @Test
     public void testGetLatestTimeSheet() throws Exception {
-        Timesheet sheet = TimesheetFactory.createTimesheet(3,new Timestamp(System.currentTimeMillis()-1),new Timestamp(System.currentTimeMillis()),true),
+        LocalDateTime testDate = LocalDateTime.now().withNano(0);
+        Timesheet sheet = TimesheetFactory.createTimesheet(3,Timestamp.valueOf(testDate),Timestamp.valueOf(testDate.plusSeconds(1)),true),
         latestTimesheet = TimesheetFactory.getLatestTimeSheet(sheet.getEmployeeId());
         Assert.assertNotNull(latestTimesheet);
         Assert.assertEquals(sheet.getEmployeeId(),latestTimesheet.getEmployeeId());

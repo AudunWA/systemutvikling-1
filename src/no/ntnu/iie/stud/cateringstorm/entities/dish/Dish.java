@@ -3,6 +3,7 @@ package no.ntnu.iie.stud.cateringstorm.entities.dish;
 
 /**
  * Created by Audun on 11.03.2016.
+ * Class for entity dish in MySQL
  */
 public class Dish {
     private final int dishId;
@@ -19,6 +20,10 @@ public class Dish {
         this.active = active;
     }
 
+    /**
+     * Method is intended to produce a user friendly value
+     * @return String
+     */
     public String dishTypeText(){
         if (getDishType() == 1){
             return "Appetiser";

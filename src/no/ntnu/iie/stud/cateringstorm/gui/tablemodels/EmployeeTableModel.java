@@ -1,6 +1,8 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
+import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 
 import java.util.ArrayList;
 
@@ -9,14 +11,6 @@ import java.util.ArrayList;
  */
 
 public class EmployeeTableModel extends EntityTableModel<Employee>{
-    /*  private final int employeeId;
-    private String username;
-    private String forename;
-    private String surname;
-    private String address;
-    private String phoneNumber;
-    private String email;
-    private EmployeeType employeeType;*/
     public static final int COLUMN_USERNAME = 0;
     public static final int COLUMN_FORENAME = 1;
     public static final int COLUMN_SURNAME = 2;
@@ -60,6 +54,7 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
         int columnType = getColumnType(columnIndex);
         return (columnType == COLUMN_ACTIVE) ? Boolean.class : String.class;
     }
+
     @Override
     public Object getValueAt(int rowIndex,int columnIndex){
         Employee value = getValue(rowIndex);
@@ -90,9 +85,10 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         int columnType = getColumnType(columnIndex);
+        Employee entity = getValue(rowIndex);
         switch (columnType) {
             case COLUMN_ACTIVE:
-                return true;
+                return entity.getEmployeeType() != EmployeeType.ADMINISTRATOR; // Can't deactivate admins
         }
         return super.isCellEditable(rowIndex, columnIndex);
     }
@@ -119,8 +115,11 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
             case COLUMN_FULL_NAME:
                 break;
             case COLUMN_ACTIVE:
-                entity.setActive((Boolean)value);
-                fireTableCellUpdated(rowIndex, columnIndex);
+                if(entity.getEmployeeType() != EmployeeType.ADMINISTRATOR) { // Can't deactivate admins
+                    entity.setActive((Boolean) value);
+                    EmployeeFactory.updateEmployee(entity);
+                    fireTableCellUpdated(rowIndex, columnIndex);
+                }
                 break;
             default: throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }

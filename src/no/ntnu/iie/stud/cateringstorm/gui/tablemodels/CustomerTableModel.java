@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
+import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
             case COLUMN_PHONE:
                 return "Phone";
             case COLUMN_ACTIVE:
-                return "Status";
+                return "Active";
             case COLUMN_EMAIL:
                 return "Email";
             default:
@@ -131,6 +132,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
                 break;
             case COLUMN_ACTIVE:
                 entity.setActive((Boolean)value);
+                CustomerFactory.editCustomerStatus(entity.getCustomerId(), entity.isActive());
                 fireTableCellUpdated(rowIndex, columnIndex);
                 break;
             case COLUMN_EMAIL:

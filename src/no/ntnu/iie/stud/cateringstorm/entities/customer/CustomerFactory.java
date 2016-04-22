@@ -186,6 +186,7 @@ public final class CustomerFactory {
 
     /**
      * Edits the status of a customer (if the customer is active or not)
+     * With status "inactive", the customer is essentially counted as deleted in the system
      * @param customerId
      * @param active
      * @return int
@@ -207,7 +208,11 @@ public final class CustomerFactory {
         }
     }
 
-    // FIXME: There is something wrong with database connection?
+    /**
+     * Method for editing a customer's details
+     * @param customer
+     * @return int
+     */
     public static int updateCustomer(Customer customer){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE customer SET  surname = ?,forename = ?, address = ?, active = ?, phone = ?, email = ? WHERE customer_id = ?")) {

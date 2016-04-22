@@ -1,13 +1,16 @@
 package no.ntnu.iie.stud.cateringstorm.gui;
 
+import no.ntnu.iie.stud.cateringstorm.Main;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.tabs.*;
 import no.ntnu.iie.stud.cateringstorm.gui.util.DynamicTabbedPane;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -32,6 +35,7 @@ public class DashboardView extends JFrame {
         super();
         this.loggedInEmployee = loggedInEmployee;
 
+        Main.setApplicationIcon(this);
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -55,6 +59,7 @@ public class DashboardView extends JFrame {
             case CHEF:
                 //tabPane.addTab("OrderInfoView", new OrderInfoView());
                 tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), StorageView.class);
+                tabPane.addTab("Food packages", getIconResource("package_1x.png"), FoodPackageAdminView.class);
                 tabPane.addTab("Orders", getIconResource("ic_list_black_24dp_1x.png"), ChefOrderView.class);
                 break;
             case CHAUFFEUR:
@@ -62,7 +67,14 @@ public class DashboardView extends JFrame {
                 break;
             case NUTRITION_EXPERT:
                 tabPane.addTab("Menu", getIconResource("ic_restaurant_menu_black_24dp_1x.png"), MenuAdministratorView.class);
+                tabPane.addTab("Food packages", getIconResource("package_1x.png"), FoodPackageAdminView.class);
                 tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), StorageView.class);
+                break;
+            case SALESPERSON:
+                tabPane.addTab("Orders", getIconResource("ic_list_black_24dp_1x.png"), SalespersonOrderView.class);
+                tabPane.addTab("Subscriptions", getIconResource("ic_update_black_24dp_1x.png"), SalespersonSubscriptionView.class);
+                tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), SalespersonCustomerView.class);
+                tabPane.addTab("Food packages", getIconResource("package_1x.png"), FoodPackageAdminView.class);
                 break;
             case ADMINISTRATOR:
                 //tabPane.addTab("OrderInfoView", new OrderInfoView());
@@ -71,15 +83,12 @@ public class DashboardView extends JFrame {
                 tabPane.addTab("Subscriptions", getIconResource("ic_update_black_24dp_1x.png"), SalespersonSubscriptionView.class);
                 tabPane.addTab("Delivery", getIconResource("ic_assignment_black_24dp_1x.png"), ChauffeurOrderView.class);
                 tabPane.addTab("Menu", getIconResource("ic_restaurant_menu_black_24dp_1x.png"), MenuAdministratorView.class);
+                tabPane.addTab("Food packages", getIconResource("package_1x.png"), FoodPackageAdminView.class);
                 tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), StorageView.class);
                 tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), SalespersonCustomerView.class);
+                tabPane.addTab("Employees", getIconResource("ic_accessibility_black_24dp_1x.png"), AdminEmployeeView.class);
                 //tabPane.addTab("FoodPackageInfoview", new FoodPackageInfoView());
                 tabPane.addTab("Statistics", getIconResource("ic_insert_chart_black_24dp_1x.png"), StatisticsView.class);
-                break;
-            case SALESPERSON:
-                tabPane.addTab("Orders", getIconResource("ic_list_black_24dp_1x.png"), SalespersonOrderView.class);
-                tabPane.addTab("Subscriptions", getIconResource("ic_update_black_24dp_1x.png"), SalespersonSubscriptionView.class);
-                tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), SalespersonCustomerView.class);
                 break;
         }
     }

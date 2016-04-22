@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Chris on 17.03.2016.
+ * All methods: @throws Exception
  */
 public class CustomerFactoryTest {
 
@@ -33,14 +34,16 @@ public class CustomerFactoryTest {
         ArrayList<Customer> list = CustomerFactory.getActiveCustomers();
         Assert.assertNotNull(list);
         for (int i = 0; i < list.size(); i++) {
-            Assert.assertEquals(true,list.get(i).isActive());
+            Assert.assertTrue(list.get(i).isActive());
         }
     }
     @Test
     public void testCreateCustomer() throws Exception {
-
-       Customer customer= CustomerFactory.createCustomer("Kirkhorn", "Knut",  "Hornindal", true, "999999","noot@hotmail.com");
-        Assert.assertNotNull(customer);
+        Customer customer = new Customer(1,"Kirkhorn", "Knut",  "Hornindal", true, "999999","noot@hotmail.com"),
+        testCustomer= CustomerFactory.createCustomer(customer.getSurname(),customer.getForename(),customer.getAddress(),customer.isActive(),customer.getPhone(),customer.getEmail());
+        Assert.assertNotNull(testCustomer);
+        Assert.assertEquals(customer.getForename(),testCustomer.getForename());
+        Assert.assertEquals(customer.getEmail(),testCustomer);
     }
 
     @Test
@@ -48,7 +51,7 @@ public class CustomerFactoryTest {
         Customer customer = CustomerFactory.createCustomer("Kirkhorn", "Knut Sr.",  "Hornindal", true, "999999","noot@hotmail.com");
         CustomerFactory.editCustomerStatus(customer.getCustomerId(),false);
         customer = CustomerFactory.getCustomer(customer.getCustomerId());
-        Assert.assertEquals(customer.isActive(), false);
+        Assert.assertTrue(customer.isActive());
     }
 
     @Test

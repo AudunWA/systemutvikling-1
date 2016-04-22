@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="no.ntnu.iie.stud.cateringstorm.gui.tabs.EmployeeView">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="no.ntnu.iie.stud.cateringstorm.gui.tabs.AdminEmployeeView">
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="622" height="504"/>
+      <xy x="20" y="20" width="1072" height="504"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -21,16 +21,28 @@
               <text value="Refresh"/>
             </properties>
           </component>
-          <component id="413e3" class="javax.swing.JButton" binding="registerTimesheetButton">
+          <component id="f168e" class="javax.swing.JButton" binding="addEmployeeButton">
             <constraints/>
             <properties>
-              <text value="Register timesheet"/>
+              <text value="Add employee"/>
             </properties>
           </component>
-          <component id="9752a" class="javax.swing.JButton" binding="editTimesheetButton" default-binding="true">
+          <component id="a4511" class="javax.swing.JButton" binding="editEmployeeButton">
             <constraints/>
             <properties>
-              <text value="Edit timesheet"/>
+              <text value="Edit employee"/>
+            </properties>
+          </component>
+          <component id="fcba" class="javax.swing.JButton" binding="removeButton">
+            <constraints/>
+            <properties>
+              <text value="Remove employee"/>
+            </properties>
+          </component>
+          <component id="23034" class="javax.swing.JCheckBox" binding="showInactiveEmployeeButton">
+            <constraints/>
+            <properties>
+              <text value="Show inactive employees"/>
             </properties>
           </component>
           <component id="86d69" class="javax.swing.JTextField" binding="searchField" custom-create="true">
@@ -41,12 +53,12 @@
       </grid>
       <scrollpane id="44d89">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="ab6b8" class="javax.swing.JTable" binding="timesheetTable" custom-create="true">
+          <component id="ab6b8" class="javax.swing.JTable" binding="adminEmployeeTable" custom-create="true">
             <constraints/>
             <properties/>
           </component>

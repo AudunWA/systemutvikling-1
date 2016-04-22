@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.timesheet.Timesheet;
+import no.ntnu.iie.stud.cateringstorm.entities.timesheet.TimesheetFactory;
 
 import java.util.ArrayList;
 
@@ -78,7 +79,8 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
     }
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex){
-        return columnIndex == COLUMN_ACTIVE;
+        int columnType = getColumnType(columnIndex);
+        return columnType == COLUMN_ACTIVE;
     }
      @Override
     public void setValueAt(Object value, int row, int column){
@@ -94,6 +96,7 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
                  break;
              case COLUMN_ACTIVE:
                  entity.setActive((Boolean)value);
+                 TimesheetFactory.editTimesheetStatus(entity.getTimesheetId(), entity.getEmployeeId(), entity.isActive());
                  break;
              default:
                  throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");

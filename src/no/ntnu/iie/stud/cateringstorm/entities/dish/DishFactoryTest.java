@@ -9,46 +9,54 @@ import java.util.ArrayList;
  * Created by Chris on 16.03.2016.
  */
 public class DishFactoryTest {
+    @Test
+    public void testCreateDish() throws Exception {
+        Dish dish = DishFactory.createDish("TestCreateDish", "TestCreateDish desc", 2, true);
+        Assert.assertNotNull(dish);
+    }
 
     @Test
-    public void testViewSingleDish() throws Exception {
-
+    public void testGetDish() throws Exception {
+        Dish dish = DishFactory.createDish("Testgetdish", "TestGetDish desc", 2, true),
+        testDish = DishFactory.getDish(dish.getDishId());
+        Assert.assertNotNull(testDish);
+        Assert.assertEquals(dish.getDishId(),testDish.getDishId());
         System.out.println(DishFactory.getDish(1));
-
     }
 
     @Test
     public void testGetAllDishes() throws Exception {
-
-        for (Dish dish :  DishFactory.getAllDishes()) {
-            System.out.println(dish);
+        ArrayList<Dish> dishes = DishFactory.getAllDishes();
+        Assert.assertNotNull(dishes);
+        for (Dish dish :  dishes) {
+            Assert.assertNotNull(dish);
         }
     }
 
     @Test
-    public void testCreateDish() throws Exception {
-        Dish dish = DishFactory.createDish("Penguin", "NOOOOOT NOOOOOOOT!!!", 2, true);
-        Assert.assertNotNull(dish);
-        System.out.println(dish);
-    }
-
-    @Test
-    public void testEditDish() throws Exception {
-
-        DishFactory.editDish(7, true);
-
+    public void testEditDishStatus() throws Exception {
+        Dish dish = DishFactory.createDish("Testgetdish", "TestGetDish desc", 2, true);
+        DishFactory.editDishStatus(dish.getDishId(), false);
+        Dish editedDish = DishFactory.getDish(dish.getDishId());
+        Assert.assertTrue(!editedDish.isActive());//Check
     }
 
     @Test
     public void testEditDishDescription() throws Exception {
-        DishFactory.editDishDescription(1, "Test");
-
+        Dish dish = DishFactory.createDish("Testgetdish", "TestGetDish desc", 2, true);
+        int affectedRows = DishFactory.editDishDescription(dish.getDishId(), "Test");
+        Assert.assertEquals(1,affectedRows);
+        Dish editedDish = DishFactory.getDish(dish.getDishId());
+        Assert.assertNotEquals(dish.getDescription(),editedDish.getDescription());
     }
 
     @Test
     public void testEditDishName() throws Exception {
-        DishFactory.editDishName(1, "Test Dish");
-
+        Dish dish = DishFactory.createDish("Testgetdish", "TestGetDish desc", 2, true);
+        int affectedRows = DishFactory.editDishName(dish.getDishId(), "Testnan");
+        Assert.assertEquals(1,affectedRows);
+        Dish editedDish = DishFactory.getDish(dish.getDishId());
+        Assert.assertNotEquals(dish.getName(),editedDish.getName());
     }
 
     @Test
@@ -72,7 +80,7 @@ public class DishFactoryTest {
         ArrayList<Dish> dishes = DishFactory.getDishes(1); // We assume food package 1 exists
         Assert.assertNotNull(dishes);
         for (Dish dish : dishes) {
-            System.out.println(dish);
+            Assert.assertNotNull(dish);
         }
     }
 }

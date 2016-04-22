@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
+import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 
 import java.util.ArrayList;
 
@@ -54,6 +55,19 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
     }
 
     @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        int columnType = getColumnType(columnIndex);
+        FoodPackage entity = getValue(rowIndex);
+        if(columnType == COLUMN_ACTIVE) {
+            entity.setActive((Boolean)aValue);
+            FoodPackageFactory.updateFoodPackage(entity);
+            fireTableCellUpdated(rowIndex, columnIndex);
+        } else {
+            super.setValueAt(aValue, rowIndex, columnIndex);
+        }
+    }
+
+    @Override
     public Class<?> getColumnClass(int columnIndex) {
         int columnType = getColumnType(columnIndex);
         switch (columnType) {
@@ -64,7 +78,7 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
             case COLUMN_COST:
                 return double.class;
             case COLUMN_ACTIVE:
-                return boolean.class;
+                return Boolean.class;
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }

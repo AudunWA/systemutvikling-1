@@ -14,7 +14,14 @@ import java.util.HashMap;
 /**
  * Created by Audun on 11.03.2016.
  */
+
 public final class OrderFactory {
+
+    /**
+     *
+     * @param orderId
+     * @return Order
+     */
     public static Order getOrder(int orderId) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE `_order_id` = ?")) {
@@ -33,6 +40,11 @@ public final class OrderFactory {
         return null;
     }
 
+    /**
+     *
+     * @param orderId
+     * @return Timestamp
+     */
     public static Timestamp getDeliveryStart(int orderId) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT delivery_start_time FROM `_order` WHERE `_order_id` = ?")) {
@@ -51,6 +63,10 @@ public final class OrderFactory {
         return null;
     }
 
+    /**
+     * Set start of delivery to time current time method is called
+     * @param orderId
+     */
     public static void setDeliveryStart(int orderId) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET delivery_start_time = NOW() WHERE _order_id = ?")) {
@@ -62,6 +78,10 @@ public final class OrderFactory {
         }
     }
 
+    /**
+     * Get currently relevant addresses
+     * @return ArrayList<String>
+     */
     public static ArrayList<String> getAllAvailableDeliveryAddresses(){
         ArrayList<String> addresses = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -81,6 +101,10 @@ public final class OrderFactory {
         return null;
     }
 
+    /**
+     * Get every address existing in database
+     * @return ArrayList<String>
+     */
     public static ArrayList<String> getAllAddresses(){
         ArrayList<String> addresses = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -100,6 +124,10 @@ public final class OrderFactory {
         return null;
     }
 
+    /**
+     * Get all orders, regardless of status
+     * @return ArrayList<Order>
+     */
     public static ArrayList<Order> getAllOrders() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -119,6 +147,11 @@ public final class OrderFactory {
         return null;
     }
 
+    /**
+     * Getting all order relevant for chefs, with relevant statuses
+     * Excluding orders being delivered and orders already delivered.
+     * @return ArrayList<Order>
+     */
     public static ArrayList<Order> getAllOrdersChef() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -150,6 +183,10 @@ public final class OrderFactory {
         return null;
     }
 
+    /**
+     * TODO: Remove if not used at deadline
+     * @return ArrayList<Order>
+     */
     public static ArrayList<Order> getAllOrdersChauffeur() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -181,6 +218,10 @@ public final class OrderFactory {
         return null;
     }
 
+    /**
+     * Sending all available orders to chauffeur
+     * @return ArrayList<Order>
+     */
     public static ArrayList<Order> getAllAvailableOrdersChauffeur() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -212,6 +253,10 @@ public final class OrderFactory {
         return null;
     }
 
+    /**
+     * Making available for map view for chauffeurs
+     * @return ArrayList<Order>
+     */
     public static ArrayList<Order> getAllAvailableOrdersForChauffeurTable() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -243,6 +288,12 @@ public final class OrderFactory {
         return null;
     }
 
+    /**
+     *
+     * @param result
+     * @return
+     * @throws SQLException
+     */
     private static Order createOrderFromResultSet(ResultSet result) throws SQLException {
         int orderId = result.getInt("_order_id");
         String description = result.getString("description");
@@ -264,15 +315,19 @@ public final class OrderFactory {
         return new Order(orderId, description, deliveryDate, orderDate, portions, priority, salespersonId, customer, recurringOrderId, status, chauffeurId);
     }
 
+    /**
+     *
+     * @param orderID
+     * @param status
+     * @return
+     */
     public static boolean setOrderState(int orderID, int status){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET status = ? WHERE _order_id = ?")) {
 
                 statement.setInt(1, status);
                 statement.setInt(2, orderID);
-
-                statement.execute();
-                return true;
+                return statement.executeUpdate() == 1;
 
             }
         } catch (SQLException e){
@@ -307,9 +362,19 @@ public final class OrderFactory {
             }
             return temp;
         }
-    /*int orderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority,
-    int salespersonId, Customer customer, int recurringOrderId, int status, int chauffeurId)*/
-    // FIXME : Echterbug
+
+    /**
+     *
+     * @param description
+     * @param deliveryTime
+     * @param portions
+     * @param priority
+     * @param salespersonId
+     * @param customerId
+     * @param chauffeurId
+     * @param packageId
+     * @return Order
+     */
     public static Order createOrder(String description, Timestamp deliveryTime, int portions, boolean priority,
                                     int salespersonId, int customerId, int chauffeurId, ArrayList<Integer> packageId) {
         Customer customer = CustomerFactory.getCustomer(customerId);
@@ -384,6 +449,12 @@ public final class OrderFactory {
         return order;
     }
 
+    /**
+     *
+     * @param orderId
+     * @param newDate
+     * @return boolean
+     */
     public static boolean setOrderDate(int orderId, Timestamp newDate){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET delivery_time = ? WHERE _order_id = ?")) {
@@ -391,8 +462,8 @@ public final class OrderFactory {
                 statement.setTimestamp(1, newDate);
                 statement.setInt(2, orderId);
 
-                statement.execute();
-                return true;
+
+                return statement.executeUpdate() == 1;
 
             }
         } catch (SQLException e){
@@ -401,6 +472,13 @@ public final class OrderFactory {
         }
 
     }
+
+    /**
+     *
+     * @param orderId
+     * @param portions
+     * @return boolean
+     */
     public static boolean setOrderPortions(int orderId, int portions){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET portions = ? WHERE _order_id = ?")) {
@@ -408,8 +486,7 @@ public final class OrderFactory {
                 statement.setInt(1, portions);
                 statement.setInt(2, orderId);
 
-                statement.execute();
-                return true;
+                return statement.executeUpdate() == 1;
 
             }
         } catch (SQLException e){
@@ -419,6 +496,12 @@ public final class OrderFactory {
 
     }
 
+    /**
+     *
+     * @param orderId
+     * @param description
+     * @return boolean
+     */
     public static boolean setOrderDescription(int orderId, String description){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET description = ? WHERE _order_id = ?")) {
@@ -426,9 +509,7 @@ public final class OrderFactory {
                 statement.setString(1, description);
                 statement.setInt(2, orderId);
 
-                statement.execute();
-                return true;
-
+                return statement.executeUpdate() == 1;
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -437,6 +518,11 @@ public final class OrderFactory {
 
     }
 
+    /**
+     *
+     * @param orderID
+     * @return ArrayList<Integer>
+     */
     public static ArrayList<Integer> getPackages(int orderID){
         ArrayList<Integer> packages = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -457,6 +543,13 @@ public final class OrderFactory {
         return null;
     }
 
+    /**
+     * For orders to be set at a higher priority as specified in problem description
+     * If a big event in need of orders comes up, it is to be prioritized above all other pending orders on the same date
+     * @param orderID
+     * @param priority
+     * @return boolean
+     */
     public static boolean setOrderPriority(int orderID, boolean priority){
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET priority = ? WHERE _order_id = ?")) {
@@ -464,9 +557,7 @@ public final class OrderFactory {
                 statement.setBoolean(1, priority);
                 statement.setInt(2, orderID);
 
-                statement.execute();
-                return true;
-
+                return statement.executeUpdate() == 1;
             }
         } catch (SQLException e){
             e.printStackTrace();
@@ -474,8 +565,17 @@ public final class OrderFactory {
         }
     }
 
+    /**
+     * Used in the method below
+     */
     private static final String salesForPeriodQuery = "SELECT DATE(`_order`.`_order_time`) AS date, SUM(cost) AS sales FROM `_order_food_package` INNER JOIN `food_package` USING(food_package_id) INNER JOIN `_order` USING(`_order_id`) WHERE DATE(`_order`.`_order_time`) BETWEEN ? AND ? GROUP BY DATE(`_order`.`_order_time`);";
 
+    /**
+     *
+     * @param startDate
+     * @param endDate
+     * @return HashMap<LocalDate, Double>
+     */
     public static HashMap<LocalDate, Double> getSalesForPeriod(LocalDate startDate, LocalDate endDate) {
         HashMap<LocalDate, Double> sales = new HashMap<>();
         try (Connection connection = Database.getConnection()) {

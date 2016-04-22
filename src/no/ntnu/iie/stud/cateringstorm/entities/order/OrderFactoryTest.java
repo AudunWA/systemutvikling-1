@@ -29,7 +29,7 @@ public class OrderFactoryTest {
         Assert.assertNotNull(orders);
         for (int i = 0; i < orders.size(); i++) {
             Assert.assertNotNull(orders.get(i));
-            Assert.assertEquals(true,orders.get(i) instanceof Order);//FIXME: Redundant?
+            Assert.assertTrue(orders.get(i) instanceof Order);//FIXME: Redundant?
         }
     }
     @Test
@@ -38,7 +38,7 @@ public class OrderFactoryTest {
         ArrayList<Order> orders = OrderFactory.getOrdersByQuery(testName);
         Assert.assertNotNull(orders);
         for(Order order: orders){
-            Assert.assertEquals(testName,order.getCustomerName());
+            Assert.assertTrue(order.getCustomerName().contains(testName));
         }
     }
     @Test
@@ -48,9 +48,8 @@ public class OrderFactoryTest {
         numbers.add(1);
         numbers.add(2);
         numbers.add(3);
-
-        OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, numbers);
-
+       Order order = OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, numbers);
+        Assert.assertNotNull(order);
     }
     @Test
     public void testSetOrderState() throws Exception {

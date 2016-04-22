@@ -5,6 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddFoodPackageDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditFoodPackageDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by kenan on 14.04.2016.
  */
-public class FoodPackageAdminView extends JFrame {
+public class FoodPackageAdminView extends JPanel {
     private JPanel mainPanel;
     private JTable FoodPackageTable;
     private JButton viewFoodPackage;
@@ -30,7 +31,6 @@ public class FoodPackageAdminView extends JFrame {
     private FoodPackageTableModel tableModel;
 
     public FoodPackageAdminView() {
-
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
@@ -74,6 +74,7 @@ public class FoodPackageAdminView extends JFrame {
             if(dialog.getAddedNewValue()) {
                 // Refresh data
                 refreshTable();
+                Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Food package updated.", Toast.Style.SUCCESS).display();
             }
         });
 
@@ -130,35 +131,17 @@ public class FoodPackageAdminView extends JFrame {
         FoodPackageTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
-// call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-// call onCancel() on ESCAPE
-        mainPanel.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
     }
     private void createSearchField(){
         searchField = new JTextField(20);
-        setSearchField("Search foodpackages");
+        setSearchField("Search for food packages");
         add(searchField);
     }
     private void setSearchField(String text){
         searchField.setText(text);
         searchField.setEnabled(true);
     }
-    private void onCancel() {
-// add your code here if necessary
-        dispose();
-    }
+
     public void search() {
         ArrayList<FoodPackage> newRows;
         if(searchField.getText().trim().equals("")) {
@@ -179,7 +162,7 @@ public class FoodPackageAdminView extends JFrame {
 
     private void createTable(){
         ArrayList<FoodPackage> foodpackageList = FoodPackageFactory.getActiveFoodPackages();
-        Integer[] columns = new Integer[] { FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_NAME }; // Columns can be changed
+        Integer[] columns = new Integer[] { FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST, FoodPackageTableModel.COLUMN_ACTIVE }; // Columns can be changed
         tableModel = new FoodPackageTableModel(foodpackageList, columns);
         FoodPackageTable = new JTable(tableModel);
         FoodPackageTable.setFillsViewportHeight(true);
@@ -199,8 +182,8 @@ public class FoodPackageAdminView extends JFrame {
         final int HEIGHT = 600;
 
         JFrame frame = new JFrame("FoodPackageAdminView");
-        frame.setContentPane(new FoodPackageAdminView().mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(new FoodPackageAdminView());
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
         frame.setSize(WIDTH, HEIGHT);

@@ -1,15 +1,18 @@
 package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
 public class EditFoodPackageDialog extends JDialog {
+    private static final Integer[] COLUMNS_AVAILABLE_DISHES = { DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION };
 
     // fixed
     private boolean addedNewValue;
@@ -17,16 +20,17 @@ public class EditFoodPackageDialog extends JDialog {
     private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
-    private JTextField nameTextField;
-    private JTextField costTextField;
-    private JCheckBox isActive;
-    private JTable addedTable;
-    private JTable dishTable;
+    private JTextField nameField;
+    private JTextField costField;
+    private JCheckBox activeCheckbox;
     private JButton swapButton;
     private FoodPackage foodPackage;
-    private ArrayList<Dish> addedList;
-    private ArrayList<FoodPackage> foodPackages = new ArrayList<>();
-    private ArrayList<Dish> dishList;
+
+    private JTable leftSideTable;
+    private DishTableModel leftSideModel;
+
+    private JTable rightSideTable;
+    private DishTableModel rightTableModel;
 
     public EditFoodPackageDialog(FoodPackage foodPackage) {
         this.foodPackage = foodPackage;
@@ -34,23 +38,11 @@ public class EditFoodPackageDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
-        swapButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { onSwap(); }
-        });
+        okButton.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
+        swapButton.addActionListener(e -> onSwap());
 
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-
-// call onCancel() when cross is clicked
+        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -58,98 +50,128 @@ public class EditFoodPackageDialog extends JDialog {
             }
         });
 
-// call onCancel() on ESCAPE
-        mainPanel.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        // call onCancel() on ESCAPE
+        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        loadData();
     }
+
+    /**
+     * Fills up the components with data from the food package.
+     * Table data is not loaded here, but in createTables().
+     */
+    private void loadData() {
+        nameField.setText(foodPackage.getName());
+        costField.setText(((Double)foodPackage.getCost()).toString());
+        activeCheckbox.setSelected(foodPackage.isActive());
+    }
+
+    private void createUIComponents() {
+       createTables();
+    }
+
+    /**
+     * Initializes and fills the tables with appropriate data
+     */
+    private void createTables() {
+        // Available dishes (all active ones)
+        rightTableModel = new DishTableModel(DishFactory.getActiveDishes(), COLUMNS_AVAILABLE_DISHES);
+        rightSideTable = new JTable(rightTableModel);
+
+        // Current dishes
+        leftSideModel = new DishTableModel(DishFactory.getDishes(foodPackage.getFoodPackageId()), COLUMNS_AVAILABLE_DISHES);
+        leftSideTable = new JTable(leftSideModel);
+    }
+
     private void onSwap() {
-        if (dishTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
-            JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
-            dishTable.clearSelection();
-            addedTable.clearSelection();
-        } else {
-            if (dishTable.getSelectedRow() > -1) {
-                boolean check = true;
-                for (Dish dishes : addedList) {
-                    if (dishes.getDishId() == (dishTable.getSelectedRow() + 1)) {
-                        check = false;
-                    }
-                }
-                if (check) {
-                    addedList.add(dishList.get(dishTable.getSelectedRow()));
-                    ((EntityTableModel) addedTable.getModel()).setRows(addedList);
-                    dishTable.clearSelection();
-                } else {
-                    JOptionPane.showMessageDialog(this, "This order is already added.");
-                    dishTable.clearSelection();
-                }
-            } else if (addedTable.getSelectedRow() > -1 && !dishTable.isColumnSelected(1) && !dishTable.isColumnSelected(2)) {
-                addedList.remove(addedTable.getSelectedRow());
-                ((EntityTableModel) addedTable.getModel()).setRows(addedList);
-                addedTable.clearSelection();
-            } else {
-                JOptionPane.showMessageDialog(this, "Please unselect the package list. Do this by clicking with ctrl down.");
-                addedTable.clearSelection();
-            }
+        // Check if both tables are selected (shouldn't really happen, but we check anyways)
+        if (leftSideTable.getSelectedRow() > -1 && rightSideTable.getSelectedRow() > -1) {
+            JOptionPane.showMessageDialog(this, "Both tables selected. Error.");
+            leftSideTable.clearSelection();
+            rightSideTable.clearSelection();
+            return;
         }
 
+        if (rightSideTable.getSelectedRow() > -1) {
+            Dish rightSideSelectedDish = rightTableModel.getValue(rightSideTable.getSelectedRow());
+            Dish existingLeftSideDish = null;
+
+            ArrayList<Dish> dishes = leftSideModel.getRowsClone();
+            for (Dish dish : dishes) {
+                if (dish.getDishId() == rightSideSelectedDish.getDishId()) {
+                    existingLeftSideDish = dish;
+                    break;
+                }
+            }
+
+            if (existingLeftSideDish == null) {
+                // Add dish to left side
+                leftSideModel.addRow(rightSideSelectedDish);
+            } else {
+                // Show error
+                Toast.makeText(this, "Dish already added.", Toast.Style.ERROR).display();
+                return;
+            }
+        } else if (leftSideTable.getSelectedRow() > -1) {
+            Dish leftSideSelectedDish = leftSideModel.getValue(leftSideTable.getSelectedRow());
+
+//            if(selectedRecurringOrder.getAmount() > 1) {
+//                // Decrement
+//                selectedRecurringOrder.decrementAmount();
+//                selectedPackagesModel.updateRow(selectedPackagesTable.getSelectedRow());
+//            } else {
+                // Remove
+                leftSideModel.removeRow(leftSideTable.getSelectedRow());
+                leftSideTable.clearSelection();
+//            }
+        } else {
+            Toast.makeText(this, "Select a row.", Toast.Style.ERROR).display();
+        }
     }
 
+    /**
+     * Called when OK button is pressed.
+     * Saves the changes to the food package.
+     */
     private void onOK() {
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
-        if (dialogResult == 0) {
-
-            String name = nameTextField.getText();
-            if (name.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please fill in a name.");
-                return;
-            }
-            double cost;
-            try {
-                cost = Double.parseDouble(costTextField.getText());
-            } catch (NumberFormatException nfe) {
-                JOptionPane.showMessageDialog(this, "Please fill in a valid amount (use . as comma).");
-                return;
-            }
-            if (cost < 0) {
-                JOptionPane.showMessageDialog(this, "Please fill in a valid amount (Not negative)");
-                return;
-            }
-            boolean active = isActive.isSelected();
-
-            ArrayList<Integer> test = new ArrayList<>();
-            test.add(dishTable.getSelectedRow() + 1);
-
-            ArrayList<Dish> dishes = new ArrayList<>();
-            for (int k = 0; k < addedList.size(); k++) {
-                dishes.add(addedList.get(k));
-            }
-
-            if (dishes.size() < 1) {
-                JOptionPane.showMessageDialog(this, "Please add package(s)");
-                return;
-            }
-
-            foodPackage.setName(name);
-            foodPackage.setCost(cost);
-            foodPackage.setActive(active);
-
-            if (FoodPackageFactory.updateFoodPackage(foodPackage) != 1) {
-                JOptionPane.showMessageDialog(this, "Dish was not update, please try again later.");
-            }
-            if (foodPackage == null) {
-                JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
-            } else {
-                // Debug code
-                JOptionPane.showMessageDialog(this, foodPackage);
-                addedNewValue = true;
-            }
-            dispose();
+        if (dialogResult != JOptionPane.YES_OPTION) {
+            return;
         }
+
+        String name = nameField.getText();
+        if (name.isEmpty()) {
+            Toast.makeText(this, "Invalid name.", Toast.Style.ERROR).display();
+            return;
+        }
+
+        double cost;
+        try {
+            cost = Double.parseDouble(costField.getText().replace(',', '.'));
+        } catch (NumberFormatException nfe) {
+            Toast.makeText(this, "Invalid cost.").display();
+            return;
+        }
+
+        if (cost < 0) {
+            Toast.makeText(this, "Invalid cost (negative).", Toast.Style.ERROR).display();
+            return;
+        }
+
+        boolean active = activeCheckbox.isSelected();
+
+        foodPackage.setName(name);
+        foodPackage.setCost(cost);
+        foodPackage.setActive(active);
+
+        // Do the actual update in database
+        if (!FoodPackageFactory.updateFoodPackage(foodPackage, leftSideModel.getRowsClone())) {
+            JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
+        } else {
+            addedNewValue = true;
+        }
+        dispose();
     }
 
     public boolean getAddedNewValue() {
@@ -157,18 +179,16 @@ public class EditFoodPackageDialog extends JDialog {
     }
 
     private void onCancel() {
-// add your code here if necessary
         dispose();
     }
 
     public static void main(String[] args) {
         final int height = 700;
         final int width = 600;
-        EditFoodPackageDialog dialog = new EditFoodPackageDialog(null);
+        EditFoodPackageDialog dialog = new EditFoodPackageDialog(FoodPackageFactory.getFoodPackage(1));
         dialog.pack();
         dialog.setVisible(true);
         dialog.setSize(width, height);
         System.exit(0);
     }
-
 }

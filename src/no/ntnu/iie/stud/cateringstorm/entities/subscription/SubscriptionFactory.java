@@ -13,6 +13,10 @@ import java.util.ArrayList;
  * Created by Audun on 18.04.2016.
  */
 public final class SubscriptionFactory {
+    /**
+     * Returning every subscription registered in database, including inactive ones
+     * @return ArrayList<Subscription>
+     */
     public static ArrayList<Subscription> getAllSubscriptions() {
         ArrayList<Subscription> results = new ArrayList<>();
 
@@ -30,14 +34,24 @@ public final class SubscriptionFactory {
         }
         return results;
     }
+    /*
     public static void generateOrdersFromSubscriptions() {
         // 1. Get all subscriptions
         // 2. Get their recurring orders
         // 3. Check if each has real orders created for them
         // 4. If orders are missing, create them.
         String s = "SELECT COUNT(*) FROM ";
-    }
+    }*/
 
+    /**
+     * Method creates a subscription inserting it to database
+     * @param startDate
+     * @param endDate
+     * @param customer
+     * @param cost
+     * @param orders
+     * @return Subscription
+     */
     public static Subscription createSubscription(Date startDate, Date endDate, Customer customer, double cost,  ArrayList<RecurringOrder> orders) {
         int generatedId;
 
@@ -62,6 +76,7 @@ public final class SubscriptionFactory {
                     }
 
                     generatedId = Database.getGeneratedKeys(statement);
+
                     if(generatedId == -1) {
                         connection.rollback();
                         connection.setAutoCommit(true);
@@ -99,6 +114,12 @@ public final class SubscriptionFactory {
         return subscription;
     }
 
+    /**
+     *
+     * @param result
+     * @return Subscription
+     * @throws SQLException
+     */
     private static Subscription createSubscriptionFromResultSet(ResultSet result) throws SQLException {
         int subscriptionId = result.getInt("subscription_id");
         int customerId = result.getInt("customer_id");
