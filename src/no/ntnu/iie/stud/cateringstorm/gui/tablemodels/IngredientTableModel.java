@@ -1,10 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**

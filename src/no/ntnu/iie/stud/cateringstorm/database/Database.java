@@ -21,7 +21,6 @@ public final class Database {
     }
 
     /***
-     *
      * @return A open connection to the database
      * @throws SQLException
      */
@@ -30,7 +29,8 @@ public final class Database {
     }
 
     /**
-     Gets the generated key (usually AUTO_INCREMENT id) from a Statement.
+     * Gets the generated key (usually AUTO_INCREMENT id) from a Statement.
+     *
      * @param statement The active statement
      * @return The generated key, or -1 if error.
      */

@@ -1,21 +1,17 @@
 package no.ntnu.iie.stud.cateringstorm;
 
 import com.alee.laf.WebLookAndFeel;
-import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.gui.LoginView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Main {
 
     /**
-     The main entry point of the application.
+     * The main entry point of the application.
+     *
      * @param args Command line arguments
      */
     public static void main(String[] args) {

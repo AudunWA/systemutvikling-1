@@ -1,9 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
-import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -65,7 +63,7 @@ public class OrderTableModel extends EntityTableModel<Order> {
                 return "Status";
             case COLUMN_ADDRESS:
                 return "Address";
-            case COLUMN_CUSTOMER_NAME :
+            case COLUMN_CUSTOMER_NAME:
                 return "Customer";
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
@@ -112,37 +110,48 @@ public class OrderTableModel extends EntityTableModel<Order> {
     }
 
     @Override
-    public void setValueAt(Object value, int row, int column){
+    public void setValueAt(Object value, int row, int column) {
         Order entity = getValue(row);
         int columnType = getColumnType(column);
         String status0 = "Ready for delivery", status1 = "In production", status2 = "Delivered", statusNeg1 = "Removed";
         System.out.println(columnType);
-        switch (columnType){
-            case COLUMN_DESCRIPTION:break;
-            case COLUMN_DELIVERY_TIME:break;
-            case COLUMN_ORDER_TIME:break;
-            case COLUMN_PORTIONS:break;
-            case COLUMN_PRIORITY:break;
-            case COLUMN_SALESPERSON_ID:break;
-            case COLUMN_CUSTOMER_ID:break;
-            case COLUMN_RECURRING_ORDER_ID:break;
-            case COLUMN_STATUS_ID:break;
+        switch (columnType) {
+            case COLUMN_DESCRIPTION:
+                break;
+            case COLUMN_DELIVERY_TIME:
+                break;
+            case COLUMN_ORDER_TIME:
+                break;
+            case COLUMN_PORTIONS:
+                break;
+            case COLUMN_PRIORITY:
+                break;
+            case COLUMN_SALESPERSON_ID:
+                break;
+            case COLUMN_CUSTOMER_ID:
+                break;
+            case COLUMN_RECURRING_ORDER_ID:
+                break;
+            case COLUMN_STATUS_ID:
+                break;
             case COLUMN_STATUS_TEXT:
-                if(value.equals(status0)) {
+                if (value.equals(status0)) {
                     entity.setStatus(0);
-                }else if(value.equals(status1)){
+                } else if (value.equals(status1)) {
                     entity.setStatus(1);
-                }else if(value.equals(status2)){
+                } else if (value.equals(status2)) {
                     entity.setStatus(2);
-                }else{
+                } else {
                     entity.setStatus(-1);
                 }
                 break;
-            case COLUMN_CHAUFFEUR_ID:break;
+            case COLUMN_CHAUFFEUR_ID:
+                break;
         }
-        fireTableCellUpdated(row,column);
+        fireTableCellUpdated(row, column);
 
     }
+
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         int columnType = getColumnType(columnIndex);

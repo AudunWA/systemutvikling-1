@@ -15,6 +15,7 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
     public static final int COLUMN_FROM_TIME = 2;
     public static final int COLUMN_TO_TIME = 3;
     public static final int COLUMN_ACTIVE = 4;
+
     public TimesheetTableModel(ArrayList<Timesheet> rows, Integer[] columns) {
         super(rows, columns);
     }
@@ -23,7 +24,7 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
     public String getColumnName(int column) {
         int columnType = getColumnType(column);
         switch (columnType) {
-            case COLUMN_HOURS_ID :
+            case COLUMN_HOURS_ID:
                 return "Timesheet ID";
             case COLUMN_EMPLOYEE_ID:
                 return "Customer ID";
@@ -77,30 +78,33 @@ public class TimesheetTableModel extends EntityTableModel<Timesheet> {
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
+
     @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex){
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
         int columnType = getColumnType(columnIndex);
         return columnType == COLUMN_ACTIVE;
     }
-     @Override
-    public void setValueAt(Object value, int row, int column){
-         Timesheet entity = getValue(row);
-         int columnType = getColumnType(column);
-         switch (columnType) {
-             case COLUMN_HOURS_ID:break;
-             case COLUMN_EMPLOYEE_ID:
-                 break;
-             case COLUMN_FROM_TIME:
-                 break;
-             case COLUMN_TO_TIME:
-                 break;
-             case COLUMN_ACTIVE:
-                 entity.setActive((Boolean)value);
-                 TimesheetFactory.editTimesheetStatus(entity.getTimesheetId(), entity.getEmployeeId(), entity.isActive());
-                 break;
-             default:
-                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
-         }
-         fireTableCellUpdated(row,column);
-     }
+
+    @Override
+    public void setValueAt(Object value, int row, int column) {
+        Timesheet entity = getValue(row);
+        int columnType = getColumnType(column);
+        switch (columnType) {
+            case COLUMN_HOURS_ID:
+                break;
+            case COLUMN_EMPLOYEE_ID:
+                break;
+            case COLUMN_FROM_TIME:
+                break;
+            case COLUMN_TO_TIME:
+                break;
+            case COLUMN_ACTIVE:
+                entity.setActive((Boolean) value);
+                TimesheetFactory.editTimesheetStatus(entity.getTimesheetId(), entity.getEmployeeId(), entity.isActive());
+                break;
+            default:
+                throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
+        }
+        fireTableCellUpdated(row, column);
+    }
 }

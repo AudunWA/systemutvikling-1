@@ -18,9 +18,9 @@ public class DishFactoryTest {
     @Test
     public void testGetDish() throws Exception {
         Dish dish = DishFactory.createDish("Testgetdish", "TestGetDish desc", 2, true),
-        testDish = DishFactory.getDish(dish.getDishId());
+                testDish = DishFactory.getDish(dish.getDishId());
         Assert.assertNotNull(testDish);
-        Assert.assertEquals(dish.getDishId(),testDish.getDishId());
+        Assert.assertEquals(dish.getDishId(), testDish.getDishId());
         System.out.println(DishFactory.getDish(1));
     }
 
@@ -28,7 +28,7 @@ public class DishFactoryTest {
     public void testGetAllDishes() throws Exception {
         ArrayList<Dish> dishes = DishFactory.getAllDishes();
         Assert.assertNotNull(dishes);
-        for (Dish dish :  dishes) {
+        for (Dish dish : dishes) {
             Assert.assertNotNull(dish);
         }
     }
@@ -45,18 +45,18 @@ public class DishFactoryTest {
     public void testEditDishDescription() throws Exception {
         Dish dish = DishFactory.createDish("Testgetdish", "TestGetDish desc", 2, true);
         int affectedRows = DishFactory.editDishDescription(dish.getDishId(), "Test");
-        Assert.assertEquals(1,affectedRows);
+        Assert.assertEquals(1, affectedRows);
         Dish editedDish = DishFactory.getDish(dish.getDishId());
-        Assert.assertNotEquals(dish.getDescription(),editedDish.getDescription());
+        Assert.assertNotEquals(dish.getDescription(), editedDish.getDescription());
     }
 
     @Test
     public void testEditDishName() throws Exception {
         Dish dish = DishFactory.createDish("Testgetdish", "TestGetDish desc", 2, true);
         int affectedRows = DishFactory.editDishName(dish.getDishId(), "Testnan");
-        Assert.assertEquals(1,affectedRows);
+        Assert.assertEquals(1, affectedRows);
         Dish editedDish = DishFactory.getDish(dish.getDishId());
-        Assert.assertNotEquals(dish.getName(),editedDish.getName());
+        Assert.assertNotEquals(dish.getName(), editedDish.getName());
     }
 
     @Test

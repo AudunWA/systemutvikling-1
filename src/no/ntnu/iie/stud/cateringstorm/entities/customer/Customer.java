@@ -31,59 +31,60 @@ public class Customer {
         return forename;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-
-    public String getPhone(){
-        return phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * Method is intended to produce a more user friendly value
-     * as an alternative value in GUI JTable.
-     * @return String
-     */
-    public String getActiveText(){
-        return (isActive())?"Active":"Not active";
-    }
-
     public void setForename(String forename) {
         this.forename = forename;
+    }
+
+    public String getSurname() {
+        return surname;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
+
+    /**
+     * Method is intended to produce a more user friendly value
+     * as an alternative value in GUI JTable.
+     *
+     * @return String
+     */
+    public String getActiveText() {
+        return (isActive()) ? "Active" : "Not active";
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -93,7 +94,7 @@ public class Customer {
                 ", address='" + address + '\'' +
                 ", active=" + active + '\'' +
                 ", phone=" + phone + '\'' +
-                ", email="+email
+                ", email=" + email
                 + '}';
     }
 }

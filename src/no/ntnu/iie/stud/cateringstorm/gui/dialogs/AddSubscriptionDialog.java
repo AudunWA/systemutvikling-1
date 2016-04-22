@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.Properties;
 
 public class AddSubscriptionDialog extends JDialog {
+    private static final int MIN_HOURS_BETWEEN_ORDERS = 1;
     private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
@@ -38,15 +39,11 @@ public class AddSubscriptionDialog extends JDialog {
     private JTextField costField;
     private JSpinner amountSpinner;
     private JSpinner timeSpinner;
-
     private JTable availablePackagesTable;
     private FoodPackageTableModel availabelpackagesModel;
-
     private JTable selectedPackagesTable;
     private RecurringOrderTableModel selectedPackagesModel;
-
     private double cost;
-
     private ArrayList<FoodPackage> foodList; // TODO: Replace with table model methods
     private Subscription subscription;
 
@@ -104,7 +101,7 @@ public class AddSubscriptionDialog extends JDialog {
             int index = selectedPackagesTable.getSelectedRow();
             int dayIndex = dayComboBox.getSelectedIndex();
 
-            if(index == -1 || dayIndex == -1) {
+            if (index == -1 || dayIndex == -1) {
                 return;
             }
 
@@ -114,18 +111,18 @@ public class AddSubscriptionDialog extends JDialog {
         });
 
         // Set minimum amount on spinner (could be 1, but we want to display our error toast)
-        SpinnerNumberModel amountSpinnerModel = (SpinnerNumberModel)amountSpinner.getModel(); // Default model
+        SpinnerNumberModel amountSpinnerModel = (SpinnerNumberModel) amountSpinner.getModel(); // Default model
         amountSpinnerModel.setMinimum(0);
 
         amountSpinner.addChangeListener(e -> {
             int index = selectedPackagesTable.getSelectedRow();
-            int newAmount = (int)amountSpinner.getValue();
+            int newAmount = (int) amountSpinner.getValue();
 
-            if(index == -1) {
+            if (index == -1) {
                 return;
             }
 
-            if(newAmount < 1) {
+            if (newAmount < 1) {
                 Toast.makeText(this, "Amount too low.", Toast.Style.ERROR).display();
                 return;
             }
@@ -139,11 +136,11 @@ public class AddSubscriptionDialog extends JDialog {
             int index = selectedPackagesTable.getSelectedRow();
             int newTime = getTimeSpinnerValue();
 
-            if(index == -1) {
+            if (index == -1) {
                 return;
             }
 
-            if(newTime < 0) {
+            if (newTime < 0) {
                 Toast.makeText(this, "Invalid time.", Toast.Style.ERROR).display();
                 return;
             }
@@ -152,6 +149,13 @@ public class AddSubscriptionDialog extends JDialog {
             order.setRelativeTime(newTime);
             selectedPackagesModel.updateRow(index);
         });
+    }
+
+    public static void main(String[] args) {
+        AddSubscriptionDialog dialog = new AddSubscriptionDialog();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
     }
 
     /**
@@ -210,7 +214,7 @@ public class AddSubscriptionDialog extends JDialog {
             cost -= selectedRecurringOrder.getFoodPackageCost();
             costField.setText("Cost: " + cost);
 
-            if(selectedRecurringOrder.getAmount() > 1) {
+            if (selectedRecurringOrder.getAmount() > 1) {
                 // Decrement
                 selectedRecurringOrder.decrementAmount();
                 selectedPackagesModel.updateRow(selectedPackagesTable.getSelectedRow());
@@ -256,7 +260,7 @@ public class AddSubscriptionDialog extends JDialog {
 
     }
 
-    private void initializeTimeSpinner(){
+    private void initializeTimeSpinner() {
         SpinnerModel model = new SpinnerDateModel();
 
         timeSpinner.setModel(model);
@@ -280,8 +284,8 @@ public class AddSubscriptionDialog extends JDialog {
         }
     }
 
-    private int getTimeSpinnerValue(){
-        return DateUtil.convertToRelativeTime(DateUtil.convertDate((Date)timeSpinner.getModel().getValue()).toLocalTime());
+    private int getTimeSpinnerValue() {
+        return DateUtil.convertToRelativeTime(DateUtil.convertDate((Date) timeSpinner.getModel().getValue()).toLocalTime());
     }
 
     public void createPackageSelectionTable() {
@@ -296,8 +300,6 @@ public class AddSubscriptionDialog extends JDialog {
         selectedPackagesTable = new JTable(selectedPackagesModel);
         selectedPackagesTable.getTableHeader().setReorderingAllowed(false);
     }
-
-    private static final int MIN_HOURS_BETWEEN_ORDERS = 1;
 
     /**
      * Compares a new recurring order time with all the existing ones.
@@ -317,13 +319,6 @@ public class AddSubscriptionDialog extends JDialog {
             }
         }
         return true;
-    }
-
-    public static void main(String[] args) {
-        AddSubscriptionDialog dialog = new AddSubscriptionDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
     }
 
     public Subscription getSubscription() {

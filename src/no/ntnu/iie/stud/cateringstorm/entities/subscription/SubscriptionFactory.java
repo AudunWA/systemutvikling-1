@@ -3,7 +3,6 @@ package no.ntnu.iie.stud.cateringstorm.entities.subscription;
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
-import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrder;
 
 import java.sql.*;
@@ -15,15 +14,16 @@ import java.util.ArrayList;
 public final class SubscriptionFactory {
     /**
      * Returning every subscription registered in database, including inactive ones
+     *
      * @return ArrayList<Subscription>
      */
     public static ArrayList<Subscription> getAllSubscriptions() {
         ArrayList<Subscription> results = new ArrayList<>();
 
-        try(Connection connection = Database.getConnection()) {
-            try(PreparedStatement statement = connection.prepareStatement("SELECT * FROM subscription")) {
-                try(ResultSet resultSet = statement.executeQuery()) {
-                    while(resultSet.next()) {
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM subscription")) {
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
                         results.add(createSubscriptionFromResultSet(resultSet));
                     }
                 }
@@ -45,6 +45,7 @@ public final class SubscriptionFactory {
 
     /**
      * Method creates a subscription inserting it to database
+     *
      * @param startDate
      * @param endDate
      * @param customer
@@ -52,7 +53,7 @@ public final class SubscriptionFactory {
      * @param orders
      * @return Subscription
      */
-    public static Subscription createSubscription(Date startDate, Date endDate, Customer customer, double cost,  ArrayList<RecurringOrder> orders) {
+    public static Subscription createSubscription(Date startDate, Date endDate, Customer customer, double cost, ArrayList<RecurringOrder> orders) {
         int generatedId;
 
         try (Connection connection = Database.getConnection()) {
@@ -77,7 +78,7 @@ public final class SubscriptionFactory {
 
                     generatedId = Database.getGeneratedKeys(statement);
 
-                    if(generatedId == -1) {
+                    if (generatedId == -1) {
                         connection.rollback();
                         connection.setAutoCommit(true);
                         return null;
@@ -96,7 +97,7 @@ public final class SubscriptionFactory {
                     }
                     statement.executeBatch();
                 }
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 connection.rollback();
                 connection.setAutoCommit(true);
                 throw e;
@@ -115,7 +116,6 @@ public final class SubscriptionFactory {
     }
 
     /**
-     *
      * @param result
      * @return Subscription
      * @throws SQLException
@@ -129,7 +129,7 @@ public final class SubscriptionFactory {
         boolean active = result.getBoolean("active");
 
         Customer customer = CustomerFactory.getCustomer(customerId);
-        if(customer == null) {
+        if (customer == null) {
             throw new NullPointerException("customer is null, check customerId.");
         }
 

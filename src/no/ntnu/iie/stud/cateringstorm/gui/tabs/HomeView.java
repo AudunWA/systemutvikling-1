@@ -1,6 +1,5 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
-import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import javax.swing.*;
@@ -23,7 +22,7 @@ public class HomeView extends JPanel {
         welcomeLabel.setText(welcomeLabel.getText().replace("%name%", GlobalStorage.getLoggedInEmployee().getForename()));
     }
 
-    private void createImage(){
+    private void createImage() {
 
         image = new JPanel(true);
         image.add(new JLabel(new ImageIcon("CSChefTekst.png")));

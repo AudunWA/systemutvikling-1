@@ -59,6 +59,13 @@ public class AddIngredientDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    public static void main(String[] args) {
+        AddIngredientDialog dialog = new AddIngredientDialog();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
     private void onOK() {
         // Check that values are valid
         String name = nameTextField.getText();
@@ -79,7 +86,8 @@ public class AddIngredientDialog extends JDialog {
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, "Please fill in a valid amount (use . as comma).");
             return;
-        } if (amount < 0) {
+        }
+        if (amount < 0) {
             JOptionPane.showMessageDialog(this, "Please fill in a valid amount (Not negative)");
             return;
         }
@@ -92,13 +100,13 @@ public class AddIngredientDialog extends JDialog {
 
         Boolean vegetarian = vegetarianCheckBox.isSelected();
         java.util.Date arrivalDate = new Date(System.currentTimeMillis());
-        if(arrivalDate == null) {
+        if (arrivalDate == null) {
             JOptionPane.showMessageDialog(this, "Please fill in an arrival date.");
             return;
         }
 
         java.util.Date expireDate = (java.util.Date) expireDatePicker.getModel().getValue();
-        if(expireDate == null) {
+        if (expireDate == null) {
             JOptionPane.showMessageDialog(this, "Please fill in an expire date.");
             return;
         }
@@ -112,7 +120,7 @@ public class AddIngredientDialog extends JDialog {
         Timestamp arrivalTime = new Timestamp(arrivalDate.getTime());
         Date expireDateSql = new Date(expireDate.getTime());
         /*Timestamp arrivalDate, String name, String description, boolean vegetarian, Date expireDate, double amount,String unit*/
-        Ingredient ingredient = IngredientFactory.createIngredient( arrivalTime,name, description, vegetarian, expireDateSql,amount, unit);
+        Ingredient ingredient = IngredientFactory.createIngredient(arrivalTime, name, description, vegetarian, expireDateSql, amount, unit);
         if (ingredient == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
         } else {
@@ -127,13 +135,6 @@ public class AddIngredientDialog extends JDialog {
     private void onCancel() {
 // add your code here if necessary
         dispose();
-    }
-
-    public static void main(String[] args) {
-        AddIngredientDialog dialog = new AddIngredientDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
     }
 
     public void createUIComponents() {

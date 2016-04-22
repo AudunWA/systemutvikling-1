@@ -22,17 +22,18 @@ public class Dish {
 
     /**
      * Method is intended to produce a user friendly value
+     *
      * @return String
      */
-    public String dishTypeText(){
-        if (dishType == 1){
+    public String dishTypeText() {
+        if (dishType == 1) {
             return "Appetiser";
-        } else if (dishType == 2){
+        } else if (dishType == 2) {
             return "Main course";
-        } else if (dishType == 3){
+        } else if (dishType == 3) {
             return "Dessert";
         } else {
-            throw new IndexOutOfBoundsException("Dish type "+dishType+" not defined");
+            throw new IndexOutOfBoundsException("Dish type " + dishType + " not defined");
         }
     }
 
@@ -44,16 +45,32 @@ public class Dish {
         return dishType;
     }
 
+    public void setDishType(int dishType) {
+        this.dishType = dishType;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String newName) {
+        this.name = newName;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String newDescription) {
+        this.description = newDescription;
+    }
+
     public boolean isActive() {
         return active;
+    }
+
+    public void setActive(Boolean newActive) {
+        this.active = newActive;
     }
 
     @Override
@@ -65,21 +82,5 @@ public class Dish {
                 ", description='" + description + '\'' +
                 ", active=" + active +
                 '}';
-    }
-
-    public void setName(String newName){
-        this.name = newName;
-    }
-
-    public void setDishType(int dishType) {
-        this.dishType = dishType;
-    }
-
-    public void setDescription(String newDescription){
-        this.description = newDescription;
-    }
-
-    public void setActive(Boolean newActive){
-        this.active = newActive;
     }
 }

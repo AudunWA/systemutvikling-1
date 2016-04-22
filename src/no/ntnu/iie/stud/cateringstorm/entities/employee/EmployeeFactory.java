@@ -17,6 +17,7 @@ public final class EmployeeFactory {
 
     /**
      * Finds an employee given username and password.
+     *
      * @param username
      * @param password
      * @return Employee. if matching username and password
@@ -50,6 +51,7 @@ public final class EmployeeFactory {
 
     /**
      * Shows an employee given a username
+     *
      * @param username
      * @return Employee
      */
@@ -73,6 +75,7 @@ public final class EmployeeFactory {
 
     /**
      * Creates an arraylist containing all employees from the SQL table employee
+     *
      * @return Arraylist<Employee>
      */
     public static ArrayList<Employee> getAllEmployees() {
@@ -93,8 +96,10 @@ public final class EmployeeFactory {
         }
         return null;
     }
+
     /**
      * Creates an arraylist containing all active employees from the SQL table employee
+     *
      * @return Arraylist<Employee>
      */
     public static ArrayList<Employee> getActiveEmployees() {
@@ -115,8 +120,10 @@ public final class EmployeeFactory {
         }
         return null;
     }
+
     /**
      * Creates an employee from result
+     *
      * @param result
      * @return Employee
      * @throws SQLException
@@ -132,11 +139,12 @@ public final class EmployeeFactory {
         String email = result.getString("email");
         boolean active = result.getBoolean("active");
         EmployeeType employeeType = EmployeeType.getEmployeeType(employeeTypeId);
-        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType,active);
+        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType, active);
     }
 
     /**
      * Inserts an employee into the SQL table employee given an employee object
+     *
      * @return Employee
      */
     public static Employee createEmployee(String username, String password, String forename,
@@ -171,7 +179,7 @@ public final class EmployeeFactory {
                     }
                 }
 
-                Employee employee = new Employee(generatedId, username, forename, surname, address, phoneNumber, email, type,true);
+                Employee employee = new Employee(generatedId, username, forename, surname, address, phoneNumber, email, type, true);
                 return employee;
             }
         } catch (SQLException e) {
@@ -182,11 +190,12 @@ public final class EmployeeFactory {
 
     /**
      * Edits the status of an employee given the employeeID (if the employee is active or not)
+     *
      * @param employeeId
      * @param active
      * @return int
      */
-    public static int editEmployeeStatus(int employeeId, boolean active){
+    public static int editEmployeeStatus(int employeeId, boolean active) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE employee SET active = ? WHERE employee.employee_id = ?")) {
 
@@ -200,26 +209,26 @@ public final class EmployeeFactory {
             return -1;
         }
     }
+
     /**
-     *
      * @param employee
      * @return statement.executeUpdate
      */
-    public static int updateEmployee(Employee employee){
+    public static int updateEmployee(Employee employee) {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE employee SET username = ?, forename = ?, surname = ?,address = ?,phone = ?,email = ?, e_type_id = ?, active = ? WHERE employee_id = ?")) {
-                statement.setString(1,employee.getUsername());
-                statement.setString(2,employee.getForename());
-                statement.setString(3,employee.getSurname());
-                statement.setString(4,employee.getAddress());
-                statement.setString(5,employee.getPhoneNumber());
-                statement.setString(6,employee.getEmail());
-                statement.setInt(7,employee.getEmployeeType().getType());
-                statement.setBoolean(8,employee.isActive());
-                statement.setInt(9,employee.getEmployeeId());
+                statement.setString(1, employee.getUsername());
+                statement.setString(2, employee.getForename());
+                statement.setString(3, employee.getSurname());
+                statement.setString(4, employee.getAddress());
+                statement.setString(5, employee.getPhoneNumber());
+                statement.setString(6, employee.getEmail());
+                statement.setInt(7, employee.getEmployeeType().getType());
+                statement.setBoolean(8, employee.isActive());
+                statement.setInt(9, employee.getEmployeeId());
                 return statement.executeUpdate();
-        }
-        } catch (SQLException e){
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         }

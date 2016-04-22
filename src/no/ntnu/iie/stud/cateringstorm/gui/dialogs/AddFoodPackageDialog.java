@@ -7,9 +7,6 @@ import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
-
-
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -78,6 +75,14 @@ public class AddFoodPackageDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+
+    public static void main(String[] args) {
+        AddFoodPackageDialog dialog = new AddFoodPackageDialog();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
     private void onOK() {
         if (dishTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
             JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
@@ -122,7 +127,8 @@ public class AddFoodPackageDialog extends JDialog {
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, "Please fill in a valid amount (use . as comma).");
             return;
-        } if (cost < 0) {
+        }
+        if (cost < 0) {
             JOptionPane.showMessageDialog(this, "Please fill in a valid amount (Not negative)");
             return;
         }
@@ -160,16 +166,8 @@ public class AddFoodPackageDialog extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-        AddFoodPackageDialog dialog = new AddFoodPackageDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
-
     private void createUIComponents() {
         // TODO: place custom component creation code here
-
 
 
         dishList = DishFactory.getAllDishes();

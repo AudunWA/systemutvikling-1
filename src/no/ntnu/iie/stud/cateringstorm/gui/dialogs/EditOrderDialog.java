@@ -27,7 +27,6 @@ public class EditOrderDialog extends JDialog {
     private Order order;
 
 
-
     public EditOrderDialog(Order order) {
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -64,6 +63,13 @@ public class EditOrderDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    public static void main(String[] args) {
+        EditOrderDialog dialog = new EditOrderDialog(null);
+        dialog.pack();
+        dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        dialog.setVisible(true);
+        System.exit(0);
+    }
 
     private void onOK() {
 // add your code here
@@ -117,7 +123,7 @@ public class EditOrderDialog extends JDialog {
                 break;
 
         }
-        if (changed){
+        if (changed) {
             JOptionPane.showMessageDialog(this, "Edit successful");
         }
     }
@@ -143,7 +149,7 @@ public class EditOrderDialog extends JDialog {
         columnBox.setSelectedIndex(0);
     }
 
-    private void createDatePicker(){
+    private void createDatePicker() {
         UtilDateModel model = new UtilDateModel();
 
         // Dunno
@@ -162,13 +168,5 @@ public class EditOrderDialog extends JDialog {
         createComboBox();
         createDatePicker();
 
-    }
-
-    public static void main(String[] args) {
-        EditOrderDialog dialog = new EditOrderDialog(null);
-        dialog.pack();
-        dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        dialog.setVisible(true);
-        System.exit(0);
     }
 }

@@ -38,6 +38,23 @@ public class LoginView extends JFrame {
         loginButton.addActionListener(e -> onLoginClick());
     }
 
+    /***
+     * Test program
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        // Makes the GUI same style as current OS :)
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println("Failed to set OS GUI style, now using default style.");
+        }
+        LoginView loginWindow = new LoginView();
+        loginWindow.setVisible(true);
+        loginWindow.setLocationRelativeTo(null);
+    }
+
     /**
      * Called when login button has been pressed
      */
@@ -61,25 +78,5 @@ public class LoginView extends JFrame {
             setVisible(false);
             dispose();
         }
-    }
-
-    private void createUIComponents() {
-        // TODO: Custom initialization of UI components here
-    }
-
-    /***
-     * Test program
-     * @param args
-     */
-    public static void main(String[] args) {
-        // Makes the GUI same style as current OS :)
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            System.out.println("Failed to set OS GUI style, now using default style.");
-        }
-        LoginView loginWindow = new LoginView();
-        loginWindow.setVisible(true);
-        loginWindow.setLocationRelativeTo(null);
     }
 }

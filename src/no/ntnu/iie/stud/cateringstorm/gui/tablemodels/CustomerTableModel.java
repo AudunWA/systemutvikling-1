@@ -2,16 +2,14 @@ package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Table model designed to manage contents of JTable in SalespersonCustomerView
  * Created by EliasBrattli on 06/04/2016.
  */
-public class CustomerTableModel extends EntityTableModel<Customer>{
+public class CustomerTableModel extends EntityTableModel<Customer> {
     public static final int COLUMN_CUSTOMER_ID = 0;
     public static final int COLUMN_SURNAME = 1;
     public static final int COLUMN_FORENAME = 2;
@@ -20,6 +18,7 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
     public static final int COLUMN_EMAIL = 5;
     public static final int COLUMN_ACTIVETEXT = 6;
     public static final int COLUMN_ACTIVE = 7;
+
     public CustomerTableModel(ArrayList<Customer> rows) {
         super(rows);
     }
@@ -27,15 +26,16 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
     public CustomerTableModel(ArrayList<Customer> rows, Integer[] columns) {
         super(rows, columns);
     }
+
     @Override
-    public String getColumnName(int columnIndex){
+    public String getColumnName(int columnIndex) {
         int columnType = getColumnType(columnIndex);
         switch (columnType) {
-            case COLUMN_CUSTOMER_ID :
+            case COLUMN_CUSTOMER_ID:
                 return "Customer ID";
-            case COLUMN_SURNAME :
+            case COLUMN_SURNAME:
                 return "Surname";
-            case COLUMN_FORENAME :
+            case COLUMN_FORENAME:
                 return "Forename";
             case COLUMN_ADDRESS:
                 return "Address";
@@ -51,17 +51,18 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Customer value = getValue(rowIndex);
         int columnType = getColumnType(columnIndex);
 
         switch (columnType) {
-            case COLUMN_CUSTOMER_ID :
+            case COLUMN_CUSTOMER_ID:
                 return value.getCustomerId();
-            case COLUMN_SURNAME :
+            case COLUMN_SURNAME:
                 return value.getSurname();
-            case COLUMN_FORENAME :
+            case COLUMN_FORENAME:
                 return value.getForename();
             case COLUMN_ADDRESS:
                 return value.getAddress();
@@ -77,15 +78,16 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
+
     @Override
-    public Class<?> getColumnClass(int columnIndex){
+    public Class<?> getColumnClass(int columnIndex) {
         int columnType = getColumnType(columnIndex);
         switch (columnType) {
-            case COLUMN_CUSTOMER_ID :
+            case COLUMN_CUSTOMER_ID:
                 return int.class;
-            case COLUMN_SURNAME :
+            case COLUMN_SURNAME:
                 return String.class;
-            case COLUMN_FORENAME :
+            case COLUMN_FORENAME:
                 return String.class;
             case COLUMN_ADDRESS:
                 return String.class;
@@ -112,22 +114,22 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
         Customer entity = getValue(rowIndex);
         int columnType = getColumnType(columnIndex);
         // Having an open switch in case more outcomes need to be implemented
-        switch(columnType){
-            case COLUMN_CUSTOMER_ID :
+        switch (columnType) {
+            case COLUMN_CUSTOMER_ID:
                 break;
-            case COLUMN_SURNAME :
+            case COLUMN_SURNAME:
                 break;
-            case COLUMN_FORENAME :
+            case COLUMN_FORENAME:
                 break;
             case COLUMN_ADDRESS:
                 break;
             case COLUMN_ACTIVETEXT:
-                entity.setActive((Boolean)value);
+                entity.setActive((Boolean) value);
                 break;
             case COLUMN_PHONE:
                 break;
             case COLUMN_ACTIVE:
-                entity.setActive((Boolean)value);
+                entity.setActive((Boolean) value);
                 CustomerFactory.editCustomerStatus(entity.getCustomerId(), entity.isActive());
                 fireTableCellUpdated(rowIndex, columnIndex);
                 break;

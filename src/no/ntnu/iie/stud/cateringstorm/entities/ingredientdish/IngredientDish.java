@@ -10,18 +10,14 @@ import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 public class IngredientDish {
     private final Ingredient ingredient;
     private final Dish dish;
-    private int quantity;
     private final String unit;
+    private int quantity;
 
-    public IngredientDish(Ingredient ingredient, Dish dish, int quantity, String unit){
+    public IngredientDish(Ingredient ingredient, Dish dish, int quantity, String unit) {
         this.ingredient = ingredient;
         this.dish = dish;
         this.quantity = quantity;
         this.unit = unit;
-    }
-
-    public void setQuantity(int quantity){
-        this.quantity = quantity;
     }
 
     public Ingredient getIngredient() {
@@ -34,6 +30,10 @@ public class IngredientDish {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getUnit() {
