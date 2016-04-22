@@ -49,6 +49,7 @@ public class EmployeeTableModel extends EntityTableModel<Employee>{
             default: throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
     }
+
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         int columnType = getColumnType(columnIndex);

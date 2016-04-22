@@ -104,18 +104,14 @@ public class CustomerTableModel extends EntityTableModel<Customer>{
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        int columnType = getColumnType(columnIndex);
-        switch (columnType) {
-            case COLUMN_ACTIVE:
-                return true;
-        }
-        return super.isCellEditable(rowIndex, columnIndex);
+        return getColumnType(columnIndex) == COLUMN_ACTIVE;
     }
 
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         Customer entity = getValue(rowIndex);
         int columnType = getColumnType(columnIndex);
+        // Having an open switch in case more outcomes need to be implemented
         switch(columnType){
             case COLUMN_CUSTOMER_ID :
                 break;

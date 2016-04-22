@@ -25,14 +25,14 @@ public class Dish {
      * @return String
      */
     public String dishTypeText(){
-        if (getDishType() == 1){
+        if (dishType == 1){
             return "Appetiser";
-        } else if (getDishType() == 2){
+        } else if (dishType == 2){
             return "Main course";
-        } else if (getDishType() == 3){
+        } else if (dishType == 3){
             return "Dessert";
         } else {
-            return "error";
+            throw new IndexOutOfBoundsException("Dish type "+dishType+" not defined");
         }
     }
 

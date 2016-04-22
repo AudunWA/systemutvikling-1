@@ -33,7 +33,7 @@ public class RecurringOrderTableModel extends EntityTableModel<RecurringOrder> {
             case COLUMN_FOOD_PACKAGE_ID:
                 return "Food package ID";
             case COLUMN_WEEKDAY:
-                return "Weekday";
+                return "Week day";
             case COLUMN_RELATIVE_TIME:
                 return "Time";
             case COLUMN_FOOD_PACKAGE_NAME:

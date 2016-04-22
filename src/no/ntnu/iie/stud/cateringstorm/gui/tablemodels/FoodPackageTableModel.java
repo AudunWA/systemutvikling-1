@@ -9,6 +9,9 @@ import java.util.ArrayList;
  * Created by Audun on 07.04.2016.
  */
 public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
+    /**
+     * Variables to be inserted to tablem odel from outside
+     */
     public static final int COLUMN_ID = 0;
     public static final int COLUMN_NAME = 1;
     public static final int COLUMN_COST = 2;
@@ -18,6 +21,11 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
         super(rows, columns);
     }
 
+    /**
+     *  Gives a description for each selected column
+     * @param column
+     * @return String
+     */
     @Override
     public String getColumnName(int column) {
         int columnType = getColumnType(column);
@@ -35,6 +43,12 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
         }
     }
 
+    /**
+     * Gives selected value of an entity
+     * @param rowIndex
+     * @param columnIndex
+     * @return Object
+     */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         FoodPackage value = getValue(rowIndex);
@@ -58,11 +72,13 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         int columnType = getColumnType(columnIndex);
         FoodPackage entity = getValue(rowIndex);
+        // Column containing status is only one to be edited.
         if(columnType == COLUMN_ACTIVE) {
             entity.setActive((Boolean)aValue);
             FoodPackageFactory.updateFoodPackage(entity);
             fireTableCellUpdated(rowIndex, columnIndex);
         } else {
+            //Empty void, nothing happens
             super.setValueAt(aValue, rowIndex, columnIndex);
         }
     }

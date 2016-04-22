@@ -9,6 +9,7 @@ import java.util.StringJoiner;
 
 /**
  * Created by EliasBrattli on 04/04/2016.
+ * Table Model designed for display of entity Dish
  */
 public class DishTableModel extends EntityTableModel<Dish> {
     public static final int COLUMN_ID = 0;
@@ -17,6 +18,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
     public static final int COLUMN_DESCRIPTION = 3;
     public static final int COLUMN_ACTIVE = 4;
     public static final int COLUMN_TYPE_TEXT = 5;
+
     public DishTableModel(ArrayList<Dish> rows, Integer[] columns) {
         super(rows, columns);
     }
@@ -28,7 +30,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
             case COLUMN_ID:
                 return "ID";
             case COLUMN_TYPE_ID:
-                return "Type ID"; // TODO: As string
+                return "Type ID";
             case COLUMN_NAME:
                 return "Name";
             case COLUMN_DESCRIPTION:
@@ -51,7 +53,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
             case COLUMN_ID:
                 return value.getDishId();
             case COLUMN_TYPE_ID:
-                return value.getDishType(); // TODO: As string
+                return value.getDishType();
             case COLUMN_NAME:
                 return value.getName();
             case COLUMN_DESCRIPTION:
@@ -70,6 +72,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
         Dish entity = getValue(row);
         int columnType = getColumnType(column);
         String status0 = "Appetiser", status1 = "Main course", status2 = "Dessert";
+        // Keeping a few empty cases should an expansion be necessary
         switch (columnType){
             case COLUMN_ID:
                 break;
@@ -101,12 +104,8 @@ public class DishTableModel extends EntityTableModel<Dish> {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        int columnType = getColumnType(columnIndex);
-        switch (columnType) {
-            case COLUMN_ACTIVE:
-                return true;
-        }
-        return super.isCellEditable(rowIndex, columnIndex);
+        //Only directly editable column is column status, cells contain a boolean rendered to checkbox
+        return getColumnType(columnIndex) == COLUMN_ACTIVE;
     }
 
     @Override
@@ -116,7 +115,7 @@ public class DishTableModel extends EntityTableModel<Dish> {
             case COLUMN_ID:
                 return int.class;
             case COLUMN_TYPE_ID:
-                return int.class; // TODO: As string
+                return int.class;
             case COLUMN_NAME:
                 return String.class;
             case COLUMN_DESCRIPTION:
