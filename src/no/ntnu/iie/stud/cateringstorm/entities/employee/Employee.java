@@ -110,7 +110,7 @@ public class Employee {
             case NUTRITION_EXPERT:
                 return "Nutrition expert";
             case SALESPERSON:
-                return "Sales person";
+                return "Salesperson";
             case CHAUFFEUR:
                 return "Chauffeur";
             case CHEF:
