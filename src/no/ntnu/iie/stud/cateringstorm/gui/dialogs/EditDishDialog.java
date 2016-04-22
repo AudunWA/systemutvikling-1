@@ -4,13 +4,11 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
-<<<<<<< HEAD
 import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDishFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientDishTableModel;
-=======
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
->>>>>>> a3640ff93b47a1a22713904cbd884723f99f7aa4
+
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 
 import javax.swing.*;
@@ -20,14 +18,11 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class EditDishDialog extends JDialog {
-    private static final Integer[] COLUMNS_AVAILABLE_INGREDIENTS = {IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_DESCRIPTION};
-    private static final Integer[] COLUMNS_AVAILABE_DISHES = {DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION};
     private boolean addedNewValue;
-<<<<<<< HEAD
+
     private static final Integer[] COLUMNS_AVAILABLE_INGREDIENTS = {IngredientDishTableModel.COLUMN_DISH_NAME, IngredientDishTableModel.COLUMN_INGREDIENT_ID, IngredientDishTableModel.COLUMN_INGREDIENT_NAME, IngredientDishTableModel.COLUMN_QUANTITY, IngredientDishTableModel.COLUMN_UNIT};
 
-=======
->>>>>>> a3640ff93b47a1a22713904cbd884723f99f7aa4
+
     private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
@@ -36,30 +31,21 @@ public class EditDishDialog extends JDialog {
     private JComboBox<String> typeComboBox;
     private JCheckBox statusCheckBox;
     private JButton swapButton;
-<<<<<<< HEAD
+
 
     private JTable addedIngredientTable;
     private IngredientDishTableModel leftSideModel;
 
-=======
-    private Dish dish;
-    private JTable leftSideTable;
-    private IngredientTableModel leftSideModel;
->>>>>>> a3640ff93b47a1a22713904cbd884723f99f7aa4
     private JTable rightSideTable;
     private JSpinner addRemoveSpinner;
     private IngredientTableModel rightTableModel;
 
-<<<<<<< HEAD
-    ArrayList<IngredientDish> copy = IngredientDishFactory.getAllIngredientDishes();
     ArrayList<IngredientDish> addedList;
     ArrayList<Ingredient> selectionList;
 
     private Dish dish;
 
 
-=======
->>>>>>> a3640ff93b47a1a22713904cbd884723f99f7aa4
     public EditDishDialog(Dish dish) {
         this.dish = dish;
         setContentPane(mainPanel);
