@@ -81,6 +81,11 @@ public final class DateUtil {
         // return LocalDate.now().atTime(hours, minutes, seconds);
     }
 
+    /**
+     *
+     * @param time
+     * @return int From Localtime(Hour,Minute,Second) to seconds
+     */
     public static int convertToRelativeTime(LocalTime time) {
         int hour = time.getHour();
         int minute = time.getMinute();

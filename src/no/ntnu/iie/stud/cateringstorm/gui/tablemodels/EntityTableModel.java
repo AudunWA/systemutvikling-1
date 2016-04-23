@@ -110,7 +110,7 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
         rows.add(value);
         fireTableRowsInserted(rows.size(), rows.size());
     }
-
+    // TODO: Add comment
     public ArrayList<T> getRowsClone() {
         return (ArrayList<T>) rows.clone();
     }

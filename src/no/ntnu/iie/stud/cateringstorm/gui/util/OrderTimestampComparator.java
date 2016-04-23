@@ -5,6 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import java.util.Comparator;
 
 /**
+ * Comparator class to safely compare Timestamps, avoiding milliesecond differences
  * Created by Audun on 14.04.2016.
  */
 public class OrderTimestampComparator implements Comparator<Order> {
