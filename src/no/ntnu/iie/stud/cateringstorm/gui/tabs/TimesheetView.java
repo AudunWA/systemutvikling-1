@@ -126,14 +126,14 @@ public class TimesheetView extends JPanel {
     private void checkUnfinishedTimesheet() {
         unFinishedSheet = TimesheetFactory.getLatestTimeSheet(loggedInEmployeeId);
 
-        //If last Clock-in hasn't been clocked out, clock out.
+        //If last Clock-in hasn't been clocked out, clock out. This means that "To-time" has the semantic value null
         if (unFinishedSheet != null && unFinishedSheet.getToTime() == null) {
 
             if (new Timestamp(System.currentTimeMillis()).after(unFinishedSheet.getFromTime())) {
                 LocalDateTime dateTime = unFinishedSheet.getFromTime().toLocalDateTime().toLocalDate().atTime(23, 59);
                 Timestamp endOfDay = Timestamp.valueOf(dateTime);
                 unFinishedSheet.setToTime(endOfDay);
-                clockOut(unFinishedSheet);
+                clockOut(unFinishedSheet); // Clock out automatically to the end of previous day, should not the user have clocked out himself.
             } else {
                 clockInButton.setEnabled(false);
                 clockOutButton.setEnabled(true);
@@ -156,14 +156,13 @@ public class TimesheetView extends JPanel {
     private void checkLatestTimesheet() {
         Timesheet sheet = TimesheetFactory.getLatestTimeSheet(loggedInEmployeeId);
         if (sheet != null && sheet.getToTime() != null) {
+            clockManuallyButton.setEnabled(true);
             if (LocalDate.now().isEqual(sheet.getToTime().toLocalDateTime().toLocalDate())) {
                 clockInButton.setEnabled(false);
                 clockOutButton.setEnabled(false);
-                clockManuallyButton.setEnabled(true);
             } else {
                 clockInButton.setEnabled(true);
                 clockOutButton.setEnabled(false);
-                clockManuallyButton.setEnabled(true);
             }
         }
     }
@@ -214,6 +213,7 @@ public class TimesheetView extends JPanel {
         if (sheet != null && sheet.getToTime() == null) {
             sheet.setToTime(time);
             int result = TimesheetFactory.updateTimesheet(sheet);
+            //Result gives back affected rows, which will be 1 when dealing with a single object
             if (result == 1) {
                 Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Clocked out.", Toast.Style.SUCCESS).display();
             } else {
