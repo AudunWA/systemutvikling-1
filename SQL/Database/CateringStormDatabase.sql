@@ -1,14 +1,10 @@
-DROP TABLE IF EXISTS _order_package;
 DROP TABLE IF EXISTS _order_food_package;
 DROP TABLE IF EXISTS _order;
 DROP TABLE IF EXISTS recurring_order;
-DROP TABLE IF EXISTS subscription_food_package;
 DROP TABLE IF EXISTS subscription;
 DROP TABLE IF EXISTS customer;
-DROP TABLE IF EXISTS area;
 DROP TABLE IF EXISTS dish_package;
 DROP TABLE IF EXISTS dish_food_package;
-DROP TABLE IF EXISTS _package;
 DROP TABLE IF EXISTS food_package;
 DROP TABLE IF EXISTS ingredient_dish;
 DROP TABLE IF EXISTS dish;
@@ -17,11 +13,6 @@ DROP TABLE IF EXISTS ingredient;
 
 DROP TABLE IF EXISTS timesheet_employee;
 DROP TABLE IF EXISTS timesheet;
-DROP TABLE IF EXISTS chef;
-DROP TABLE IF EXISTS nutrition_exp;
-DROP TABLE IF EXISTS chauffeur;
-DROP TABLE IF EXISTS administrator;
-DROP TABLE IF EXISTS salesperson;
 DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS employee_type;
 
@@ -49,36 +40,6 @@ CREATE TABLE employee (
   PRIMARY KEY (employee_id),
   UNIQUE KEY (username)
 );
-
--- CREATE TABLE salesperson(
--- employee_id INTEGER,
--- FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
--- PRIMARY KEY (employee_id)
--- );
-
--- CREATE TABLE administrator(
--- employee_id INTEGER,
--- FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
--- PRIMARY KEY (employee_id)
--- );
-
--- CREATE TABLE chauffeur(
--- employee_id INTEGER,
--- FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
--- PRIMARY KEY (employee_id)
--- );
-
--- CREATE TABLE nutrition_exp(
--- employee_id INTEGER,
--- FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
--- PRIMARY KEY (employee_id)
--- );
-
--- CREATE TABLE chef(
--- employee_id INTEGER,
--- FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON UPDATE CASCADE,
--- PRIMARY KEY (employee_id)
--- );
 
 CREATE TABLE timesheet (
   timesheet_id INTEGER AUTO_INCREMENT NOT NULL,
@@ -151,22 +112,14 @@ CREATE TABLE dish_food_package (
   PRIMARY KEY (dish_id, food_package_id)
 );
 
--- CREATE TABLE area(
--- area_id INTEGER AUTO_INCREMENT,
--- area_name VARCHAR(50),
--- PRIMARY KEY (area_id)
--- );
-
 CREATE TABLE customer (
   customer_id INTEGER AUTO_INCREMENT,
   surname     VARCHAR(100) NOT NULL,
   forename    VARCHAR(50)  NOT NULL,
   address     VARCHAR(255) NOT NULL,
   active      BOOLEAN      NOT NULL,
-  -- area_id INTEGER NOT NULL,
   phone       VARCHAR(10)  NOT NULL,
   email       VARCHAR(50)  NOT NULL,
-  -- FOREIGN KEY (area_id) REFERENCES area(area_id) ON UPDATE CASCADE,
   PRIMARY KEY (customer_id)
 );
 
@@ -180,14 +133,6 @@ CREATE TABLE subscription (
   FOREIGN KEY (customer_id) REFERENCES customer (customer_id),
   PRIMARY KEY (subscription_id)
 );
-
--- CREATE TABLE subscription_food_package(
---	subscription_id INTEGER NOT NULL,
---	food_package_id INTEGER NOT NULL,
---	FOREIGN KEY (subscription_id) REFERENCES subscription(subscription_id),
---	FOREIGN KEY (food_package_id) REFERENCES food_package(food_package_id),
---	PRIMARY KEY (subscription_id, food_package_id)
--- );
 
 CREATE TABLE recurring_order (
   rec_order_id    INTEGER AUTO_INCREMENT,

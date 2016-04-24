@@ -46,7 +46,7 @@ public class OrderFactoryTest {
         numbers.add(1);
         numbers.add(2);
         numbers.add(3);
-        Order order = OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, numbers);
+        Order order = OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, -1, 4, -1, -1, numbers);
         Assert.assertNotNull(order);
     }
 
@@ -56,7 +56,7 @@ public class OrderFactoryTest {
         numbers.add(1);
         numbers.add(2);
         numbers.add(3);
-        Order test1 = OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, 6, 4, 5, numbers);
+        Order test1 = OrderFactory.createOrder("Scooter express", new Timestamp(System.currentTimeMillis() + 8600000), 3, false, -1, 4, -1, -1, numbers);
         OrderFactory.setOrderState(test1.getOrderId(), 2);
         Order test2 = OrderFactory.getOrder(test1.getOrderId());
         Assert.assertNotEquals(test1.getStatus(), test2.getStatus());

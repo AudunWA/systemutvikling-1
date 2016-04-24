@@ -19,6 +19,10 @@ import java.util.List;
 import java.util.Random;
 
 public class MapBackend {
+    /**
+     * The location of Healthy Catering LTD.
+     * TODO: Add to a configuration file?
+     */
     private static final Coordinate HOME_LOCATION = addressToPoint("Elgesetergate 1, Trondheim, Norway");
 
     public static void main(String[] args) {

@@ -238,7 +238,7 @@ public class AddOrderDialog extends JDialog {
 
             Order order = OrderFactory.createOrder(description, deliverDate, portions,
                     priority, employee.getEmployeeId(),
-                    customerId, 0, packages);
+                    customerId, -1, -1, packages);
 
             if (order != null) {
                 JOptionPane.showMessageDialog(this, "Add successful");

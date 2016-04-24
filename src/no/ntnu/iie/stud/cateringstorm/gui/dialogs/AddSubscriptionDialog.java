@@ -198,7 +198,7 @@ public class AddSubscriptionDialog extends JDialog {
             if (existingRecurringOrder == null) {
                 // Create a new recurring order and add it
                 int relativeTime = DateUtil.convertToRelativeTime(DateUtil.convertDate((Date) timeSpinner.getModel().getValue()).toLocalTime());
-                RecurringOrder newOrder = new RecurringOrder(-1, -1, selectedFoodPackage.getFoodPackageId(), dayComboBox.getSelectedIndex(), relativeTime, 1, selectedFoodPackage);
+                RecurringOrder newOrder = new RecurringOrder(-1, dayComboBox.getSelectedIndex(), relativeTime,1, null, selectedFoodPackage);
                 selectedPackagesModel.addRow(newOrder);
 
             } else {

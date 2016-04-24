@@ -15,10 +15,9 @@ public final class CustomerFactory {
 
 
     /**
-     * Creates customer from result.
-     *
-     * @param result
-     * @return Customer
+     * Creates a customer from a result set.
+     * @param result The result set.
+     * @return Customer The customer.
      * @throws SQLException
      */
     private static Customer createCustomerFromResultSet(ResultSet result) throws SQLException {
@@ -32,7 +31,6 @@ public final class CustomerFactory {
         String email = result.getString("email");
 
         return new Customer(customer_id, surname, forename, address, active, phone, email);
-
     }
 
     /**
