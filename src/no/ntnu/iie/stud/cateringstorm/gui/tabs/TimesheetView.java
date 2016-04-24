@@ -84,7 +84,7 @@ public class TimesheetView extends JPanel {
     }
 
     /**
-     Entry point for isolated testing of this view.
+     * Entry point for isolated testing of this view.
      * @param args Command line arguments.
      */
     public static void main(String[] args) {
@@ -100,12 +100,10 @@ public class TimesheetView extends JPanel {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         createTable();
     }
 
     private void createTable() {
-        //timesheetList = TimesheetFactory.getAllTimesheets();
         Integer[] columns;
         if (GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
             timesheetList = getTimesheetsByEmployeeId();
@@ -123,6 +121,10 @@ public class TimesheetView extends JPanel {
         hoursTable.setFillsViewportHeight(true);
     }
 
+    /**
+     * When clocked in, an unfinished time sheet is sent to database, consisting  null column(End-time)
+     * This method searches and gets access to given time sheet, completing it should its date have passed
+     */
     private void checkUnfinishedTimesheet() {
         unFinishedSheet = TimesheetFactory.getLatestTimeSheet(loggedInEmployeeId);
 
@@ -144,6 +146,10 @@ public class TimesheetView extends JPanel {
         }
     }
 
+    /**
+     * Gives access to user selection. If no object is selected, a null value is returned
+     * @return Timesheet Selected object in table
+     */
     private Timesheet getSelectedTimesheet() {
         int selectedRow = hoursTable.getSelectedRow();
         if (selectedRow > -1) {
@@ -153,6 +159,10 @@ public class TimesheetView extends JPanel {
         return null;
     }
 
+    /**
+     * Checks the latest registered time sheet, sorted on date.
+     * Controls that user is unable to register hours any more than once a day.
+     */
     private void checkLatestTimesheet() {
         Timesheet sheet = TimesheetFactory.getLatestTimeSheet(loggedInEmployeeId);
         if (sheet != null && sheet.getToTime() != null) {
@@ -167,8 +177,11 @@ public class TimesheetView extends JPanel {
         }
     }
 
+    /**
+     * Opens a dialog enabling user to edit certain values in a Timesheet object, thus changing value in a table row
+     * @param timesheet Selected time sheet from table
+     */
     private void editTimesheet(Timesheet timesheet) {
-        // TODO: Open EditTimesheetDialog
         if (timesheet == null) {
             JOptionPane.showMessageDialog(null, "Please select a table row");
         } else {
@@ -180,16 +193,19 @@ public class TimesheetView extends JPanel {
             dialog.setVisible(true);
             dialog.setTitle("Edit timesheet");
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            dialog.setLocationRelativeTo(this);
+            dialog.setLocationRelativeTo(this);// TODO: Fix centering
         }
     }
 
+    /**
+     * Clocks user in on current system time and date. Sends a Timesheet containing an empty "to_time" column.
+     * User is at any time after able to clock out with a clockout button
+     * @See clockOut()
+     */
     private void clockIn() {
-        // TODO: Use current time, register to from-Time
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Timesheet sheet = TimesheetFactory.createTimesheet(loggedInEmployeeId, time, true);
         if (sheet != null) {
-            //JOptionPane.showMessageDialog(null, sheet);
             Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Clocked in.", Toast.Style.SUCCESS).display();
 
         } else {
@@ -207,7 +223,6 @@ public class TimesheetView extends JPanel {
      * @See clockIn()
      */
     private void clockOut() {
-        // TODO: Use current time, register to-time
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Timesheet sheet = TimesheetFactory.getLatestTimeSheet(loggedInEmployeeId);
         if (sheet != null && sheet.getToTime() == null) {
@@ -248,8 +263,10 @@ public class TimesheetView extends JPanel {
         }
     }
 
+    /**
+     * Adding a new row to table, from user input.
+     */
     private void registerTimesheet() {
-        // TODO: Open RegisterTimesheetDialog
         final int HEIGHT = 400, WIDTH = 400;
         RegisterTimesheetDialog dialog = new RegisterTimesheetDialog(loggedInEmployeeId);
         dialog.pack();
@@ -266,25 +283,39 @@ public class TimesheetView extends JPanel {
         refresh();
     }
 
+    /**
+     * Sets boolean active in status column in selected row to false, thus hiding it from the user.
+     * @param timesheet Selected row from table
+     */
     private void removeTimesheet(Timesheet timesheet) {
-        // TODO: set Status of a time sheet to inactive. It's accessible to admin
         if (timesheet == null) {
             JOptionPane.showMessageDialog(null, "Please select a table row");
         } else {
-            JOptionPane.showConfirmDialog(null, "Are you sure?");
+            JOptionPane.showConfirmDialog(null, "Are you sure you want to remove this row?");
             TimesheetFactory.editTimesheetStatus(timesheet.getTimesheetId(), timesheet.getEmployeeId(), false);
             refresh();
         }
     }
 
+    /**
+     * Shows user active time sheets, which would be time sheet that aren't deleted
+     * @return ArrayList<Timesheet> Containing all objects with value true in column "active"
+     */
     private ArrayList<Timesheet> getActiveTimesheetsByEmployeeId() {
         return TimesheetFactory.getActiveTimesheetsByEmployee(loggedInEmployeeId);
     }
 
+    /**
+     * Shows admin user inactive(deleted) should he choose to view them
+     * @return ArrayList<Timesheet>
+     */
     private ArrayList<Timesheet> getTimesheetsByEmployeeId() {
         return TimesheetFactory.getTimesheetsByEmployee(loggedInEmployeeId);
     }
 
+    /**
+     * Updates components, reloading table contents from database
+     */
     private void refresh() {
         checkLatestTimesheet();
         if (GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
