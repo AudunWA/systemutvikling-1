@@ -3,6 +3,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.util;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 /**
@@ -30,7 +31,7 @@ public final class DateUtil {
      */
     public static String formatWeekday(int weekday) {
         if (weekday < 0 || weekday >= WEEKDAYS.length) {
-            throw new IllegalArgumentException("weekday has to be between 0 and 6");
+            throw new IllegalArgumentException("weekday has to be between 0 and 6, is " + weekday);
         }
 
         return WEEKDAYS[weekday];
@@ -92,5 +93,14 @@ public final class DateUtil {
         int second = time.getSecond();
 
         return hour * 3600 + minute * 60 + second;
+    }
+
+    /**
+     Calculates which date the given weekday occurs next time.
+     * @param day The weekday to find.
+     * @return The next occurrence of the weekday.
+     */
+    public static LocalDate getNextDateOfDay(DayOfWeek day) {
+        return LocalDate.now().with(TemporalAdjusters.next(day));
     }
 }

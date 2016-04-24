@@ -1,13 +1,12 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
-//import no.ntnu.iie.stud.cateringstorm.gui.tabs.ChauffeurOrderView;
-
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.ChefMakeOrderDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
@@ -23,52 +22,43 @@ import java.util.ArrayList;
  */
 public class ChefOrderView extends JPanel {
     private JPanel mainPanel;
-    private JScrollPane orderPane;
     private JTable orderTable;
-    private JPanel buttonPanel;
     private JButton viewButton;
-    private JComboBox statusBox;
-    private JPanel cbPanel;
+    private JComboBox<String> statusBox;
     private JButton refreshButton;
     private ArrayList<Order> orderList;
     private OrderTableModel tableModel;
-
-    private ArrayList<IngredientDish> ingredientsInOrder;
-    private ArrayList<Ingredient> ingredients;
 
     public ChefOrderView() {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        viewButton.addActionListener(e -> {
-            viewOrder();
-        });
+        viewButton.addActionListener(e -> viewOrder());
+        statusBox.addActionListener(e -> setStatus());
+        refreshButton.addActionListener(e -> refresh());
 
-
-        statusBox.addActionListener(e -> {
-            setStatus();
-        });
-        refreshButton.addActionListener(e -> {
-            refresh();
-        });
+        getNewRenderedTable();
+        orderTable.getTableHeader().setReorderingAllowed(false);
+        orderTable.setFillsViewportHeight(true);
+        updateRecurringOrders();
     }
 
-    private static JTable getNewRenderedTable(final JTable table) {
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+    private JTable getNewRenderedTable() {
+        orderTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table,
                                                            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+                Order order = tableModel.getValue(row);
+                int status = order.getStatus();
 
-                String temp = (String) table.getModel().getValueAt(row, 4);
-                boolean priority = (boolean) table.getModel().getValueAt(row, 3);
-                if (temp.equals("Ready for production") && !priority) {
+                if (status == 1 && !order.isPriority()) {
                     setBackground(new Color(100, 200, 100));
-                } else if (temp.equals("Ready for delivery")) {
+                } else if (status == 0) {
                     setBackground(new Color(150, 150, 150));
-                } else if (temp.equals("In production") && !priority) {
+                } else if (status == 3 && !order.isPriority()) {
                     setBackground(Color.ORANGE);
-                } else if (priority) {
+                } else if (order.isPriority()) {
                     setBackground(new Color(200, 100, 100));
                     setFont(new Font("BOLD", Font.BOLD, 12));
                 } else {
@@ -78,7 +68,7 @@ public class ChefOrderView extends JPanel {
                 return this;
             }
         });
-        return table;
+        return orderTable;
     }
 
     public static void main(String[] args) {
@@ -87,7 +77,7 @@ public class ChefOrderView extends JPanel {
         JFrame frame = new JFrame();
         frame.add(new ChefOrderView());
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);
     }
@@ -104,21 +94,16 @@ public class ChefOrderView extends JPanel {
     }
 
     private void createTable() {
-
         getChefArray();
 
-        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_DELIVERY_TIME};
+        Integer[] columns = new Integer[]{OrderTableModel.COLUMN_ID, OrderTableModel.COLUMN_DESCRIPTION, OrderTableModel.COLUMN_RECURRING_ORDER_ID, OrderTableModel.COLUMN_PORTIONS, OrderTableModel.COLUMN_PRIORITY, OrderTableModel.COLUMN_STATUS_TEXT, OrderTableModel.COLUMN_DELIVERY_TIME};
         tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
-        getNewRenderedTable(orderTable);
-        orderTable.getTableHeader().setReorderingAllowed(false);
-        orderPane = new JScrollPane(orderTable);
-        orderTable.setFillsViewportHeight(true);
     }
 
     private void createComboBox() {
-        Object[] status = {"In production", "Ready for delivery"};
-        statusBox = new JComboBox(status);
+        String[] status = {"In production", "Ready for delivery"};
+        statusBox = new JComboBox<>(status);
         statusBox.setSelectedIndex(0);
     }
 
@@ -130,7 +115,8 @@ public class ChefOrderView extends JPanel {
         int statusColumn = 5;
         boolean inProduction = choice > 0;
         if (selectedRow > -1) {
-            if (orderList.get(selectedRow).getStatus() < 2) {
+            Order order = tableModel.getValue(orderTable.getSelectedRow());
+            if (order.getStatus() < 2) {
                 orderTable.clearSelection();
                 orderTable.getModel().setValueAt((inProduction) ? "Ready for delivery" : "In production", selectedRow, statusColumn);
                 Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Orders status changed.", Toast.Style.SUCCESS).display();
@@ -152,16 +138,16 @@ public class ChefOrderView extends JPanel {
         String JOutput = "Not enough ingredients in storage for this order";
         boolean empty = false;
 
-        ingredientsInOrder = IngredientDishFactory.getAllIngredientsDishesInOrder(currentId);
-        ingredients = IngredientFactory.getAllIngredients();
+        ArrayList<IngredientDish> ingredientsInOrder = IngredientDishFactory.getAllIngredientsDishesInOrder(currentId);
+        ArrayList<Ingredient> ingredients = IngredientFactory.getAllIngredients();
 
-        for (int i = 0; i < ingredientsInOrder.size(); i++) {
-            for (int k = 0; k < ingredients.size(); k++) {
-                if (ingredientsInOrder.get(i).getIngredient().getIngredientId() == ingredients.get(k).getIngredientId()) {
-                    if (ingredientsInOrder.get(i).getQuantity() > ingredients.get(k).getAmount()) {
-                        double newAmount = ingredients.get(k).getAmount() - ingredientsInOrder.get(i).getQuantity();
+        for (IngredientDish anIngredientsInOrder : ingredientsInOrder) {
+            for (Ingredient ingredient : ingredients) {
+                if (anIngredientsInOrder.getIngredient().getIngredientId() == ingredient.getIngredientId()) {
+                    if (anIngredientsInOrder.getQuantity() > ingredient.getAmount()) {
+                        double newAmount = ingredient.getAmount() - anIngredientsInOrder.getQuantity();
                         empty = true;
-                        JOutput += "\n Dish: " + ingredientsInOrder.get(i).getDish().getName() + " Missing ingredient: " + ingredients.get(k).getName() + " - Missing amount: " + newAmount;
+                        JOutput += "\n Dish: " + anIngredientsInOrder.getDish().getName() + " Missing ingredient: " + ingredient.getName() + " - Missing amount: " + newAmount;
                     }
                 }
             }
@@ -171,10 +157,11 @@ public class ChefOrderView extends JPanel {
             JOptionPane.showMessageDialog(this, JOutput);
             return;
         }
-        int viewedOrderId = (Integer) orderTable.getModel().getValueAt(orderTable.getSelectedRow(), 0);
-        if (OrderFactory.getOrder(viewedOrderId).getStatus() != 0 && OrderFactory.getOrder(viewedOrderId).getStatus() != 3) {
-            OrderFactory.setOrderState(viewedOrderId, 3);
-            ChefMakeOrderDialog dialog = new ChefMakeOrderDialog(OrderFactory.getOrder(viewedOrderId));
+        Order order = tableModel.getValue(orderTable.getSelectedRow());
+        if (order.getStatus() != 0 && order.getStatus() != 3) {
+            OrderFactory.setOrderState(order.getOrderId(), 3);
+            ChefMakeOrderDialog dialog = new ChefMakeOrderDialog(order);
+
             final int HEIGHT = 700;
             final int WIDTH = 1000;
             dialog.pack();
@@ -194,5 +181,11 @@ public class ChefOrderView extends JPanel {
         //  TODO: Implement a method updating table for new orders, and removing changed orders from table.
         tableModel.setRows(getChefArray());
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
+    }
+
+    private void updateRecurringOrders() {
+        int newOrders = RecurringOrderFactory.goThroughRecurringOrders();
+        tableModel.setRows(getChefArray());
+        System.out.println(newOrders + " new orders.");
     }
 }

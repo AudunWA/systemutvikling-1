@@ -47,7 +47,7 @@ public class FoodPackageFactoryTest {
         numbers.add(foodPackage.getFoodPackageId());
         numbers.add(foodPackage2.getFoodPackageId());
         //Creating test order
-        Order order = OrderFactory.createOrder("TestGetFoodPackageOrder", new Timestamp(System.currentTimeMillis() - 888 + 8600000), 3, false, 6, 4, 5, numbers);
+        Order order = OrderFactory.createOrder("TestGetFoodPackageOrder", new Timestamp(System.currentTimeMillis() - 888 + 8600000), 3, false, -1, 4, -1, -1, numbers);
         ArrayList<FoodPackage> foodPackages = FoodPackageFactory.getFoodPackages(order.getOrderId());
         Assert.assertNotNull(foodPackages);
         for (int i = 0; i < foodPackages.size(); i++) {

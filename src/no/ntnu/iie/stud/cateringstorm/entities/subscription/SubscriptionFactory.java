@@ -34,6 +34,26 @@ public final class SubscriptionFactory {
         }
         return results;
     }
+
+    /**
+     * Returns a subscription with a selected ID.
+     * @return The selected subscription, or null if error or not found.
+     */
+    public static Subscription getSubscription(int subscriptionId) {
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM subscription WHERE subscription_id = ?")) {
+                statement.setInt(1, subscriptionId);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                       return createSubscriptionFromResultSet(resultSet);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     /*
     public static void generateOrdersFromSubscriptions() {
         // 1. Get all subscriptions
