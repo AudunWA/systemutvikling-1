@@ -27,13 +27,6 @@ INSERT INTO employee VALUES (default, 'drammen', 'Håvard', 'Høydalsnes', 'Dram
                                       'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e',
                                       'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
 
--- (employee types - includes all employee specialty tables) --
--- INSERT INTO chef VALUES (2);
--- INSERT INTO administrator VALUES (3);
--- INSERT INTO nutrition_exp VALUES (4);
--- INSERT INTO chauffeur VALUES (5);
--- INSERT INTO salesperson VALUES (6);
-
 -- (timesheet) --
 INSERT INTO timesheet VALUES (DEFAULT, 1, '2015-12-31 11:30:45', '2015-12-31 17:30:45', TRUE);
 INSERT INTO timesheet VALUES (DEFAULT, 3, '2015-12-31 10:30:45', '2015-12-31 17:40:45', TRUE);
@@ -99,13 +92,6 @@ INSERT INTO dish_food_package VALUES (4, 2);
 INSERT INTO dish_food_package VALUES (1, 3);
 INSERT INTO dish_food_package VALUES (3, 3);
 INSERT INTO dish_food_package VALUES (6, 3);
-
--- (area) --
--- INSERT INTO area VALUES (default, 'Kolstad');
--- INSERT INTO area VALUES (default, 'Byåsen');
--- INSERT INTO area VALUES (default, 'Lerkendal');
--- INSERT INTO area VALUES (default, 'Malvik');
--- INSERT INTO area VALUES (default, 'Klæbu');
 
 -- (customer) --
 INSERT INTO customer VALUES (default, 'Gates', 'Bill', 'Jomfrugata 5', TRUE, '12345678', 'mail@m.com');
