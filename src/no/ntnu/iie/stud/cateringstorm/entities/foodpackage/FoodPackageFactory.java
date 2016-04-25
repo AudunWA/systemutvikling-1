@@ -304,10 +304,10 @@ public final class FoodPackageFactory {
     }
 
     /**
-     * Runs an UPDATE-query of a foodpackage, with all its columns.
+     * Runs an UPDATE-query of a food package, with all its columns.
      * This overload also replaces all the dishes in the food package.
      *
-     * @param foodPackage The foodpackage to update
+     * @param foodPackage The food package to update
      * @param dishes      The list of dishes to replace
      * @return Boolean representing success or not
      */
