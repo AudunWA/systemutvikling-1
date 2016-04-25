@@ -82,7 +82,7 @@ public class AddCustomerDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "Please fill in an email.");
             return;
         }
-        Customer customer = CustomerFactory.createCustomer(surname, forename, address, true, phone, email);
+        Customer customer = CustomerFactory.createCustomer(forename, surname, address, true, phone, email);
 
         if (customer == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
