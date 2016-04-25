@@ -46,36 +46,10 @@ public class MenuAdministratorView extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        addDishButton.addActionListener(e -> {
-            AddDishDialog dialog = new AddDishDialog();
-            dialog.pack();
-            dialog.setVisible(true);
-            dishList = DishFactory.getActiveDishes();
-        });
-
-        editDishButton.addActionListener(e -> {
-            int selectedRow = dishTable.getSelectedRow();
-            if (selectedRow == -1) {
-                return;
-            }
-
-            Dish dish = tableModel.getValue(selectedRow);
-
-            EditDishDialog dialog = new EditDishDialog(dish);
-            dialog.pack();
-            dialog.setVisible(true);
-
-            if (dialog.getAddedNewValue()) {
-                // Refresh data
-                refresh();
-            }
-
-            // TODO: Update table, see StorageView
-        });
-
-        refreshButton.addActionListener(e -> {
-            refresh();
-        });
+        addDishButton.addActionListener(e -> onAdd());
+        editDishButton.addActionListener(e -> onEdit());
+        refreshButton.addActionListener(e -> refresh());
+        removeDishButton.addActionListener(e -> onRemove());
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -108,24 +82,6 @@ public class MenuAdministratorView extends JPanel {
             }
         });
 
-        removeDishButton.addActionListener(e -> {
-            int selectedRow = dishTable.getSelectedRow();
-            if (selectedRow == -1) {
-                return;
-            }
-
-            int dialogButton = JOptionPane.YES_NO_OPTION;
-            int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
-            if (dialogResult == 0) {
-                Dish dish = tableModel.getValue(selectedRow);
-                dish.setActive(false);
-                DishFactory.updateDish(dish);
-
-                tableModel.removeRow(selectedRow);
-                JOptionPane.showMessageDialog(null, "Row is removed.");
-            }
-        });
-
         //Searches on enter key press
         searchField.addActionListener(e -> search());
 
@@ -139,6 +95,56 @@ public class MenuAdministratorView extends JPanel {
         dishTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
+    }
+    /**
+     * Removes the selected dish by changing its active status in the database
+     */
+    private void onRemove() {
+        int selectedRow = dishTable.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
+        if (dialogResult == 0) {
+            Dish dish = tableModel.getValue(selectedRow);
+            dish.setActive(false);
+            DishFactory.updateDish(dish);
+
+            tableModel.removeRow(selectedRow);
+            JOptionPane.showMessageDialog(null, "Row is removed.");
+        }
+    }
+    /**
+     * Opens an EditDishDialog GUI
+     */
+    private void onEdit() {
+        int selectedRow = dishTable.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        Dish dish = tableModel.getValue(selectedRow);
+
+        EditDishDialog dialog = new EditDishDialog(dish);
+        dialog.pack();
+        dialog.setVisible(true);
+
+        if (dialog.getAddedNewValue()) {
+            // Refresh data
+            refresh();
+        }
+    }
+
+    /**
+     * Opens an AddDishDialog GUI
+     */
+    private void onAdd() {
+        AddDishDialog dialog = new AddDishDialog();
+        dialog.pack();
+        dialog.setVisible(true);
+        dishList = DishFactory.getActiveDishes();
     }
 
     public static void main(String[] args) {
