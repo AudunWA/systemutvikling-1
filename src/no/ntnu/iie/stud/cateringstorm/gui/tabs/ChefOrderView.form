@@ -7,7 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="f64d5" binding="cbPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+      <grid id="f64d5" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="South"/>
         <properties/>
         <border type="none"/>
@@ -16,7 +16,7 @@
             <constraints/>
             <properties/>
           </component>
-          <grid id="a8d18" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+          <grid id="a8d18" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints/>
             <properties/>
             <border type="none"/>
@@ -37,7 +37,7 @@
           </grid>
         </children>
       </grid>
-      <scrollpane id="4ea5" binding="orderPane" custom-create="true">
+      <scrollpane id="4ea5">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>

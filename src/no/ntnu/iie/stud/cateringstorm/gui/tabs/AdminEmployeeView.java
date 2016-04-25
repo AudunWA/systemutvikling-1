@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
+ * GUI tab for administrators, giving an overview over employees
  * Created by Håvard
  */
 public class AdminEmployeeView extends JPanel {
@@ -38,7 +39,10 @@ public class AdminEmployeeView extends JPanel {
     public AdminEmployeeView() {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
+        addActionListeners();
+    }
 
+    private void addActionListeners() {
         refreshButton.addActionListener(e -> {
             refresh();
         });
@@ -96,17 +100,10 @@ public class AdminEmployeeView extends JPanel {
         });
     }
 
-    public static void main(String[] args) {
-        final int WIDTH = 1300;
-        final int HEIGHT = 600;
-        JFrame frame = new JFrame();
-        frame.add(new AdminEmployeeView());
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
-    }
-
+    /**
+     *
+     * @return Selected table row
+     */
     private Employee getSelectedEmployee() {
         int selectedRow = adminEmployeeTable.getSelectedRow();
         if (selectedRow > -1) {
@@ -125,7 +122,6 @@ public class AdminEmployeeView extends JPanel {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         createTable();
         createSearchField();
     }
@@ -203,6 +199,17 @@ public class AdminEmployeeView extends JPanel {
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Employees refreshed").display();
         employeeList = EmployeeFactory.getActiveEmployees();
     }
-}
 
-/**/
+
+    // Test method
+    public static void main(String[] args) {
+        final int WIDTH = 1300;
+        final int HEIGHT = 600;
+        JFrame frame = new JFrame();
+        frame.add(new AdminEmployeeView());
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
+    }
+}

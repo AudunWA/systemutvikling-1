@@ -53,6 +53,9 @@ public class FoodPackageAdminView extends JPanel {
         });
         */
 
+        addActionListeners();
+    }
+    public void addActionListeners(){
         addButton.addActionListener(e -> {
             AddFoodPackageDialog dialog = new AddFoodPackageDialog();
             dialog.pack();
@@ -131,7 +134,7 @@ public class FoodPackageAdminView extends JPanel {
             //Get index from selected row
         });
     }
-
+    // Test method
     public static void main(String[] args) {
         final int WIDTH = 700;
         final int HEIGHT = 600;
@@ -144,7 +147,7 @@ public class FoodPackageAdminView extends JPanel {
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);//Puts window in middle of screen
     }
-
+    
     private void createSearchField() {
         searchField = new JTextField(20);
         setSearchField("Search for food packages");

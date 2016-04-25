@@ -3,6 +3,7 @@ package no.ntnu.iie.stud.cateringstorm.entities.order;
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrder;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -372,18 +373,44 @@ public final class OrderFactory {
     }
 
     /**
-     * @param description
-     * @param deliveryTime
-     * @param portions
-     * @param priority
-     * @param salespersonId
-     * @param customerId
-     * @param chauffeurId
-     * @param packageId
-     * @return Order
+     * Runs an INSERT query to create a customer in the database.
+     * @param description The description of the order.
+     * @param deliveryTime When the order is set to be delivered.
+     * @param portions How many portions of the order.
+     * @param priority Whether this order is priority or not.
+     * @param salespersonId If -1 inserts NULL, otherwise value.
+     * @param customerId The ID of the customer.
+     * @param chauffeurId If -1 inserts NULL, otherwise value.
+     * @param recurringOrderId If -1 inserts NULL, otherwise value.
+     * @param packageId A list of all food packages used.
+     * @return Order The created order.
      */
     public static Order createOrder(String description, Timestamp deliveryTime, int portions, boolean priority,
-                                    int salespersonId, int customerId, int chauffeurId, ArrayList<Integer> packageId) {
+                                    int salespersonId, int customerId, int chauffeurId, int recurringOrderId, ArrayList<Integer> packageId) {
+        try (Connection connection = Database.getConnection()) {
+            return createOrder(connection, description, deliveryTime, portions, priority, salespersonId, customerId, chauffeurId, recurringOrderId, packageId);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Runs an INSERT query to create a customer in the database.
+     * @param connection The database connection to use.
+     * @param description The description of the order.
+     * @param deliveryTime When the order is set to be delivered.
+     * @param portions How many portions of the order.
+     * @param priority Whether this order is priority or not.
+     * @param salespersonId If -1 inserts NULL, otherwise value.
+     * @param customerId The ID of the customer.
+     * @param chauffeurId If -1 inserts NULL, otherwise value.
+     * @param recurringOrderId If -1 inserts NULL, otherwise value.
+     * @param packageId A list of all food packages used.
+     * @return Order The created order.
+     */
+    private static Order createOrder(Connection connection, String description, Timestamp deliveryTime, int portions, boolean priority,
+                                    int salespersonId, int customerId, int chauffeurId, int recurringOrderId, ArrayList<Integer> packageId) throws SQLException {
         Customer customer = CustomerFactory.getCustomer(customerId);
         if (customer == null) {
             return null;
@@ -391,69 +418,98 @@ public final class OrderFactory {
 
         Timestamp orderTime = new Timestamp(System.currentTimeMillis());
         int generatedId;
-        int initalStatus = 1;
-        try (Connection connection = Database.getConnection()) {
+        int initialStatus = 1;
 
-            try {
+        try {
+            connection.setAutoCommit(false);
 
-                connection.setAutoCommit(false);
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL);", PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, null, ?, null, null);", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                //Insert data
+                statement.setString(1, description);
+                statement.setTimestamp(2, deliveryTime);
+                statement.setTimestamp(3, orderTime);
+                statement.setInt(4, portions);
+                statement.setBoolean(5, priority);
 
-                    //Insert data
-                    statement.setString(1, description);
-                    statement.setTimestamp(2, deliveryTime);
-                    statement.setTimestamp(3, orderTime);
-                    statement.setInt(4, portions);
-                    statement.setBoolean(5, priority);
+                if (salespersonId == -1) {
+                    statement.setNull(6, Types.INTEGER);
+                } else {
                     statement.setInt(6, salespersonId);
-                    statement.setInt(7, customerId);
-                    statement.setInt(8, initalStatus);
-
-                    int affectedRows = statement.executeUpdate();
-
-                    if (affectedRows == 0) {
-                        connection.rollback();
-                        connection.setAutoCommit(true);
-                        return null;
-                    }
-
-                    try (ResultSet result = statement.getGeneratedKeys()) {
-                        if (result.next()) {
-                            generatedId = result.getInt(1);
-                        } else {
-                            connection.rollback();
-                            connection.setAutoCommit(true);
-                            return null; // No ID?
-                        }
-                    }
                 }
 
-                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order_food_package VALUES(?,?)")) {
+                statement.setInt(7, customerId);
 
-                    for (Integer numbers : packageId) {
-                        statement.setInt(1, generatedId);
-                        statement.setInt(2, numbers);
-                        statement.addBatch();
-                    }
-                    statement.executeBatch();
+                if (recurringOrderId == -1) {
+                    statement.setNull(8, Types.INTEGER);
+                } else {
+                    statement.setInt(8, recurringOrderId);
                 }
-            } catch (SQLException e) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                throw e;
+
+                statement.setInt(9, initialStatus);
+
+                if (chauffeurId == -1) {
+                    statement.setNull(10, Types.INTEGER);
+                } else {
+                    statement.setInt(10, chauffeurId);
+                }
+
+                int affectedRows = statement.executeUpdate();
+
+                if (affectedRows == 0) {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                    return null;
+                }
+
+                generatedId = Database.getGeneratedKeys(statement);
+                if (generatedId == -1) {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                    return null; // No ID?
+                }
             }
 
-            //All good, commence commit
-            connection.commit();
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order_food_package VALUES(?,?)")) {
+
+                for (Integer numbers : packageId) {
+                    statement.setInt(1, generatedId);
+                    statement.setInt(2, numbers);
+                    statement.addBatch();
+                }
+                statement.executeBatch();
+            }
+        } catch (SQLException e) {
+            connection.rollback();
             connection.setAutoCommit(true);
+            throw e;
+        }
+
+        //All good, commence commit
+        connection.commit();
+        connection.setAutoCommit(true);
+
+        Order order = new Order(generatedId, description, deliveryTime, orderTime, portions, priority, salespersonId, customer, recurringOrderId, initialStatus, chauffeurId);
+        return order;
+    }
+
+    public static ArrayList<Order> createOrdersForRecurringOrders(ArrayList<RecurringOrder> recurringOrders) {
+        ArrayList<Order> orders = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            for (RecurringOrder recurringOrder : recurringOrders) {
+                ArrayList<Integer> foodPackageIds = new ArrayList<>();
+                foodPackageIds.add(recurringOrder.getFoodPackageId());
+                // TODO: Define salesperson ID
+                Order order = createOrder(connection, "Recurring order", recurringOrder.getDeliveryTime(), recurringOrder.getAmount(), false, -1, recurringOrder.getCustomerId(), -1, recurringOrder.getRecurringOrderId(), foodPackageIds);
+                if (order != null) {
+                    orders.add(order);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
-
-        Order order = new Order(generatedId, description, deliveryTime, orderTime, portions, priority, salespersonId, customer, 0, 1, 0);
-        return order;
+        return orders;
     }
 
     /**

@@ -23,9 +23,9 @@ public class SubscriptionFactoryTest {
         Customer customer = CustomerFactory.getCustomer(1); // hehe
         double cost = 50.5;
         ArrayList<RecurringOrder> recurringOrders = new ArrayList<>();
-        recurringOrders.add(new RecurringOrder(-1, -1, 1, 1, 2000, 4, FoodPackageFactory.getFoodPackage(1)));
-        recurringOrders.add(new RecurringOrder(-1, -1, 2, 1, 10000, 4, FoodPackageFactory.getFoodPackage(2)));
-        recurringOrders.add(new RecurringOrder(-1, -1, 3, 1, 12000, 4, FoodPackageFactory.getFoodPackage(3)));
+        recurringOrders.add(new RecurringOrder(-1, 1, 2000, 4, SubscriptionFactory.getSubscription(1), FoodPackageFactory.getFoodPackage(1)));
+        recurringOrders.add(new RecurringOrder(-1, 2, 10000, 4, SubscriptionFactory.getSubscription(1), FoodPackageFactory.getFoodPackage(2)));
+        recurringOrders.add(new RecurringOrder(-1, 3, 12000, 4, SubscriptionFactory.getSubscription(1), FoodPackageFactory.getFoodPackage(3)));
         Subscription subscription = SubscriptionFactory.createSubscription(startDate, endDate, customer, cost, recurringOrders);
 
         Assert.assertNotNull(subscription);

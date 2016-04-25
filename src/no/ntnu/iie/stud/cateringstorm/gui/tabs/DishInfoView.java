@@ -32,11 +32,14 @@ public class DishInfoView extends JFrame {
 
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
+        addActionListeners();
+    }
 
+    public void addActionListeners(){
         closeButton.addActionListener(e -> {
             onCancel();
         });
-// call onCancel() when cross is clicked
+       // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -44,7 +47,7 @@ public class DishInfoView extends JFrame {
             }
         });
 
-// call onCancel() on ESCAPE
+        // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
@@ -64,7 +67,6 @@ public class DishInfoView extends JFrame {
     }
 
     private void onCancel() {
-// add your code here if necessary
         dispose();
     }
 
@@ -78,8 +80,5 @@ public class DishInfoView extends JFrame {
 
     private void createUIComponents() {
         createTable();
-        // TODO: place custom component creation code here
-
-
     }
 }

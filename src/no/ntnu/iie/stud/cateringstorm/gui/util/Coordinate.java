@@ -1,7 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.util;
 
 /**
- * Used to store latitude and longitude
+ * Used to store latitude and longitude for mapping
  * Created by Audun on 19.04.2016.
  */
 public class Coordinate {
