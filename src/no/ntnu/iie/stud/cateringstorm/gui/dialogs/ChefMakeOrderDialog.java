@@ -99,6 +99,7 @@ public class ChefMakeOrderDialog extends JDialog {
 
     /**
      * Called when ok button is pressed
+     * Changes an orders status from ready for production to in production/ready for delivery
      */
     private void onOK() {
         OrderFactory.setOrderState(order.getOrderId(), 0);

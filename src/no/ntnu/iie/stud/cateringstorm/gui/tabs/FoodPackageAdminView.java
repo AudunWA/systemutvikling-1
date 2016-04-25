@@ -37,68 +37,16 @@ public class FoodPackageAdminView extends JPanel {
     }
     private void addActionListeners(){
         addButton.addActionListener(e -> {
-            AddFoodPackageDialog dialog = new AddFoodPackageDialog();
-            dialog.pack();
-            dialog.setVisible(true);
+            onAdd();
         });
-        editButton.addActionListener(e -> {
-            int selectedRow = FoodPackageTable.getSelectedRow();
-            if (selectedRow == -1) {
-                return;
-            }
-
-            FoodPackage foodPackage = tableModel.getValue(selectedRow);
-
-            EditFoodPackageDialog dialog = new EditFoodPackageDialog(foodPackage);
-            dialog.pack();
-            dialog.setVisible(true);
-
-            if (dialog.getAddedNewValue()) {
-                // Refresh data
-                refreshTable();
-                Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Food package updated.", Toast.Style.SUCCESS).display();
-            }
-        });
+        editButton.addActionListener(e -> onEdit());
 
         viewFoodPackage.addActionListener(e -> {
-
-            int selectedRow = FoodPackageTable.getSelectedRow();
-            if (selectedRow == -1) {
-                return;
-            }
-
-            FoodPackage foodPackage = tableModel.getValue(selectedRow);
-
-
-            final int WIDTH = 700;
-            final int HEIGHT = 600;
-
-
-            FoodPackageInfoView dialog = new FoodPackageInfoView(foodPackage);
-            dialog.pack();
-            dialog.setVisible(true);
-            dialog.setSize(WIDTH, HEIGHT);
-            dialog.setLocationRelativeTo(null);//Puts window in middle of screen
-
-
+            onView();
         });
         searchButton.addActionListener(e -> search());
         removeFoodPackageButton.addActionListener(e -> {
-            int selectedRow = FoodPackageTable.getSelectedRow();
-            if (selectedRow == -1) {
-                return;
-            }
-
-            int dialogButton = JOptionPane.YES_NO_OPTION;
-            int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
-            if (dialogResult == 0) {
-                FoodPackage foodPackage = tableModel.getValue(selectedRow);
-                foodPackage.setActive(false);
-                FoodPackageFactory.updateFoodPackage(foodPackage);
-
-                tableModel.removeRow(selectedRow);
-                JOptionPane.showMessageDialog(null, "Row is removed.");
-            }
+            onRemove();
         });
         searchField.addMouseListener(new MouseAdapter() {
             @Override
@@ -130,7 +78,81 @@ public class FoodPackageAdminView extends JPanel {
         searchField.setText(text);
         searchField.setEnabled(true);
     }
+    /**
+     * Opens the AddFoodPackage GUI Dialog
+     */
+    private void onAdd() {
+        AddFoodPackageDialog dialog = new AddFoodPackageDialog();
+        dialog.pack();
+        dialog.setVisible(true);
+    }
+    /**
+     * Opens the EditFoodPackage GUI Dialog
+     */
+    private void onEdit() {
+        int selectedRow = FoodPackageTable.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
 
+        FoodPackage foodPackage = tableModel.getValue(selectedRow);
+
+        EditFoodPackageDialog dialog = new EditFoodPackageDialog(foodPackage);
+        dialog.pack();
+        dialog.setVisible(true);
+
+        if (dialog.getAddedNewValue()) {
+            // Refresh data
+            refreshTable();
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Food package updated.", Toast.Style.SUCCESS).display();
+        }
+    }
+    /**
+     * Opens the FoodPackageInfoView GUI
+     */
+    private void onView() {
+        int selectedRow = FoodPackageTable.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        FoodPackage foodPackage = tableModel.getValue(selectedRow);
+
+
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+
+
+        FoodPackageInfoView dialog = new FoodPackageInfoView(foodPackage);
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setLocationRelativeTo(null);//Puts window in middle of screen
+
+    }
+    /**
+     * Removes the selected row by change its active status in the database
+     */
+    private void onRemove() {
+        int selectedRow = FoodPackageTable.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
+        if (dialogResult == 0) {
+            FoodPackage foodPackage = tableModel.getValue(selectedRow);
+            foodPackage.setActive(false);
+            FoodPackageFactory.updateFoodPackage(foodPackage);
+
+            tableModel.removeRow(selectedRow);
+            JOptionPane.showMessageDialog(null, "Row is removed.");
+        }
+    }
+    /**
+     * Searches through a list of foodpackages
+     */
     private void search() {
         ArrayList<FoodPackage> newRows;
         if (searchField.getText().trim().equals("")) {

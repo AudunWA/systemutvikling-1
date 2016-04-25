@@ -67,6 +67,7 @@ public class EditCustomerDialog extends JDialog {
     }
     /**
      * Called when ok button is pressed
+     * Updates and saves the changes to the existing Customer
      */
     private void onOK() {
         final int COLUMN_SURNAME = 0;

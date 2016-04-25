@@ -92,6 +92,7 @@ public class AddEmployeeDialog extends JDialog {
 
     /**
      * Called when ok button is pressed
+     * Creates a new Employee with attributes from user input
      */
     private void onOK() {
         String username = usernameField.getText();

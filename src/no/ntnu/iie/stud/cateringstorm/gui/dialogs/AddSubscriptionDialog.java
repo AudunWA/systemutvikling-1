@@ -164,6 +164,7 @@ public class AddSubscriptionDialog extends JDialog {
 
     /**
      * Called when OK button is pressed.
+     * Creates a new Subscription with attributes from user input
      */
     private void onOK() {
         Customer customer = (Customer) customerComboBox.getSelectedItem();

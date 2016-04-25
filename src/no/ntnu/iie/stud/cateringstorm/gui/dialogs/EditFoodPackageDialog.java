@@ -151,7 +151,7 @@ public class EditFoodPackageDialog extends JDialog {
 
     /**
      * Called when OK button is pressed.
-     * Saves the changes to the food package.
+     * Saves the changes to the existing foodpackage.
      */
     private void onOK() {
         int dialogButton = JOptionPane.YES_NO_OPTION;
