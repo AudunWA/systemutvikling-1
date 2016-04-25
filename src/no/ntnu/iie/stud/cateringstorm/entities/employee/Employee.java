@@ -236,7 +236,7 @@ public class Employee {
      *  Returns the commission of this employee.
      * @return the commission of this employee.
      */
-    public double getCommission() {
+    public int getCommission() {
         return commission;
     }
 
@@ -255,6 +255,7 @@ public class Employee {
     public void setSalary(double salary) {
         this.salary = salary;
     }
+
 
     /**
      * Called on successful login attempt.

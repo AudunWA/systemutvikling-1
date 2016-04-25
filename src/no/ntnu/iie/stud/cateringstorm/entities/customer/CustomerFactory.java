@@ -21,7 +21,7 @@ public final class CustomerFactory {
      * @return Customer The customer.
      * @throws SQLException
      */
-    private static Customer createCustomerFromResultSet(ResultSet result) throws SQLException {
+    public static Customer createCustomerFromResultSet(ResultSet result) throws SQLException {
 
         int customer_id = result.getInt("customer_id");
         String surname = result.getString("surname");

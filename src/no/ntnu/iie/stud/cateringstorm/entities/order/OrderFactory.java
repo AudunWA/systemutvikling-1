@@ -27,7 +27,7 @@ public final class OrderFactory {
      */
     public static Order getOrder(int orderId) {
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE `_order_id` = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` NATURAL JOIN customer WHERE `_order_id` = ?")) {
                 statement.setInt(1, orderId);
                 statement.executeQuery();
 
@@ -137,7 +137,7 @@ public final class OrderFactory {
     public static ArrayList<Order> getAllOrders() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE status != -1")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` NATURAL JOIN customer WHERE status != -1")) {
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {
@@ -162,7 +162,7 @@ public final class OrderFactory {
     public static ArrayList<Order> getAllOrdersChef() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status < 2 || status = 3) && delivery_time > NOW() ORDER BY delivery_time")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` NATURAL JOIN customer WHERE (status < 2 || status = 3) && delivery_time > NOW() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()) {
@@ -198,7 +198,7 @@ public final class OrderFactory {
     public static ArrayList<Order> getAllOrdersChauffeur() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status = 0) && delivery_time > NOW() ORDER BY delivery_time")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` NATURAL JOIN customer WHERE (status = 0) && delivery_time > NOW() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()) {
@@ -234,7 +234,7 @@ public final class OrderFactory {
     public static ArrayList<Order> getAllAvailableOrdersChauffeur() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE status = 0 && DATE(delivery_time) = CURDATE() ORDER BY delivery_time")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` NATURAL JOIN customer WHERE status = 0 && DATE(delivery_time) = CURDATE() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()) {
@@ -270,7 +270,7 @@ public final class OrderFactory {
     public static ArrayList<Order> getAllAvailableOrdersForChauffeurTable() {
         ArrayList<Order> employees = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` WHERE (status = 0 || status = 4) && delivery_time > NOW() ORDER BY delivery_time")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` NATURAL JOIN customer WHERE (status = 0 || status = 4) && delivery_time > NOW() ORDER BY delivery_time")) {
                 statement.executeQuery();
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()) {
@@ -317,10 +317,12 @@ public final class OrderFactory {
         int status = result.getInt("status");
         int chauffeurId = result.getInt("chauffeur_id");
 
-        Customer customer = CustomerFactory.getCustomer(customerId);
-        if (customer == null) {
-            throw new NullPointerException("customer is null, check customerId.");
-        }
+        //Customer customer = CustomerFactory.getCustomer(customerId);
+        //if (customer == null) {
+        //    throw new NullPointerException("customer is null, check customerId.");
+        //}
+
+        Customer customer = CustomerFactory.createCustomerFromResultSet(result);
 
         return new Order(orderId, description, deliveryDate, orderDate, portions, priority, salespersonId, customer, recurringOrderId, status, chauffeurId);
     }

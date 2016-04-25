@@ -5,7 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import java.sql.Timestamp;
 
 /**
- * Created by Audun on 11.03.2016.
+ * Java representation of the database entity "_order".
  */
 public class Order {
     private final int orderId;
@@ -20,6 +20,20 @@ public class Order {
     private boolean priority;
     private int status;
 
+    /**
+     * Constructs and initializes a FoodPackage with the specified details.
+     * @param orderId
+     * @param description
+     * @param deliveryDate
+     * @param orderDate
+     * @param portions
+     * @param priority
+     * @param salespersonId
+     * @param customer
+     * @param recurringOrderId
+     * @param status
+     * @param chauffeurId
+     */
     public Order(int orderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, int salespersonId, Customer customer, int recurringOrderId, int status, int chauffeurId) {
         this.orderId = orderId;
         this.customer = customer;
@@ -34,6 +48,10 @@ public class Order {
         this.salespersonId = salespersonId;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Order{" +
@@ -51,68 +69,131 @@ public class Order {
                 '}';
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSalespersonId() {
         return salespersonId;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getChauffeurId() {
         return chauffeurId;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getOrderId() {
         return orderId;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCustomerId() {
         return customer.getCustomerId();
     }
 
-
+    /**
+     *
+     * @return
+     */
     public int getRecurringOrderId() {
         return recurringOrderId;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     *
+     * @return
+     */
     public Timestamp getDeliveryDate() {
         return deliveryDate;
     }
 
+    /**
+     *
+     * @param deliveryDate
+     */
     public void setDeliveryDate(Timestamp deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
+    /**
+     *
+     * @return
+     */
     public Timestamp getOrderDate() {
         return orderDate;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPortions() {
         return portions;
     }
 
+    /**
+     *
+     * @param portions
+     */
     public void setPortions(int portions) {
         this.portions = portions;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPriority() {
         return priority;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getStatus() {
         return status;
     }
 
+    /**
+     *
+     * @param status
+     */
     public void setStatus(int status) {
         this.status = status;
         OrderFactory.setOrderState(orderId, status);
     }
 
-    public String findPriority() {
+    /**
+     *
+     * @return
+     */
+    public String priorityAsString() {
         return (isPriority()) ? "Priority" : "Ordinary";
     }
 
+    /**
+     *
+     * @return
+     */
     public String deliveryStatus() {
         if (getStatus() == 0) {
             return "Ready for delivery";
@@ -129,10 +210,18 @@ public class Order {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCustomerName() {
         return customer.getForename() + " " + customer.getSurname();
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCustomerAddress() {
         return customer.getAddress();
     }
