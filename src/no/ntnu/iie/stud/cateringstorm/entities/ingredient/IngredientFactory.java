@@ -148,7 +148,7 @@ public final class IngredientFactory {
 
                 statement.setInt(1, ingredientId);
                 statement.setDouble(2, amount);
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
             e.printStackTrace();
