@@ -5,8 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import java.util.ArrayList;
 
 /**
- * Table model for ingredient entities
- * Created by Audun on 05.04.2016.
+ * Table model for ingredient entities, used to display Ingredient JTable in GUI
  */
 public class IngredientTableModel extends EntityTableModel<Ingredient> {
     public static final int COLUMN_ID = 0;

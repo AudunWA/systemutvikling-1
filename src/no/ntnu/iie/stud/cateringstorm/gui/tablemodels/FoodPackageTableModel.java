@@ -6,11 +6,11 @@ import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import java.util.ArrayList;
 
 /**
- * Created by Audun on 07.04.2016.
+ * Tablemodel class, used to manipulate contents in JTable in GUI windows FoodPackageAdminView and FoodPackageInfoView
  */
 public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
     /**
-     * Variables to be inserted to tablem odel from outside
+     * Variables to be inserted to table model from outside
      */
     public static final int COLUMN_ID = 0;
     public static final int COLUMN_NAME = 1;
@@ -23,7 +23,6 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
 
     /**
      * Gives a description for each selected column
-     *
      * @param column
      * @return String
      */
@@ -46,7 +45,6 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
 
     /**
      * Gives selected value of an entity
-     *
      * @param rowIndex
      * @param columnIndex
      * @return Object

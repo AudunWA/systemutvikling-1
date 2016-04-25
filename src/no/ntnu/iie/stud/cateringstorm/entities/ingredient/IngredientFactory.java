@@ -6,13 +6,12 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * Created by Chris on 30.03.2016.
+ * Class handling database interaction, loading and generating Ingredient entity objects.
  */
 public final class IngredientFactory {
 
     /**
      * result set - used for creating an ingredient object from result.
-     *
      * @param result
      * @return an ingredient object
      * @throws SQLException
