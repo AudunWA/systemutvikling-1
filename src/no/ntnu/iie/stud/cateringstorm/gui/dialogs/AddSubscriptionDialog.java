@@ -26,6 +26,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
+/**
+ * GUI Dialog for adding a subscription to the database
+ */
+
 public class AddSubscriptionDialog extends JDialog {
     private static final int MIN_HOURS_BETWEEN_ORDERS = 1;
     private JPanel mainPanel;

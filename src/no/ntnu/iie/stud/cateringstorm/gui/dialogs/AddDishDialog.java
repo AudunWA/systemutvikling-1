@@ -11,6 +11,10 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * GUI Dialog for adding a dish to the database
+ */
+
 public class AddDishDialog extends JDialog {
     private JPanel mainPanel;
     private JButton addButton;

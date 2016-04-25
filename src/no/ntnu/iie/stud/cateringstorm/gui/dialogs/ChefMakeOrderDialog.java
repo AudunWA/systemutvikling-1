@@ -15,6 +15,10 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * GUI Dialog for the chef to change the status of orders
+ */
+
 public class ChefMakeOrderDialog extends JDialog {
     private JPanel mainPanel;
     private JButton okButton;

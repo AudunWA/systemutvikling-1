@@ -9,6 +9,10 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * GUI Dialog for editing an existing employee in the database
+ */
+
 
 public class EditEmployeeDialog extends JDialog {
     private JPanel mainPanel;

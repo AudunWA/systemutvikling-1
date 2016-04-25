@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 /**
- * Created by EliasBrattli on 06/04/2016.
+ * GUI Dialog for adding a customer to the database
  */
 public class AddCustomerDialog extends JDialog {
     private JPanel mainPanel;

@@ -55,7 +55,7 @@ public class FoodPackageAdminView extends JPanel {
 
         addActionListeners();
     }
-    public void addActionListeners(){
+    private void addActionListeners(){
         addButton.addActionListener(e -> {
             AddFoodPackageDialog dialog = new AddFoodPackageDialog();
             dialog.pack();
@@ -159,7 +159,7 @@ public class FoodPackageAdminView extends JPanel {
         searchField.setEnabled(true);
     }
 
-    public void search() {
+    private void search() {
         ArrayList<FoodPackage> newRows;
         if (searchField.getText().trim().equals("")) {
             if (inactiveCheckBox.isSelected()) {

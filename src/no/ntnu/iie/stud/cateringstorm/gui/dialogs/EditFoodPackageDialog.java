@@ -13,6 +13,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+/**
+ * GUI Dialog for editing an existing foodpackage in the database
+ */
+
 public class EditFoodPackageDialog extends JDialog {
     private static final Integer[] COLUMNS_AVAILABLE_DISHES = {DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION};
 
