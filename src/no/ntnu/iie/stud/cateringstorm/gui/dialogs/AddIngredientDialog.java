@@ -13,6 +13,10 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Properties;
 
+/**
+ * GUI Dialog for adding an ingredient to the database
+ */
+
 public class AddIngredientDialog extends JDialog {
     private boolean addedNewValue;
 

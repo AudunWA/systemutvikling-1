@@ -11,6 +11,10 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * GUI Dialog for adding a foodpackage to the database
+ */
+
 public class AddFoodPackageDialog extends JDialog {
     private JPanel mainPanel;
     private JButton addButton;

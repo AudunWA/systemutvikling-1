@@ -17,6 +17,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+/**
+ * GUI Dialog for editing an existing dish in the database
+ */
+
 public class EditDishDialog extends JDialog {
     private boolean addedNewValue;
 
@@ -45,6 +49,9 @@ public class EditDishDialog extends JDialog {
 
     private Dish dish;
 
+    public boolean getAddedNewValue() {
+        return addedNewValue;
+    }
 
     public EditDishDialog(Dish dish) {
         this.dish = dish;
@@ -204,7 +211,5 @@ public class EditDishDialog extends JDialog {
         dispose();
     }
 
-    public boolean getAddedNewValue() {
-        return addedNewValue;
-    }
+
 }

@@ -8,6 +8,10 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import javax.swing.*;
 import java.awt.event.*;
 
+/**
+ * GUI Dialog for adding an Employee to the database
+ */
+
 public class AddEmployeeDialog extends JDialog {
     private JPanel mainPanel;
     private JButton saveButton;

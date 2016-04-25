@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
- * Created by EliasBrattli on 16/04/2016.
+ * GUI Dialog for editing an existing timesheet in the database
  */
 public class EditTimesheetDialog extends JDialog {
     private JPanel componentPanel;

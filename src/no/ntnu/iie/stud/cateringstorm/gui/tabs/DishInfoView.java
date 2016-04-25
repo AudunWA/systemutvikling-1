@@ -35,7 +35,7 @@ public class DishInfoView extends JFrame {
         addActionListeners();
     }
 
-    public void addActionListeners(){
+    private void addActionListeners(){
         closeButton.addActionListener(e -> {
             onCancel();
         });
