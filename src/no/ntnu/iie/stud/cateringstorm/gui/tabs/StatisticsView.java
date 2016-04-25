@@ -9,7 +9,6 @@ import java.time.LocalDate;
 
 /**
  * Displays various statistics about the system.
- * Created by Audun on 14.04.2016.
  */
 public class StatisticsView extends JPanel {
     private JTabbedPane tabPane;
