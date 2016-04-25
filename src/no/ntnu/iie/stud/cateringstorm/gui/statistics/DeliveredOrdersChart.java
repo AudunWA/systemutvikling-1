@@ -37,7 +37,7 @@ public class DeliveredOrdersChart extends ChartPanel {
     }
 
     public static ChartPanel generateIncomeChart(LocalDate startTime, LocalDate endTime) {
-        ChartPanel chartPanel = new ChartPanel(ChartFactory.createLineChart("Income last 7 days", "Date", "Income (NOK)", generateIncomeDataset(startTime, endTime)));
+        ChartPanel chartPanel = new ChartPanel(ChartFactory.createBarChart("Income last 7 days", "Date", "Income (NOK)", generateIncomeDataset(startTime, endTime)));
         return chartPanel;
     }
 
