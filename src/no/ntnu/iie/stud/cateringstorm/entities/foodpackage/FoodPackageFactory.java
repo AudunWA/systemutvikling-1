@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Audun on 16.03.2016.
+ * Class handling database interaction, loading and generating FoodPackage entity objects.
  */
 public final class FoodPackageFactory {
     /**

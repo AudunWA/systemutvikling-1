@@ -55,7 +55,7 @@ public class FoodPackageAdminView extends JPanel {
 
         addActionListeners();
     }
-    public void addActionListeners(){
+    private void addActionListeners(){
         addButton.addActionListener(e -> {
             AddFoodPackageDialog dialog = new AddFoodPackageDialog();
             dialog.pack();
@@ -147,19 +147,13 @@ public class FoodPackageAdminView extends JPanel {
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);//Puts window in middle of screen
     }
-    
-    private void createSearchField() {
-        searchField = new JTextField(20);
-        setSearchField("Search for food packages");
-        add(searchField);
-    }
 
     private void setSearchField(String text) {
         searchField.setText(text);
         searchField.setEnabled(true);
     }
 
-    public void search() {
+    private void search() {
         ArrayList<FoodPackage> newRows;
         if (searchField.getText().trim().equals("")) {
             if (inactiveCheckBox.isSelected()) {
@@ -186,7 +180,6 @@ public class FoodPackageAdminView extends JPanel {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         createTable();
     }
 

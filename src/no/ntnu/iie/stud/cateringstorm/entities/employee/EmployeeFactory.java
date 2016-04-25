@@ -10,8 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Handles all loading and generation of employees
- * Created by Audun on 10.03.2016.
+ * Class handling database interaction, loading and generating Employee entity objects.
  */
 public final class EmployeeFactory {
 

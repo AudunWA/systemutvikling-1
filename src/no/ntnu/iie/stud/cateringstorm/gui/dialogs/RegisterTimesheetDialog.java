@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
- * Created by EliasBrattli on 14/04/2016.
+ * GUI Dialog for registering a timesheet
  */
 public class RegisterTimesheetDialog extends JDialog {
     private JPanel mainPanel;

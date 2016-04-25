@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * Created by Audun on 18.04.2016.
+ * Class handling database interaction, loading and generating Subscription entity objects.
  */
 public final class SubscriptionFactory {
     /**

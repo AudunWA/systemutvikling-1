@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
@@ -11,8 +12,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
- * Created by EliasBrattli on 16/03/2016.
- * Fixed by Kenan on 08.04.16
+ * GUI window for chefs, viewing detailed information about ingredients in a dish
  */
 public class DishInfoView extends JFrame {
     private JButton editRowButton;
@@ -35,7 +35,7 @@ public class DishInfoView extends JFrame {
         addActionListeners();
     }
 
-    public void addActionListeners(){
+    private void addActionListeners(){
         closeButton.addActionListener(e -> {
             onCancel();
         });
@@ -59,7 +59,8 @@ public class DishInfoView extends JFrame {
         // Window dimensions
         final int WIDTH = 700;
         final int HEIGHT = 600;
-        DishInfoView dialog = new DishInfoView(null);
+
+        DishInfoView dialog = new DishInfoView(null);// Must generate a Dish from Factory to run
         dialog.pack();
         dialog.setVisible(true);
         dialog.setSize(WIDTH, HEIGHT);

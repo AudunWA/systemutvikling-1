@@ -10,6 +10,10 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * GUI Dialog for getting a pop-up window view of ingredients in an order
+ */
+
 public class ChefViewIngredientsDialog extends JDialog {
     private JPanel mainPanel;
     private JButton okButton;

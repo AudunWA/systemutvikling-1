@@ -5,7 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
 import java.util.ArrayList;
 
 /**
- * Created by Chris on 21.04.2016.
+ * Tablemodel class, used to manipulate contents in JTable in GUI window DishInfoView
  */
 public class IngredientDishTableModel extends EntityTableModel<IngredientDish> {
     public static final int COLUMN_INGREDIENT_ID = 0;

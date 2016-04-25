@@ -5,8 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import java.util.ArrayList;
 
 /**
- * Table model for order entities
- * Created by Audun on 06.04.2016.
+ * Table model for order entity JTable in GUI
  */
 public class OrderTableModel extends EntityTableModel<Order> {
     public static final int COLUMN_ID = 0;

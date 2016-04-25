@@ -2,17 +2,16 @@ package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
+import no.ntnu.iie.stud.cateringstorm.util.InputUtil;
 
 import javax.swing.*;
 import java.awt.event.*;
 
 /**
- * Created by EliasBrattli on 06/04/2016.
+ * GUI Dialog for adding a customer to the database
  */
 public class AddCustomerDialog extends JDialog {
     private JPanel mainPanel;
-    private JPanel bottomPanel;
-    private JPanel textPanel;
     private JTextField forenameField;
     private JButton saveButton;
     private JTextField surnameField;
@@ -20,10 +19,6 @@ public class AddCustomerDialog extends JDialog {
     private JTextField phoneField;
     private JButton cancelButton;
     private JTextField emailField;
-    private JLabel forenameLabel;
-    private JLabel surnameLabel;
-    private JLabel phoneLabel;
-    private JLabel emailLabel;
     private boolean addedNewValue;
 
     public AddCustomerDialog() {
@@ -31,22 +26,13 @@ public class AddCustomerDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(saveButton);// Consider not using this for safety reasons
         setLocationRelativeTo(getParent());
-        /*setComponentOrientation(((parent == null) ?
-                getRootPane() : parent).getComponentOrientation());*/
+
         addedNewValue = false;
-        saveButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        saveButton.addActionListener(e -> onOK());
 
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        cancelButton.addActionListener(e -> onCancel());
 
-// call onCancel() when cross is clicked
+        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -54,11 +40,7 @@ public class AddCustomerDialog extends JDialog {
             }
         });
         // call onCancel() on ESCAPE
-        mainPanel.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     public static void main(String[] args) {
@@ -73,11 +55,11 @@ public class AddCustomerDialog extends JDialog {
     }
 
     private void onOK() {
-        String forename = forenameField.getText();
-        String surname = surnameField.getText();
-        String address = addressField.getText();
-        String phone = phoneField.getText();
-        String email = emailField.getText();
+        String forename = forenameField.getText().trim();
+        String surname = surnameField.getText().trim();
+        String address = addressField.getText().trim();
+        String phone = phoneField.getText().trim();
+        String email = emailField.getText().trim();
 
         if (forename.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in a forename");
@@ -92,21 +74,20 @@ public class AddCustomerDialog extends JDialog {
             return;
         }
 
-        if (phone.isEmpty()) {
+        if (phone.isEmpty() || !InputUtil.isValidPhoneNumber(phone)) {
             JOptionPane.showMessageDialog(this, "Please fill in a phone number.");
             return;
         }
-        if (email.isEmpty()) {
+        if (email.isEmpty() || !InputUtil.isValidEmail(email)) {
             JOptionPane.showMessageDialog(this, "Please fill in an email.");
             return;
         }
         Customer customer = CustomerFactory.createCustomer(surname, forename, address, true, phone, email);
-        addedNewValue = true;
+
         if (customer == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
         } else {
-            // Debug code
-            JOptionPane.showMessageDialog(this, customer);
+            addedNewValue = true;
         }
         dispose();
     }

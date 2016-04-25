@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by Chris on 16.03.2016.
+ * Class handling database interaction, loading and generating Dish entity objects.
  */
 public final class DishFactory {
 

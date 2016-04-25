@@ -186,6 +186,9 @@ public class MenuAdministratorView extends JPanel {
         dishTable.setFillsViewportHeight(true);
     }
 
+    /**
+     * Searches through
+     */
     private void search() {
         ArrayList<Dish> newRows;
         if (searchField.getText().trim().equals("")) {

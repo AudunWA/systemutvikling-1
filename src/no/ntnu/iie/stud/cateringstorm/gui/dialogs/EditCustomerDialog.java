@@ -10,9 +10,9 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- * Created by EliasBrattli on 08/04/2016.
+ * GUI Dialog for editing an existing customer in the database
  */
-// FIXME: There is something wrong with database connection. Check class CustomerFactory
+
 public class EditCustomerDialog extends JDialog {
     private boolean addedNewValue;
     private Customer customer;

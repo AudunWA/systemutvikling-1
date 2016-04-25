@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
+/**
+ * GUI Dialog for adding an order to the database
+ */
+
 public class AddOrderDialog extends JDialog {
     private Employee employee;
 

@@ -5,8 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.subscription.Subscription;
 import java.util.ArrayList;
 
 /**
- * Table model for order entities
- * Created by Audun on 06.04.2016.
+ * Table model for manipulating GUI JTable of Subscription entity
  */
 public class SubscriptionTableModel extends EntityTableModel<Subscription> {
     public static final int COLUMN_ID = 0;

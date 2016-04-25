@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by Audun on 24.04.2016.
+ * Class handling database interaction, loading and generating RecurringOrder entity objects.
  */
 public final class RecurringOrderFactory {
     /**
