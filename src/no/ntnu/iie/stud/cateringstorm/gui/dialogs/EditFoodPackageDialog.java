@@ -29,7 +29,7 @@ public class EditFoodPackageDialog extends JDialog {
     private JTextField nameField;
     private JTextField costField;
     private JCheckBox activeCheckbox;
-    private JButton swapButton;
+    private JButton addRemoveButton;
     private FoodPackage foodPackage;
 
     private JTable leftSideTable;
@@ -46,7 +46,7 @@ public class EditFoodPackageDialog extends JDialog {
 
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
-        swapButton.addActionListener(e -> onSwap());
+        addRemoveButton.addActionListener(e -> onAR());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -99,7 +99,11 @@ public class EditFoodPackageDialog extends JDialog {
         leftSideTable = new JTable(leftSideModel);
     }
 
-    private void onSwap() {
+    /**
+     * Called when add/remove button is pressed (Between the tables)
+     * Adds or removes selected dishes in the left side table
+     */
+    private void onAR() {
         // Check if both tables are selected (shouldn't really happen, but we check anyways)
         if (leftSideTable.getSelectedRow() > -1 && rightSideTable.getSelectedRow() > -1) {
             JOptionPane.showMessageDialog(this, "Both tables selected. Error.");
@@ -193,7 +197,9 @@ public class EditFoodPackageDialog extends JDialog {
     public boolean getAddedNewValue() {
         return addedNewValue;
     }
-
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
         dispose();
     }

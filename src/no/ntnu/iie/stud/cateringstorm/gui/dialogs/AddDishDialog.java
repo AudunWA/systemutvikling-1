@@ -46,13 +46,6 @@ public class AddDishDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(addButton);
 
-        /*addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onAdd();
-            }
-        });
-        */
-
         addOrRemoveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onAR();
@@ -123,39 +116,9 @@ public class AddDishDialog extends JDialog {
         activeStatus.setSelectedIndex(0);
     }
 
-    //private void onOk() {
-    //if (ingredientTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
-    //    JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
-    //    ingredientTable.clearSelection();
-    //    addedTable.clearSelection();
-    //} else {
-    //    if (ingredientTable.getSelectedRow() > -1) {
-    //        boolean check = true;
-    //for (Ingredient ingredients : addedList) {
-    //    if (ingredients.getIngredientId() == (ingredientTable.getSelectedRow() + 1)) {
-    //        check = false;
-    //    }
-    //}
-    //if (check) {
-    //   addedList.add(ingredientList.get(ingredientTable.getSelectedRow()));
-    //   ((EntityTableModel) addedTable.getModel()).setRows(addedList);
-    //  ingredientTable.clearSelection();
-    //      } else {
-    //        JOptionPane.showMessageDialog(this, "This ingredient is already added.");
-    //      ingredientTable.clearSelection();
-    //}
-    // } else if (addedTable.getSelectedRow() > -1 && !ingredientTable.isColumnSelected(1) && !ingredientTable.isColumnSelected(2)) {
-    //  addedList.remove(addedTable.getSelectedRow());
-    //((EntityTableModel) addedTable.getModel()).setRows(addedList);
-    // addedTable.clearSelection();
-    //} else {
-    //  JOptionPane.showMessageDialog(this, "Please unselect the ingredient list. Do this by clicking with ctrl down.");
-    // addedTable.clearSelection();
-    // }
-    // }
-
-    //}
-
+    /**
+     * Called when Ok button is pressed
+     */
     private void onOk() {
 
         String name;
@@ -186,11 +149,17 @@ public class AddDishDialog extends JDialog {
 
     }
 
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
 // add your code here if necessary
         dispose();
     }
 
+    /**
+     * Called when add/remove betton is pressed
+     */
     public void onAR() {
 
         if ((Integer) addRemoveSpinner.getValue() < 1) {
@@ -225,11 +194,6 @@ public class AddDishDialog extends JDialog {
 
     }
 
-    public void onAdd() {
-        //TODO
-        //addedList.add(IngredientDishFactory.addIngredientToNewDish(selectionList.get(selectionIngredientTable.getSelectedRow()).getIngredient().getIngredientId(), (Integer)addRemoveSpinner.getValue(), selectionList.get(selectionIngredientTable.getSelectedRow()).getIngredient().getUnit()));
-    }
-
     public void createTables() {
 
         selectionList = IngredientFactory.getAllIngredients();
@@ -252,49 +216,4 @@ public class AddDishDialog extends JDialog {
         createComboBoxActiveStatus();
         createTables();
     }
-    /*
-    private void onAdd() {
-        String name = dishName.getText();
-        if (name.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in a name.");
-            return;
-        }
-
-        String description = dishDescription.getText();
-        if (description.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in a description.");
-            return;
-        }
-
-        int type = dishType.getSelectedIndex() + 1;
-
-        boolean active = activeStatus.getSelectedIndex()<1;
-
-        ArrayList<Integer> test = new ArrayList<>();
-        test.add(ingredientTable.getSelectedRow() + 1);
-
-        dishes.add(new Dish(0, name, description, type, active));
-
-        int check = DishFactory.getAllDishes().size();
-
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
-        for (int k = 0; k < addedList.size(); k++) {
-            ingredients.add(addedList.get(k));
-        }
-
-        if (ingredients.size() < 1) {
-            JOptionPane.showMessageDialog(this, "Please add package(s)");
-            return;
-        }
-
-        Dish dish = DishFactory.createDish(name, description, type, active, ingredients);
-
-        if (DishFactory.getAllDishes().size() > check) {
-            JOptionPane.showMessageDialog(this, "Add successful");
-            addedList = new ArrayList<>();
-            ((EntityTableModel) addedTable.getModel()).setRows(addedList);
-        }
-        JOptionPane.showMessageDialog(this, dish);
-    }
-    */
 }

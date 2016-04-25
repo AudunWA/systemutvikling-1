@@ -54,6 +54,9 @@ public class AddCustomerDialog extends JDialog {
 
     }
 
+    /**
+     * Called when Ok Button is pressed
+     */
     private void onOK() {
         String forename = forenameField.getText().trim();
         String surname = surnameField.getText().trim();
@@ -96,6 +99,9 @@ public class AddCustomerDialog extends JDialog {
         return addedNewValue;
     }
 
+    /**
+     * Called on cancel button, escape or the exit cross in the top right corner is pressed
+     */
     private void onCancel() {
         dispose();
     }

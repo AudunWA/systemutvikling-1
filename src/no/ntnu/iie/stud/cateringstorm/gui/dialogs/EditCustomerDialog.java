@@ -65,10 +65,10 @@ public class EditCustomerDialog extends JDialog {
         dialog.setVisible(true);
         System.exit(0);
     }
-
-    //Method when clicking "Save changes" button
+    /**
+     * Called when ok button is pressed
+     */
     private void onOK() {
-        // TODO: Implement a method sending the saved changes to database
         final int COLUMN_SURNAME = 0;
         final int COLUMN_FORENAME = 1;
         final int COLUMN_ADDRESS = 2;
@@ -117,14 +117,14 @@ public class EditCustomerDialog extends JDialog {
         }
         dispose();
     }
-
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
-        // TODO: Implement a method exiting window
         dispose();
     }
 
     private void setTextField() {
-        // TODO: Implement a method setting text field based on chosen column
         final int COLUMN_SURNAME = 0;
         final int COLUMN_FORENAME = 1;
         final int COLUMN_ADDRESS = 2;

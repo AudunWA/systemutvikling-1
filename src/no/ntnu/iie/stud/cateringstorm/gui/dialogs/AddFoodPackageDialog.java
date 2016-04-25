@@ -24,7 +24,7 @@ public class AddFoodPackageDialog extends JDialog {
     private JTextField costTextField;
     private JLabel foodPackageName;
     private JLabel foodPackageCost;
-    private JButton okButton;
+    private JButton addRemoveButton;
     private JTable dishTable;
     private JTable addedTable;
 
@@ -40,7 +40,7 @@ public class AddFoodPackageDialog extends JDialog {
 
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onAdd();
+                onOk();
             }
         });
 
@@ -49,10 +49,10 @@ public class AddFoodPackageDialog extends JDialog {
                 onCancel();
             }
         });
-        okButton.addActionListener(new ActionListener() {
+        addRemoveButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                onAR();
             }
         });
 
@@ -87,7 +87,10 @@ public class AddFoodPackageDialog extends JDialog {
         System.exit(0);
     }
 
-    private void onOK() {
+    /**
+     * Called when add/remove button is pressed
+     */
+    private void onAR() {
         if (dishTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
             JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
             dishTable.clearSelection();
@@ -119,7 +122,10 @@ public class AddFoodPackageDialog extends JDialog {
         }
     }
 
-    private void onAdd() {
+    /**
+     * Called when ok button is pressed
+     */
+    private void onOk() {
         String name = foodPackageNameTextField.getText();
         if (name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in a name.");
@@ -165,6 +171,9 @@ public class AddFoodPackageDialog extends JDialog {
         JOptionPane.showMessageDialog(this, foodPackage);
     }
 
+    /**
+     * Called when cancel button, escape or cross is pressed
+     */
     private void onCancel() {
 // add your code here if necessary
         dispose();

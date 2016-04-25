@@ -85,7 +85,9 @@ public class EditTimesheetDialog extends JDialog {
     public Timesheet getSelectedTimesheet() {
         return selectedTimesheet;
     }
-
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
         dispose();
     }
@@ -141,6 +143,10 @@ public class EditTimesheetDialog extends JDialog {
         return new Timestamp(((Date) toSpinner.getModel().getValue()).getTime());
     }
 
+    /**
+     * Called when ok buttons is pressed
+     * Saves changes
+     */
     private void onOK() {
         Date date = getDate();
         Date selectedDate = selectedTimesheet.getFromTime();
