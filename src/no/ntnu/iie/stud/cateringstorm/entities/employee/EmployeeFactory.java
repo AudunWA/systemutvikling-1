@@ -224,7 +224,7 @@ public final class EmployeeFactory {
 
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT employee_id, SUM(HOUR(TIMEDIFF(DATE_ADD(to_time, INTERVAL 30 MINUTE), from_time))) sum " +
-                    "FROM timesheet WHERE employee_id = ? AND year(from_time) = year(?)\n" +
+                    "FROM timesheet WHERE employee_id = ? AND YEAR(from_time) = YEAR(?)\n" +
                     "GROUP BY employee_id")) {
                 statement.setInt(1,employeeId);
                 statement.setDate(2,year);
