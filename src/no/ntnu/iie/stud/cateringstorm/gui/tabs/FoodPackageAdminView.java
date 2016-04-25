@@ -36,18 +36,12 @@ public class FoodPackageAdminView extends JPanel {
         addActionListeners();
     }
     private void addActionListeners(){
-        addButton.addActionListener(e -> {
-            onAdd();
-        });
+        addButton.addActionListener(e -> onAdd());
         editButton.addActionListener(e -> onEdit());
-
-        viewFoodPackage.addActionListener(e -> {
-            onView();
-        });
+        viewFoodPackage.addActionListener(e -> onView());
         searchButton.addActionListener(e -> search());
-        removeFoodPackageButton.addActionListener(e -> {
-            onRemove();
-        });
+        removeFoodPackageButton.addActionListener(e -> onRemove());
+
         searchField.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
