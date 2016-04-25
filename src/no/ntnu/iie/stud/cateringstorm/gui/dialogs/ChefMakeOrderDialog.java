@@ -112,8 +112,8 @@ public class ChefMakeOrderDialog extends JDialog {
                 if (ingredientsInOrder.get(i).getIngredient().getIngredientId() == ingredients.get(k).getIngredientId()) {
                     //System.out.println("BEFORE||||" + "Ingredient: " + ingredients.get(k).getName() + " Amount:" + ingredients.get(k).getAmount());
                     //System.out.println("INGREDIENT_IN_ORDER|||||" + "Ingredient" + ingredientsInOrder.get(i).getIngredient().getName() + " Amount:" + ingredientsInOrder.get(i).getQuantity());
-                    double newAmount = ingredients.get(k).getAmount() - ingredientsInOrder.get(i).getQuantity();
-                    //System.out.println("Ingredient: " + ingredients.get(k).getName() + " Amount: " + newAmount);
+                    double newAmount = IngredientFactory.getIngredient(ingredients.get(k).getIngredientId()).getAmount() - ingredientsInOrder.get(i).getQuantity();
+                    System.out.println("Ingredient: " + ingredients.get(k).getName() + " Amount: " + newAmount);
                     IngredientFactory.updateIngredientAmount(ingredients.get(k).getIngredientId(), newAmount);
                 }
             }
