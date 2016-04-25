@@ -33,7 +33,7 @@ public final class OrderFactory {
 
                 try (ResultSet result = statement.getResultSet()) {
                     if (result.next()) {
-                        return createOrderFromResultSet(result);
+                        return createOrderFromResultSet(result, connection);
                     }
                 }
             }
@@ -142,7 +142,7 @@ public final class OrderFactory {
 
                 try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
-                        employees.add(createOrderFromResultSet(result));
+                        employees.add(createOrderFromResultSet(result, connection));
                     }
                 }
             }
@@ -167,10 +167,10 @@ public final class OrderFactory {
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()) {
                     while (resultPreUpdate.next()) {
-
-                        if ((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
+                        Order order = createOrderFromResultSet(resultPreUpdate, connection);
+                        if ((order.getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
                             try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
-                                statementUpdate.setInt(1, createOrderFromResultSet(resultPreUpdate).getOrderId());
+                                statementUpdate.setInt(1, order.getOrderId());
                                 statementUpdate.execute();
                             }
                         }
@@ -179,7 +179,7 @@ public final class OrderFactory {
                 statement.executeQuery();
                 try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
-                        employees.add(createOrderFromResultSet(result));
+                        employees.add(createOrderFromResultSet(result, connection));
                     }
                 }
             }
@@ -203,10 +203,10 @@ public final class OrderFactory {
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()) {
                     while (resultPreUpdate.next()) {
-
-                        if ((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
+                        Order order = createOrderFromResultSet(resultPreUpdate, connection);
+                        if ((order.getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
                             try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
-                                statementUpdate.setInt(1, createOrderFromResultSet(resultPreUpdate).getOrderId());
+                                statementUpdate.setInt(1, order.getOrderId());
                                 statementUpdate.execute();
                             }
                         }
@@ -215,7 +215,7 @@ public final class OrderFactory {
                 statement.executeQuery();
                 try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
-                        employees.add(createOrderFromResultSet(result));
+                        employees.add(createOrderFromResultSet(result, connection));
                     }
                 }
             }
@@ -239,10 +239,10 @@ public final class OrderFactory {
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()) {
                     while (resultPreUpdate.next()) {
-
-                        if ((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
+                        Order order = createOrderFromResultSet(resultPreUpdate, connection);
+                        if ((order.getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
                             try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
-                                statementUpdate.setInt(1, createOrderFromResultSet(resultPreUpdate).getOrderId());
+                                statementUpdate.setInt(1, order.getOrderId());
                                 statementUpdate.execute();
                             }
                         }
@@ -251,7 +251,7 @@ public final class OrderFactory {
                 statement.executeQuery();
                 try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
-                        employees.add(createOrderFromResultSet(result));
+                        employees.add(createOrderFromResultSet(result, connection));
                     }
                 }
             }
@@ -275,10 +275,10 @@ public final class OrderFactory {
 
                 try (ResultSet resultPreUpdate = statement.getResultSet()) {
                     while (resultPreUpdate.next()) {
-
-                        if ((createOrderFromResultSet(resultPreUpdate).getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
+                        Order order = createOrderFromResultSet(resultPreUpdate, connection);
+                        if ((order.getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
                             try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
-                                statementUpdate.setInt(1, createOrderFromResultSet(resultPreUpdate).getOrderId());
+                                statementUpdate.setInt(1, order.getOrderId());
                                 statementUpdate.execute();
                             }
                         }
@@ -303,6 +303,7 @@ public final class OrderFactory {
      * @return
      * @throws SQLException
      */
+    @Deprecated
     private static Order createOrderFromResultSet(ResultSet result) throws SQLException {
         int orderId = result.getInt("_order_id");
         String description = result.getString("description");
@@ -317,6 +318,32 @@ public final class OrderFactory {
         int chauffeurId = result.getInt("chauffeur_id");
 
         Customer customer = CustomerFactory.getCustomer(customerId);
+        if (customer == null) {
+            throw new NullPointerException("customer is null, check customerId.");
+        }
+
+        return new Order(orderId, description, deliveryDate, orderDate, portions, priority, salespersonId, customer, recurringOrderId, status, chauffeurId);
+    }
+
+    /**
+     * @param result
+     * @return
+     * @throws SQLException
+     */
+    private static Order createOrderFromResultSet(ResultSet result, Connection connection) throws SQLException {
+        int orderId = result.getInt("_order_id");
+        String description = result.getString("description");
+        Timestamp deliveryDate = result.getTimestamp("delivery_time");
+        Timestamp orderDate = result.getTimestamp("_order_time");
+        int portions = result.getInt("portions");
+        boolean priority = result.getBoolean("priority");
+        int salespersonId = result.getInt("salesperson_id");
+        int customerId = result.getInt("customer_id");
+        int recurringOrderId = result.getInt("rec_order_id");
+        int status = result.getInt("status");
+        int chauffeurId = result.getInt("chauffeur_id");
+
+        Customer customer = CustomerFactory.getCustomer(customerId, connection);
         if (customer == null) {
             throw new NullPointerException("customer is null, check customerId.");
         }
@@ -362,7 +389,7 @@ public final class OrderFactory {
 
                 try (ResultSet result = statement.getResultSet()) {
                     while (result.next()) {
-                        temp.add(createOrderFromResultSet(result));
+                        temp.add(createOrderFromResultSet(result, connection));
                     }
                 }
             }

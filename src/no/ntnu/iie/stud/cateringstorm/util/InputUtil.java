@@ -52,7 +52,7 @@ public final class InputUtil {
 
     /**
      * Uses the Google Geocoder API to validate a street address.
-     * @param input The street address to validate. Trondheim, Norway is added automatically at the end.
+     * @param input The street address to validate.
      * @return true if valid street address or API problems, false otherwise.
      */
     public static boolean isValidStreetAddress(String input) {

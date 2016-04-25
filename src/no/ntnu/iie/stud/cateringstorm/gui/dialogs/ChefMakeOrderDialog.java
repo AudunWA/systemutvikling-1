@@ -107,15 +107,6 @@ public class ChefMakeOrderDialog extends JDialog {
         ingredientsInOrder = IngredientDishFactory.getAllIngredientsDishesInOrder(viewedOrderId);
         ingredients = IngredientFactory.getAllIngredients();
 
-        /*for(int i = 0; i < ingredientsInOrder.size(); i++) {
-            int id = ingredientsInOrder.get(i).getIngredientId();
-            double usedAmount = ingredientsInOrder.get(i).getAmount();
-            ingredients = IngredientFactory.getAllIngredients();
-            double storageAmount = ingredients.get(i).getAmount();
-            double newAmount = storageAmount - usedAmount;
-            IngredientFactory.updateIngredientAmount(id, newAmount);
-        }*/
-        //FIXME THE INGREDIENTS GET THE AMOUNT IN STORAGE INSTEAD OF QUANTITY!!!!!!!!!!
         for (int i = 0; i < ingredientsInOrder.size(); i++) {
             for (int k = 0; k < ingredients.size(); k++) {
                 if (ingredientsInOrder.get(i).getIngredient().getIngredientId() == ingredients.get(k).getIngredientId()) {
