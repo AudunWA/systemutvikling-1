@@ -77,7 +77,7 @@ public class EditOrderDialog extends JDialog {
 
     /**
      * Called when ok button is pressed
-     * Saves changes to the order
+     * Updates and saves the changes to the existing Order
      */
     private void onOK() {
 // add your code here

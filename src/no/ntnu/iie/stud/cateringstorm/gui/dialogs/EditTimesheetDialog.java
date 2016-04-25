@@ -145,7 +145,7 @@ public class EditTimesheetDialog extends JDialog {
 
     /**
      * Called when ok buttons is pressed
-     * Saves changes
+     * Updates and saves the changes to the existing Timesheet
      */
     private void onOK() {
         Date date = getDate();

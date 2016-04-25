@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 /**
  * GUI tab for administrators, giving an overview over employees
- * Created by Håvard
  */
 public class AdminEmployeeView extends JPanel {
     private JPanel mainPanel;
@@ -122,6 +121,9 @@ public class AdminEmployeeView extends JPanel {
         adminEmployeeTable.setFillsViewportHeight(true);
     }
 
+    /**
+     * Opens the addEmployee GUI Dialog
+     */
     private void addEmployee() {
         AddEmployeeDialog aeDialog = new AddEmployeeDialog();
         aeDialog.pack();
@@ -134,7 +136,9 @@ public class AdminEmployeeView extends JPanel {
         }
         employeeList = EmployeeFactory.getActiveEmployees();
     }
-
+    /**
+     * Opens the editEmployee GUI Dialog
+     */
     private void editEmployee(Employee employee) {
         if (employee != null) {
             EditEmployeeDialog eeDialog = new EditEmployeeDialog(employee);
@@ -151,7 +155,9 @@ public class AdminEmployeeView extends JPanel {
             }
         }
     }
-
+    /**
+     * De-activates the selected row in the database
+     */
     private void removeEmployee(Employee employee) {
         int activeColumn = EmployeeTableModel.COLUMN_ACTIVE;
         int selectedRow = adminEmployeeTable.getSelectedRow();

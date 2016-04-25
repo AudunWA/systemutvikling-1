@@ -64,7 +64,7 @@ public class AddOrderDialog extends JDialog {
             }
         });
 
-        addRemoveButton.addActionListener(new ActionListener() {
+        okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOk();
             }
@@ -176,6 +176,7 @@ public class AddOrderDialog extends JDialog {
 
     /**
      * Called when ok button is pressed
+     * Creates a new Order with attributes from user input
      */
     private void onOk() {
 

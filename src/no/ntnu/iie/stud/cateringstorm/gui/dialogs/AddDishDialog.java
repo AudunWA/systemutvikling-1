@@ -118,6 +118,7 @@ public class AddDishDialog extends JDialog {
 
     /**
      * Called when Ok button is pressed
+     * Creates a new dish with the user inputted attributes
      */
     private void onOk() {
 
