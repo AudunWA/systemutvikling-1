@@ -36,22 +36,32 @@ public final class CustomerFactory {
 
     /**
      * Gets a single customer by ID
-     *
-     * @param customerId
+     * @param customerId The ID of the customer.
      * @return Customer
      */
     public static Customer getCustomer(int customerId) {
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customer WHERE customer_id = ?")) {
+            return getCustomer(customerId, connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-                statement.setInt(1, customerId);
-                statement.executeQuery();
+    /**
+     * Gets a single customer by ID
+     * @param customerId The ID of the customer.
+     * @param connection The connection to use.
+     * @return Customer
+     */
+    public static Customer getCustomer(int customerId, Connection connection) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customer WHERE customer_id = ?")) {
+            statement.setInt(1, customerId);
+            statement.executeQuery();
 
-                try (ResultSet result = statement.getResultSet()) {
-                    if (result.next()) {
-
-                        return createCustomerFromResultSet(result);
-                    }
+            try (ResultSet result = statement.getResultSet()) {
+                if (result.next()) {
+                    return createCustomerFromResultSet(result);
                 }
             }
         } catch (SQLException e) {
@@ -151,7 +161,12 @@ public final class CustomerFactory {
     /**
      * Inserts a customer into the SQL table customer. Takes a Customer object as arguement
      *
-     * @param surname, forename, address, active, phone, email
+     * @param surname
+     * @param forename
+     * @param address
+     * @param active
+     * @param phone
+     * @param email
      * @return Customer
      */
     public static Customer createCustomer(String forename, String surname, String address, boolean active, String phone, String email) {

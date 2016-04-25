@@ -47,7 +47,7 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
      * Gives selected value of an entity
      * @param rowIndex
      * @param columnIndex
-     * @return Object
+     * @return Object Selected value
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {

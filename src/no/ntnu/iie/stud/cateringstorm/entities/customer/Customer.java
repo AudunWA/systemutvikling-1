@@ -1,7 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.entities.customer;
 
 /**
- * A customer entity from the MySQL database.
+ * Java representation of database entity "customer".
  */
 public class Customer {
     /**
@@ -68,7 +68,7 @@ public class Customer {
     }
 
     /**
-     Returns the forename of this customer.
+     * Returns the forename of this customer.
      * @return the forename of this customer.
      */
     public String getForename() {
@@ -116,7 +116,7 @@ public class Customer {
     }
 
     /**
-     * Determines if the customer is active. An inactive customer is in practise a deleted one.
+     * Determines whether the customer is active. An inactive customer is practically considered a deleted one.
      * @return true if the customer is active, false otherwise.
      */
     public boolean isActive() {
@@ -124,7 +124,7 @@ public class Customer {
     }
 
     /**
-     * Activates or inactivates this customer. An inactive customer is in practise a deleted one.
+     * Activates or inactivates this customer. An inactive customer is practically considered a deleted one.
      * @param active If true, this customer is active, otherwise this customer is inactive.
      */
     public void setActive(boolean active) {
