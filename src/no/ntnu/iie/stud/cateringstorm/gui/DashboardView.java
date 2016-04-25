@@ -49,7 +49,7 @@ public class DashboardView extends JFrame {
         }
 
         DashboardView view = new DashboardView(new Employee(-1, "Test", "Forename", "Surname", "Address",
-                "Phone", "Email", EmployeeType.ADMINISTRATOR, true));
+                "Phone", "Email", EmployeeType.ADMINISTRATOR, true,206.49,0)); //Admin has "secretary" salary
         view.setVisible(true);
     }
 

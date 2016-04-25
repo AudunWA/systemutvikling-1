@@ -137,23 +137,25 @@ public final class EmployeeFactory {
         String phone = result.getString("phone");
         String email = result.getString("email");
         boolean active = result.getBoolean("active");
+        double salary = result.getDouble("salary");
+        int commission = result.getInt("commission");
         EmployeeType employeeType = EmployeeType.getEmployeeType(employeeTypeId);
-        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType, active);
+        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType, active,salary,commission);
     }
 
     /**
-     * Inserts an employee into the SQL table employee given an employee object
+     * Inserts an employee into the SQL table employee given an employee object.
      *
-     * @return Employee
+     * @return Employee.
      */
     public static Employee createEmployee(String username, String password, String forename,
                                           String surname, String address, String phoneNumber,
-                                          String email, EmployeeType type) {
+                                          String email, EmployeeType type,double salary,int commission) {
         String salt = PasswordUtil.generateSalt();
         String hashedPassword = PasswordUtil.generatePasswordHash(password, salt);
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO employee VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, TRUE, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO employee VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, TRUE, ?, ?,?,?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
                 statement.setString(1, username);
                 statement.setString(2, forename);
                 statement.setString(3, surname);
@@ -163,7 +165,8 @@ public final class EmployeeFactory {
                 statement.setInt(7, type.getType());
                 statement.setString(8, hashedPassword);
                 statement.setString(9, salt);
-
+                statement.setDouble(10,salary);
+                statement.setInt(11,commission);
                 int affectedRows = statement.executeUpdate();
                 if (affectedRows == 0) {
                     return null; // No rows inserted
@@ -178,7 +181,7 @@ public final class EmployeeFactory {
                     }
                 }
 
-                Employee employee = new Employee(generatedId, username, forename, surname, address, phoneNumber, email, type, true);
+                Employee employee = new Employee(generatedId, username, forename, surname, address, phoneNumber, email, type, true,salary,commission);
                 return employee;
             }
         } catch (SQLException e) {

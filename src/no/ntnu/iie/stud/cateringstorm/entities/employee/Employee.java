@@ -4,9 +4,16 @@ import no.ntnu.iie.stud.cateringstorm.gui.DashboardView;
 import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import javax.swing.*;
-
+/* Expected salaries:
+* One year is 1695 hrs
+* CEO: 277.29 /hr | 470 000 /yr
+* Secretary: 206.49 /hr | 350 000 /yr
+* Salesperson: 106.19 /hr | 180 000 + 11% comm / yr
+* Chef : 235.99 /hr | 400 000 / yr
+* */
 /**
  * Class for  database entity "employee".
+ *
  */
 public class Employee {
 
@@ -19,6 +26,9 @@ public class Employee {
     private String email;
     private EmployeeType employeeType;
     private boolean active;
+    private double salary;
+    private int commission;
+
 
     /**
      * Constructs and initializes an Employee with the specified details.
@@ -32,7 +42,7 @@ public class Employee {
      * @param employeeType  The employee type of the employee.
      * @param active Whether the employee is active or inactive.
      */
-    public Employee(int employeeId, String username, String forename, String surname, String address, String phoneNumber, String email, EmployeeType employeeType, boolean active) {
+    public Employee(int employeeId, String username, String forename, String surname, String address, String phoneNumber, String email, EmployeeType employeeType, boolean active,double salary,int commission) {
         this.employeeId = employeeId;
         this.username = username;
         this.forename = forename;
@@ -42,6 +52,9 @@ public class Employee {
         this.email = email;
         this.employeeType = employeeType;
         this.active = active;
+        this.salary = salary;
+        this.commission = commission;
+
     }
 
     /**
@@ -209,6 +222,38 @@ public class Employee {
             default:
                 return "Employee";
         }
+    }
+
+    /**
+     *  Returns the salary of this employee.
+     * @return the salary of this employee.
+     */
+    public double getSalary() {
+        return salary;
+    }
+
+    /**
+     *  Returns the commission of this employee.
+     * @return the commission of this employee.
+     */
+    public double getCommission() {
+        return commission;
+    }
+
+    /**
+     * Sets the commission of this employee.
+     * @param commission The new commission.
+     */
+    public void setCommission(int commission) {
+        this.commission = commission;
+    }
+
+    /**
+     * Sets the salary of this employee.
+     * @param salary The new salary.
+     */
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 
     /**
