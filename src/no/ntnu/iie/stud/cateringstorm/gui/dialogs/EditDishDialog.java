@@ -133,6 +133,14 @@ public class EditDishDialog extends JDialog {
             dish.setDishType(type);
             dish.setActive(isActive);
 
+
+            IngredientDishFactory.RemoveAllIngredientFromDish(dish.getDishId());
+
+
+            for (int i = 0; i < addedList.size(); i++) {
+                IngredientDishFactory.addIngredientToDish(addedList.get(i).getIngredient().getIngredientId(), dish.getDishId(), addedList.get(i).getQuantity(), addedList.get(i).getUnit());
+            }
+
             DishFactory.updateDish(dish);
             if (DishFactory.updateDish(dish) != 1) {
                 JOptionPane.showMessageDialog(this, "Dish was not update, please try again later.");
