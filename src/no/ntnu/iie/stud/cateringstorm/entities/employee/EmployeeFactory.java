@@ -155,7 +155,7 @@ public final class EmployeeFactory {
         String hashedPassword = PasswordUtil.generatePasswordHash(password, salt);
 
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO employee VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, TRUE, ?, ?,?,?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO employee VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, TRUE, ?, ?,?,?,?,?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
                 statement.setString(1, username);
                 statement.setString(2, forename);
                 statement.setString(3, surname);
@@ -233,6 +233,34 @@ public final class EmployeeFactory {
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
+        }
+    }
+
+    public static int getCommissionByType(int employeeType){
+        switch (employeeType){
+            case 5:
+                return 11;
+            default:
+                return 0;
+        }
+    }
+
+    public static double getSalaryByType(int employeeType){
+        switch (employeeType){
+            case 1:
+                return 235.99;
+            case 2:
+                return 235.99;
+            case 3:
+                return 235.99;
+            case 4:
+                return 277.29;
+            case 5:
+                return 106.19;
+            case 6:
+                return 206.49;
+            default:
+                return -1.0;
         }
     }
 }
