@@ -30,23 +30,7 @@ public class FoodPackageInfoView extends JFrame {
         add(mainPanel, BorderLayout.CENTER);
 
         viewPackageButton.addActionListener(e -> {
-
-            int selectedRow = dishTable.getSelectedRow();
-            if (selectedRow == -1) {
-                return;
-            }
-
-            Dish dish = tableModel.getValue(selectedRow);
-            final int WIDTH = 700;
-            final int HEIGHT = 600;
-
-            DishInfoView dialog = new DishInfoView(dish);
-            dialog.pack();
-            dialog.setVisible(true);
-            dialog.setSize(WIDTH, HEIGHT);
-            dialog.setLocationRelativeTo(null);//Puts window in middle of screen
-
-
+            onView();
         });
 
         closeButton.addActionListener(e -> onCancel());
@@ -63,6 +47,26 @@ public class FoodPackageInfoView extends JFrame {
         mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    /**
+     * Called when View button is pressed
+     * Opens the DishInfoView GUI
+     */
+    private void onView() {
+        int selectedRow = dishTable.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        Dish dish = tableModel.getValue(selectedRow);
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+
+        DishInfoView dialog = new DishInfoView(dish);
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setLocationRelativeTo(null);//Puts window in middle of screen
+    }
     public static void main(String[] args) {
         // Window dimensions
         final int WIDTH = 700;
@@ -75,7 +79,10 @@ public class FoodPackageInfoView extends JFrame {
         System.exit(0);
 
     }
-
+    /**
+     * Called on when close button, escape or cross is pressed
+     * Closes the GUI panel
+     */
     private void onCancel() {
         dispose();
     }

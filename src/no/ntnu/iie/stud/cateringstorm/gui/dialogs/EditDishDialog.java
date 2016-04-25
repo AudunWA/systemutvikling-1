@@ -116,6 +116,7 @@ public class EditDishDialog extends JDialog {
 
     /**
      * Called when ok button is pressed
+     * Updates and saves the changes to the existing Dish
      */
     private void onOK() {
         int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -179,6 +180,7 @@ public class EditDishDialog extends JDialog {
 
     /**
      * Called when add/remove button(Between tables) is pressed
+     * Adds or removes the selected row from the left side table
      */
     private void onAR() {
 

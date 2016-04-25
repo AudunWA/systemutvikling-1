@@ -58,6 +58,7 @@ public class AddCustomerDialog extends JDialog {
 
     /**
      * Called when Ok Button is pressed
+     * Creates a new customer with the added attributes
      */
     private void onOK() {
         String forename = forenameField.getText().trim();

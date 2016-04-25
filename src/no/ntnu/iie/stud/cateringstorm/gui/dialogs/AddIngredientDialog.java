@@ -72,6 +72,7 @@ public class AddIngredientDialog extends JDialog {
 
     /**
      * Called when ok button is pressed
+     * Creates a new Ingredient with attributes from user inputted data
      */
     private void onOK() {
         // Check that values are valid

@@ -124,6 +124,7 @@ public class AddFoodPackageDialog extends JDialog {
 
     /**
      * Called when ok button is pressed
+     * Creates a new FoodPakcage with attributes from user input
      */
     private void onOk() {
         String name = foodPackageNameTextField.getText();

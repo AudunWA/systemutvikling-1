@@ -90,6 +90,7 @@ public class EditEmployeeDialog extends JDialog {
 
     /**
      * Called when ok button is called
+     * Updates and saves the changes to the existing Employee
      */
     private void onOK() {
         final int COLUMN_USERNAME = 0;
