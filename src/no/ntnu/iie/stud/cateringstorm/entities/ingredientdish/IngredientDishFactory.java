@@ -231,4 +231,29 @@ public class IngredientDishFactory {
         }
         return true;
     }
+
+    public static ArrayList<IngredientDish> getAllIngredientsInDish(int dishId){
+
+        ArrayList<IngredientDish> returnList = new ArrayList<>();
+
+        try (Connection connection = Database.getConnection()) {
+            // Add the ingredient itself and get ID
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM ingredient_dish WHERE dish_id = ?")) {
+
+                statement.setInt(1, dishId);
+                statement.execute();
+
+                try (ResultSet resultSet = statement.getResultSet()){
+                    while (resultSet.next()){
+                        returnList.add(createIngredientDishFromResultSet(resultSet));
+                    }
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return returnList;
+    }
 }
