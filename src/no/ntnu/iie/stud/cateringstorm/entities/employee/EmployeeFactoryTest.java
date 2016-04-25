@@ -4,6 +4,7 @@ import no.ntnu.iie.stud.cateringstorm.encryption.PasswordUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -54,14 +55,14 @@ public class EmployeeFactoryTest {
      */
     @Test
     public void testCreateEmployee() throws Exception {
-        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT);
+        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT,235.99,0);
         Assert.assertNotNull(test);
     }
 
     @Test
     public void testEditEmployeeStatus() throws Exception {
         //Test is initially active
-        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT);
+        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT,235.99,0);
 
         int result = EmployeeFactory.editEmployeeStatus(test.getEmployeeId(), false);
         Assert.assertEquals(result, 1);
@@ -71,12 +72,18 @@ public class EmployeeFactoryTest {
 
     @Test
     public void testUpdateEmployee() throws Exception {
-        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Testaddress", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT);
+        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Testaddress", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT,235.99,0);
         String newAddress = "New testaddress 9";
-        test = new Employee(test.getEmployeeId(), test.getUsername(), test.getForename(), test.getSurname(), newAddress, test.getPhoneNumber(), test.getEmail(), test.getEmployeeType(), test.isActive());
+        test = new Employee(test.getEmployeeId(), test.getUsername(), test.getForename(), test.getSurname(), newAddress, test.getPhoneNumber(), test.getEmail(), test.getEmployeeType(), test.isActive(),test.getSalary(),test.getCommission());
         int result = EmployeeFactory.updateEmployee(test);
         Assert.assertEquals(1, result);
         test = EmployeeFactory.getEmployee(test.getUsername());
         Assert.assertEquals(test.getAddress(), newAddress);
+    }
+    @Test
+    public void testGetSalarySoFar() throws Exception {
+        Employee employee = EmployeeFactory.getEmployee("chechter");
+        double salary = EmployeeFactory.getSalarySoFar(employee.getEmployeeId(),new Date(System.currentTimeMillis()));
+        Assert.assertNotNull(salary);
     }
 }

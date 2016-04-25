@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Class handling database interaction, loading and generating Employee entity objects.
@@ -212,6 +213,36 @@ public final class EmployeeFactory {
         }
     }
 
+    /**
+     * Returns salary so far selected year for a selected employee.
+     * @param employeeId
+     * @return double
+     */
+    public static double getSalarySoFar(int employeeId, java.sql.Date year){
+        /*SELECT employee_id, SUM(HOUR(TIMEDIFF(DATE_ADD(to_time, INTERVAL 30 MINUTE), from_time))) sum FROM timesheet WHERE year(from_time) = year(CURDATE())
+            GROUP BY employee_id;*/
+
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT employee_id, SUM(HOUR(TIMEDIFF(DATE_ADD(to_time, INTERVAL 30 MINUTE), from_time))) sum " +
+                    "FROM timesheet WHERE employee_id = ? AND year(from_time) = year(?)\n" +
+                    "GROUP BY employee_id")) {
+                statement.setInt(1,employeeId);
+                statement.setDate(2,year);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    double paymentSoFar;
+                    if(result.next()) {
+                        return result.getDouble("sum");
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1.;
+    }
     /**
      * @param employee
      * @return statement.executeUpdate
