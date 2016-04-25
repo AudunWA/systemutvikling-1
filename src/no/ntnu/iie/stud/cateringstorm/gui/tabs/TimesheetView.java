@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * Created by EliasBrattli on 14/04/2016.
+ * Gives you options for adding, removing or editing "Timesheets"
  */
 
 public class TimesheetView extends JPanel {

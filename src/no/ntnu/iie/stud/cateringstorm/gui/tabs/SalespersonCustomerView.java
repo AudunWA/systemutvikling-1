@@ -19,7 +19,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- * Created by EliasBrattli on 06/04/2016.
+ * Gives you options for adding, editing and removing customers
  */
 
 // TODO: Implement email, phone and address verification, and checking that names do not contain numbers and such!

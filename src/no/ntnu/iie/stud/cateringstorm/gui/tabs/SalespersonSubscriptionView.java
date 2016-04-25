@@ -15,7 +15,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- * Created by kenan on 30.03.2016.
+ * Gives you options for adding, editing and
  */
 public class SalespersonSubscriptionView extends JPanel {
     private JPanel mainPanel;

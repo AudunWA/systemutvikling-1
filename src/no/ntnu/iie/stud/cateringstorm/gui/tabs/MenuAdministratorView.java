@@ -23,7 +23,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- * Created by kenan on 01.04.2016.
+ * Give you options for administrating the menu by adding new dishes, editing existing or removing old ones
  */
 public class MenuAdministratorView extends JPanel {
     private static final Integer[] COLUMNS = new Integer[]{DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION};

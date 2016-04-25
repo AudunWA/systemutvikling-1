@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- * Created by kenan on 14.04.2016.
+ * Gives you options for editing, adding or removing foodpackages
  */
 public class FoodPackageAdminView extends JPanel {
     private JPanel mainPanel;

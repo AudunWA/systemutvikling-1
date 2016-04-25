@@ -19,7 +19,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- * Created by kenan on 30.03.2016.
+ * Gives you options for adding, removing or editing orders
  */
 public class SalespersonOrderView extends JPanel {
     private static ArrayList<Order> orderList = new ArrayList<Order>();
