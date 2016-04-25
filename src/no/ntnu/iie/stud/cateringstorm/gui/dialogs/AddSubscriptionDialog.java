@@ -35,7 +35,7 @@ public class AddSubscriptionDialog extends JDialog {
     private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
-    private JButton addButton;
+    private JButton addRemoveButton;
     private JDatePickerImpl fromDate;
     private JDatePickerImpl toDate;
     private JComboBox<String> dayComboBox;
@@ -62,7 +62,7 @@ public class AddSubscriptionDialog extends JDialog {
         // Add event listeners
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
-        addButton.addActionListener(e -> onAdd());
+        addRemoveButton.addActionListener(e -> onAR());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -175,9 +175,9 @@ public class AddSubscriptionDialog extends JDialog {
     }
 
     /**
-     * Called when add button (arrow between tables) is pressed
+     * Called when add/remove button (arrow between tables) is pressed
      */
-    private void onAdd() {
+    private void onAR() {
         // Check if both tables are selected
         if (availablePackagesTable.getSelectedRow() > -1 && selectedPackagesTable.getSelectedRow() > -1) {
             JOptionPane.showMessageDialog(this, "Both tables selected. Error.");
@@ -233,7 +233,7 @@ public class AddSubscriptionDialog extends JDialog {
     }
 
     /**
-     * Called when Cancel button is pressed
+     * Called when cancel button, escape or the cross is pressed
      */
     private void onCancel() {
 // add your code here if necessary

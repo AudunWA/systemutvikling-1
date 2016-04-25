@@ -22,12 +22,9 @@ public class SalespersonSubscriptionView extends JPanel {
     private JScrollPane orderPane;
     private JButton viewButton;
     private JButton editOrderButton;
-    private JPanel selectButtonPanel;
-    private JComboBox statusBox;
+    private JComboBox<String> statusBox;
     private JTable orderTable;
     private JButton refreshButton;
-    private JPanel noSelectButtonPanel;
-    private JLabel infoLabel;
     private JButton searchButton;
     private JTextField searchField;
     private JButton newSubscriptionButton;
@@ -37,17 +34,9 @@ public class SalespersonSubscriptionView extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        refreshButton.addActionListener(e -> {
-            refresh();
-        });
-
-        editOrderButton.addActionListener(e -> {
-            editSubscription(getSelectedSubscription());
-        });
-
-        newSubscriptionButton.addActionListener(e -> {
-            newSubscription();
-        });
+        refreshButton.addActionListener(e -> refresh());
+        editOrderButton.addActionListener(e -> editSubscription(getSelectedSubscription()));
+        newSubscriptionButton.addActionListener(e -> newSubscription());
 
         statusBox.addActionListener(e -> {
             //setStatus();
@@ -150,9 +139,9 @@ public class SalespersonSubscriptionView extends JPanel {
     }
 
     private void createComboBox() {
-        Object[] status = {"Activate", "Remove"};
+        String[] status = {"Activate", "Remove"};
 
-        statusBox = new JComboBox(status);
+        statusBox = new JComboBox<>(status);
         statusBox.setSelectedIndex(0);
     }
 

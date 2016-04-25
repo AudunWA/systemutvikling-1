@@ -8,7 +8,6 @@ import java.awt.*;
 /**
  * GUI for the employee home screen.
  * Displays useful information and options for the employee.
- * Created by Audun on 01.04.2016.
  */
 public class HomeView extends JPanel {
     private JPanel mainPanel;

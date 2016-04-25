@@ -82,6 +82,9 @@ public class ChefMakeOrderDialog extends JDialog {
         System.exit(0);
     }
 
+    /**
+     * Called when view button is pressed
+     */
     private void onView() {
         ChefViewIngredientsDialog view = new ChefViewIngredientsDialog(DishFactory.getDish((Integer) dishTable.getModel().getValueAt(dishTable.getSelectedRow(), 0)));
         final int HEIGHT = 700;
@@ -94,8 +97,10 @@ public class ChefMakeOrderDialog extends JDialog {
 
     }
 
+    /**
+     * Called when ok button is pressed
+     */
     private void onOK() {
-// add your code here
         OrderFactory.setOrderState(order.getOrderId(), 0);
         int viewedOrderId = order.getOrderId();
 
@@ -126,9 +131,10 @@ public class ChefMakeOrderDialog extends JDialog {
 
         dispose();
     }
-
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
-// add your code here if necessary
         OrderFactory.setOrderState(order.getOrderId(), 1);
         dispose();
     }

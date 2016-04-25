@@ -34,7 +34,7 @@ public class EditDishDialog extends JDialog {
     private JTextField nameField;
     private JComboBox<String> typeComboBox;
     private JCheckBox statusCheckBox;
-    private JButton swapButton;
+    private JButton addRemoveButton;
 
 
     private JTable addedIngredientTable;
@@ -63,7 +63,7 @@ public class EditDishDialog extends JDialog {
 
         cancelButton.addActionListener(e -> onCancel());
 
-        swapButton.addActionListener((e1 -> onSwap()));
+        addRemoveButton.addActionListener((e1 -> onAR()));
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -114,6 +114,9 @@ public class EditDishDialog extends JDialog {
         addedIngredientTable.getTableHeader().setReorderingAllowed(false);
     }
 
+    /**
+     * Called when ok button is pressed
+     */
     private void onOK() {
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
@@ -174,7 +177,10 @@ public class EditDishDialog extends JDialog {
 
     }
 
-    private void onSwap() {
+    /**
+     * Called when add/remove button(Between tables) is pressed
+     */
+    private void onAR() {
 
         if ((Integer)addRemoveSpinner.getValue() < 1) {
             JOptionPane.showMessageDialog(this, "Please set a positive amount on the spinner");
@@ -214,9 +220,10 @@ public class EditDishDialog extends JDialog {
         }
         leftSideModel.setRows(addedList);
     }
-
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
-// add your code here if necessary
         dispose();
     }
 

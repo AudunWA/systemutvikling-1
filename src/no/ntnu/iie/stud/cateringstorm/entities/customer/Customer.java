@@ -42,14 +42,14 @@ public class Customer {
     /**
      * Constructs and initializes a customer with the specified details.
      * @param customerId The ID of the customer
-     * @param surname The surname of the customer
      * @param forename The forename of the customer
+     * @param surname The surname of the customer
      * @param address The address of the customer
      * @param active Whether the customer is active of inactive
      * @param phone The phone number of the customer
      * @param email The email address of the customer
      */
-    public Customer(int customerId, String surname, String forename, String address, boolean active, String phone, String email) {
+    public Customer(int customerId, String forename, String surname, String address, boolean active, String phone, String email) {
         this.customerId = customerId;
         this.forename = forename;
         this.surname = surname;

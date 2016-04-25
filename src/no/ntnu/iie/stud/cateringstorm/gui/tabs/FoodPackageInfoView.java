@@ -17,7 +17,6 @@ public class FoodPackageInfoView extends JFrame {
     private JPanel mainPanel;
     private JButton viewPackageButton;
     private JTable dishTable;
-    private JPanel buttonPanel;
     private JButton closeButton;
 
     private DishTableModel tableModel;
@@ -50,13 +49,8 @@ public class FoodPackageInfoView extends JFrame {
 
         });
 
-        closeButton.addActionListener(e -> {
-            onCancel();
-        });
+        closeButton.addActionListener(e -> onCancel());
 
-        dishTable.getSelectionModel().addListSelectionListener(e -> {
-            //Get index from selected row
-        });
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -65,12 +59,8 @@ public class FoodPackageInfoView extends JFrame {
             }
         });
 
-// call onCancel() on ESCAPE
-        mainPanel.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        // call onCancel() on ESCAPE
+        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     public static void main(String[] args) {
@@ -87,7 +77,6 @@ public class FoodPackageInfoView extends JFrame {
     }
 
     private void onCancel() {
-// add your code here if necessary
         dispose();
     }
 
