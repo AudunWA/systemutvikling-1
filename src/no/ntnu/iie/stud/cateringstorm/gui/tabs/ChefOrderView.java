@@ -158,10 +158,10 @@ public class ChefOrderView extends JPanel {
             JOptionPane.showMessageDialog(this, JOutput);
             return;
         }
-        Order order = tableModel.getValue(orderTable.getSelectedRow());
-        if (order.getStatus() != 0 && order.getStatus() != 3) {
-            OrderFactory.setOrderState(order.getOrderId(), 3);
-            ChefMakeOrderDialog dialog = new ChefMakeOrderDialog(order);
+        Order orderModel = OrderFactory.getOrder((Integer)tableModel.getValueAt(orderTable.getSelectedRow(),0));
+        if (orderModel.getStatus() != 0 && orderModel.getStatus() != 3) {
+            OrderFactory.setOrderState(orderModel.getOrderId(), 3);
+            ChefMakeOrderDialog dialog = new ChefMakeOrderDialog(orderModel);
 
             final int HEIGHT = 700;
             final int WIDTH = 1000;

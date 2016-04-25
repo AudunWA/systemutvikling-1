@@ -86,6 +86,9 @@ public class ChefMakeOrderDialog extends JDialog {
      * Called when view button is pressed
      */
     private void onView() {
+        if (dishTable.getSelectedRow() < 0){
+            return;
+        }
         ChefViewIngredientsDialog view = new ChefViewIngredientsDialog(DishFactory.getDish((Integer) dishTable.getModel().getValueAt(dishTable.getSelectedRow(), 0)));
         final int HEIGHT = 700;
         final int WIDTH = 1000;
@@ -133,15 +136,16 @@ public class ChefMakeOrderDialog extends JDialog {
 
     private void createTable() {
 
-        ArrayList<Integer> packagesId = OrderFactory.getPackages(6);
+        ArrayList<Integer> packagesId = OrderFactory.getPackagesId(order.getOrderId());
         dishList = new ArrayList<>();
 
         for (int i = 0; i < packagesId.size(); i++) {
-            for (int k = 0; k < DishFactory.getDishes(i).size(); k++) {
-                dishList.add(DishFactory.getDishes(i).get(k));
+            for (int k = 0; k < DishFactory.getDishes(i+1).size(); k++) {
+                dishList.add(DishFactory.getDishes(i+1).get(k));
+                System.out.println(DishFactory.getDishes(i+1).get(k));
             }
         }
-        //FIXME add package column???
+
         Integer[] columns = new Integer[]{DishTableModel.COLUMN_ID, DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_TYPE_TEXT, DishTableModel.COLUMN_DESCRIPTION};
         tableModel = new DishTableModel(dishList, columns);
         dishTable = new JTable(tableModel);
