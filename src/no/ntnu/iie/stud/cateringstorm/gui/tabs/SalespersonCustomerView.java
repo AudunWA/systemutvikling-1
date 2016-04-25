@@ -134,7 +134,7 @@ public class SalespersonCustomerView extends JPanel {
         createSearchField();
     }
 
-    public void createTable() {
+    private void createTable() {
 
         customerList = getActiveCustomers();
 

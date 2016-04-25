@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
+/**
+ * GUI Dialog for editing an existing order in the database
+ */
+
 public class EditOrderDialog extends JDialog {
     private JPanel mainPanel;
     private JTextField textField1;
