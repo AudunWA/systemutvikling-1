@@ -1,4 +1,4 @@
-package no.ntnu.iie.stud.cateringstorm.Maps;
+package no.ntnu.iie.stud.cateringstorm.maps;
 
 /**
  * Created by Chris on 14.04.2016.
