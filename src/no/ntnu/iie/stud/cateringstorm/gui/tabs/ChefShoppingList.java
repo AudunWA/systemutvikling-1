@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ChefShoppingList extends JPanel {
     private JPanel contentPane;
     private JButton goShoppingButton;
-    private JButton buttonCancel;
+    private JButton refreshButton;
     private JTable ingredientTable;
     private JScrollPane ingredientPane;
 
@@ -29,6 +29,15 @@ public class ChefShoppingList extends JPanel {
             goShopping();
         });
 
+        refreshButton.addActionListener(e -> {
+            refresh();
+        });
+
+    }
+
+    private void refresh(){
+        ingredientList = IngredientFactory.getAllIngredients();
+        tableModel.setRows(ingredientList);
     }
 
     private void goShopping(){
