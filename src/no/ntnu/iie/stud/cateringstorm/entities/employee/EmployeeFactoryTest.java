@@ -57,12 +57,14 @@ public class EmployeeFactoryTest {
     public void testCreateEmployee() throws Exception {
         Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT,235.99,0);
         Assert.assertNotNull(test);
+
     }
 
     @Test
     public void testEditEmployeeStatus() throws Exception {
         //Test is initially active
         Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT,235.99,0);
+
 
         int result = EmployeeFactory.editEmployeeStatus(test.getEmployeeId(), false);
         Assert.assertEquals(result, 1);
@@ -86,4 +88,5 @@ public class EmployeeFactoryTest {
         double salary = EmployeeFactory.getSalarySoFar(employee.getEmployeeId(),new Date(System.currentTimeMillis()));
         Assert.assertNotNull(salary);
     }
+
 }

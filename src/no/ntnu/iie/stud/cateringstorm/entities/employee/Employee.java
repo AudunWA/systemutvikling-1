@@ -256,6 +256,7 @@ public class Employee {
         this.salary = salary;
     }
 
+
     /**
      * Called on successful login attempt.
      */

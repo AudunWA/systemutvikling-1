@@ -136,8 +136,7 @@ public class AddEmployeeDialog extends JDialog {
             return;
         }
 
-
-        Employee employee = EmployeeFactory.createEmployee(username, password, surname, forename, address, phone, email, employeeType);
+        Employee employee = EmployeeFactory.createEmployee(username, password, surname, forename, address, phone, email, employeeType, EmployeeFactory.getSalaryByType(employeeType.getType()), EmployeeFactory.getCommissionByType(employeeType.getType()));
         addedNewValue = true;
         if (employee == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again.");

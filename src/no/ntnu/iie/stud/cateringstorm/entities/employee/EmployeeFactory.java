@@ -266,4 +266,32 @@ public final class EmployeeFactory {
             return -1;
         }
     }
+
+    public static int getCommissionByType(int employeeType){
+        switch (employeeType){
+            case 5:
+                return 11;
+            default:
+                return 0;
+        }
+    }
+
+    public static double getSalaryByType(int employeeType){
+        switch (employeeType){
+            case 1:
+                return 235.99;
+            case 2:
+                return 235.99;
+            case 3:
+                return 235.99;
+            case 4:
+                return 277.29;
+            case 5:
+                return 106.19;
+            case 6:
+                return 206.49;
+            default:
+                return -1.0;
+        }
+    }
 }
