@@ -108,7 +108,7 @@ public class EditDishDialog extends JDialog {
         rightSideTable.getTableHeader().setReorderingAllowed(false);
 
         // Current dishes
-        addedList = IngredientDishFactory.getAllIngredientsDishesInOrder(dish.getDishId());
+        addedList = IngredientDishFactory.getAllIngredientsInDish(dish.getDishId());
         leftSideModel = new IngredientDishTableModel(addedList, COLUMNS_AVAILABLE_INGREDIENTS);
         addedIngredientTable = new JTable(leftSideModel);
         addedIngredientTable.getTableHeader().setReorderingAllowed(false);
@@ -140,6 +140,14 @@ public class EditDishDialog extends JDialog {
             dish.setDishType(type);
             dish.setActive(isActive);
 
+
+            IngredientDishFactory.RemoveAllIngredientFromDish(dish.getDishId());
+
+
+            for (int i = 0; i < addedList.size(); i++) {
+                IngredientDishFactory.addIngredientToDish(addedList.get(i).getIngredient().getIngredientId(), dish.getDishId(), addedList.get(i).getQuantity(), addedList.get(i).getUnit());
+            }
+
             DishFactory.updateDish(dish);
             if (DishFactory.updateDish(dish) != 1) {
                 JOptionPane.showMessageDialog(this, "Dish was not update, please try again later.");
@@ -158,9 +166,10 @@ public class EditDishDialog extends JDialog {
     }
 
     private void loadData() {
+
         nameField.setText(dish.getName());
         descriptionField.setText(dish.getDescription());
-        typeComboBox.setSelectedIndex(dish.getDishType());
+        typeComboBox.setSelectedIndex(dish.getDishType() - 1);
         statusCheckBox.setSelected(dish.isActive());
 
     }
@@ -190,7 +199,7 @@ public class EditDishDialog extends JDialog {
         boolean check = true;
 
         if (rightSideTable.getSelectedRow() > -1) {
-            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(rightSideTable.getSelectedRow()).getIngredientId()),null,(Integer)addRemoveSpinner.getValue(),selectionList.get(rightSideTable.getSelectedRow()).getUnit());
+            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(rightSideTable.getSelectedRow()).getIngredientId()),dish,(Integer)addRemoveSpinner.getValue(),selectionList.get(rightSideTable.getSelectedRow()).getUnit());
 
             for (int i = 0; i <addedList.size(); i++){
                 if (addedList.get(i).getIngredient().getIngredientId() == ingDish.getIngredient().getIngredientId()){
