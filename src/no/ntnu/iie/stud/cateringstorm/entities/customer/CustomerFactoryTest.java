@@ -46,7 +46,7 @@ public class CustomerFactoryTest {
         Customer testCustomer = CustomerFactory.createCustomer(customer.getForename(), customer.getSurname(), customer.getAddress(), customer.isActive(), customer.getPhone(), customer.getEmail());
         Assert.assertNotNull(testCustomer);
         Assert.assertEquals(customer.getForename(), testCustomer.getForename());
-        Assert.assertEquals(customer.getEmail(), testCustomer);
+        Assert.assertEquals(customer.getEmail(), testCustomer.getEmail());
     }
 
     @Test
