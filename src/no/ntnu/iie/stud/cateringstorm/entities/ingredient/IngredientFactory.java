@@ -146,8 +146,8 @@ public final class IngredientFactory {
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE ingredient SET amount = ? WHERE ingredient_id = ?")) {
 
-                statement.setInt(1, ingredientId);
-                statement.setDouble(2, amount);
+                statement.setDouble(1, amount);
+                statement.setInt(2, ingredientId);
                 statement.execute();
             }
         } catch (SQLException e) {
