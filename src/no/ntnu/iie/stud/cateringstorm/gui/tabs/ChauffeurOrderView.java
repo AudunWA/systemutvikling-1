@@ -20,38 +20,22 @@ import java.util.Date;
  * Created by Audun on 10.03.2016.
  */
 public class ChauffeurOrderView extends JPanel {
-    private static ArrayList<Order> orderList = new ArrayList<Order>();
+    private static ArrayList<Order> orderList = new ArrayList<>();
     private JPanel mainPanel;
-    private JScrollPane orderPane;
     private JTable orderTable;
     private JButton refreshButton;
-    private JComboBox statusBox;
-    private JPanel ComboBoxPanel;
-    private JPanel ButtonPanel;
+    private JComboBox<String> statusBox;
     private JButton startDeliveryButton;
     private JSpinner deliveryAmountSpinner;
-    private ComboBoxModel cbModel;
     private OrderTableModel tableModel;
 
     public ChauffeurOrderView() {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        refreshButton.addActionListener(e -> {
-            refresh();
-        });
-
-        statusBox.addActionListener(e -> {
-            setStatus();
-        });
-
-        startDeliveryButton.addActionListener(e -> {
-            makeDelivery();
-        });
-
-        orderTable.getSelectionModel().addListSelectionListener(e -> {
-            //Get index from selected row
-        });
+        refreshButton.addActionListener(e -> refresh());
+        statusBox.addActionListener(e -> setStatus());
+        startDeliveryButton.addActionListener(e -> makeDelivery());
     }
 
     private static JTable getNewRenderedTable(final JTable table) {
@@ -92,7 +76,7 @@ public class ChauffeurOrderView extends JPanel {
         JFrame frame = new JFrame();
         frame.add(new ChauffeurOrderView());
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
     }
 
@@ -110,7 +94,6 @@ public class ChauffeurOrderView extends JPanel {
         orderTable = new JTable(tableModel);
         getNewRenderedTable(orderTable);
         orderTable.getTableHeader().setReorderingAllowed(false);
-        orderPane = new JScrollPane(orderTable);
         orderTable.setFillsViewportHeight(true);
     }
 
@@ -153,10 +136,10 @@ public class ChauffeurOrderView extends JPanel {
 
         ArrayList<Coordinate> addressToPoint = new ArrayList<>();
 
-        for (int i = 0; i < addresses.size(); i++) {
-            Coordinate coordinate = MapBackend.addressToPoint(addresses.get(i) + ", Trondheim, Norway");
+        for (String address : addresses) {
+            Coordinate coordinate = MapBackend.addressToPoint(address + ", Trondheim, Norway");
             if (coordinate == null) {
-                JOptionPane.showMessageDialog(this, "Address \"" + addresses.get(i) + "\" is troublesome.");
+                JOptionPane.showMessageDialog(this, "Address \"" + address + "\" is troublesome.");
                 startDeliveryButton.setEnabled(true);
                 return;
             }
@@ -174,9 +157,9 @@ public class ChauffeurOrderView extends JPanel {
     }
 
     private void createComboBox() {
-        Object[] status = {"Delivered", "Ready for delivery"};
+        String[] status = {"Delivered", "Ready for delivery"};
 
-        statusBox = new JComboBox(status);
+        statusBox = new JComboBox<>(status);
         statusBox.setSelectedIndex(0);
     }
 

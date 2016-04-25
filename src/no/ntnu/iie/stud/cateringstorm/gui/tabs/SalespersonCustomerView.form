@@ -18,12 +18,12 @@
           </component>
         </children>
       </scrollpane>
-      <grid id="c5577" binding="selectButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+      <grid id="c5577" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="b02d" class="javax.swing.JLabel" binding="infoLabel">
+          <component id="b02d" class="javax.swing.JLabel">
             <constraints/>
             <properties>
               <text value="With selected table row:"/>
@@ -49,7 +49,7 @@
           </component>
         </children>
       </grid>
-      <grid id="872a6" binding="noSelectButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+      <grid id="872a6" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="South"/>
         <properties/>
         <border type="none"/>

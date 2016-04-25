@@ -7,7 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="5221f" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+      <grid id="5221f" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="South"/>
         <properties/>
         <border type="none"/>
@@ -20,7 +20,7 @@
           </component>
         </children>
       </grid>
-      <scrollpane id="67179" binding="tablePane">
+      <scrollpane id="67179">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>

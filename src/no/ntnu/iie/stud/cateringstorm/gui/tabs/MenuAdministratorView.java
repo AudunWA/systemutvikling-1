@@ -34,7 +34,6 @@ public class MenuAdministratorView extends JPanel {
     private JTable dishTable;
     private JPanel mainPanel;
     private JButton exitButton;
-    private JScrollPane dishPane;
     private JTextField searchField;
     private JButton refreshButton;
     private JCheckBox inactiveCheckBox;
@@ -128,12 +127,7 @@ public class MenuAdministratorView extends JPanel {
         });
 
         //Searches on enter key press
-        searchField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                search();
-            }
-        });
+        searchField.addActionListener(e -> search());
 
         searchField.addMouseListener(new MouseAdapter() {
             @Override
@@ -154,7 +148,7 @@ public class MenuAdministratorView extends JPanel {
         JFrame frame = new JFrame();
         frame.add(new MenuAdministratorView());
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);//Puts window in middle of screen
     }

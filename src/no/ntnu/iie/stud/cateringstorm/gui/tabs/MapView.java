@@ -22,7 +22,6 @@ import java.util.logging.Level;
 
 /**
  * Displays a map with driving routes for the chauffeur.
- * Created by Audun on 19.04.2016.
  */
 public class MapView extends JFrame {
     private final String MAP_PATH = "html/map.html";
@@ -53,9 +52,7 @@ public class MapView extends JFrame {
             }
         });
 
-        setDeliveredButton.addActionListener(e -> {
-            setDelivered();
-        });
+        setDeliveredButton.addActionListener(e -> setDelivered());
 
         browser.loadHTML(getMapHTML());
         mainPanel.add(view, BorderLayout.CENTER);

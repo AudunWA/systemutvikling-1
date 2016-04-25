@@ -7,7 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="b1370" binding="selectButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+      <grid id="b1370" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>
@@ -15,7 +15,7 @@
           <vspacer id="576f5">
             <constraints/>
           </vspacer>
-          <component id="917b0" class="javax.swing.JLabel" binding="infoLabel">
+          <component id="917b0" class="javax.swing.JLabel">
             <constraints/>
             <properties>
               <text value="With selected row: "/>
@@ -44,7 +44,7 @@
           </component>
         </children>
       </scrollpane>
-      <grid id="e99d3" binding="noSelectButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+      <grid id="e99d3" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="South"/>
         <properties/>
         <border type="none"/>
@@ -59,12 +59,6 @@
             <constraints/>
             <properties>
               <text value="New order"/>
-            </properties>
-          </component>
-          <component id="5c894" class="javax.swing.JButton" binding="newSubscriptionButton" default-binding="true">
-            <constraints/>
-            <properties>
-              <text value="New subscription"/>
             </properties>
           </component>
           <component id="2609f" class="javax.swing.JTextField" binding="searchField" custom-create="true">

@@ -31,7 +31,7 @@
           <gridbag weightx="0.0" weighty="0.25"/>
         </constraints>
       </hspacer>
-      <grid id="5c993" binding="ButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+      <grid id="5c993" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
@@ -40,7 +40,7 @@
         <border type="none"/>
         <children/>
       </grid>
-      <grid id="a4b39" binding="ComboBoxPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+      <grid id="a4b39" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>

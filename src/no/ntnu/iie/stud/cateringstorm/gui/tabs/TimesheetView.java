@@ -40,6 +40,10 @@ public class TimesheetView extends JPanel {
     private int loggedInEmployeeId;
     private Timesheet unFinishedSheet;
 
+    /**
+     * Constructor used when initializing as a tab on the dashboard. Invoked with reflection.
+     */
+    @SuppressWarnings("unused")
     public TimesheetView() {
         this.loggedInEmployeeId = GlobalStorage.getLoggedInEmployee().getEmployeeId();
 
