@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
- * Represents a recurring order, which is a part of a subscription
- * Created by Audun on 20.04.2016.
+ * Java representation of the database entity "recurring_order", which is a part of a subscription.
  */
 public class RecurringOrder {
     private final int recurringOrderId;
@@ -82,7 +81,7 @@ public class RecurringOrder {
     }
 
     /**
-     *  Returns the amount of food packages.
+     * Returns the amount of food packages.
      * @return the amount of food packages.
      */
     public int getAmount() {

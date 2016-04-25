@@ -1,31 +1,37 @@
 -- (employee_type) --
-INSERT INTO employee_type VALUES (1, 'chef', 100);
-INSERT INTO employee_type VALUES (2, 'chauffeur', 80);
-INSERT INTO employee_type VALUES (3, 'nutrition expert', 110);
-INSERT INTO employee_type VALUES (4, 'administrator', 120);
-INSERT INTO employee_type VALUES (5, 'sales person', 50);
-INSERT INTO employee_type VALUES (6, 'laundry staff', 60);
+INSERT INTO employee_type VALUES (1, 'chef', 235.99, 0);
+INSERT INTO employee_type VALUES (2, 'chauffeur', 235.99, 0);
+INSERT INTO employee_type VALUES (3, 'nutrition expert', 235.99, 0);
+INSERT INTO employee_type VALUES (4, 'administrator', 277.29, 0);
+INSERT INTO employee_type VALUES (5, 'sales person', 106.19, 11);
+INSERT INTO employee_type VALUES (6, 'secretary', 206.49, 0);
 
 -- (employee) --
 INSERT INTO employee VALUES
   (default, 'nootnoot', 'Knut', 'Kirkhorn', 'Pinguveien 23', '12345678', 'pingu@pingumail.com', 6, TRUE,
-            'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e', 'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
+            'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e', 'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh',
+            206.49, 0);
 INSERT INTO employee VALUES
   (default, 'eliasbs', 'Elias', 'Sørensen', 'Valgrindvegen', '88888888', 'dragonslayer69@hotmail.com', 1, TRUE,
-            'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e', 'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
+            'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e', 'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh',
+            235.99, 0);
 INSERT INTO employee VALUES
   (default, 'chechter', 'Christian', 'Echtermeyer', 'Stibakken 2', '99258217', 'chrech.birr@gmail.com', 4, TRUE,
-            'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e', 'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
+            'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e', 'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh',
+            277.29, 0);
 INSERT INTO employee VALUES
   (default, 'pisken', 'Kenan', 'Mahic', 'Kolstad', '123232323', 'kenanpølser@pølsefest.no', 3, TRUE,
-            'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e', 'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
+            'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e', 'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh',
+            235.99, 0);
 INSERT INTO employee VALUES
   (default, 'vebjørn', 'Audun', 'Arbo', 'Trondheim', '69696969', 'glassmesteren@knusemail.com', 2, TRUE,
-            'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e', 'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
+            'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e', 'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh',
+            235.99, 0);
 INSERT INTO employee VALUES (default, 'drammen', 'Håvard', 'Høydalsnes', 'Drammen',
                                       '87654321', 'rave@ravemail.com', 5, FALSE,
                                       'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e',
-                                      'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh');
+                                      'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh',
+                                      106.19, 11);
 
 -- (timesheet) --
 INSERT INTO timesheet VALUES (DEFAULT, 1, '2015-12-31 11:30:45', '2015-12-31 17:30:45', TRUE);

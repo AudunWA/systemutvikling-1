@@ -6,9 +6,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 /**
- * Created by Chris on 16.03.2016.
+ * Unit test class for DishFactory.
  */
 public class DishFactoryTest {
+
     @Test
     public void testCreateDish() throws Exception {
         Dish dish = DishFactory.createDish("TestCreateDish", "TestCreateDish desc", 2, true);
@@ -74,7 +75,6 @@ public class DishFactoryTest {
         Assert.assertNotNull(dish);
         Assert.assertEquals(dish.getDescription(), newDescription);
     }
-
     @Test
     public void testGetDishes() throws Exception {
         ArrayList<Dish> dishes = DishFactory.getDishes(1); // We assume food package 1 exists

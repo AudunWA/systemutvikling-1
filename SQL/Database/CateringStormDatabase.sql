@@ -20,6 +20,7 @@ CREATE TABLE employee_type (
   e_type_id   INTEGER,
   e_type_name VARCHAR(20) NOT NULL,
   salary      DOUBLE      NOT NULL,
+  commission  INTEGER,
   PRIMARY KEY (e_type_id)
 );
 
@@ -35,6 +36,8 @@ CREATE TABLE employee (
   active      BOOLEAN     NOT NULL,
   password    VARCHAR(64) NOT NULL,
   salt        VARCHAR(32) NOT NULL,
+  salary      DOUBLE      NOT NULL,
+  commission  INTEGER,
   FOREIGN KEY (e_type_id) REFERENCES employee_type (e_type_id)
     ON UPDATE CASCADE,
   PRIMARY KEY (employee_id),
