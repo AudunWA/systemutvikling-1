@@ -609,7 +609,7 @@ public final class OrderFactory {
      * @param orderID
      * @return ArrayList<Integer>
      */
-    public static ArrayList<Integer> getPackages(int orderID) {
+    public static ArrayList<Integer> getPackagesId(int orderID) {
         ArrayList<Integer> packages = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT food_package_id FROM _order_food_package WHERE _order_id = ?")) {
