@@ -5,7 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import java.util.ArrayList;
 
 /**
- * Table model for order entity JTable in GUI
+ * Table model for order entity JTable in GUI window for Order entity
  */
 public class OrderTableModel extends EntityTableModel<Order> {
     public static final int COLUMN_ID = 0;

@@ -151,7 +151,12 @@ public final class CustomerFactory {
     /**
      * Inserts a customer into the SQL table customer. Takes a Customer object as arguement
      *
-     * @param surname, forename, address, active, phone, email
+     * @param surname
+     * @param forename
+     * @param address
+     * @param active
+     * @param phone
+     * @param email
      * @return Customer
      */
     public static Customer createCustomer(String surname, String forename, String address, boolean active, String phone, String email) {
