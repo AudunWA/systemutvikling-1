@@ -6,7 +6,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.timesheet.TimesheetFactory;
 import java.util.ArrayList;
 
 /**
- * Created by EliasBrattli on 14/04/2016.
+ * Table model for manipulating contents of GUI JTable for Timesheet entity
  */
 public class TimesheetTableModel extends EntityTableModel<Timesheet> {
 
