@@ -141,6 +141,20 @@ public final class IngredientFactory {
         return temp;
     }
 
+    public static void setAmountGivenIngredientId(int ingredientId, double amount) {
+
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE ingredient SET amount = ? WHERE ingredient_id = ?")) {
+
+                statement.setInt(1, ingredientId);
+                statement.setDouble(2, amount);
+                statement.executeQuery();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Inserts an ingredient into SQL table ingredient given an ingredient object
