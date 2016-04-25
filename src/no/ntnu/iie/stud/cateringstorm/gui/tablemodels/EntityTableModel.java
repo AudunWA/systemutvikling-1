@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 /**
  * Abstract base class for custom table models
+ * Used to manipulate contents in GUI JTables, displayed in JPanel windows
  * Contains methods designed for dynamic contents, and recycling code lines
- * Created by Audun on 05.04.2016.
  */
 public abstract class EntityTableModel<T> extends AbstractTableModel {
     private ArrayList<T> rows;

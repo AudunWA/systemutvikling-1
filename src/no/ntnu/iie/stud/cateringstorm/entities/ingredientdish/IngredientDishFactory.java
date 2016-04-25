@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by Chris on 21.04.2016.
+ * Class handling database interaction, loading and generating IngredientDish joint entity objects.
  */
 public class IngredientDishFactory {
 

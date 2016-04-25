@@ -5,7 +5,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 
 /**
  * Created by Chris on 21.04.2016.
- * Joint class of MySQL entities ingredient and dish, containing a quantity.
+ * Joint class of MySQL entities ingredient and dish, containing a quantity and a unit.
  */
 public class IngredientDish {
     private final Ingredient ingredient;

@@ -33,14 +33,17 @@ public class ChefOrderView extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        viewButton.addActionListener(e -> viewOrder());
-        statusBox.addActionListener(e -> setStatus());
-        refreshButton.addActionListener(e -> refresh());
-
+        addActionListeners();
         getNewRenderedTable();
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderTable.setFillsViewportHeight(true);
         updateRecurringOrders();
+    }
+
+    private void addActionListeners(){
+        viewButton.addActionListener(e -> viewOrder());
+        statusBox.addActionListener(e -> setStatus());
+        refreshButton.addActionListener(e -> refresh());
     }
 
     private JTable getNewRenderedTable() {
@@ -107,7 +110,6 @@ public class ChefOrderView extends JPanel {
         statusBox.setSelectedIndex(0);
     }
 
-    // FIXME: Trouble with wrongly selected indexes. Might be wrong logic i back-end?
     private void setStatus() {
         orderList = OrderFactory.getAllOrders();
         int choice = statusBox.getSelectedIndex();
@@ -128,7 +130,6 @@ public class ChefOrderView extends JPanel {
     }
 
     private void viewOrder() {
-        // TODO: Implement method opening a new tab DishInfoView, allowing user to view more information of a single
         if (orderTable.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(this, "Please select a order");
             return;

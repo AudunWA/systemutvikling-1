@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Audun on 11.03.2016.
+ * Class handling database interaction, loading and generating Order entity objects.
  */
 
 public final class OrderFactory {

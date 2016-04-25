@@ -147,12 +147,6 @@ public class FoodPackageAdminView extends JPanel {
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);//Puts window in middle of screen
     }
-    
-    private void createSearchField() {
-        searchField = new JTextField(20);
-        setSearchField("Search for food packages");
-        add(searchField);
-    }
 
     private void setSearchField(String text) {
         searchField.setText(text);
@@ -186,7 +180,6 @@ public class FoodPackageAdminView extends JPanel {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         createTable();
     }
 

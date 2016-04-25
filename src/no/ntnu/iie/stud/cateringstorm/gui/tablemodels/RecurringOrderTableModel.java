@@ -6,7 +6,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.util.DateUtil;
 import java.util.ArrayList;
 
 /**
- * Created by Audun on 07.04.2016.
+ * Tablemodel class, used to manipulate contents in GUI JTable of RecurringOrder entity
  */
 public class RecurringOrderTableModel extends EntityTableModel<RecurringOrder> {
     public static final int COLUMN_ID = 0;

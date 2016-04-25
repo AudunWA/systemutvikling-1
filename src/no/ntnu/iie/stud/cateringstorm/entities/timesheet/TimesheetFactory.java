@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * Created by EliasBrattli on 14/04/2016.
+ * Class handling database interaction, loading and generating Timesheet entity objects.
  */
 public final class TimesheetFactory {
     private Employee thisEmployee = GlobalStorage.getLoggedInEmployee(); //Access to the respective employee
@@ -28,16 +28,13 @@ public final class TimesheetFactory {
         Timestamp toTime = result.getTimestamp("to_time");
         boolean active = result.getBoolean("active");
         return new Timesheet(timesheetId, employeeId, fromTime, toTime, active);
-
     }
 
     /**
      * Creates an arraylist containing Timesheet
-     *
      * @return ArrayList<Timesheet>
      */
     public static ArrayList<Timesheet> getAllTimesheets() {
-        // TODO: Implement method gathering all timesheet from table, only where employee ID equals this ID
         ArrayList<Timesheet> timesheetList = new ArrayList<>();
 
         try (Connection connection = Database.getConnection()) {
