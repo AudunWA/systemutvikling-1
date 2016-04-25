@@ -63,7 +63,9 @@ public class ChefViewIngredientsDialog extends JDialog {
         dialog.setVisible(true);
         System.exit(0);
     }
-
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
         dispose();
     }

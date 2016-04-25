@@ -89,7 +89,9 @@ public class RegisterTimesheetDialog extends JDialog {
     public boolean isRegistered() {
         return registered;
     }
-
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
         dispose();
     }
@@ -151,6 +153,11 @@ public class RegisterTimesheetDialog extends JDialog {
     }
 
     // TODO: Check if any date selected has already got a timesheet registered, as we want no double saving.
+
+    /**
+     * Called when ok buttons is pressed
+     * Registers a new timesheet for the selected employee
+     */
     private void onOK() {
         Date date = getDate();
 

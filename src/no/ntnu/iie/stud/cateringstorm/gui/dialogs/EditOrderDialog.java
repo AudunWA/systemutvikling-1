@@ -75,6 +75,10 @@ public class EditOrderDialog extends JDialog {
         System.exit(0);
     }
 
+    /**
+     * Called when ok button is pressed
+     * Saves changes to the order
+     */
     private void onOK() {
 // add your code here
         boolean changed = false;
@@ -131,7 +135,9 @@ public class EditOrderDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "Edit successful");
         }
     }
-
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
 // add your code here if necessary
         dispose();

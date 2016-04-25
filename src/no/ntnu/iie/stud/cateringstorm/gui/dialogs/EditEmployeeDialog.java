@@ -88,6 +88,9 @@ public class EditEmployeeDialog extends JDialog {
         System.exit(0);
     }
 
+    /**
+     * Called when ok button is called
+     */
     private void onOK() {
         final int COLUMN_USERNAME = 0;
         final int COLUMN_FORENAME = 1;
@@ -146,9 +149,10 @@ public class EditEmployeeDialog extends JDialog {
 
         dispose();
     }
-
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
-// add your code here if necessary
         dispose();
     }
 
