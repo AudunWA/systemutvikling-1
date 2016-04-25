@@ -70,6 +70,9 @@ public class AddIngredientDialog extends JDialog {
         System.exit(0);
     }
 
+    /**
+     * Called when ok button is pressed
+     */
     private void onOK() {
         // Check that values are valid
         String name = nameTextField.getText();
@@ -136,6 +139,9 @@ public class AddIngredientDialog extends JDialog {
         dispose();
     }
 
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
 // add your code here if necessary
         dispose();

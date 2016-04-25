@@ -33,26 +33,6 @@ public class FoodPackageAdminView extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        /*
-        searchField.getDocument().addDocumentListener(new DocumentListener() {
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                search();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                search();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                search();
-            }
-        });
-        */
-
         addActionListeners();
     }
     private void addActionListeners(){
@@ -102,9 +82,7 @@ public class FoodPackageAdminView extends JPanel {
 
 
         });
-        searchButton.addActionListener(e -> {
-            search();
-        });
+        searchButton.addActionListener(e -> search());
         removeFoodPackageButton.addActionListener(e -> {
             int selectedRow = FoodPackageTable.getSelectedRow();
             if (selectedRow == -1) {

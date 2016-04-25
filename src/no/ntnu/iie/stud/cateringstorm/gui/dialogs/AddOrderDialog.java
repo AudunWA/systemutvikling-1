@@ -30,7 +30,7 @@ public class AddOrderDialog extends JDialog {
     private Employee employee;
 
     private JPanel mainPanel;
-    private JButton okButton;
+    private JButton addRemoveButton;
     private JButton cancelButton;
     private JTextField forenameText;
     private JLabel descriptionLabel;
@@ -46,7 +46,7 @@ public class AddOrderDialog extends JDialog {
     private JComboBox customerComboBox;
     private JTable packageTable;
     private JTable addedTable;
-    private JButton addButton;
+    private JButton okButton;
 
     private ArrayList<FoodPackage> addedList;
     private ArrayList<Order> orders = new ArrayList<>();
@@ -56,17 +56,17 @@ public class AddOrderDialog extends JDialog {
         this.employee = employee;
         setContentPane(mainPanel);
         setModal(true);
-        getRootPane().setDefaultButton(okButton);
+        getRootPane().setDefaultButton(addRemoveButton);
 
-        okButton.addActionListener(new ActionListener() {
+        addRemoveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                onAR();
             }
         });
 
-        addButton.addActionListener(new ActionListener() {
+        addRemoveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onAdd();
+                onOk();
             }
         });
 
@@ -140,7 +140,7 @@ public class AddOrderDialog extends JDialog {
         System.exit(0);
     }
 
-    private void onOK() {
+    private void onAR() {
 // add your code here
 
         if (packageTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
@@ -174,7 +174,10 @@ public class AddOrderDialog extends JDialog {
         }
     }
 
-    private void onAdd() {
+    /**
+     * Called when ok button is pressed
+     */
+    private void onOk() {
 
         int customerIndex = customerComboBox.getSelectedIndex();
         if (customerIndex == CustomerFactory.getAllCustomers().size()) {
@@ -255,6 +258,9 @@ public class AddOrderDialog extends JDialog {
         }
     }
 
+    /**
+     * Called when cancel button, escape or the cross is pressed
+     */
     private void onCancel() {
 // add your code here if necessary
         dispose();

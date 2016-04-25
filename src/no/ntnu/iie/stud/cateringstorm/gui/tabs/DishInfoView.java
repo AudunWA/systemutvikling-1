@@ -19,8 +19,6 @@ public class DishInfoView extends JFrame {
     private JPanel mainPanel;
     private JButton addRowButton;
     private JTable ingredientTable;
-    private JScrollPane tablePane;
-    private JPanel buttonPanel;
     private JButton saveButton;
     private JButton closeButton;
 
@@ -36,9 +34,7 @@ public class DishInfoView extends JFrame {
     }
 
     private void addActionListeners(){
-        closeButton.addActionListener(e -> {
-            onCancel();
-        });
+        closeButton.addActionListener(e -> onCancel());
        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -48,11 +44,7 @@ public class DishInfoView extends JFrame {
         });
 
         // call onCancel() on ESCAPE
-        mainPanel.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     public static void main(String[] args) {

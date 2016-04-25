@@ -31,7 +31,7 @@ public final class CustomerFactory {
         String phone = result.getString("phone");
         String email = result.getString("email");
 
-        return new Customer(customer_id, surname, forename, address, active, phone, email);
+        return new Customer(customer_id, forename, surname, address, active, phone, email);
     }
 
     /**
@@ -154,7 +154,7 @@ public final class CustomerFactory {
      * @param surname, forename, address, active, phone, email
      * @return Customer
      */
-    public static Customer createCustomer(String surname, String forename, String address, boolean active, String phone, String email) {
+    public static Customer createCustomer(String forename, String surname, String address, boolean active, String phone, String email) {
 
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO customer VALUES(DEFAULT,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS)) {

@@ -19,7 +19,6 @@ import java.util.Date;
 /**
  * GUI for displaying the inventory of ingredients to chefs and nutrition experts(?).
  * Lets the user add, edit and remove ingredients.
- * Created by Audun on 01.04.2016.
  */
 public class StorageView extends JPanel {
     private JPanel mainPanel;
@@ -73,9 +72,9 @@ public class StorageView extends JPanel {
 
                 ArrayList<Ingredient> copy = new ArrayList<>();
 
-                for (int i = 0; i < ingredientList.size(); i++) {
-                    if ((ingredientList.get(i).getName().toLowerCase().contains(searchField.getText().toLowerCase()) || (ingredientList.get(i).getName()).toLowerCase().contains(searchField.getText().toLowerCase()))) {
-                        copy.add(ingredientList.get(i));
+                for (Ingredient anIngredientList : ingredientList) {
+                    if ((anIngredientList.getName().toLowerCase().contains(searchField.getText().toLowerCase()) || (anIngredientList.getName()).toLowerCase().contains(searchField.getText().toLowerCase()))) {
+                        copy.add(anIngredientList);
 
                     }
                 }
@@ -117,7 +116,7 @@ public class StorageView extends JPanel {
     public static void main(String[] args) {
         JFrame frame = new JFrame("StorageView");
         frame.setContentPane(new StorageView().mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);

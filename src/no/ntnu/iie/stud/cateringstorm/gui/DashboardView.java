@@ -65,7 +65,6 @@ public class DashboardView extends JFrame {
             case EMPLOYEE:
                 break;
             case CHEF:
-                //tabPane.addTab("OrderInfoView", new OrderInfoView());
                 tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), StorageView.class);
                 tabPane.addTab("Food packages", getIconResource("package_1x.png"), FoodPackageAdminView.class);
                 tabPane.addTab("Orders", getIconResource("ic_list_black_24dp_1x.png"), ChefOrderView.class);
@@ -87,7 +86,6 @@ public class DashboardView extends JFrame {
                 tabPane.addTab("Food packages", getIconResource("package_1x.png"), FoodPackageAdminView.class);
                 break;
             case ADMINISTRATOR:
-                //tabPane.addTab("OrderInfoView", new OrderInfoView());
                 tabPane.addTab("Orders (chef)", getIconResource("ic_list_black_24dp_1x.png"), ChefOrderView.class);
                 tabPane.addTab("Orders (salesperson)", getIconResource("ic_list_black_24dp_1x.png"), SalespersonOrderView.class);
                 tabPane.addTab("Subscriptions", getIconResource("ic_update_black_24dp_1x.png"), SalespersonSubscriptionView.class);
@@ -97,7 +95,6 @@ public class DashboardView extends JFrame {
                 tabPane.addTab("Storage", getIconResource("ic_shopping_cart_black_24dp_1x.png"), StorageView.class);
                 tabPane.addTab("Customers", getIconResource("ic_account_circle_black_24dp_1x.png"), SalespersonCustomerView.class);
                 tabPane.addTab("Employees", getIconResource("ic_accessibility_black_24dp_1x.png"), AdminEmployeeView.class);
-                //tabPane.addTab("FoodPackageInfoview", new FoodPackageInfoView());
                 tabPane.addTab("Statistics", getIconResource("ic_insert_chart_black_24dp_1x.png"), StatisticsView.class);
                 tabPane.addTab("Shopping", getIconResource("cart-plus_1x.png"), ChefShoppingList.class);
                 break;

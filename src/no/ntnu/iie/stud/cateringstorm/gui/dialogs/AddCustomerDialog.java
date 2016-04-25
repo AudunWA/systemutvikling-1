@@ -54,6 +54,9 @@ public class AddCustomerDialog extends JDialog {
 
     }
 
+    /**
+     * Called when Ok Button is pressed
+     */
     private void onOK() {
         String forename = forenameField.getText().trim();
         String surname = surnameField.getText().trim();
@@ -82,7 +85,7 @@ public class AddCustomerDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "Please fill in an email.");
             return;
         }
-        Customer customer = CustomerFactory.createCustomer(surname, forename, address, true, phone, email);
+        Customer customer = CustomerFactory.createCustomer(forename, surname, address, true, phone, email);
 
         if (customer == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again later.");
@@ -96,6 +99,9 @@ public class AddCustomerDialog extends JDialog {
         return addedNewValue;
     }
 
+    /**
+     * Called on cancel button, escape or the exit cross in the top right corner is pressed
+     */
     private void onCancel() {
         dispose();
     }

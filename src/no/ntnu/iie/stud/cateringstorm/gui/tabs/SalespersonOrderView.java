@@ -25,43 +25,23 @@ public class SalespersonOrderView extends JPanel {
     private static ArrayList<Order> orderList = new ArrayList<Order>();
     OrderTableModel tableModel;
     private JPanel mainPanel;
-    private JScrollPane orderPane;
     private JButton viewButton;
     private JButton addOrderButton;
     private JButton editOrderButton;
-    private JPanel selectButtonPanel;
     private JComboBox statusBox;
     private JTable orderTable;
     private JButton refreshButton;
-    private JPanel noSelectButtonPanel;
-    private JLabel infoLabel;
     private JButton searchButton;
     private JTextField searchField;
-    private JButton newSubscriptionButton;
 
     public SalespersonOrderView() {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        refreshButton.addActionListener(e -> {
-            refresh();
-        });
-
-        addOrderButton.addActionListener(e -> {
-            addOrder(GlobalStorage.getLoggedInEmployee());
-        });
-
-        editOrderButton.addActionListener(e -> {
-            editOrder(getSelectedOrder());
-        });
-
-        newSubscriptionButton.addActionListener(e -> {
-            newSubscription();
-        });
-
-        statusBox.addActionListener(e -> {
-            setStatus();
-        });
+        refreshButton.addActionListener(e -> refresh());
+        addOrderButton.addActionListener(e -> addOrder(GlobalStorage.getLoggedInEmployee()));
+        editOrderButton.addActionListener(e -> editOrder(getSelectedOrder()));
+        statusBox.addActionListener(e -> setStatus());
 
         searchField.addMouseListener(new MouseAdapter() {
             @Override
@@ -138,25 +118,6 @@ public class SalespersonOrderView extends JPanel {
         orderList = OrderFactory.getAllOrders();
     }
 
-    private void newSubscription() {
-
-        AddSubscriptionDialog asDialog = new AddSubscriptionDialog();
-        final int WIDTH = 1300;
-        final int HEIGHT = 600;
-        asDialog.pack();
-        asDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        asDialog.setSize(WIDTH, HEIGHT);
-        asDialog.setLocationRelativeTo(null);
-        asDialog.setVisible(true);
-
-        if (asDialog.getSubscription() == null) {
-            // Failed
-            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Subscription not created.", Toast.Style.ERROR).display();
-        } else {
-            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Subscription created.", Toast.Style.SUCCESS).display();
-        }
-    }
-
     private void editOrder(Order order) {
         if (order != null) {
             EditOrderDialog eoDialog = new EditOrderDialog(order);
@@ -186,7 +147,6 @@ public class SalespersonOrderView extends JPanel {
         tableModel = new OrderTableModel(orderList, columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
-        orderPane = new JScrollPane(orderTable);
         orderTable.setFillsViewportHeight(true);
     }
 

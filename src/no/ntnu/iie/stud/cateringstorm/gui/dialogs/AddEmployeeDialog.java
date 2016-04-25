@@ -90,6 +90,9 @@ public class AddEmployeeDialog extends JDialog {
         etBox.setSelectedIndex(0);
     }
 
+    /**
+     * Called when ok button is pressed
+     */
     private void onOK() {
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -148,6 +151,9 @@ public class AddEmployeeDialog extends JDialog {
         return addedNewValue;
     }
 
+    /**
+     * Called when cancel button, escape or cross is pressed
+     */
     private void onCancel() {
 // add your code here if necessary
         dispose();

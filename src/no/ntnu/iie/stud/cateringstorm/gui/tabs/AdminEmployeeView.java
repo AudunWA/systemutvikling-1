@@ -26,7 +26,6 @@ public class AdminEmployeeView extends JPanel {
     private JButton addEmployeeButton;
     private JButton editEmployeeButton;
     private JButton removeButton;
-    private JPanel noSelectButtonPanel;
     private JCheckBox showInactiveEmployeeButton;
     private JTextField searchField;
     private EmployeeTableModel tableModel;
@@ -43,25 +42,11 @@ public class AdminEmployeeView extends JPanel {
     }
 
     private void addActionListeners() {
-        refreshButton.addActionListener(e -> {
-            refresh();
-        });
-
-        addEmployeeButton.addActionListener(e -> {
-            addEmployee();
-        });
-
-        editEmployeeButton.addActionListener(e -> {
-            editEmployee(getSelectedEmployee());
-        });
-
-        removeButton.addActionListener(e -> {
-            removeEmployee(getSelectedEmployee());
-        });
-
-        showInactiveEmployeeButton.addActionListener(e -> {
-            refresh();
-        });
+        refreshButton.addActionListener(e -> refresh());
+        addEmployeeButton.addActionListener(e -> addEmployee());
+        editEmployeeButton.addActionListener(e -> editEmployee(getSelectedEmployee()));
+        removeButton.addActionListener(e -> removeEmployee(getSelectedEmployee()));
+        showInactiveEmployeeButton.addActionListener(e -> refresh());
 
         searchField.addMouseListener(new MouseAdapter() {
             @Override

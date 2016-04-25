@@ -31,11 +31,8 @@ public class SalespersonCustomerView extends JPanel {
     private JTable customerTable;
     private JButton addButton;
     private JButton editButton;
-    private JPanel selectButtonPanel;
     private JButton refreshButton;
     private JButton removeButton;
-    private JPanel noSelectButtonPanel;
-    private JLabel infoLabel;
     private JTextField searchField;
     private JButton searchButton;
     private JCheckBox showInactiveCB;
@@ -48,22 +45,11 @@ public class SalespersonCustomerView extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        addButton.addActionListener(e -> {
-            addCustomer();
-        });
-        editButton.addActionListener(e -> {
-            editCustomer(getSelectedCustomer());
-        });
-        removeButton.addActionListener(e -> {
-
-            removeCustomer(getSelectedCustomer());
-        });
-        refreshButton.addActionListener(e -> {
-            refresh();
-        });
-        showInactiveCB.addActionListener(e -> {
-            refresh();
-        });
+        addButton.addActionListener(e -> addCustomer());
+        editButton.addActionListener(e -> editCustomer(getSelectedCustomer()));
+        removeButton.addActionListener(e -> removeCustomer(getSelectedCustomer()));
+        refreshButton.addActionListener(e -> refresh());
+        showInactiveCB.addActionListener(e -> refresh());
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -115,7 +101,7 @@ public class SalespersonCustomerView extends JPanel {
         JFrame frame = new JFrame();
         frame.add(new SalespersonCustomerView());
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);
     }
