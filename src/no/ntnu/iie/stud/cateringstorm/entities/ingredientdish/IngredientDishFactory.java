@@ -21,7 +21,7 @@ public class IngredientDishFactory {
 
         int ingredientId = resultSet.getInt("ingredient_id");
         int dishId = resultSet.getInt("dish_id");
-        int quantity = resultSet.getInt("quantity");
+        double quantity = resultSet.getDouble("quantity");
         String unit = resultSet.getString("unit");
         Ingredient ingredient = IngredientFactory.getIngredient(ingredientId);
         Dish dish = DishFactory.getDish(dishId);
@@ -29,7 +29,7 @@ public class IngredientDishFactory {
         return new IngredientDish(ingredient, dish, quantity, unit);
     }
 
-    public static boolean addIngredientToDish(int ingredientId, int dishId, int quantity, String unit) {
+    public static boolean addIngredientToDish(int ingredientId, int dishId, double quantity, String unit) {
 
         try (Connection connection = Database.getConnection()) {
             // Add the ingredient itself and get ID
@@ -37,7 +37,7 @@ public class IngredientDishFactory {
 
                 statement.setInt(1, ingredientId);
                 statement.setInt(2, dishId);
-                statement.setInt(3, quantity);
+                statement.setDouble(3, quantity);
                 statement.setString(4, unit);
 
                 int affectedRows = statement.executeUpdate();
@@ -48,6 +48,8 @@ public class IngredientDishFactory {
             return false;
         }
     }
+
+    private static Dish tempDish;
 
     public static ArrayList<IngredientDish> createDish(ArrayList<IngredientDish> ingredientDishes, String name, String description, int dishType, boolean active) {
 
@@ -72,6 +74,7 @@ public class IngredientDishFactory {
                     try (ResultSet result = statement.getGeneratedKeys()) {
                         if (result.next()) {
                             generatedId = result.getInt(1);
+                            tempDish = new Dish(generatedId, name, description, dishType, active);
                         } else {
                             connection.rollback();
                             connection.setAutoCommit(true);
@@ -85,10 +88,10 @@ public class IngredientDishFactory {
                     for (IngredientDish ingDish : ingredientDishes) {
                         statement.setInt(1, ingDish.getIngredient().getIngredientId());
                         statement.setInt(2, generatedId);
-                        statement.setInt(3, ingDish.getQuantity());
+                        statement.setDouble(3, ingDish.getQuantity());
                         statement.setString(4, ingDish.getUnit());
                         statement.addBatch();
-                        returnList.add(new IngredientDish(IngredientFactory.getIngredient(ingDish.getIngredient().getIngredientId()), DishFactory.getDish(generatedId), ingDish.getQuantity(), ingDish.getUnit()));
+                        returnList.add(new IngredientDish(IngredientFactory.getIngredient(ingDish.getIngredient().getIngredientId()), tempDish, ingDish.getQuantity(), ingDish.getUnit()));
                     }
                     statement.executeBatch();
                 }
@@ -185,7 +188,7 @@ public class IngredientDishFactory {
         return temp;
     }
 
-    public static boolean RemoveIngredientFromDish(int ingredientId, int dishId) {
+    public static boolean removeIngredientFromDish(int ingredientId, int dishId) {
 
         ArrayList<IngredientDish> ingDishList = getAllIngredientDishes();
         boolean exists = false;
@@ -211,7 +214,7 @@ public class IngredientDishFactory {
     }
 
     //TO BE USED BEFORE ADDING NEW DISHES
-    public static boolean RemoveAllIngredientFromDish(int dishId) {
+    public static boolean removeAllIngredientFromDish(int dishId) {
 
         try (Connection connection = Database.getConnection()) {
             // Add the ingredient itself and get ID

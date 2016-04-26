@@ -67,18 +67,18 @@ INSERT INTO dish VALUES (default, 'Pølse hovedrett', 'Kenan spesial H', 2, TRUE
 INSERT INTO dish VALUES (default, 'Pølse dessert', 'Kenan spesial D', 3, FALSE);
 
 -- (ingredient_dish) --
-INSERT INTO ingredient_dish VALUES (4, 1, 200, 'g');
-INSERT INTO ingredient_dish VALUES (5, 1, 100, 'g');
+INSERT INTO ingredient_dish VALUES (4, 1, 200.0, 'g');
+INSERT INTO ingredient_dish VALUES (5, 1, 100.0, 'g');
 
-INSERT INTO ingredient_dish VALUES (3, 2, 200, 'g');
-INSERT INTO ingredient_dish VALUES (2, 2, 100, 'g');
+INSERT INTO ingredient_dish VALUES (3, 2, 200.0, 'g');
+INSERT INTO ingredient_dish VALUES (2, 2, 100.0, 'g');
 
-INSERT INTO ingredient_dish VALUES (1, 3, 1000, 'g');
+INSERT INTO ingredient_dish VALUES (1, 3, 1000.0, 'g');
 
-INSERT INTO ingredient_dish VALUES (5, 4, 100, 'g');
+INSERT INTO ingredient_dish VALUES (5, 4, 100.0, 'g');
 
-INSERT INTO ingredient_dish VALUES (1, 5, 100, 'g');
-INSERT INTO ingredient_dish VALUES (1, 6, 50, 'g');
+INSERT INTO ingredient_dish VALUES (1, 5, 100.0, 'g');
+INSERT INTO ingredient_dish VALUES (1, 6, 50.0, 'g');
 
 -- (food_package) --
 

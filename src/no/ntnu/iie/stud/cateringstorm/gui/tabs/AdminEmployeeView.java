@@ -126,10 +126,6 @@ public class AdminEmployeeView extends JPanel {
      */
     private void addEmployee() {
         AddEmployeeDialog aeDialog = new AddEmployeeDialog();
-        aeDialog.pack();
-        final int WIDTH = 400;
-        final int HEIGHT = 400;
-        aeDialog.setSize(WIDTH, HEIGHT);
         aeDialog.setVisible(true);
         if (aeDialog.hasAddedNewValue()) {
             refresh();
