@@ -132,7 +132,7 @@ public class IngredientDishFactory {
         }
         return temp;
     }
-
+    /*
     public static IngredientDish addIngredientToNewDish(int ingredientId, int quantity, String unit) {
 
         int generatedId;
@@ -162,7 +162,7 @@ public class IngredientDishFactory {
             return null;
         }
         return new IngredientDish(IngredientFactory.getIngredient(ingredientId), DishFactory.getDish(generatedId), quantity, unit);
-    }
+    }*/
 
     public static ArrayList<IngredientDish> getAllIngredientDishes() {
 
@@ -187,31 +187,27 @@ public class IngredientDishFactory {
 
     public static boolean RemoveIngredientFromDish(int ingredientId, int dishId) {
 
-        boolean check = false;
         ArrayList<IngredientDish> ingDishList = getAllIngredientDishes();
-
+        boolean exists = false;
         for (IngredientDish temp : ingDishList) {
-            if (temp.getIngredient().getIngredientId() == ingredientId && temp.getDish().getDishId() == dishId) {
-                check = true;
-            }
-        }
-        if (check) {
-            try (Connection connection = Database.getConnection()) {
-                // Add the ingredient itself and get ID
-                try (PreparedStatement statement = connection.prepareStatement("DELETE FROM ingredient_dish WHERE dish_id = ? && ingredient_id = ?")) {
+           exists = temp.getIngredient().getIngredientId() == ingredientId && temp.getDish().getDishId() == dishId;
+            if (exists) {
+                try (Connection connection = Database.getConnection()) {
+                    // Add the ingredient itself and get ID
+                    try (PreparedStatement statement = connection.prepareStatement("DELETE FROM ingredient_dish WHERE dish_id = ? && ingredient_id = ?")) {
 
-                    statement.setInt(1, dishId);
-                    statement.setInt(2, ingredientId);
+                        statement.setInt(1, dishId);
+                        statement.setInt(2, ingredientId);
 
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
+                return true;
             }
-            return true;
-        } else {
-            return false;
         }
+            return false;
     }
 
     //TO BE USED BEFORE ADDING NEW DISHES

@@ -2,6 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.entities.employee;
 
 /**
  * The base class for all employees.
+ * Different kinds of employees are ID-ed
  */
 public enum EmployeeType {
     EMPLOYEE(0),

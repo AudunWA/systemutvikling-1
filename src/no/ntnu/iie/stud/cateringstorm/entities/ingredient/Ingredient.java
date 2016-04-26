@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
- * Created by Audun on 11.03.2016.
+ * Java representation of database entity "ingredient".
  */
 public class Ingredient {
     private final int ingredientId;

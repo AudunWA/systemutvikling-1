@@ -142,8 +142,8 @@ public class AddDishDialog extends JDialog {
 
         String Joutput = "The following ingredients have been added to the dish: " + name + "\n";
 
-        for (IngredientDish ayy : IngredientDishFactory.createDish(addedList, name, description, type, active)) {
-            Joutput += "Ingredient: " + ayy.getIngredient().getName() + " " + ayy.getQuantity() + ayy.getUnit() + ".\n";
+        for (IngredientDish ingredientDishes : IngredientDishFactory.createDish(addedList, name, description, type, active)) {
+            Joutput += "Ingredient: " + ingredientDishes.getIngredient().getName() + " " + ingredientDishes.getQuantity() + ingredientDishes.getUnit() + ".\n";
         }
 
         JOptionPane.showMessageDialog(this, Joutput);
@@ -212,7 +212,6 @@ public class AddDishDialog extends JDialog {
     }
 
     private void createUIComponents() {
-        // TODO: Custom initialization of UI components here
         createComboBoxType();
         createComboBoxActiveStatus();
         createTables();
