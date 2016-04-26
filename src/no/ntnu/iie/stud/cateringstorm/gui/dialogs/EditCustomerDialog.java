@@ -3,6 +3,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.CustomerTableModel;
+import no.ntnu.iie.stud.cateringstorm.util.InputUtil;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -103,28 +104,51 @@ public class EditCustomerDialog extends JDialog {
      * Updates and saves the changes to the existing Customer.
      */
     private void onOK() {
-        String forename = forenameField.getText(),
-        surname = surnameField.getText(),
-        address = addressField.getText(),
-        phone = phoneField.getText(),
-        email = emailField.getText();
+        String forename = forenameField.getText().trim(),
+        surname = surnameField.getText().trim(),
+        address = addressField.getText().trim(),
+        phone = phoneField.getText().trim(),
+        email = emailField.getText().trim();
+
+        if (forename.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in a forename");
+            return;
+        }
+        if (surname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in a surname");
+            return;
+        }
+        if (address.isEmpty() || !InputUtil.isValidStreetAddress(address)) {
+            JOptionPane.showMessageDialog(this, "Please fill in an address.");
+            return;
+        }
+
+        if (phone.isEmpty() || !InputUtil.isValidPhoneNumber(phone)) {
+            JOptionPane.showMessageDialog(this, "Please fill in a phone number.");
+            return;
+        }
+        if (email.isEmpty() || !InputUtil.isValidEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Please fill in an email.");
+            return;
+        }
+            customer.setForename(forename);
+            customer.setSurname(surname);
+            customer.setAddress(address);
+            customer.setPhone(phone);
+            customer.setEmail(email);
+
+        int updatedId = CustomerFactory.updateCustomer(customer);
 
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
 
         if (dialogResult == 0) {
-            String input = forenameField.getText();
+
             if (forename.isEmpty() || surname.isEmpty() || address.isEmpty()|| phone.isEmpty() || email.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please enter a value in all text fields");
                 return;
             }
-                    customer.setForename(forename);
-                    customer.setSurname(input);
-                    customer.setAddress(input);
-                    customer.setPhone(input);
-                    customer.setEmail(input);
 
-            int updatedId = CustomerFactory.updateCustomer(customer);
             if (updatedId != 1) {
                 JOptionPane.showMessageDialog(this, "Customer wasn't updated, please try again later!");
             }

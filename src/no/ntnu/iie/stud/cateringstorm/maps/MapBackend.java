@@ -50,22 +50,8 @@ public class MapBackend {
         pointList.add(plass1);
         pointList.add(plass2);
 
-        /*for (double[] ayy : pointList){
-            System.out.println(ayy[1] + " " + ayy[0] + "     ");
-        }*/
-
-        /*for (double[] ayy : createFastestRoute(pointList)){
-            System.out.println(ayy[1] + " " + ayy[0] + "     ");
-        }*/
-
-        /*for (double[] ayy : getRandomList(pointList)) {
-            System.out.println(ayy[1] + " " + ayy[0] + "     ");
-        }*/
-
-        //System.out.println(getTotalDistanceList(getRandomList(pointList)));
-
-        for (Coordinate ayy : getShortestRoute(addressList)) {
-            System.out.println(ayy);
+        for (Coordinate coordinate : getShortestRoute(addressList)) {
+            System.out.println(coordinate);
         }
     }
 
@@ -90,8 +76,6 @@ public class MapBackend {
 
         double latitude = results.get(0).getGeometry().getLocation().getLat().doubleValue();
         double longitude = results.get(0).getGeometry().getLocation().getLng().doubleValue();
-
-        //System.out.println("Place: " + address + " At:   Latitude: " + latitude + " Longitude: " + longitude);
 
         return new Coordinate(latitude, longitude);
     }

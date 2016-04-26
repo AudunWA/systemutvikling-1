@@ -184,7 +184,7 @@ public class FoodPackageAdminView extends JPanel {
         }
     }
     /**
-     * Searches through a list of foodpackages
+     * Searches through a list of foodpackages within database.
      */
     private void search() {
         ArrayList<FoodPackage> newRows;
@@ -224,7 +224,7 @@ public class FoodPackageAdminView extends JPanel {
         }
         tableModel.setRows(foodPackageList);
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Dishes refreshed").display();
-        setSearchField("Search customer names.");
+        //setSearchField("Search customer names.");
     }
 
 }

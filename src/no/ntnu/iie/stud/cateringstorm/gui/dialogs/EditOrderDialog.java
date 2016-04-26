@@ -171,19 +171,19 @@ public class EditOrderDialog extends JDialog {
     }
 
     private void createTextFields(){
-        String ayy = order.getCustomerName();
+        String name = order.getCustomerName();
         customerTextField = new JTextField();
-        customerTextField.setText(ayy);
+        customerTextField.setText(name);
         customerTextField.setEditable(false);
 
-        String ayy2 = order.getDescription();
+        String description = order.getDescription();
         descriptionTextField = new JTextField();
-        descriptionTextField.setText(ayy2);
+        descriptionTextField.setText(description);
         descriptionTextField.setEditable(true);
 
-        String ayy3 = order.getPortions() + "";
+        String portions = order.getPortions() + "";
         portionsTextField = new JTextField();
-        portionsTextField.setText(ayy3);
+        portionsTextField.setText(portions);
         portionsTextField.setEditable(true);
     }
 

@@ -44,13 +44,13 @@ public class ChefShoppingList extends JPanel {
     }
 
     private void goShopping(){
-        for (int i = 0; i < ingredientList.size(); i++){
-            if (ingredientList.get(i).getAmount() < 100){
-                ingredientList.get(i).setAmount(1000.0);
-                IngredientFactory.setAmountGivenIngredientId(ingredientList.get(i).getIngredientId(), 1000.0);
-            }
+        int selectedRow = ingredientTable.getSelectedRow();
+        if(selectedRow > -1) {
+            Ingredient ingredient = ingredientList.get(selectedRow);
+            ingredient.setAmount(1000.0);
+            IngredientFactory.setAmountGivenIngredientId(ingredient.getIngredientId(), 1000.0);
+            tableModel.setRows(ingredientList);
         }
-        tableModel.setRows(ingredientList);
     }
 
     public static void main(String[] args) {

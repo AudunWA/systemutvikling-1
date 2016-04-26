@@ -77,7 +77,7 @@ public class AddCustomerDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "Please fill in a surname");
             return;
         }
-        if (address.isEmpty()) {
+        if (address.isEmpty() || !InputUtil.isValidStreetAddress(address)) {
             JOptionPane.showMessageDialog(this, "Please fill in an address.");
             return;
         }
