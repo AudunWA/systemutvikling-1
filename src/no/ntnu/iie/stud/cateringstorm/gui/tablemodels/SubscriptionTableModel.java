@@ -14,6 +14,7 @@ public class SubscriptionTableModel extends EntityTableModel<Subscription> {
     public static final int COLUMN_END_DATE = 3;
     public static final int COLUMN_COST = 4;
     public static final int COLUMN_ACTIVE = 5;
+    public static final int COLUMN_CUSTOMER_NAME = 6;
 
 
     public SubscriptionTableModel(ArrayList<Subscription> rows) {
@@ -40,6 +41,8 @@ public class SubscriptionTableModel extends EntityTableModel<Subscription> {
                 return "Cost";
             case COLUMN_ACTIVE:
                 return "Active";
+            case COLUMN_CUSTOMER_NAME:
+                return "Customer name";
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
@@ -63,6 +66,8 @@ public class SubscriptionTableModel extends EntityTableModel<Subscription> {
                 return value.getCost();
             case COLUMN_ACTIVE:
                 return value.isActive();
+            case COLUMN_CUSTOMER_NAME:
+                return value.getCustomerId();
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
@@ -84,6 +89,8 @@ public class SubscriptionTableModel extends EntityTableModel<Subscription> {
                 return Double.class;
             case COLUMN_ACTIVE:
                 return Boolean.class;
+            case COLUMN_CUSTOMER_NAME:
+                return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnType " + columnType + " not defined.");
         }
