@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Audun on 14.04.2016.
+ * A backend class for providing info to the StatisticView class.
  */
 public class DeliveredOrdersChart extends ChartPanel {
     public DeliveredOrdersChart() {

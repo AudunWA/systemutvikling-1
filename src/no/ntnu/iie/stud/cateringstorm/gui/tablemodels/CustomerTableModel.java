@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 /**
  * Table model designed to manage contents of JTable in SalespersonCustomerView
- * Created by EliasBrattli on 06/04/2016.
  */
 public class CustomerTableModel extends EntityTableModel<Customer> {
     public static final int COLUMN_CUSTOMER_ID = 0;

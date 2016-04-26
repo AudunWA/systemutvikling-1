@@ -7,7 +7,6 @@ import java.util.Calendar;
 
 /**
  * Used for JDatePicker
- * Created by Audun on 04.04.2016.
  */
 public class SimpleDateFormatter extends JFormattedTextField.AbstractFormatter {
     private String datePattern = "yyyy-MM-dd";

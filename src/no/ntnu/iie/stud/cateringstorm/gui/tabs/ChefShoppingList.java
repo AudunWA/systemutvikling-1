@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * GUI for extracting and printing a shopping list over low supplies for the Chef
+ */
 public class ChefShoppingList extends JPanel {
     private JPanel contentPane;
     private JButton goShoppingButton;
@@ -43,8 +46,8 @@ public class ChefShoppingList extends JPanel {
     private void goShopping(){
         for (int i = 0; i < ingredientList.size(); i++){
             if (ingredientList.get(i).getAmount() < 100){
-                ingredientList.get(i).setAmount(100.0);
-                IngredientFactory.setAmountGivenIngredientId(ingredientList.get(i).getIngredientId(), 100.0);
+                ingredientList.get(i).setAmount(1000.0);
+                IngredientFactory.setAmountGivenIngredientId(ingredientList.get(i).getIngredientId(), 1000.0);
             }
         }
         tableModel.setRows(ingredientList);

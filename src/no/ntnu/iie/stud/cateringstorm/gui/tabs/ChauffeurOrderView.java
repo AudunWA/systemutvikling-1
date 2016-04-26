@@ -17,7 +17,6 @@ import java.util.Date;
 
 /**
  * Represents GUI with overview of orders for the chauffeur
- * Created by Audun on 10.03.2016.
  */
 public class ChauffeurOrderView extends JPanel {
     private static ArrayList<Order> orderList = new ArrayList<>();

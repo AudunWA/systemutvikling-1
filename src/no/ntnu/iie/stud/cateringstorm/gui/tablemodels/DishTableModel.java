@@ -6,7 +6,6 @@ import no.ntnu.iie.stud.cateringstorm.entities.dish.DishFactory;
 import java.util.ArrayList;
 
 /**
- * Created by EliasBrattli on 04/04/2016.
  * Table Model designed for display of entity Dish
  */
 public class DishTableModel extends EntityTableModel<Dish> {

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
- * Created by Audun on 21.04.2016.
+ * Test for DateUtil
  */
 public class DateUtilTest {
     @Test

@@ -10,7 +10,6 @@ import javax.swing.*;
 
 /**
  * GUI for the employee login window
- * Created by Audun on 09.03.2016.
  */
 public class LoginView extends JFrame {
     private static final String WINDOW_TITLE = "Healthy Catering login";

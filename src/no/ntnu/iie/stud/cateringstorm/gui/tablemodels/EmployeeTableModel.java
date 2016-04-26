@@ -7,7 +7,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import java.util.ArrayList;
 
 /**
- * Created by EliasBrattli on 21/04/2016.
+ * Table Model designed for display of entity Employee
  */
 
 public class EmployeeTableModel extends EntityTableModel<Employee> {

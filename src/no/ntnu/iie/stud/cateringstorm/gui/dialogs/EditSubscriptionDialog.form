@@ -129,7 +129,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="5d790" class="javax.swing.JTable" binding="selectedPackagesTable" custom-create="true">
+              <component id="5d790" class="javax.swing.JTable" binding="leftSideTable" custom-create="true">
                 <constraints/>
                 <properties/>
               </component>
@@ -150,7 +150,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="f5e9a" class="javax.swing.JTable" binding="availablePackagesTable" custom-create="true">
+              <component id="f5e9a" class="javax.swing.JTable" binding="rightSideTable" custom-create="true">
                 <constraints/>
                 <properties/>
               </component>
