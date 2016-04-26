@@ -205,7 +205,6 @@ public class EditSubscriptionDialog extends JDialog {
      * Called when OK button is pressed.
      * Creates a new Subscription with attributes from user input
      */
-
     private void onOK() {
         Customer customer = (Customer) customerComboBox.getSelectedItem();
         Date startDate = ((SqlDateModel) fromDatePicker.getModel()).getValue();
@@ -216,13 +215,11 @@ public class EditSubscriptionDialog extends JDialog {
         subscription.setEndDate(endDate);
         subscription.setCost(cost);
 
-        // TODO: Make factory method
         if (!SubscriptionFactory.updateSubscription(subscription, leftSideModel.getRowsClone())) {
             JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
         }
         dispose();
     }
-
 
     /**
      * Called when add/remove button (arrow between tables) is pressed

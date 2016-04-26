@@ -10,6 +10,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddDishDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditDishDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import javax.swing.*;
@@ -115,6 +116,7 @@ public class MenuAdministratorView extends JPanel {
             tableModel.removeRow(selectedRow);
             JOptionPane.showMessageDialog(null, "Row is removed.");
         }
+        refresh();
     }
     /**
      * Opens an EditDishDialog GUI
@@ -208,7 +210,13 @@ public class MenuAdministratorView extends JPanel {
     }
 
     private void refresh() {
-        tableModel.setRows(DishFactory.getActiveDishes());
+        if (inactiveCheckBox.isSelected()) {
+            dishList = DishFactory.getActiveDishes();
+        } else {
+            dishList = DishFactory.getAllDishes();
+        }
+        tableModel.setRows(dishList);
+        Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Dishes refreshed").display();
     }
 }
 
