@@ -29,7 +29,7 @@ public class AddEmployeeDialog extends JDialog {
     private JLabel surnameLabel;
     private JLabel phoneLabel;
     private JLabel emailLabel;
-    private JComboBox etBox;
+    private JComboBox<String> typeComboBox;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
     private JLabel employeeTypeLabel;
@@ -73,8 +73,8 @@ public class AddEmployeeDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        final int WIDTH = 1000;
-        final int HEIGHT = 1000;
+        final int WIDTH = 400;
+        final int HEIGHT = 500;
         AddEmployeeDialog dialog = new AddEmployeeDialog();
         dialog.pack();
         dialog.setSize(WIDTH, HEIGHT);
@@ -84,10 +84,10 @@ public class AddEmployeeDialog extends JDialog {
     }
 
     private void createComboBoxType() {
-        Object[] status = {"Employee", "Chef", "Chauffeur", ""};
+        String[] status = {"General employee", "Chef", "Chauffeur", "Nutrition Expert", "Administrator", "Salesperson"};
 
-        etBox = new JComboBox(status);
-        etBox.setSelectedIndex(0);
+        typeComboBox = new JComboBox<>(status);
+        typeComboBox.setSelectedIndex(0);
     }
 
     /**
@@ -102,7 +102,7 @@ public class AddEmployeeDialog extends JDialog {
         String address = addressField.getText();
         String phone = phoneField.getText();
         String email = emailField.getText();
-        int selectedIndex = etBox.getSelectedIndex();
+        int selectedIndex = typeComboBox.getSelectedIndex();
 
         EmployeeType employeeType = EmployeeType.getEmployeeType(selectedIndex);
 

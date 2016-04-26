@@ -270,7 +270,7 @@ public final class EmployeeFactory {
     public static int getCommissionByType(int employeeType){
         int commission = 0;
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT commission FROM employee_type WHERE type_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT commission FROM employee_type WHERE e_type_id = ?")) {
                 statement.setInt(1, employeeType);
                 statement.executeQuery();
 
@@ -289,7 +289,7 @@ public final class EmployeeFactory {
     public static double getSalaryByType(int employeeType){
         double salary = 0.0;
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM employee_type WHERE type_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM employee_type WHERE e_type_id = ?")) {
                 statement.setInt(1, employeeType);
                 statement.executeQuery();
 
