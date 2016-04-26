@@ -130,9 +130,9 @@ public final class OrderFactory {
     }
 
     /**
-     * Get all orders, regardless of status
+     * Get all orders, regardless of status.
      *
-     * @return ArrayList<Order>
+     * @return ArrayList<Order>.
      */
     public static ArrayList<Order> getAllOrders() {
         ArrayList<Order> employees = new ArrayList<>();
