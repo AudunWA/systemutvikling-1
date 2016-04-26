@@ -263,7 +263,7 @@ public class AddOrderDialog extends JDialog {
                 return;
             }
 
-            Order order = OrderFactory.createOrder(description, deliverDate, portions,
+            Order order = OrderFactory.createOrder(description, deliverTime, portions,
                     priority, employee.getEmployeeId(),
                     customerId, -1, -1, packages);
 
