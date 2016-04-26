@@ -32,6 +32,7 @@ public class Toast extends JDialog {
     private int mDuration;
     private Color mBackgroundColor = Color.BLACK;
     private Color mForegroundColor = Color.WHITE;
+
     public Toast(JFrame owner) {
         super(owner);
         mOwner = owner;
@@ -161,7 +162,7 @@ public class Toast extends JDialog {
         int x = (int) (ownerLoc.getX() + ((mOwner.getWidth() - this.getWidth()) / 2));
         //int y = (int) (ownerLoc.getY() + (mOwner.getHeight() - this.getHeight()) - DISTANCE_FROM_PARENT_BOTTOM);
 
-        int percent = (int)(parentSizeY * DISTANCE_PERCENT_FROM_PARENT_BOTTOM);
+        int percent = (int) (parentSizeY * DISTANCE_PERCENT_FROM_PARENT_BOTTOM);
         int y = (int) (ownerLoc.getY() + (mOwner.getHeight() - this.getHeight()) - percent);
         return new Point(x, y);
     }

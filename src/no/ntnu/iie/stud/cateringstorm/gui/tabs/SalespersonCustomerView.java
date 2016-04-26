@@ -46,7 +46,21 @@ public class SalespersonCustomerView extends JPanel {
         addActionListeners();
         addDocumentListener();
     }
-    public void addActionListeners(){
+
+    public static void main(String[] args) {
+        // Window dimensions
+        final int WIDTH = 1200;
+        final int HEIGHT = 600;
+        GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
+        JFrame frame = new JFrame();
+        frame.add(new SalespersonCustomerView());
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
+    }
+
+    public void addActionListeners() {
         addButton.addActionListener(e -> addCustomer());
         editButton.addActionListener(e -> editCustomer(getSelectedCustomer()));
         removeButton.addActionListener(e -> removeCustomer(getSelectedCustomer()));
@@ -63,7 +77,8 @@ public class SalespersonCustomerView extends JPanel {
             //Get index from selected row
         });
     }
-    private void addDocumentListener(){
+
+    private void addDocumentListener() {
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -96,18 +111,6 @@ public class SalespersonCustomerView extends JPanel {
             }
         });
 
-    }
-    public static void main(String[] args) {
-        // Window dimensions
-        final int WIDTH = 1200;
-        final int HEIGHT = 600;
-        GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
-        JFrame frame = new JFrame();
-        frame.add(new SalespersonCustomerView());
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
     }
 
     private Customer getSelectedCustomer() {
@@ -148,8 +151,8 @@ public class SalespersonCustomerView extends JPanel {
         acDialog.setVisible(true);
         if (acDialog.hasAddedNewValue()) {
             refresh();
-        }else{
-        Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Customer was not added.", Toast.Style.ERROR).display();
+        } else {
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Customer was not added.", Toast.Style.ERROR).display();
         }
         //customerList = CustomerFactory.getActiveCustomers();
     }
@@ -166,7 +169,7 @@ public class SalespersonCustomerView extends JPanel {
             ecDialog.setVisible(true);
             if (ecDialog.getAddedNewValue()) {
                 refresh();
-            }else{
+            } else {
                 Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Customer was not edited.", Toast.Style.ERROR).display();
             }
         } else {

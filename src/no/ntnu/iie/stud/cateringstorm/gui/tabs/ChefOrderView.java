@@ -39,7 +39,18 @@ public class ChefOrderView extends JPanel {
         updateRecurringOrders();
     }
 
-    private void addActionListeners(){
+    public static void main(String[] args) {
+        final int WIDTH = 1300;
+        final int HEIGHT = 600;
+        JFrame frame = new JFrame();
+        frame.add(new ChefOrderView());
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
+    }
+
+    private void addActionListeners() {
         viewButton.addActionListener(e -> viewOrder());
         statusBox.addActionListener(e -> setStatus());
         refreshButton.addActionListener(e -> refresh());
@@ -73,17 +84,6 @@ public class ChefOrderView extends JPanel {
         return orderTable;
     }
 
-    public static void main(String[] args) {
-        final int WIDTH = 1300;
-        final int HEIGHT = 600;
-        JFrame frame = new JFrame();
-        frame.add(new ChefOrderView());
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
-    }
-
     //Custom initialization of UI components
     private void createUIComponents() {
         createTable();
@@ -112,12 +112,12 @@ public class ChefOrderView extends JPanel {
     private void setStatus() {
         int statusIndex = statusBox.getSelectedIndex();
         int statusType = 0;
-        if (statusIndex == 0){
+        if (statusIndex == 0) {
             statusType = 1;
-        } else if (statusIndex == 1){
+        } else if (statusIndex == 1) {
             statusType = 0;
         }
-        OrderFactory.setOrderState(((Integer)orderTable.getValueAt(orderTable.getSelectedRow(),0)), statusType);
+        OrderFactory.setOrderState(((Integer) orderTable.getValueAt(orderTable.getSelectedRow(), 0)), statusType);
         tableModel.setRows(OrderFactory.getAllOrdersChef());
     }
 
@@ -150,7 +150,7 @@ public class ChefOrderView extends JPanel {
             JOptionPane.showMessageDialog(this, JOutput);
             return;
         }
-        Order orderModel = OrderFactory.getOrder((Integer)tableModel.getValueAt(orderTable.getSelectedRow(),0));
+        Order orderModel = OrderFactory.getOrder((Integer) tableModel.getValueAt(orderTable.getSelectedRow(), 0));
         if (orderModel.getStatus() != 0 && orderModel.getStatus() != 3) {
             OrderFactory.setOrderState(orderModel.getOrderId(), 3);
             ChefMakeOrderDialog dialog = new ChefMakeOrderDialog(orderModel);

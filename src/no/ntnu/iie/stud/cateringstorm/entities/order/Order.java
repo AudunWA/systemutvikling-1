@@ -22,6 +22,7 @@ public class Order {
 
     /**
      * Constructs and initializes a FoodPackage with the specified details.
+     *
      * @param orderId
      * @param description
      * @param deliveryTime
@@ -49,7 +50,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -70,7 +70,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public int getSalespersonId() {
@@ -78,7 +77,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public int getChauffeurId() {
@@ -86,7 +84,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public int getOrderId() {
@@ -94,7 +91,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public int getCustomerId() {
@@ -102,7 +98,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public int getRecurringOrderId() {
@@ -110,7 +105,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public String getDescription() {
@@ -118,7 +112,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public Timestamp getDeliveryDate() {
@@ -126,7 +119,6 @@ public class Order {
     }
 
     /**
-     *
      * @param deliveryDate
      */
     public void setDeliveryDate(Timestamp deliveryDate) {
@@ -134,7 +126,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public Timestamp getOrderDate() {
@@ -142,7 +133,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public int getPortions() {
@@ -150,7 +140,6 @@ public class Order {
     }
 
     /**
-     *
      * @param portions
      */
     public void setPortions(int portions) {
@@ -158,7 +147,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public boolean isPriority() {
@@ -166,7 +154,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public int getStatus() {
@@ -174,7 +161,6 @@ public class Order {
     }
 
     /**
-     *
      * @param status
      */
     public void setStatus(int status) {
@@ -183,7 +169,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public String priorityAsString() {
@@ -191,7 +176,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public String deliveryStatus() {
@@ -213,7 +197,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public String getCustomerName() {
@@ -221,7 +204,6 @@ public class Order {
     }
 
     /**
-     *
      * @return
      */
     public String getCustomerAddress() {

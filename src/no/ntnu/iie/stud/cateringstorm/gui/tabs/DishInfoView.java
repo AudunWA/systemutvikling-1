@@ -34,20 +34,6 @@ public class DishInfoView extends JFrame {
         addActionListeners();
     }
 
-    private void addActionListeners(){
-        closeButton.addActionListener(e -> onCancel());
-       // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() on ESCAPE
-        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-    }
-
     public static void main(String[] args) {
         // Window dimensions
         final int WIDTH = 700;
@@ -58,6 +44,20 @@ public class DishInfoView extends JFrame {
         dialog.setVisible(true);
         dialog.setSize(WIDTH, HEIGHT);
         dialog.setLocationRelativeTo(null);//Puts window in middle of screen
+    }
+
+    private void addActionListeners() {
+        closeButton.addActionListener(e -> onCancel());
+        // call onCancel() when cross is clicked
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
+        });
+
+        // call onCancel() on ESCAPE
+        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void onCancel() {

@@ -49,6 +49,19 @@ public class FoodPackageInfoView extends JFrame {
         mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    public static void main(String[] args) {
+        // Window dimensions
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+        FoodPackageInfoView dialog = new FoodPackageInfoView(null);
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setLocationRelativeTo(null);//Puts window in middle of screen
+        System.exit(0);
+
+    }
+
     /**
      * Called when View button is pressed
      * Opens the DishInfoView GUI
@@ -69,18 +82,7 @@ public class FoodPackageInfoView extends JFrame {
         dialog.setSize(WIDTH, HEIGHT);
         dialog.setLocationRelativeTo(null);//Puts window in middle of screen
     }
-    public static void main(String[] args) {
-        // Window dimensions
-        final int WIDTH = 700;
-        final int HEIGHT = 600;
-        FoodPackageInfoView dialog = new FoodPackageInfoView(null);
-        dialog.pack();
-        dialog.setVisible(true);
-        dialog.setSize(WIDTH, HEIGHT);
-        dialog.setLocationRelativeTo(null);//Puts window in middle of screen
-        System.exit(0);
 
-    }
     /**
      * Called on when close button, escape or cross is pressed
      * Closes the GUI panel

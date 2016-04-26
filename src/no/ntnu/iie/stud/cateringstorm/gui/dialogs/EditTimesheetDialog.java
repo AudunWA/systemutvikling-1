@@ -47,7 +47,21 @@ public class EditTimesheetDialog extends JDialog {
         setSpinners();
         addActionListeners();
     }
-    private void addActionListeners(){
+
+    public static void main(String[] args) {
+        final int HEIGHT = 400, WIDTH = 400;
+        GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
+        int id = GlobalStorage.getLoggedInEmployee().getEmployeeId();
+        EditTimesheetDialog dialog = new EditTimesheetDialog(id, TimesheetFactory.getLatestTimeSheet(id));
+        dialog.pack();
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setVisible(true);
+        dialog.setTitle("Register timesheet");
+        dialog.setLocationRelativeTo(null);
+        System.exit(0);
+    }
+
+    private void addActionListeners() {
         okButton.addActionListener(e -> onOK());
 
         // call onCancel() when cross is clicked
@@ -66,18 +80,6 @@ public class EditTimesheetDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-    public static void main(String[] args) {
-        final int HEIGHT = 400, WIDTH = 400;
-        GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
-        int id = GlobalStorage.getLoggedInEmployee().getEmployeeId();
-        EditTimesheetDialog dialog = new EditTimesheetDialog(id, TimesheetFactory.getLatestTimeSheet(id));
-        dialog.pack();
-        dialog.setSize(WIDTH, HEIGHT);
-        dialog.setVisible(true);
-        dialog.setTitle("Register timesheet");
-        dialog.setLocationRelativeTo(null);
-        System.exit(0);
-    }
 
     public int getLoggedInEmployeeId() {
         return loggedInEmployeeId;
@@ -86,6 +88,7 @@ public class EditTimesheetDialog extends JDialog {
     public Timesheet getSelectedTimesheet() {
         return selectedTimesheet;
     }
+
     /**
      * Called when cancel button, escape or the cross is pressed
      */

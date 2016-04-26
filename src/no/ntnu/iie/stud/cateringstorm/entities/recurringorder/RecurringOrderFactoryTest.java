@@ -14,7 +14,7 @@ public class RecurringOrderFactoryTest {
     @Test
     public void testGoThroughRecurringOrders() throws Exception {
         int recurringOrders = RecurringOrderFactory.goThroughRecurringOrders();
-        Assert.assertNotEquals(-1,recurringOrders);
+        Assert.assertNotEquals(-1, recurringOrders);
     }
 
     @Test

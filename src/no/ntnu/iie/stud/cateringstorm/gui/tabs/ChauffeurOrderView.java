@@ -20,7 +20,7 @@ import java.util.Date;
  */
 public class ChauffeurOrderView extends JPanel {
     private static ArrayList<Order> orderList = new ArrayList<>(),
-    helpTable = new ArrayList<>();
+            helpTable = new ArrayList<>();
     private JPanel mainPanel;
     private JTable orderTable;
     private JButton refreshButton;
@@ -34,11 +34,7 @@ public class ChauffeurOrderView extends JPanel {
         add(mainPanel, BorderLayout.CENTER);
         addActionListeners();
     }
-    private void addActionListeners(){
-        refreshButton.addActionListener(e -> refresh());
-        statusBox.addActionListener(e -> setStatus());
-        startDeliveryButton.addActionListener(e -> makeDelivery());
-    }
+
     private static JTable getNewRenderedTable(final JTable table) {
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
@@ -79,6 +75,12 @@ public class ChauffeurOrderView extends JPanel {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
+    }
+
+    private void addActionListeners() {
+        refreshButton.addActionListener(e -> refresh());
+        statusBox.addActionListener(e -> setStatus());
+        startDeliveryButton.addActionListener(e -> makeDelivery());
     }
 
     private void createTable() {
@@ -155,7 +157,7 @@ public class ChauffeurOrderView extends JPanel {
         startDeliveryButton.setEnabled(true);
 
         // Reset states
-        if(!mapView.isSuccess()) {
+        if (!mapView.isSuccess()) {
             for (Order order : helpTable) {
                 OrderFactory.setOrderState(order.getOrderId(), 0);
             }

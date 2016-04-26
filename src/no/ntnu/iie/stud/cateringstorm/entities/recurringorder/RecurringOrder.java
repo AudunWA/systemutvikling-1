@@ -23,12 +23,13 @@ public class RecurringOrder {
 
     /**
      * Constructs and initializes a recurring order with the specified details.
+     *
      * @param recurringOrderId The ID of the recurring order.
-     * @param weekday The week day number from 0-6(Monday to Sunday).
-     * @param relativeTime The amount of seconds after midnight, defines delivery time of day.
-     * @param amount The amount of food packages.
-     * @param subscription The subscription connected to the recurring order.
-     * @param foodPackage The foodpackage connected to the recurring order.
+     * @param weekday          The week day number from 0-6(Monday to Sunday).
+     * @param relativeTime     The amount of seconds after midnight, defines delivery time of day.
+     * @param amount           The amount of food packages.
+     * @param subscription     The subscription connected to the recurring order.
+     * @param foodPackage      The foodpackage connected to the recurring order.
      */
     public RecurringOrder(int recurringOrderId, int weekday, int relativeTime, int amount, Subscription subscription, FoodPackage foodPackage) {
         this.recurringOrderId = recurringOrderId;
@@ -41,6 +42,7 @@ public class RecurringOrder {
 
     /**
      * Returns the id of the recurring order.
+     *
      * @return the id of the recurring order.
      */
     public int getRecurringOrderId() {
@@ -49,6 +51,7 @@ public class RecurringOrder {
 
     /**
      * Returns the week day number.
+     *
      * @return the week day number.
      */
     public int getWeekday() {
@@ -57,6 +60,7 @@ public class RecurringOrder {
 
     /**
      * Sets the week day number.
+     *
      * @param weekday The new week day number.
      */
     public void setWeekday(int weekday) {
@@ -65,6 +69,7 @@ public class RecurringOrder {
 
     /**
      * Returns the amount of seconds after midnight, thus representing time of the day.
+     *
      * @return the amount of seconds after midnight.
      */
     public int getRelativeTime() {
@@ -73,6 +78,7 @@ public class RecurringOrder {
 
     /**
      * Sets the amount of seconds after midnight, thus changing delivery time of day.
+     *
      * @param relativeTime The new amount of seconds after midnight.
      */
     public void setRelativeTime(int relativeTime) {
@@ -81,6 +87,7 @@ public class RecurringOrder {
 
     /**
      * Returns the amount of food packages.
+     *
      * @return the amount of food packages.
      */
     public int getAmount() {
@@ -88,7 +95,8 @@ public class RecurringOrder {
     }
 
     /**
-     *  Sets the amount of food packages.
+     * Sets the amount of food packages.
+     *
      * @param amount The new amount of food packages.
      */
     public void setAmount(int amount) {
@@ -111,6 +119,7 @@ public class RecurringOrder {
 
     /**
      * Return the id of the connected subscription.
+     *
      * @return the id of the connected subscription.
      */
     public int getSubscriptionId() {
@@ -119,12 +128,16 @@ public class RecurringOrder {
 
     /**
      * Return the id of the connected food package.
+     *
      * @return the id of the connected food package.
      */
-    public int getFoodPackageId() { return foodPackage.getFoodPackageId(); }
+    public int getFoodPackageId() {
+        return foodPackage.getFoodPackageId();
+    }
 
     /**
      * Returns the name of the connected food package.
+     *
      * @return the name of the connected food package.
      */
     public String getFoodPackageName() {
@@ -133,6 +146,7 @@ public class RecurringOrder {
 
     /**
      * Returns the cost of the connected food package.
+     *
      * @return the cost of the connected food package.
      */
     public double getFoodPackageCost() {
@@ -141,12 +155,16 @@ public class RecurringOrder {
 
     /**
      * Returns the id of the connected customer, from the connected subscription.
+     *
      * @return the id of the connected customer, from the connected subscription.
      */
-    public int getCustomerId() { return subscription.getCustomerId(); }
+    public int getCustomerId() {
+        return subscription.getCustomerId();
+    }
 
     /**
      * Generates the next delivery time of this order, using today's date as ground.
+     *
      * @return The next delivery time of this order.
      */
     public Timestamp getDeliveryTime() {
@@ -156,6 +174,7 @@ public class RecurringOrder {
 
     /**
      * Returns true if this is a new recurring order (not inserted into database yet).
+     *
      * @return true if this is a new recurring order (not inserted into database yet).
      */
     public boolean isNew() {
@@ -164,6 +183,7 @@ public class RecurringOrder {
 
     /**
      * Returns a string representation of this recurring order.
+     *
      * @return a string representation of this recurring order.
      */
     @Override

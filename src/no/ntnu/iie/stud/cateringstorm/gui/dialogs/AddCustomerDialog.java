@@ -33,7 +33,18 @@ public class AddCustomerDialog extends JDialog {
         addActionListeners();
     }
 
-    private void addActionListeners(){
+    public static void main(String[] args) {
+        final int WIDTH = 320;
+        final int HEIGHT = 400;
+        AddCustomerDialog dialog = new AddCustomerDialog();
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setVisible(true);
+        dialog.setLocationRelativeTo(dialog.getParent());
+        System.exit(0);
+
+    }
+
+    private void addActionListeners() {
         saveButton.addActionListener(e -> onOK());
 
         cancelButton.addActionListener(e -> onCancel());
@@ -47,17 +58,6 @@ public class AddCustomerDialog extends JDialog {
         });
         // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-    }
-
-    public static void main(String[] args) {
-        final int WIDTH = 320;
-        final int HEIGHT = 400;
-        AddCustomerDialog dialog = new AddCustomerDialog();
-        dialog.setSize(WIDTH, HEIGHT);
-        dialog.setVisible(true);
-        dialog.setLocationRelativeTo(dialog.getParent());
-        System.exit(0);
-
     }
 
     /**
@@ -104,6 +104,7 @@ public class AddCustomerDialog extends JDialog {
 
     /**
      * Method returning validation of an added value, allowing parent window to display response to users
+     *
      * @return boolean
      */
     public boolean hasAddedNewValue() {

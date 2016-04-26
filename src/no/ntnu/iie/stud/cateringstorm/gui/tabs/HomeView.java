@@ -30,7 +30,8 @@ public class HomeView extends JPanel {
     }
 
     /**
-     Returns a string representation of the logged in employee's employee type. Used for displaying it for the employee.
+     * Returns a string representation of the logged in employee's employee type. Used for displaying it for the employee.
+     *
      * @return a string representation of the logged in employee's employee type.
      */
     private String getEmployeeTypeString() {

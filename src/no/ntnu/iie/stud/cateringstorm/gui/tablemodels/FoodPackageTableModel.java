@@ -22,11 +22,13 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
     }
 
     @Override
-    public boolean isCellEditable(int rowIndex,int columnIndex){
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
         return getColumnType(columnIndex) == COLUMN_ACTIVE;
     }
+
     /**
      * Gives a description for each selected column
+     *
      * @param column
      * @return String
      */
@@ -49,7 +51,8 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
 
     /**
      * Gives selected value of an entity
-     * @param rowIndex Index of the row.
+     *
+     * @param rowIndex    Index of the row.
      * @param columnIndex Column of the row.
      * @return Object Selected value.
      */

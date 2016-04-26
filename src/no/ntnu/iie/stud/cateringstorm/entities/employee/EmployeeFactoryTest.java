@@ -55,7 +55,7 @@ public class EmployeeFactoryTest {
      */
     @Test
     public void testCreateEmployee() throws Exception {
-        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT,235.99,0);
+        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT, 235.99, 0);
         Assert.assertNotNull(test);
 
     }
@@ -63,37 +63,39 @@ public class EmployeeFactoryTest {
     @Test
     public void testEditEmployeeStatus() throws Exception {
         //Test is initially active
-        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT,235.99,0);
+        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Mo", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT, 235.99, 0);
 
 
         int result = EmployeeFactory.editEmployeeStatus(test.getEmployeeId(), false);
-        Assert.assertEquals(1,result);
+        Assert.assertEquals(1, result);
         test = EmployeeFactory.getEmployee(test.getUsername());
         Assert.assertTrue(!test.isActive());
     }
 
     @Test
     public void testUpdateEmployee() throws Exception {
-        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Testaddress", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT,235.99,0);
+        Employee test = EmployeeFactory.createEmployee(PasswordUtil.generateSalt().substring(0, 30), "testPassword123", "Unit", "Test", "Testaddress", "99999999", "unit@test.com", EmployeeType.NUTRITION_EXPERT, 235.99, 0);
         String newAddress = "New testaddress 9";
-        test = new Employee(test.getEmployeeId(), test.getUsername(), test.getForename(), test.getSurname(), newAddress, test.getPhoneNumber(), test.getEmail(), test.getEmployeeType(), test.isActive(),test.getSalary(),test.getCommission());
+        test = new Employee(test.getEmployeeId(), test.getUsername(), test.getForename(), test.getSurname(), newAddress, test.getPhoneNumber(), test.getEmail(), test.getEmployeeType(), test.isActive(), test.getSalary(), test.getCommission());
         int result = EmployeeFactory.updateEmployee(test);
         Assert.assertEquals(1, result);
         test = EmployeeFactory.getEmployee(test.getUsername());
-        Assert.assertEquals(newAddress,test.getAddress());
+        Assert.assertEquals(newAddress, test.getAddress());
     }
+
     @Test
     public void testGetSalarySoFar() throws Exception {
         Employee employee = EmployeeFactory.getEmployee("chechter");
-        double salary = EmployeeFactory.getSalarySoFar(employee.getEmployeeId(),new Date(System.currentTimeMillis()));
+        double salary = EmployeeFactory.getSalarySoFar(employee.getEmployeeId(), new Date(System.currentTimeMillis()));
         Assert.assertNotNull(salary);
     }
+
     //Valid data must be inserted to database. This test fails unless valid orders exist.
     @Test
     public void testGetSalesThisYear() throws Exception {
         Employee employee = EmployeeFactory.getEmployee("drammen");
-        int sales = EmployeeFactory.getSalesThisYear(employee.getEmployeeId(),new Date(System.currentTimeMillis()));
+        int sales = EmployeeFactory.getSalesThisYear(employee.getEmployeeId(), new Date(System.currentTimeMillis()));
         Assert.assertNotNull(sales);
-        Assert.assertNotEquals(-1,sales);
+        Assert.assertNotEquals(-1, sales);
     }
 }

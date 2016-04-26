@@ -350,7 +350,7 @@ public final class OrderFactory {
         ArrayList<Order> temp = new ArrayList<>();
         String input = searchQuery.trim();
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("select o.* from _order o join customer c ON (o.customer_id LIKE c.customer_id) where concat_ws(' ',c.forename,c.surname) like ?;")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT o.* FROM _order o JOIN customer c ON (o.customer_id LIKE c.customer_id) WHERE concat_ws(' ',c.forename,c.surname) LIKE ?;")) {
                 statement.setString(1, '%' + input + '%');
                 statement.executeQuery();
 

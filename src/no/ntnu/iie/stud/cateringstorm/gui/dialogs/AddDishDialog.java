@@ -49,7 +49,18 @@ public class AddDishDialog extends JDialog {
         addActionListeners();
         loadData();
     }
-    private void addActionListeners(){
+
+    public static void main(String[] args) {
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+        AddDishDialog dialog = new AddDishDialog();
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setVisible(true);
+        System.exit(0);
+
+    }
+
+    private void addActionListeners() {
         addOrRemoveButton.addActionListener(e -> onAR());
         cancelButton.addActionListener(e -> onCancel());
         okButton.addActionListener(e -> onOk());
@@ -83,15 +94,7 @@ public class AddDishDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-    public static void main(String[] args) {
-        final int WIDTH = 700;
-        final int HEIGHT = 600;
-        AddDishDialog dialog = new AddDishDialog();
-        dialog.setSize(WIDTH, HEIGHT);
-        dialog.setVisible(true);
-        System.exit(0);
 
-    }
     private void loadData() {
         activeCheckBox.setSelected(true);
     }
@@ -150,7 +153,7 @@ public class AddDishDialog extends JDialog {
         String aorAmount = addOrRemoveText.getText();
         try {
             aorValue = Double.parseDouble(aorAmount);
-        } catch (Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error. Please only input numbers in the text field");
             return;
         }

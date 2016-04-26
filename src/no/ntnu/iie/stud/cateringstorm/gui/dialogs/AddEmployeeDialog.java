@@ -41,7 +41,19 @@ public class AddEmployeeDialog extends JDialog {
         addActionListeners();
         pack();
     }
-    private void addActionListeners(){
+
+    public static void main(String[] args) {
+        final int WIDTH = 400;
+        final int HEIGHT = 500;
+        AddEmployeeDialog dialog = new AddEmployeeDialog();
+        dialog.pack();
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setVisible(true);
+        dialog.setLocationRelativeTo(dialog.getParent());
+        System.exit(0);
+    }
+
+    private void addActionListeners() {
         saveButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
 
@@ -56,16 +68,6 @@ public class AddEmployeeDialog extends JDialog {
 
 // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-    }
-    public static void main(String[] args) {
-        final int WIDTH = 400;
-        final int HEIGHT = 500;
-        AddEmployeeDialog dialog = new AddEmployeeDialog();
-        dialog.pack();
-        dialog.setSize(WIDTH, HEIGHT);
-        dialog.setVisible(true);
-        dialog.setLocationRelativeTo(dialog.getParent());
-        System.exit(0);
     }
 
     private void createComboBoxType() {
@@ -121,22 +123,22 @@ public class AddEmployeeDialog extends JDialog {
             return;
         }
 
-        if(!InputUtil.isValidPhoneNumber(phone)) {
+        if (!InputUtil.isValidPhoneNumber(phone)) {
             Toast.makeText(this, "Invalid phone number.", Toast.Style.ERROR).display();
             return;
         }
 
-        if(!InputUtil.isValidEmail(email)) {
+        if (!InputUtil.isValidEmail(email)) {
             Toast.makeText(this, "Invalid email address.", Toast.Style.ERROR).display();
             return;
         }
 
-        if(!InputUtil.isValidStreetAddress(address)) {
+        if (!InputUtil.isValidStreetAddress(address)) {
             Toast.makeText(this, "Invalid address.", Toast.Style.ERROR).display();
             return;
         }
 
-        Employee employee = EmployeeFactory.createEmployee(username, password, forename,surname, address, phone, email, employeeType, EmployeeFactory.getSalaryByType(employeeType.getType()), EmployeeFactory.getCommissionByType(employeeType.getType()));
+        Employee employee = EmployeeFactory.createEmployee(username, password, forename, surname, address, phone, email, employeeType, EmployeeFactory.getSalaryByType(employeeType.getType()), EmployeeFactory.getCommissionByType(employeeType.getType()));
         addedNewValue = true;
         if (employee == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again.");

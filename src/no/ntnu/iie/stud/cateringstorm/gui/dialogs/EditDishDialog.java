@@ -20,11 +20,10 @@ import java.util.ArrayList;
  */
 
 public class EditDishDialog extends JDialog {
-    private boolean addedNewValue;
-
     private static final Integer[] COLUMNS_AVAILABLE_INGREDIENTS = {IngredientDishTableModel.COLUMN_DISH_NAME, IngredientDishTableModel.COLUMN_INGREDIENT_ID, IngredientDishTableModel.COLUMN_INGREDIENT_NAME, IngredientDishTableModel.COLUMN_QUANTITY, IngredientDishTableModel.COLUMN_UNIT};
-
-
+    ArrayList<IngredientDish> addedList;
+    ArrayList<Ingredient> selectionList;
+    private boolean addedNewValue;
     private JPanel mainPanel;
     private JButton okButton;
     private JButton cancelButton;
@@ -33,24 +32,13 @@ public class EditDishDialog extends JDialog {
     private JComboBox<String> typeComboBox;
     private JCheckBox statusCheckBox;
     private JButton addRemoveButton;
-
-
     private JTable addedIngredientTable;
     private IngredientDishTableModel leftSideModel;
-
     private JTable rightSideTable;
     private JTextField aorText;
     private JSpinner addRemoveSpinner;
     private IngredientTableModel rightTableModel;
-
-    ArrayList<IngredientDish> addedList;
-    ArrayList<Ingredient> selectionList;
-
     private Dish dish;
-
-    public boolean getAddedNewValue() {
-        return addedNewValue;
-    }
 
     public EditDishDialog(Dish dish) {
         this.dish = dish;
@@ -82,6 +70,10 @@ public class EditDishDialog extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    public boolean getAddedNewValue() {
+        return addedNewValue;
     }
 
     private void createUIComponents() {
@@ -182,9 +174,9 @@ public class EditDishDialog extends JDialog {
     private void onAR() {
         Double aorValue = 0.0;
         String temp = aorText.getText();
-        try{
+        try {
             aorValue = Double.parseDouble(temp);
-        } catch (Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error, please only put numbers in the text field");
         }
 
@@ -211,21 +203,22 @@ public class EditDishDialog extends JDialog {
         boolean check = true;
 
         if (rightSideTable.getSelectedRow() > -1) {
-            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(rightSideTable.getSelectedRow()).getIngredientId()),dish,aorValue,selectionList.get(rightSideTable.getSelectedRow()).getUnit());
+            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(rightSideTable.getSelectedRow()).getIngredientId()), dish, aorValue, selectionList.get(rightSideTable.getSelectedRow()).getUnit());
 
-            for (int i = 0; i <addedList.size(); i++){
-                if (addedList.get(i).getIngredient().getIngredientId() == ingDish.getIngredient().getIngredientId()){
+            for (int i = 0; i < addedList.size(); i++) {
+                if (addedList.get(i).getIngredient().getIngredientId() == ingDish.getIngredient().getIngredientId()) {
                     addedList.get(i).setQuantity(addedList.get(i).getQuantity() + ingDish.getQuantity());
                     check = false;
                 }
             }
 
-            if (check){
+            if (check) {
                 addedList.add(ingDish);
             }
         }
         leftSideModel.setRows(addedList);
     }
+
     /**
      * Called when cancel button, escape or the cross is pressed
      */

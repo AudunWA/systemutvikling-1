@@ -63,7 +63,15 @@ public class AddSubscriptionDialog extends JDialog {
         addChangeListeners();
 
     }
-    private void addActionListeners(){
+
+    public static void main(String[] args) {
+        AddSubscriptionDialog dialog = new AddSubscriptionDialog();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
+    private void addActionListeners() {
         // Add event listeners
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
@@ -120,7 +128,7 @@ public class AddSubscriptionDialog extends JDialog {
         });
     }
 
-    private void addChangeListeners(){
+    private void addChangeListeners() {
         // Set minimum amount on spinner (could be 1, but we want to display our error toast)
         SpinnerNumberModel amountSpinnerModel = (SpinnerNumberModel) amountSpinner.getModel(); // Default model
         amountSpinnerModel.setMinimum(0);
@@ -160,12 +168,6 @@ public class AddSubscriptionDialog extends JDialog {
             order.setRelativeTime(newTime);
             selectedPackagesModel.updateRow(index);
         });
-    }
-    public static void main(String[] args) {
-        AddSubscriptionDialog dialog = new AddSubscriptionDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
     }
 
     /**
@@ -209,7 +211,7 @@ public class AddSubscriptionDialog extends JDialog {
             if (existingRecurringOrder == null) {
                 // Create a new recurring order and add it
                 int relativeTime = DateUtil.convertToRelativeTime(DateUtil.convertDate((Date) timeSpinner.getModel().getValue()).toLocalTime());
-                RecurringOrder newOrder = new RecurringOrder(-1, dayComboBox.getSelectedIndex(), relativeTime,1, null, selectedFoodPackage);
+                RecurringOrder newOrder = new RecurringOrder(-1, dayComboBox.getSelectedIndex(), relativeTime, 1, null, selectedFoodPackage);
                 selectedPackagesModel.addRow(newOrder);
 
             } else {

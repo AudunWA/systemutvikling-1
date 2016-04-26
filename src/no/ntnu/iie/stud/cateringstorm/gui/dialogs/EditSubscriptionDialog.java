@@ -80,6 +80,13 @@ public class EditSubscriptionDialog extends JDialog {
         loadData();
     }
 
+    public static void main(String[] args) {
+        EditSubscriptionDialog dialog = new EditSubscriptionDialog(SubscriptionFactory.getSubscription(1));
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
     private void addActionListeners() {
         // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -187,13 +194,6 @@ public class EditSubscriptionDialog extends JDialog {
         dayComboBox.setSelectedIndex(order.getWeekday());
         amountSpinner.setValue(order.getAmount());
         timeSpinner.setValue(new Time(Timestamp.valueOf(DateUtil.convertRelativeTime(order.getRelativeTime())).getTime()));
-    }
-
-    public static void main(String[] args) {
-        EditSubscriptionDialog dialog = new EditSubscriptionDialog(SubscriptionFactory.getSubscription(1));
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
     }
 
     /**

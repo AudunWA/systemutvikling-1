@@ -44,50 +44,7 @@ public class EditCustomerDialog extends JDialog {
         addActionListeners();
 
     }
-    private void addActionListeners(){
-        okButton.addActionListener(e -> onOK());
-        cancelButton.addActionListener(e -> onCancel());
-        forenameField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (forenameField.isEnabled()) {
-                    emptyTextField(forenameField.getText(),forenameField);
-                }
-            }
-        });
-        surnameField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (surnameField.isEnabled()) {
-                    emptyTextField(surnameField.getText(),surnameField);
-                }
-            }
-        });
-        addressField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (forenameField.isEnabled()) {
-                    emptyTextField(addressField.getText(),addressField);
-                }
-            }
-        });
-        phoneField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (forenameField.isEnabled()) {
-                    emptyTextField(phoneField.getText(),phoneField);
-                }
-            }
-        });
-        emailField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (forenameField.isEnabled()) {
-                    emptyTextField(emailField.getText(),emailField);
-                }
-            }
-        });
-    }
+
     //Test method
     public static void main(String[] args) {
         final int WIDTH = 300;
@@ -99,16 +56,62 @@ public class EditCustomerDialog extends JDialog {
         dialog.setVisible(true);
         System.exit(0);
     }
+
+    private void addActionListeners() {
+        okButton.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
+        forenameField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (forenameField.isEnabled()) {
+                    emptyTextField(forenameField.getText(), forenameField);
+                }
+            }
+        });
+        surnameField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (surnameField.isEnabled()) {
+                    emptyTextField(surnameField.getText(), surnameField);
+                }
+            }
+        });
+        addressField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (forenameField.isEnabled()) {
+                    emptyTextField(addressField.getText(), addressField);
+                }
+            }
+        });
+        phoneField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (forenameField.isEnabled()) {
+                    emptyTextField(phoneField.getText(), phoneField);
+                }
+            }
+        });
+        emailField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (forenameField.isEnabled()) {
+                    emptyTextField(emailField.getText(), emailField);
+                }
+            }
+        });
+    }
+
     /**
      * Called when ok button is pressed.
      * Updates and saves the changes to the existing Customer.
      */
     private void onOK() {
         String forename = forenameField.getText().trim(),
-        surname = surnameField.getText().trim(),
-        address = addressField.getText().trim(),
-        phone = phoneField.getText().trim(),
-        email = emailField.getText().trim();
+                surname = surnameField.getText().trim(),
+                address = addressField.getText().trim(),
+                phone = phoneField.getText().trim(),
+                email = emailField.getText().trim();
 
         if (forename.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in a forename");
@@ -131,11 +134,11 @@ public class EditCustomerDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "Please fill in an email.");
             return;
         }
-            customer.setForename(forename);
-            customer.setSurname(surname);
-            customer.setAddress(address);
-            customer.setPhone(phone);
-            customer.setEmail(email);
+        customer.setForename(forename);
+        customer.setSurname(surname);
+        customer.setAddress(address);
+        customer.setPhone(phone);
+        customer.setEmail(email);
 
         int updatedId = CustomerFactory.updateCustomer(customer);
 
@@ -144,7 +147,7 @@ public class EditCustomerDialog extends JDialog {
 
         if (dialogResult == 0) {
 
-            if (forename.isEmpty() || surname.isEmpty() || address.isEmpty()|| phone.isEmpty() || email.isEmpty()) {
+            if (forename.isEmpty() || surname.isEmpty() || address.isEmpty() || phone.isEmpty() || email.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please enter a value in all text fields");
                 return;
             }
@@ -162,6 +165,7 @@ public class EditCustomerDialog extends JDialog {
         }
         dispose();
     }
+
     /**
      * Called when cancel button, escape or the cross is pressed
      */
@@ -170,13 +174,13 @@ public class EditCustomerDialog extends JDialog {
     }
 
 
-    private void emptyTextField(String text,JTextField textField) {
+    private void emptyTextField(String text, JTextField textField) {
         if (textField.getText().equals(text)) {
             textField.setText("");
         }
     }
 
-    private void setTextFields(){
+    private void setTextFields() {
         forenameField.setText(customer.getForename());
         surnameField.setText(customer.getSurname());
         addressField.setText(customer.getAddress());

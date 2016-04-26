@@ -10,7 +10,7 @@ INSERT INTO employee_type VALUES (6, 'secretary', 206.49, 0);
 INSERT INTO employee VALUES
   (default, 'chechter', 'Christian', 'Echtermeyer', 'Stibakken 2', '99258217', 'chrech.birr@gmail.com', 4, TRUE,
             'dd1a1d47e15b4e2165f597ded84c05640c4506ba30d76a7d25e7726af37dc41e', 'YWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFh',
-            277.29, 0);
+   277.29, 0);
 
 -- (dish_type) --
 INSERT INTO dish_type VALUES (default, 'Forrett');

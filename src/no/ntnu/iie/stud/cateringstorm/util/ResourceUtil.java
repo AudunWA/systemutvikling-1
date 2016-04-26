@@ -19,6 +19,7 @@ public final class ResourceUtil {
 
     /**
      * Helper class for setting the application icon.
+     *
      * @param frame The window to set the icon for.
      */
     public static void setApplicationIcon(Window frame) {
@@ -41,7 +42,7 @@ public final class ResourceUtil {
      * @return An ImageIcon initialized with the loaded resource
      */
     public static ImageIcon getIconResource(String path) {
-       // path = "icons/" + path;
+        // path = "icons/" + path;
 
         ClassLoader loader = ResourceUtil.class.getClassLoader();
         if (loader == null) {
@@ -75,6 +76,7 @@ public final class ResourceUtil {
     /**
      * Reads an input stream into a string.
      * * @param stream The input stream to read from.
+     *
      * @return The read string.
      */
     private static String convertStreamToString(InputStream stream) {

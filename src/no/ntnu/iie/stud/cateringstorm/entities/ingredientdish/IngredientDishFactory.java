@@ -17,6 +17,8 @@ import java.util.ArrayList;
  */
 public class IngredientDishFactory {
 
+    private static Dish tempDish;
+
     private static IngredientDish createIngredientDishFromResultSet(ResultSet resultSet) throws SQLException {
 
         int ingredientId = resultSet.getInt("ingredient_id");
@@ -48,8 +50,6 @@ public class IngredientDishFactory {
             return false;
         }
     }
-
-    private static Dish tempDish;
 
     public static ArrayList<IngredientDish> createDish(ArrayList<IngredientDish> ingredientDishes, String name, String description, int dishType, boolean active) {
 
@@ -193,7 +193,7 @@ public class IngredientDishFactory {
         ArrayList<IngredientDish> ingDishList = getAllIngredientDishes();
         boolean exists = false;
         for (IngredientDish temp : ingDishList) {
-           exists = temp.getIngredient().getIngredientId() == ingredientId && temp.getDish().getDishId() == dishId;
+            exists = temp.getIngredient().getIngredientId() == ingredientId && temp.getDish().getDishId() == dishId;
             if (exists) {
                 try (Connection connection = Database.getConnection()) {
                     // Add the ingredient itself and get ID
@@ -210,7 +210,7 @@ public class IngredientDishFactory {
                 return true;
             }
         }
-            return false;
+        return false;
     }
 
     //TO BE USED BEFORE ADDING NEW DISHES
@@ -231,7 +231,7 @@ public class IngredientDishFactory {
         return true;
     }
 
-    public static ArrayList<IngredientDish> getAllIngredientsInDish(int dishId){
+    public static ArrayList<IngredientDish> getAllIngredientsInDish(int dishId) {
 
         ArrayList<IngredientDish> returnList = new ArrayList<>();
 
@@ -242,8 +242,8 @@ public class IngredientDishFactory {
                 statement.setInt(1, dishId);
                 statement.execute();
 
-                try (ResultSet resultSet = statement.getResultSet()){
-                    while (resultSet.next()){
+                try (ResultSet resultSet = statement.getResultSet()) {
+                    while (resultSet.next()) {
                         returnList.add(createIngredientDishFromResultSet(resultSet));
                     }
                 }

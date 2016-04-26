@@ -55,7 +55,8 @@ public class TimesheetView extends JPanel {
     }
 
     /**
-     Constructor used for admins, creates the view for a specified employee.
+     * Constructor used for admins, creates the view for a specified employee.
+     *
      * @param loggedInEmployeeId THe ID of the specified employee.
      */
     public TimesheetView(int loggedInEmployeeId) {
@@ -72,20 +73,8 @@ public class TimesheetView extends JPanel {
     }
 
     /**
-     * Adds action listeners to our components.
-     */
-    private void addActionListeners() {
-        editButton.addActionListener(e -> editTimesheet(getSelectedTimesheet()));
-        clockInButton.addActionListener(e -> clockIn());
-        clockOutButton.addActionListener(e -> clockOut());
-        clockManuallyButton.addActionListener(e -> registerTimesheet());
-        removeButton.addActionListener(e -> removeTimesheet(getSelectedTimesheet()));
-        refreshButton.addActionListener(e -> refresh());
-        showInactiveCB.addActionListener(e -> refresh());
-    }
-
-    /**
      * Entry point for isolated testing of this view.
+     *
      * @param args Command line arguments.
      */
     public static void main(String[] args) {
@@ -98,6 +87,19 @@ public class TimesheetView extends JPanel {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);
+    }
+
+    /**
+     * Adds action listeners to our components.
+     */
+    private void addActionListeners() {
+        editButton.addActionListener(e -> editTimesheet(getSelectedTimesheet()));
+        clockInButton.addActionListener(e -> clockIn());
+        clockOutButton.addActionListener(e -> clockOut());
+        clockManuallyButton.addActionListener(e -> registerTimesheet());
+        removeButton.addActionListener(e -> removeTimesheet(getSelectedTimesheet()));
+        refreshButton.addActionListener(e -> refresh());
+        showInactiveCB.addActionListener(e -> refresh());
     }
 
     private void createUIComponents() {
@@ -149,6 +151,7 @@ public class TimesheetView extends JPanel {
 
     /**
      * Gives access to user selection. If no object is selected, a null value is returned
+     *
      * @return Timesheet Selected object in table
      */
     private Timesheet getSelectedTimesheet() {
@@ -180,6 +183,7 @@ public class TimesheetView extends JPanel {
 
     /**
      * Opens a dialog enabling user to edit certain values in a Timesheet object, thus changing value in a table row
+     *
      * @param timesheet Selected time sheet from table
      */
     private void editTimesheet(Timesheet timesheet) {
@@ -202,6 +206,7 @@ public class TimesheetView extends JPanel {
     /**
      * Clocks user in on current system time and date. Sends a Timesheet containing an empty "to_time" column.
      * User is at any time after able to clock out with a clockout button
+     *
      * @See clockOut()
      */
     private void clockIn() {
@@ -286,6 +291,7 @@ public class TimesheetView extends JPanel {
 
     /**
      * Sets boolean active in status column in selected row to false, thus hiding it from the user.
+     *
      * @param timesheet Selected row from table
      */
     private void removeTimesheet(Timesheet timesheet) {
@@ -300,6 +306,7 @@ public class TimesheetView extends JPanel {
 
     /**
      * Shows user active time sheets, which would be time sheet that aren't deleted
+     *
      * @return ArrayList<Timesheet> Containing all objects with value true in column "active"
      */
     private ArrayList<Timesheet> getActiveTimesheetsByEmployeeId() {
@@ -308,6 +315,7 @@ public class TimesheetView extends JPanel {
 
     /**
      * Shows admin user inactive(deleted) should he choose to view them
+     *
      * @return ArrayList<Timesheet>
      */
     private ArrayList<Timesheet> getTimesheetsByEmployeeId() {

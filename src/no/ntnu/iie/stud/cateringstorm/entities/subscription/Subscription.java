@@ -15,12 +15,13 @@ public class Subscription {
 
     /**
      * Constructs and initializes a subscription with the specified details.
+     *
      * @param subscriptionId The ID of the subscription.
-     * @param startDate The start date of the subscription.
-     * @param endDate The end date of the subscription.
-     * @param cost The cost of the subsciption.
-     * @param customerId The ID of the customer subscribing.
-     * @param active Whether the subscription is active or inactive.
+     * @param startDate      The start date of the subscription.
+     * @param endDate        The end date of the subscription.
+     * @param cost           The cost of the subsciption.
+     * @param customerId     The ID of the customer subscribing.
+     * @param active         Whether the subscription is active or inactive.
      */
     public Subscription(int subscriptionId, Date startDate, Date endDate, double cost, int customerId, boolean active) {
         this.subscriptionId = subscriptionId;
@@ -32,7 +33,8 @@ public class Subscription {
     }
 
     /**
-     *  Returns the id of this subscription.
+     * Returns the id of this subscription.
+     *
      * @return the id of this subscription.
      */
     public int getSubscriptionId() {
@@ -41,6 +43,7 @@ public class Subscription {
 
     /**
      * Returns the start date of this subscription.
+     *
      * @return the start date of this subscription.
      */
     public Date getStartDate() {
@@ -49,6 +52,7 @@ public class Subscription {
 
     /**
      * Sets the start date of the subscription.
+     *
      * @param startDate The new start date.
      */
     public void setStartDate(Date startDate) {
@@ -56,7 +60,8 @@ public class Subscription {
     }
 
     /**
-     *  Returns the end date of this subscription.
+     * Returns the end date of this subscription.
+     *
      * @return the end date of this subscription.
      */
     public Date getEndDate() {
@@ -65,6 +70,7 @@ public class Subscription {
 
     /**
      * Sets the end date of this subscription.
+     *
      * @param endDate The new end date.
      */
     public void setEndDate(Date endDate) {
@@ -72,7 +78,8 @@ public class Subscription {
     }
 
     /**
-     *  Returns the price of this subscription.
+     * Returns the price of this subscription.
+     *
      * @return the price of this subscription.
      */
     public double getCost() {
@@ -81,6 +88,7 @@ public class Subscription {
 
     /**
      * Sets the cost of this subscription.
+     *
      * @param cost The new price.
      */
     public void setCost(double cost) {
@@ -89,6 +97,7 @@ public class Subscription {
 
     /**
      * Determines whether the subscription is active. An inactive subscription is practically considered a deleted one.
+     *
      * @return true if the subscription is active, false otherwise.
      */
     public boolean isActive() {
@@ -97,6 +106,7 @@ public class Subscription {
 
     /**
      * Activates or inactivates this subscription. An inactive subscription is practically considered a deleted one.
+     *
      * @param active If true, this subscription is active, otherwise it is inactive.
      */
     public void setActive(boolean active) {
@@ -104,7 +114,8 @@ public class Subscription {
     }
 
     /**
-     *  Returns the id of the connected customer.
+     * Returns the id of the connected customer.
+     *
      * @return the id of the connected customer.
      */
     public int getCustomerId() {
@@ -112,7 +123,8 @@ public class Subscription {
     }
 
     /**
-     *  Sets the customer id.
+     * Sets the customer id.
+     *
      * @param customerId The new customer id.
      */
     public void setCustomerId(int customerId) {
@@ -124,7 +136,8 @@ public class Subscription {
     }
 
     /**
-     *  Returns a string representation of this subscription.
+     * Returns a string representation of this subscription.
+     *
      * @return a string representation of this subscription.
      */
     @Override

@@ -37,7 +37,15 @@ public class ChefViewIngredientsDialog extends JDialog {
 
         addActionListeners();
     }
-    private void addActionListeners(){
+
+    public static void main(String[] args) {
+        ChefViewIngredientsDialog dialog = new ChefViewIngredientsDialog(DishFactory.getDish(2));
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
+    private void addActionListeners() {
         cancelButton.addActionListener(e -> onCancel());
 
 // call onCancel() when cross is clicked
@@ -55,12 +63,7 @@ public class ChefViewIngredientsDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-    public static void main(String[] args) {
-        ChefViewIngredientsDialog dialog = new ChefViewIngredientsDialog(DishFactory.getDish(2));
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
+
     /**
      * Called when cancel button, escape or the cross is pressed
      */

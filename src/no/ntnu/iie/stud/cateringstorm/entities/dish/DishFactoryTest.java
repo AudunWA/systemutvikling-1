@@ -75,6 +75,7 @@ public class DishFactoryTest {
         Assert.assertNotNull(dish);
         Assert.assertEquals(dish.getDescription(), newDescription);
     }
+
     @Test
     public void testGetDishes() throws Exception {
         ArrayList<Dish> dishes = DishFactory.getDishes(1); // We assume food package 1 exists

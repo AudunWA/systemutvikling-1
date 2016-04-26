@@ -39,7 +39,22 @@ public class FoodPackageAdminView extends JPanel {
         addActionListeners();
         addDocumentListener();
     }
-    private void addActionListeners(){
+
+    // Test method
+    public static void main(String[] args) {
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+
+        JFrame frame = new JFrame("FoodPackageAdminView");
+        frame.setContentPane(new FoodPackageAdminView());
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);//Puts window in middle of screen
+    }
+
+    private void addActionListeners() {
         addButton.addActionListener(e -> onAdd());
         editButton.addActionListener(e -> onEdit());
         viewFoodPackage.addActionListener(e -> onView());
@@ -61,7 +76,8 @@ public class FoodPackageAdminView extends JPanel {
             //Get index from selected row
         });
     }
-    private void addDocumentListener(){
+
+    private void addDocumentListener() {
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -83,7 +99,7 @@ public class FoodPackageAdminView extends JPanel {
                 ArrayList<FoodPackage> copy = new ArrayList<>();
 
                 for (int i = 0; i < foodPackageList.size(); i++) {
-                    if ((foodPackageList.get(i).getName()).toLowerCase().contains(searchField.getText().toLowerCase())){
+                    if ((foodPackageList.get(i).getName()).toLowerCase().contains(searchField.getText().toLowerCase())) {
                         copy.add(foodPackageList.get(i));
                     }
                 }
@@ -91,24 +107,12 @@ public class FoodPackageAdminView extends JPanel {
             }
         });
     }
-    // Test method
-    public static void main(String[] args) {
-        final int WIDTH = 700;
-        final int HEIGHT = 600;
-
-        JFrame frame = new JFrame("FoodPackageAdminView");
-        frame.setContentPane(new FoodPackageAdminView());
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);//Puts window in middle of screen
-    }
 
     private void setSearchField(String text) {
         searchField.setText(text);
         searchField.setEnabled(true);
     }
+
     /**
      * Opens the AddFoodPackage GUI Dialog
      */
@@ -118,6 +122,7 @@ public class FoodPackageAdminView extends JPanel {
         dialog.setVisible(true);
         refresh();
     }
+
     /**
      * Opens the EditFoodPackage GUI Dialog
      */
@@ -140,6 +145,7 @@ public class FoodPackageAdminView extends JPanel {
 
         }
     }
+
     /**
      * Opens the FoodPackageInfoView GUI
      */
@@ -163,6 +169,7 @@ public class FoodPackageAdminView extends JPanel {
         dialog.setLocationRelativeTo(null);//Puts window in middle of screen
 
     }
+
     /**
      * Removes the selected row by change its active status in the database
      */
@@ -184,6 +191,7 @@ public class FoodPackageAdminView extends JPanel {
             refresh();
         }
     }
+
     /**
      * Searches through a list of foodpackages within database.
      */

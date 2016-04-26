@@ -17,6 +17,7 @@ import java.awt.event.WindowEvent;
 
 
 public class EditEmployeeDialog extends JDialog {
+    private static final String PASSWORD_DUMMY = "dummyPassword";
     private JPanel mainPanel;
     private JButton saveButton;
     private JButton cancelButton;
@@ -28,10 +29,8 @@ public class EditEmployeeDialog extends JDialog {
     private JTextField emailField;
     private JTextField passwordField;
     private JComboBox<String> typeComboBox;
-
     private Employee employee;
     private boolean addedNewValue;
-    private static final String PASSWORD_DUMMY = "dummyPassword";
 
     public EditEmployeeDialog(Employee employee) {
         this.employee = employee;
@@ -45,7 +44,19 @@ public class EditEmployeeDialog extends JDialog {
         loadData();
         pack();
     }
-    private void addActionListeners(){
+
+    public static void main(String[] args) {
+        final int WIDTH = 500;
+        final int HEIGHT = 300;
+        EditEmployeeDialog dialog = new EditEmployeeDialog(null);
+        dialog.pack();
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setLocationRelativeTo(dialog.getParent());
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
+    private void addActionListeners() {
         saveButton.addActionListener(e -> onSavePressed());
         cancelButton.addActionListener(e -> onCancel());
 
@@ -59,16 +70,6 @@ public class EditEmployeeDialog extends JDialog {
 
         // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-    }
-    public static void main(String[] args) {
-        final int WIDTH = 500;
-        final int HEIGHT = 300;
-        EditEmployeeDialog dialog = new EditEmployeeDialog(null);
-        dialog.pack();
-        dialog.setSize(WIDTH, HEIGHT);
-        dialog.setLocationRelativeTo(dialog.getParent());
-        dialog.setVisible(true);
-        System.exit(0);
     }
 
     /**
@@ -121,17 +122,17 @@ public class EditEmployeeDialog extends JDialog {
                 return;
             }
 
-            if(!InputUtil.isValidPhoneNumber(phone)) {
+            if (!InputUtil.isValidPhoneNumber(phone)) {
                 Toast.makeText(this, "Invalid phone number.", Toast.Style.ERROR).display();
                 return;
             }
 
-            if(!InputUtil.isValidEmail(email)) {
+            if (!InputUtil.isValidEmail(email)) {
                 Toast.makeText(this, "Invalid email address.", Toast.Style.ERROR).display();
                 return;
             }
 
-            if(!InputUtil.isValidStreetAddress(address)) {
+            if (!InputUtil.isValidStreetAddress(address)) {
                 Toast.makeText(this, "Invalid address.", Toast.Style.ERROR).display();
                 return;
             }
@@ -143,11 +144,11 @@ public class EditEmployeeDialog extends JDialog {
             employee.setUsername(username);
             employee.setAddress(address);
 
-            if(employee.getEmployeeType() != EmployeeType.ADMINISTRATOR) {
+            if (employee.getEmployeeType() != EmployeeType.ADMINISTRATOR) {
                 // Not admin, can change type
                 employee.setEmployeeType(employeeType);
             }
-            if(!passwordField.getText().equals(PASSWORD_DUMMY)) {
+            if (!passwordField.getText().equals(PASSWORD_DUMMY)) {
                 // Changed password
                 // TODO: Update password
             }
@@ -185,7 +186,7 @@ public class EditEmployeeDialog extends JDialog {
         typeComboBox.setSelectedIndex(employee.getEmployeeType().getType());
 
         // Disable role selection if user being edited is admin
-        if(employee.getEmployeeType() == EmployeeType.ADMINISTRATOR) {
+        if (employee.getEmployeeType() == EmployeeType.ADMINISTRATOR) {
             typeComboBox.setEnabled(false);
         }
     }

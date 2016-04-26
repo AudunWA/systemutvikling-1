@@ -15,10 +15,10 @@ public class RecurringOrderTest {
     // TODO: Finish test.
     @Test
     public void testGetDeliveryTime() throws Exception {
-        Subscription subscription = new Subscription(-1,new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()+10000000),10000,1,true);
+        Subscription subscription = new Subscription(-1, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis() + 10000000), 10000, 1, true);
         ArrayList<RecurringOrder> recOrders = new ArrayList<>();
         FoodPackage foodPackage = FoodPackageFactory.getFoodPackage(1);
-        recOrders.add(new RecurringOrder(-1,3,3600*14,5,subscription,foodPackage));
+        recOrders.add(new RecurringOrder(-1, 3, 3600 * 14, 5, subscription, foodPackage));
     }
 
 }

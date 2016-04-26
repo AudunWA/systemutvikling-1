@@ -99,7 +99,7 @@ public class SalespersonOrderView extends JPanel {
     }
 
     private Order getSelectedOrder() {
-        return OrderFactory.getOrder((Integer)tableModel.getValueAt(orderTable.getSelectedRow(), 0));
+        return OrderFactory.getOrder((Integer) tableModel.getValueAt(orderTable.getSelectedRow(), 0));
     }
 
     private void addOrder(Employee employee) {
@@ -113,7 +113,7 @@ public class SalespersonOrderView extends JPanel {
 
         aoDialog.setVisible(true);
         orderList = OrderFactory.getAllOrders();
-        if(aoDialog.getAddedNewValue()){
+        if (aoDialog.getAddedNewValue()) {
             refresh();
             Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
         }
@@ -166,10 +166,10 @@ public class SalespersonOrderView extends JPanel {
             int id = (Integer) orderTable.getValueAt(orderTable.getSelectedRow(), 0);
             int status = OrderFactory.getOrder(id).getStatus();
 
-            if (status != 2 && status != 4){
+            if (status != 2 && status != 4) {
                 if (statusBox.getSelectedIndex() == 0 && status == 5) {
                     OrderFactory.setOrderState(id, 1);
-                } else if (statusBox.getSelectedIndex() == 1){
+                } else if (statusBox.getSelectedIndex() == 1) {
                     OrderFactory.setOrderState(id, 5);
                 }
             } else {

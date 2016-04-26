@@ -32,6 +32,7 @@ public final class TimesheetFactory {
 
     /**
      * Creates an arraylist containing Timesheet
+     *
      * @return ArrayList<Timesheet>
      */
     public static ArrayList<Timesheet> getAllTimesheets() {

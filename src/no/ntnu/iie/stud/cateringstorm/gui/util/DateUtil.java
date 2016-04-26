@@ -82,7 +82,6 @@ public final class DateUtil {
     }
 
     /**
-     *
      * @param time
      * @return int From Localtime(Hour,Minute,Second) to seconds
      */
@@ -95,7 +94,8 @@ public final class DateUtil {
     }
 
     /**
-     Calculates which date the given weekday occurs next time.
+     * Calculates which date the given weekday occurs next time.
+     *
      * @param day The weekday to find.
      * @return The next occurrence of the weekday.
      */

@@ -16,6 +16,7 @@ public final class CustomerFactory {
 
     /**
      * Creates a customer from a result set.
+     *
      * @param result The result set.
      * @return the created customer.
      * @throws SQLException
@@ -35,6 +36,7 @@ public final class CustomerFactory {
 
     /**
      * Gets a single customer by ID.
+     *
      * @param customerId The ID of the customer.
      * @return the selected customer.
      */
@@ -49,6 +51,7 @@ public final class CustomerFactory {
 
     /**
      * Gets a single customer by ID.
+     *
      * @param customerId The ID of the customer.
      * @param connection The connection to use.
      * @return the selected customer.

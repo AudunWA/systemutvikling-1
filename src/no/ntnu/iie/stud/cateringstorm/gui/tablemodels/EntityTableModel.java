@@ -113,7 +113,8 @@ public abstract class EntityTableModel<T> extends AbstractTableModel {
 
     /**
      * Returns a clone of this model's rows.
-     *  @return
+     *
+     * @return
      */
     public ArrayList<T> getRowsClone() {
         return (ArrayList<T>) rows.clone();

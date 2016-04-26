@@ -40,6 +40,18 @@ public class AdminEmployeeView extends JPanel {
         addActionListeners();
     }
 
+    // Test method
+    public static void main(String[] args) {
+        final int WIDTH = 1300;
+        final int HEIGHT = 600;
+        JFrame frame = new JFrame();
+        frame.add(new AdminEmployeeView());
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
+    }
+
     private void addActionListeners() {
         refreshButton.addActionListener(e -> refresh());
         addEmployeeButton.addActionListener(e -> addEmployee());
@@ -85,7 +97,6 @@ public class AdminEmployeeView extends JPanel {
     }
 
     /**
-     *
      * @return Selected table row
      */
     private Employee getSelectedEmployee() {
@@ -132,6 +143,7 @@ public class AdminEmployeeView extends JPanel {
         }
         employeeList = EmployeeFactory.getActiveEmployees();
     }
+
     /**
      * Opens the editEmployee GUI Dialog
      */
@@ -152,6 +164,7 @@ public class AdminEmployeeView extends JPanel {
         }
         refresh();
     }
+
     /**
      * De-activates the selected row in the database
      */
@@ -193,18 +206,5 @@ public class AdminEmployeeView extends JPanel {
         }
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Employees refreshed").display();
         tableModel.setRows(employeeList);
-    }
-
-
-    // Test method
-    public static void main(String[] args) {
-        final int WIDTH = 1300;
-        final int HEIGHT = 600;
-        JFrame frame = new JFrame();
-        frame.add(new AdminEmployeeView());
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);
     }
 }

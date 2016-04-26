@@ -12,6 +12,7 @@ public final class IngredientFactory {
 
     /**
      * result set - used for creating an ingredient object from result.
+     *
      * @param result
      * @return an ingredient object
      * @throws SQLException

@@ -47,7 +47,18 @@ public class EditFoodPackageDialog extends JDialog {
         addActionListeners();
 
     }
-    private void addActionListeners(){
+
+    public static void main(String[] args) {
+        final int height = 700;
+        final int width = 600;
+        EditFoodPackageDialog dialog = new EditFoodPackageDialog(null);
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setSize(width, height);
+        System.exit(0);
+    }
+
+    private void addActionListeners() {
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
         addRemoveButton.addActionListener(e -> onAR());
@@ -61,15 +72,6 @@ public class EditFoodPackageDialog extends JDialog {
         // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         loadData();
-    }
-    public static void main(String[] args) {
-        final int height = 700;
-        final int width = 600;
-        EditFoodPackageDialog dialog = new EditFoodPackageDialog(null);
-        dialog.pack();
-        dialog.setVisible(true);
-        dialog.setSize(width, height);
-        System.exit(0);
     }
 
     /**
@@ -197,6 +199,7 @@ public class EditFoodPackageDialog extends JDialog {
     public boolean getAddedNewValue() {
         return addedNewValue;
     }
+
     /**
      * Called when cancel button, escape or the cross is pressed
      */

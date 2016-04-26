@@ -39,7 +39,44 @@ public class StorageView extends JPanel {
         addDocumentListener();
         addActionListeners();
     }
-    private void addActionListeners(){
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("StorageView");
+        frame.setContentPane(new StorageView().mainPanel);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+    }
+
+    /**
+     * Used to create a custom table renderer.
+     *
+     * @param table The table which should have the renderer.
+     * @return The same table.
+     */
+    private static JTable getNewRenderedTable(final JTable table) {
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table,
+                                                           Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+
+                if (((Date) table.getValueAt(row, 3)).before(new Date(System.currentTimeMillis() + 86400000 * 2))) {
+                    setBackground(new Color(200, 100, 100));
+                } else if (((Date) table.getValueAt(row, 3)).before(new Date(System.currentTimeMillis() + 86400000 * 10))) {
+                    setBackground(Color.ORANGE);
+                } else {
+                    return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+                }
+
+                return this;
+            }
+        });
+        return table;
+    }
+
+    private void addActionListeners() {
         addIngredientButton.addActionListener(e -> onIngredientAddClick());
         incrementSupplyButton.addActionListener(e -> onIncrementClick());
         searchField.addMouseListener(new MouseAdapter() {
@@ -53,7 +90,8 @@ public class StorageView extends JPanel {
             refresh();
         });
     }
-    private void addDocumentListener(){
+
+    private void addDocumentListener() {
 
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
@@ -87,6 +125,7 @@ public class StorageView extends JPanel {
             }
         });
     }
+
     /*private void addIngredient(){
         AddIngredientDialog dialog = new AddIngredientDialog();
         dialog.pack();
@@ -125,6 +164,7 @@ public class StorageView extends JPanel {
         tableModel.setRows(ingredientList);
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Storage refreshed.").display();
     }
+
     /**
      * Called when increment button has been pressed.
      * Increments supply of selected ingredient by value defined by a text field.
@@ -132,15 +172,15 @@ public class StorageView extends JPanel {
     private void onIncrementClick() {
         int selectedRow = ingredientTable.getSelectedRow();
         if (selectedRow == -1) {
-            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "No ingredient selected.").display();
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "No ingredient selected.").display();
             return;
         }
 
         double incrementValue;
         try {
             incrementValue = Double.parseDouble(incrementValueField.getText().replace(',', '.'));
-        } catch(NumberFormatException e) {
-            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Invalid incrementation.", Toast.Style.ERROR).display();
+        } catch (NumberFormatException e) {
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Invalid incrementation.", Toast.Style.ERROR).display();
             return;
         }
 
@@ -151,7 +191,7 @@ public class StorageView extends JPanel {
         if (affectedRows == 1) {
             tableModel.setRow(selectedRow, ingredient);
         } else {
-            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Incrementation failed.", Toast.Style.ERROR).display();
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Incrementation failed.", Toast.Style.ERROR).display();
         }
     }
 
@@ -173,41 +213,6 @@ public class StorageView extends JPanel {
         } else {
             Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Ingredient add failed.", Toast.LENGTH_SHORT, Toast.Style.ERROR).display();
         }
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("StorageView");
-        frame.setContentPane(new StorageView().mainPanel);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-    }
-
-    /**
-     * Used to create a custom table renderer.
-     * @param table The table which should have the renderer.
-     * @return The same table.
-     */
-    private static JTable getNewRenderedTable(final JTable table) {
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table,
-                                                           Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-
-
-                if (((Date) table.getValueAt(row, 3)).before(new Date(System.currentTimeMillis() + 86400000 * 2))) {
-                    setBackground(new Color(200, 100, 100));
-                } else if (((Date) table.getValueAt(row, 3)).before(new Date(System.currentTimeMillis() + 86400000 * 10))) {
-                    setBackground(Color.ORANGE);
-                } else {
-                    return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-                }
-
-                return this;
-            }
-        });
-        return table;
     }
 
     private void createUIComponents() {

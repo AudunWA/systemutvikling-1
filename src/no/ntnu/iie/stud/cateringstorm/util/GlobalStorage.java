@@ -14,6 +14,7 @@ public final class GlobalStorage {
     private static final String PROPERTIES_FILE = "./config/app.properties";
     private static Employee loggedInEmployee;
     private static Properties properties;
+
     static {
         properties = new Properties();
 

@@ -11,10 +11,11 @@ public class FoodPackage {
 
     /**
      * Constructs and initializes a FoodPackage with the specified details.
+     *
      * @param foodPackageId The ID of the food package.
-     * @param name The name of the food package.
-     * @param cost The cost of the food package.
-     * @param active Whether the food package is active or inactive.
+     * @param name          The name of the food package.
+     * @param cost          The cost of the food package.
+     * @param active        Whether the food package is active or inactive.
      */
     public FoodPackage(int foodPackageId, String name, double cost, boolean active) {
         this.foodPackageId = foodPackageId;
@@ -25,6 +26,7 @@ public class FoodPackage {
 
     /**
      * Returns the id of the food package.
+     *
      * @return the id of the food package.
      */
     public int getFoodPackageId() {
@@ -33,6 +35,7 @@ public class FoodPackage {
 
     /**
      * Returns the name of the food package.
+     *
      * @return the name of the food package.
      */
     public String getName() {
@@ -41,6 +44,7 @@ public class FoodPackage {
 
     /**
      * Sets the name of the food package.
+     *
      * @param name The new name.
      */
     public void setName(String name) {
@@ -49,6 +53,7 @@ public class FoodPackage {
 
     /**
      * Returns the cost of the food package.
+     *
      * @return the cost of the food package.
      */
     public double getCost() {
@@ -57,6 +62,7 @@ public class FoodPackage {
 
     /**
      * Sets the price of the customer.
+     *
      * @param cost The new price.
      */
     public void setCost(double cost) {
@@ -65,6 +71,7 @@ public class FoodPackage {
 
     /**
      * Determines whether the food package is active. An inactive food package is practically considered a deleted one.
+     *
      * @return true if the food package is active, false otherwise.
      */
     public boolean isActive() {
@@ -73,6 +80,7 @@ public class FoodPackage {
 
     /**
      * Activates or inactivates this food package. An inactive food package is practically considered a deleted one.
+     *
      * @param active If true, this food package is active, otherwise this food package is inactive.
      */
     public void setActive(boolean active) {
@@ -81,6 +89,7 @@ public class FoodPackage {
 
     /**
      * Returns a string representation of this food package.
+     *
      * @return a string representation of this food package.
      */
     @Override

@@ -47,7 +47,21 @@ public class RegisterTimesheetDialog extends JDialog {
         timesheets = TimesheetFactory.getActiveTimesheetsByEmployee(loggedInEmployeeId);
         addActionListeners();
     }
-    private void addActionListeners(){
+
+    //Test method
+    public static void main(String[] args) {
+        final int HEIGHT = 400, WIDTH = 400;
+        GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
+        RegisterTimesheetDialog dialog = new RegisterTimesheetDialog(GlobalStorage.getLoggedInEmployee().getEmployeeId());
+        dialog.pack();
+        dialog.setSize(WIDTH, HEIGHT);
+        dialog.setVisible(true);
+        dialog.setTitle("Register timesheet");
+        dialog.setLocationRelativeTo(null);
+        System.exit(0);
+    }
+
+    private void addActionListeners() {
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
 
@@ -67,22 +81,11 @@ public class RegisterTimesheetDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-    //Test method
-    public static void main(String[] args) {
-        final int HEIGHT = 400, WIDTH = 400;
-        GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));
-        RegisterTimesheetDialog dialog = new RegisterTimesheetDialog(GlobalStorage.getLoggedInEmployee().getEmployeeId());
-        dialog.pack();
-        dialog.setSize(WIDTH, HEIGHT);
-        dialog.setVisible(true);
-        dialog.setTitle("Register timesheet");
-        dialog.setLocationRelativeTo(null);
-        System.exit(0);
-    }
 
     public boolean isRegistered() {
         return registered;
     }
+
     /**
      * Called when cancel button, escape or the cross is pressed
      */

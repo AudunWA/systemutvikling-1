@@ -49,7 +49,8 @@ public class ChefMakeOrderDialog extends JDialog {
         dialog.setVisible(true);
         System.exit(0);
     }
-    private void addActionListeners(){
+
+    private void addActionListeners() {
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
         viewIngredientsButton.addActionListener(e -> onView());
@@ -69,11 +70,12 @@ public class ChefMakeOrderDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+
     /**
      * Called when view button is pressed
      */
     private void onView() {
-        if (dishTable.getSelectedRow() < 0){
+        if (dishTable.getSelectedRow() < 0) {
             return;
         }
         ChefViewIngredientsDialog view = new ChefViewIngredientsDialog(DishFactory.getDish((Integer) dishTable.getModel().getValueAt(dishTable.getSelectedRow(), 0)));
@@ -113,6 +115,7 @@ public class ChefMakeOrderDialog extends JDialog {
 
         dispose();
     }
+
     /**
      * Called when cancel button, escape or the cross is pressed
      */

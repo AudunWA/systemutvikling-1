@@ -61,7 +61,16 @@ public class EditOrderDialog extends JDialog {
 
         loadData();
     }
-    private void addActionListeners(){
+
+    public static void main(String[] args) {
+        EditOrderDialog dialog = new EditOrderDialog(null);
+        dialog.pack();
+        dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
+    private void addActionListeners() {
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
         addRemoveButton.addActionListener(e -> onAR());
@@ -80,13 +89,6 @@ public class EditOrderDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
     }
-    public static void main(String[] args) {
-        EditOrderDialog dialog = new EditOrderDialog(null);
-        dialog.pack();
-        dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        dialog.setVisible(true);
-        System.exit(0);
-    }
 
     /**
      * Called when ok button is pressed
@@ -99,17 +101,17 @@ public class EditOrderDialog extends JDialog {
         int portions;
         try {
             portions = Integer.parseInt(tempPortion);
-        } catch (Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error, please input numbers in the portions field");
             return;
         }
-        if (portions < 1){
+        if (portions < 1) {
             JOptionPane.showMessageDialog(this, "Error, please input a positive portion number");
             return;
         }
         boolean priority = priorityBox.isSelected();
         Timestamp deliveryDate = new Timestamp(dateModel.getValue().getTime());
-        if (deliveryDate.before(new java.util.Date(System.currentTimeMillis()))){
+        if (deliveryDate.before(new java.util.Date(System.currentTimeMillis()))) {
             JOptionPane.showMessageDialog(this, "Error, delivery date is set to today or before");
         }
 
@@ -123,13 +125,13 @@ public class EditOrderDialog extends JDialog {
 
     }
 
-    private void loadData(){
+    private void loadData() {
 
         dateModel.setValue(new Date(order.getDeliveryDate().getTime()));
 
     }
 
-    private void onAR(){
+    private void onAR() {
 
         if (packageTable.getSelectedRow() > -1 && addedTable.getSelectedRow() > -1) {
             JOptionPane.showMessageDialog(this, "Both tables selected. please deselect one by pressing with crtl");
@@ -161,6 +163,7 @@ public class EditOrderDialog extends JDialog {
             }
         }
     }
+
     /**
      * Called when cancel button, escape or the cross is pressed
      */
@@ -169,7 +172,7 @@ public class EditOrderDialog extends JDialog {
         dispose();
     }
 
-    private void createTextFields(){
+    private void createTextFields() {
         String name = order.getCustomerName();
         customerTextField = new JTextField();
         customerTextField.setText(name);
@@ -186,11 +189,11 @@ public class EditOrderDialog extends JDialog {
         portionsTextField.setEditable(true);
     }
 
-    private void createCheckBox(){
+    private void createCheckBox() {
         priorityBox = new JCheckBox("", order.isPriority());
     }
 
-    private void createTables(){
+    private void createTables() {
 
         foodList = FoodPackageFactory.getAllFoodPackages();
         Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST};

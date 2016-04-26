@@ -228,7 +228,7 @@ public class AddOrderDialog extends JDialog {
             }
             boolean priority = false;
 
-            if (priorityBox.isSelected()){
+            if (priorityBox.isSelected()) {
                 priority = true;
             }
 
@@ -242,7 +242,7 @@ public class AddOrderDialog extends JDialog {
                 //return;
                 // ^Temporarily disabled for showcase
             }
-            
+
 
             LocalDate localDate = DateUtil.convertDate(fromDatePicker).toLocalDate();
             LocalTime localTime = DateUtil.convertDate(fromHourPicker).toLocalTime();
@@ -288,6 +288,7 @@ public class AddOrderDialog extends JDialog {
 // add your code here if necessary
         dispose();
     }
+
     private void initializeTimeSpinner() {
         SpinnerModel model = new SpinnerDateModel();
 
@@ -309,6 +310,7 @@ public class AddOrderDialog extends JDialog {
             customerComboBox.addItem(new String(CustomerFactory.getCustomer(i + 1).getSurname()) + ", " + CustomerFactory.getCustomer(i + 1).getForename());
         }
     }
+
     private int getTimeSpinnerValue() {
         return DateUtil.convertToRelativeTime(DateUtil.convertDate((Date) timeSpinner.getModel().getValue()).toLocalTime());
     }
@@ -344,6 +346,7 @@ public class AddOrderDialog extends JDialog {
         packageTable.getTableHeader().setReorderingAllowed(false);
 
     }
+
     public boolean getAddedNewValue() {
         return addedNewValue;
     }

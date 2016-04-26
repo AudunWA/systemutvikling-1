@@ -140,7 +140,7 @@ public final class EmployeeFactory {
         double salary = result.getDouble("salary");
         int commission = result.getInt("commission");
         EmployeeType employeeType = EmployeeType.getEmployeeType(employeeTypeId);
-        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType, active,salary,commission);
+        return new Employee(employeeId, username, forename, surname, address, phone, email, employeeType, active, salary, commission);
     }
 
     /**
@@ -150,7 +150,7 @@ public final class EmployeeFactory {
      */
     public static Employee createEmployee(String username, String password, String forename,
                                           String surname, String address, String phoneNumber,
-                                          String email, EmployeeType type,double salary,int commission) {
+                                          String email, EmployeeType type, double salary, int commission) {
         String salt = PasswordUtil.generateSalt();
         String hashedPassword = PasswordUtil.generatePasswordHash(password, salt);
 
@@ -165,8 +165,8 @@ public final class EmployeeFactory {
                 statement.setInt(7, type.getType());
                 statement.setString(8, hashedPassword);
                 statement.setString(9, salt);
-                statement.setDouble(10,salary);
-                statement.setInt(11,commission);
+                statement.setDouble(10, salary);
+                statement.setInt(11, commission);
                 int affectedRows = statement.executeUpdate();
                 if (affectedRows == 0) {
                     return null; // No rows inserted
@@ -181,7 +181,7 @@ public final class EmployeeFactory {
                     }
                 }
 
-                Employee employee = new Employee(generatedId, username, forename, surname, address, phoneNumber, email, type, true,salary,commission);
+                Employee employee = new Employee(generatedId, username, forename, surname, address, phoneNumber, email, type, true, salary, commission);
                 return employee;
             }
         } catch (SQLException e) {
@@ -214,10 +214,11 @@ public final class EmployeeFactory {
 
     /**
      * Returns salary so far selected year for a selected employee.
+     *
      * @param employeeId The id of the selected employee
      * @return double
      */
-    public static double getSalarySoFar(int employeeId, java.sql.Date year){
+    public static double getSalarySoFar(int employeeId, java.sql.Date year) {
         /*SELECT employee_id, SUM(HOUR(TIMEDIFF(DATE_ADD(to_time, INTERVAL 30 MINUTE), from_time))) sum FROM timesheet WHERE year(from_time) = year(CURDATE())
             GROUP BY employee_id;*/
 
@@ -225,13 +226,13 @@ public final class EmployeeFactory {
             try (PreparedStatement statement = connection.prepareStatement("SELECT employee_id, SUM(HOUR(TIMEDIFF(DATE_ADD(to_time, INTERVAL 30 MINUTE), from_time))) sum " +
                     "FROM timesheet WHERE employee_id = ? AND YEAR(from_time) = YEAR(?)\n" +
                     "GROUP BY employee_id")) {
-                statement.setInt(1,employeeId);
-                statement.setDate(2,year);
+                statement.setInt(1, employeeId);
+                statement.setDate(2, year);
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {
                     double paymentSoFar;
-                    if(result.next()) {
+                    if (result.next()) {
                         return result.getDouble("sum");
                     }
                 }
@@ -242,6 +243,7 @@ public final class EmployeeFactory {
         }
         return -1.;
     }
+
     /**
      * @param employee The selected employee.
      * @return int.
@@ -274,18 +276,19 @@ public final class EmployeeFactory {
     /**
      * Returns sales this year by a selected employee. Only completed(delivered) sales
      * are registered. Year can be freely selected.
+     *
      * @param employeeId The id of the selected employee.
      * @return int.
      */
-    public static int getSalesThisYear(int employeeId, java.sql.Date year){
+    public static int getSalesThisYear(int employeeId, java.sql.Date year) {
         int sales = 0;
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(
                     "SELECT employee_id, COUNT(*) sum FROM _order o JOIN employee e ON(o.salesperson_id = e.employee_id)" +
-                    " WHERE year(o.delivery_time) = year(?)" +
-                    " AND o.status = 2 AND employee_id = ?\n" +
-                    " GROUP BY employee_id DESC LIMIT 1")) {
-                statement.setDate(1,year);
+                            " WHERE year(o.delivery_time) = year(?)" +
+                            " AND o.status = 2 AND employee_id = ?\n" +
+                            " GROUP BY employee_id DESC LIMIT 1")) {
+                statement.setDate(1, year);
                 statement.setInt(2, employeeId);
                 statement.executeQuery();
 
@@ -301,7 +304,8 @@ public final class EmployeeFactory {
         }
         return sales;
     }
-    public static int getCommissionByType(int employeeType){
+
+    public static int getCommissionByType(int employeeType) {
         int commission = 0;
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT commission FROM employee_type WHERE e_type_id = ?")) {
@@ -321,7 +325,7 @@ public final class EmployeeFactory {
         return commission;
     }
 
-    public static double getSalaryByType(int employeeType){
+    public static double getSalaryByType(int employeeType) {
         double salary = 0.0;
         try (Connection connection = Database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM employee_type WHERE e_type_id = ?")) {

@@ -38,6 +38,7 @@ public final class SubscriptionFactory {
 
     /**
      * Returns a subscription with a selected ID.
+     *
      * @return The selected subscription, or null if error or not found.
      */
     public static Subscription getSubscription(int subscriptionId) {
@@ -46,7 +47,7 @@ public final class SubscriptionFactory {
                 statement.setInt(1, subscriptionId);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
-                       return createSubscriptionFromResultSet(resultSet);
+                        return createSubscriptionFromResultSet(resultSet);
                     }
                 }
             }
@@ -68,10 +69,10 @@ public final class SubscriptionFactory {
      * Method creates a subscription inserting it to database
      *
      * @param startDate The start date of the subscription.
-     * @param endDate The end date of the subscription.
-     * @param customer The customer connected to the subscription.
-     * @param cost The cost of the subsctiption.
-     * @param orders A list of the recurring orders connected to the subscription.
+     * @param endDate   The end date of the subscription.
+     * @param customer  The customer connected to the subscription.
+     * @param cost      The cost of the subsctiption.
+     * @param orders    A list of the recurring orders connected to the subscription.
      * @return Subscription
      */
     public static Subscription createSubscription(Date startDate, Date endDate, Customer customer, double cost, ArrayList<RecurringOrder> orders) {
@@ -135,6 +136,7 @@ public final class SubscriptionFactory {
         Subscription subscription = new Subscription(generatedId, startDate, endDate, cost, customer.getCustomerId(), true);
         return subscription;
     }
+
     /**
      * Creates an arraylist of the active subscriptions in the SQL table subscriptions
      *
@@ -162,6 +164,7 @@ public final class SubscriptionFactory {
 
         return null;
     }
+
     /**
      * Gets all subscriptions with name matching a query.
      *
@@ -222,8 +225,8 @@ public final class SubscriptionFactory {
      * Runs an UPDATE-query of a subscription, with all its columns.
      * This overload also replaces all the recurring orders in subscription.
      *
-     * @param subscription The subscription to update
-     * @param recurringOrders      The list of recurring orders to replace
+     * @param subscription    The subscription to update
+     * @param recurringOrders The list of recurring orders to replace
      * @return Boolean representing success or not
      */
     public static boolean updateSubscription(Subscription subscription, List<RecurringOrder> recurringOrders) {
@@ -259,7 +262,7 @@ public final class SubscriptionFactory {
 
                     for (RecurringOrder recurringOrder : recurringOrders) {
                         // Only update old ones
-                        if(recurringOrder.isNew()) {
+                        if (recurringOrder.isNew()) {
                             continue;
                         }
                         statement.setInt(1, recurringOrder.getWeekday());
@@ -276,7 +279,7 @@ public final class SubscriptionFactory {
 
                     for (RecurringOrder recurringOrder : recurringOrders) {
                         // Only insert new ones
-                        if(!recurringOrder.isNew()) {
+                        if (!recurringOrder.isNew()) {
                             continue;
                         }
                         statement.setInt(1, recurringOrder.getWeekday());
@@ -326,6 +329,7 @@ public final class SubscriptionFactory {
 
         return new Subscription(subscriptionId, startDate, endDate, cost, customerId, active);
     }
+
     /**
      * Runs an UPDATE-query of a subscription, with all its columns.
      *

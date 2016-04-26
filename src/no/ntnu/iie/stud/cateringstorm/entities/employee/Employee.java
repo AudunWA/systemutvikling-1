@@ -11,6 +11,7 @@ import javax.swing.*;
 * Salesperson: 106.19 /hr | 180 000 + 11% comm / yr
 * Chef : 235.99 /hr | 400 000 / yr
 * */
+
 /**
  * Java representation of database entity "employee".
  */
@@ -31,17 +32,18 @@ public class Employee {
 
     /**
      * Constructs and initializes an Employee with the specified details.
-     * @param employeeId The ID of the employee.
-     * @param username The user name of the employee.
-     * @param forename  The forename of the employee.
-     * @param surname The surname of the employee.
-     * @param address The address of the employee.
-     * @param phoneNumber The phone number of the employee.
-     * @param email The email address of the employee.
-     * @param employeeType  The employee type of the employee.
-     * @param active Whether the employee is active or inactive.
+     *
+     * @param employeeId   The ID of the employee.
+     * @param username     The user name of the employee.
+     * @param forename     The forename of the employee.
+     * @param surname      The surname of the employee.
+     * @param address      The address of the employee.
+     * @param phoneNumber  The phone number of the employee.
+     * @param email        The email address of the employee.
+     * @param employeeType The employee type of the employee.
+     * @param active       Whether the employee is active or inactive.
      */
-    public Employee(int employeeId, String username, String forename, String surname, String address, String phoneNumber, String email, EmployeeType employeeType, boolean active,double salary,int commission) {
+    public Employee(int employeeId, String username, String forename, String surname, String address, String phoneNumber, String email, EmployeeType employeeType, boolean active, double salary, int commission) {
         this.employeeId = employeeId;
         this.username = username;
         this.forename = forename;
@@ -58,6 +60,7 @@ public class Employee {
 
     /**
      * Returns the username of this employee.
+     *
      * @return the username of this employee.
      */
     public String getUsername() {
@@ -66,6 +69,7 @@ public class Employee {
 
     /**
      * Sets the username of this employee.
+     *
      * @param username The new username.
      */
     public void setUsername(String username) {
@@ -74,6 +78,7 @@ public class Employee {
 
     /**
      * Returns the surname of this employee.
+     *
      * @return the surname of this employee.
      */
     public String getSurname() {
@@ -82,6 +87,7 @@ public class Employee {
 
     /**
      * Sets the surname of this employee.
+     *
      * @param surname The new surname.
      */
     public void setSurname(String surname) {
@@ -90,6 +96,7 @@ public class Employee {
 
     /**
      * Returns the forename of this employee.
+     *
      * @return the forename of this employee.
      */
     public String getForename() {
@@ -98,6 +105,7 @@ public class Employee {
 
     /**
      * Sets the forename of this employee.
+     *
      * @param forename The new forename.
      */
     public void setForename(String forename) {
@@ -106,6 +114,7 @@ public class Employee {
 
     /**
      * Returns the address of this employee.
+     *
      * @return the address of this employee.
      */
     public String getAddress() {
@@ -114,6 +123,7 @@ public class Employee {
 
     /**
      * Sets the address of this employee.
+     *
      * @param address The new address.
      */
     public void setAddress(String address) {
@@ -122,6 +132,7 @@ public class Employee {
 
     /**
      * Returns the phone number of this employee.
+     *
      * @return the phone number of this employee.
      */
     public String getPhoneNumber() {
@@ -130,6 +141,7 @@ public class Employee {
 
     /**
      * Sets the phone number of this employee.
+     *
      * @param phoneNumber The new phone number.
      */
     public void setPhoneNumber(String phoneNumber) {
@@ -138,6 +150,7 @@ public class Employee {
 
     /**
      * Returns the employee type of this employee.
+     *
      * @return The employee type of this employee.
      */
     public EmployeeType getEmployeeType() {
@@ -146,6 +159,7 @@ public class Employee {
 
     /**
      * Sets the employee type of this employee.
+     *
      * @param employeeType The new employee type.
      */
     public void setEmployeeType(EmployeeType employeeType) {
@@ -154,6 +168,7 @@ public class Employee {
 
     /**
      * Returns the email address of this employee
+     *
      * @return the email address of this employee.
      */
     public String getEmail() {
@@ -162,6 +177,7 @@ public class Employee {
 
     /**
      * Sets the email address of this employee.
+     *
      * @param email The new email address.
      */
     public void setEmail(String email) {
@@ -170,6 +186,7 @@ public class Employee {
 
     /**
      * Returns the id of this employee.
+     *
      * @return the id of this employee.
      */
     public int getEmployeeId() {
@@ -178,6 +195,7 @@ public class Employee {
 
     /**
      * Determines whether the employee is active. An inactive employee is practically considered a deleted one.
+     *
      * @return true if the employee is active, false otherwise.
      */
     public boolean isActive() {
@@ -186,6 +204,7 @@ public class Employee {
 
     /**
      * Activates or inactivates this employee. An inactive employee is practically considered a deleted one.
+     *
      * @param active If true, this employee is active, otherwise this employee is inactive.
      */
     public void setActive(boolean active) {
@@ -194,6 +213,7 @@ public class Employee {
 
     /**
      * Returns a string containing both the forename and surname of this employee.
+     *
      * @return a string containing both the forename and surname of this employee.
      */
     public String getFullName() {
@@ -202,6 +222,7 @@ public class Employee {
 
     /**
      * Returns a string representation of the employee type.
+     *
      * @return a string representation of the employee type.
      */
     public String getEmployeeTypeString() {
@@ -224,7 +245,8 @@ public class Employee {
     }
 
     /**
-     *  Returns the salary of this employee.
+     * Returns the salary of this employee.
+     *
      * @return the salary of this employee.
      */
     public double getSalary() {
@@ -232,7 +254,17 @@ public class Employee {
     }
 
     /**
-     *  Returns the commission of this employee.
+     * Sets the salary of this employee.
+     *
+     * @param salary The new salary.
+     */
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    /**
+     * Returns the commission of this employee.
+     *
      * @return the commission of this employee.
      */
     public int getCommission() {
@@ -241,20 +273,12 @@ public class Employee {
 
     /**
      * Sets the commission of this employee.
+     *
      * @param commission The new commission.
      */
     public void setCommission(int commission) {
         this.commission = commission;
     }
-
-    /**
-     * Sets the salary of this employee.
-     * @param salary The new salary.
-     */
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
 
     /**
      * Called on successful login attempt.
@@ -269,6 +293,7 @@ public class Employee {
 
     /**
      * Returns a string representation of this employee.
+     *
      * @return a string representation of this employee.
      */
     @Override

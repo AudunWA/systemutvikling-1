@@ -96,6 +96,19 @@ public class MenuAdministratorView extends JPanel {
             //Get index from selected row
         });
     }
+
+    public static void main(String[] args) {
+        // Window dimensions
+        final int WIDTH = 700;
+        final int HEIGHT = 600;
+        JFrame frame = new JFrame();
+        frame.add(new MenuAdministratorView());
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);//Puts window in middle of screen
+    }
+
     /**
      * Removes the selected dish by changing its active status in the database
      */
@@ -117,6 +130,7 @@ public class MenuAdministratorView extends JPanel {
         }
         refresh();
     }
+
     /**
      * Opens an EditDishDialog GUI
      */
@@ -152,18 +166,6 @@ public class MenuAdministratorView extends JPanel {
         dialog.setVisible(true);
         dishList = DishFactory.getActiveDishes();
         refresh();
-    }
-
-    public static void main(String[] args) {
-        // Window dimensions
-        final int WIDTH = 700;
-        final int HEIGHT = 600;
-        JFrame frame = new JFrame();
-        frame.add(new MenuAdministratorView());
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null);//Puts window in middle of screen
     }
 
     private void createSearchField() {

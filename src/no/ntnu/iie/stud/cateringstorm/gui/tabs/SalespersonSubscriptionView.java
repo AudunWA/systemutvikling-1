@@ -43,7 +43,7 @@ public class SalespersonSubscriptionView extends JPanel {
         editSubscriptionButton.addActionListener(e -> editSubscription(getSelectedSubscription()));
         newSubscriptionButton.addActionListener(e -> newSubscription());
         removeButton.addActionListener(e -> removeSubscription());
-        inactiveCheckBox.addActionListener(e -> refresh() );
+        inactiveCheckBox.addActionListener(e -> refresh());
 
         statusBox.addActionListener(e -> {
             //setStatus();
@@ -138,6 +138,7 @@ public class SalespersonSubscriptionView extends JPanel {
         esDialog.setVisible(true);
         refresh();
     }
+
     private void removeSubscription() {
         int selectedRow = orderTable.getSelectedRow();
         if (selectedRow == -1) {
@@ -189,6 +190,7 @@ public class SalespersonSubscriptionView extends JPanel {
         searchField.setText(text);
         searchField.setEnabled(true);
     }
+
     private void search() {
         ArrayList<Subscription> newRows;
         if (searchField.getText().trim().equals("")) {

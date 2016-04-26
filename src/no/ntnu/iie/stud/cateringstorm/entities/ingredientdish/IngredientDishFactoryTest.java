@@ -54,6 +54,7 @@ public class IngredientDishFactoryTest {
         Assert.assertEquals(true, removed);
 
     }
+
     @Test
     public void testCreateDish() throws Exception {
 
@@ -67,6 +68,7 @@ public class IngredientDishFactoryTest {
 
         Assert.assertNotNull(relationsCreated);
     }
+
     @Test
     public void testGetAllIngredientDishesInOrder() throws Exception {
 
@@ -88,6 +90,7 @@ public class IngredientDishFactoryTest {
         Assert.assertEquals(true, removed);
 
     }
+
     @Test
     public void testGetAllIngredientsInDish() throws Exception {
 

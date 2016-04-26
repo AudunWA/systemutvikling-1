@@ -35,25 +35,25 @@ public class ChefShoppingList extends JPanel {
         });
     }
 
-    private void refresh(){
+    public static void main(String[] args) {
+        ChefShoppingList dialog = new ChefShoppingList();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
+    private void refresh() {
         ingredientList = IngredientFactory.getAllIngredients();
         tableModel.setRows(ingredientList);
     }
 
-    private void goShopping(){
+    private void goShopping() {
         int selectedRow = ingredientTable.getSelectedRow();
-        if(selectedRow > -1) {
+        if (selectedRow > -1) {
             Ingredient ingredient = ingredientList.get(selectedRow);
             ingredient.setAmount(1000.0);
             IngredientFactory.setAmountGivenIngredientId(ingredient.getIngredientId(), 1000.0);
             tableModel.setRows(ingredientList);
         }
-    }
-
-    public static void main(String[] args) {
-        ChefShoppingList dialog = new ChefShoppingList();
-        dialog.setVisible(true);
-        System.exit(0);
     }
 
     private JTable getNewRenderedTable() {
@@ -63,7 +63,7 @@ public class ChefShoppingList extends JPanel {
                                                            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-                double amount = (Double)tableModel.getValueAt(row, 2);
+                double amount = (Double) tableModel.getValueAt(row, 2);
 
                 if (amount < 100) {
                     setBackground(new Color(200, 100, 100));
@@ -77,7 +77,7 @@ public class ChefShoppingList extends JPanel {
         return ingredientTable;
     }
 
-    private void createTable(){
+    private void createTable() {
         ingredientList = IngredientFactory.getAllIngredients();
 
         Integer[] columns = new Integer[]{IngredientTableModel.COLUMN_ID, IngredientTableModel.COLUMN_NAME, IngredientTableModel.COLUMN_AMOUNT, IngredientTableModel.COLUMN_UNIT};

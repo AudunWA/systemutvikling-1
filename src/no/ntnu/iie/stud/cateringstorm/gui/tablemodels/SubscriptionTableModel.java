@@ -27,7 +27,7 @@ public class SubscriptionTableModel extends EntityTableModel<Subscription> {
     }
 
     @Override
-    public boolean isCellEditable(int rowIndex,int columnIndex){
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
         return getColumnType(columnIndex) == COLUMN_ACTIVE;
     }
 
