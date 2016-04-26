@@ -157,6 +157,14 @@ public class RecurringOrder {
     }
 
     /**
+     * Returns true if this is a new recurring order (not inserted into database yet).
+     * @return true if this is a new recurring order (not inserted into database yet).
+     */
+    public boolean isNew() {
+        return recurringOrderId <= 0;
+    }
+
+    /**
      * Returns a string representation of this recurring order.
      * @return a string representation of this recurring order.
      */

@@ -3,10 +3,13 @@ package no.ntnu.iie.stud.cateringstorm.entities.subscription;
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
+import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrder;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class handling database interaction, loading and generating Subscription entity objects.
@@ -215,6 +218,94 @@ public final class SubscriptionFactory {
         }
 
         return null;
+    }
+
+    /**
+     * Runs an UPDATE-query of a subscription, with all its columns.
+     * This overload also replaces all the recurring orders in subscription.
+     *
+     * @param subscription The subscription to update
+     * @param recurringOrders      The list of recurring orders to replace
+     * @return Boolean representing success or not
+     */
+    public static boolean updateSubscription(Subscription subscription, List<RecurringOrder> recurringOrders) {
+        if (recurringOrders == null) {
+            throw new IllegalArgumentException("recurringOrders cannot be null.");
+        }
+
+        try (Connection connection = Database.getConnection()) {
+            // Start transaction
+            connection.setAutoCommit(false);
+
+            try {
+                // Update the food package itself
+                try (PreparedStatement statement = connection.prepareStatement("UPDATE subscription SET start_date = ?, end_date = ?, cost = ?, customer_id = ?, active = ? WHERE subscription_id = ?")) {
+                    statement.setDate(1, subscription.getStartDate());
+                    statement.setDate(2, subscription.getEndDate());
+                    statement.setDouble(3, subscription.getCost());
+                    statement.setInt(4, subscription.getCustomerId());
+                    statement.setBoolean(5, subscription.isActive());
+                    statement.setInt(6, subscription.getSubscriptionId());
+
+                    int affectedRows = statement.executeUpdate();
+                    if (affectedRows == 0) {
+                        connection.rollback();
+                        connection.setAutoCommit(true);
+                        return false; // No rows inserted
+                    }
+                }
+
+                // Add the recurring orders to the subscription
+                // First update existing ones
+                try (PreparedStatement statement = connection.prepareStatement("UPDATE recurring_order SET week_day = ?, relative_time = ?, amount = ? WHERE rec_order_id = ?")) {
+
+                    for (RecurringOrder recurringOrder : recurringOrders) {
+                        // Only update old ones
+                        if(recurringOrder.isNew()) {
+                            continue;
+                        }
+                        statement.setInt(1, recurringOrder.getWeekday());
+                        statement.setInt(2, recurringOrder.getRelativeTime());
+                        statement.setInt(3, recurringOrder.getAmount());
+                        statement.setInt(4, recurringOrder.getRecurringOrderId());
+                        statement.addBatch();
+                    }
+                    statement.executeBatch();
+                }
+
+                // Then insert new ones
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO recurring_order VALUES (DEFAULT,?,?,?,?,?)")) {
+
+                    for (RecurringOrder recurringOrder : recurringOrders) {
+                        // Only insert new ones
+                        if(!recurringOrder.isNew()) {
+                            continue;
+                        }
+                        statement.setInt(1, recurringOrder.getWeekday());
+                        statement.setInt(2, recurringOrder.getRelativeTime());
+                        statement.setInt(3, subscription.getSubscriptionId());
+                        statement.setInt(4, recurringOrder.getFoodPackageId());
+                        statement.setInt(5, recurringOrder.getAmount());
+                        statement.addBatch();
+                    }
+                    statement.executeBatch();
+                }
+            } catch (SQLException e) {
+                connection.rollback();
+                connection.setAutoCommit(true);
+                throw e;
+            }
+
+            // All good, commit all
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        // All good, return true
+        return true;
     }
 
     /**

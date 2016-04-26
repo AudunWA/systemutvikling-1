@@ -18,11 +18,11 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 import java.awt.event.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -69,96 +69,123 @@ public class EditSubscriptionDialog extends JDialog {
         initializeTimeSpinner();
 
         // Add event listeners
-        //okButton.addActionListener(e -> onOK());
-        cancelButton.addActionListener(e -> onCancel());
-        addRemoveButton.addActionListener(e -> onAR());
-
-        // call onCancel() when cross is clicked
+        addEventListeners();
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        // Set minimum amount on spinner (could be 1, but we want to display our error toast)
+        SpinnerNumberModel amountSpinnerModel = (SpinnerNumberModel) amountSpinner.getModel(); // Default model
+        amountSpinnerModel.setMinimum(0);
+
+        loadData();
+    }
+
+    private void addEventListeners() {
+        // call onCancel() on ESCAPE
+        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
             }
         });
 
-        // call onCancel() on ESCAPE
-        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        okButton.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
+        addRemoveButton.addActionListener(e -> onAR());
+        leftSideTable.getSelectionModel().addListSelectionListener(e -> onLeftSideTableSelected(e));
+        rightSideTable.getSelectionModel().addListSelectionListener(e -> onRightSideTableSelected(e));
+        dayComboBox.addActionListener(e -> onDayComboBoxSelected());
+        amountSpinner.addChangeListener(e -> onAmountSpinnerSelected());
+        timeSpinner.addChangeListener(e -> onTimeSpinnerSelected());
+    }
 
-        leftSideTable.getSelectionModel().addListSelectionListener(e -> {
-            int index = leftSideTable.getSelectedRow();
-            if (!e.getValueIsAdjusting() || index == -1) {
-                return;
-            }
-            // Unselect other table
-            rightSideTable.clearSelection();
-            RecurringOrder order = leftSideModel.getValue(index);
+    /**
+     * Called when the time spinner value has been changed.
+     */
+    private void onTimeSpinnerSelected() {
+        int index = leftSideTable.getSelectedRow();
+        int newTime = getTimeSpinnerValue();
 
-            dayComboBox.setSelectedIndex(order.getWeekday());
-            amountSpinner.setValue(order.getAmount());
-            timeSpinner.setValue(new Time(Timestamp.valueOf(DateUtil.convertRelativeTime(order.getRelativeTime())).getTime()));
-        });
+        if (index == -1) {
+            return;
+        }
 
-        rightSideTable.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                return;
-            }
-            // Unselect other table
-            leftSideTable.clearSelection();
-        });
+        if (newTime < 0) {
+            Toast.makeText(this, "Invalid time.", Toast.Style.ERROR).display();
+            return;
+        }
 
-        dayComboBox.addActionListener(e -> {
-            int index = leftSideTable.getSelectedRow();
-            int dayIndex = dayComboBox.getSelectedIndex();
+        RecurringOrder order = leftSideModel.getValue(index);
+        order.setRelativeTime(newTime);
+        leftSideModel.updateRow(index);
+    }
 
-            if (index == -1 || dayIndex == -1) {
-                return;
-            }
+    /**
+     * Called when the amount spinner value has been changed.
+     */
+    private void onAmountSpinnerSelected() {
+        int index = leftSideTable.getSelectedRow();
+        int newAmount = (int) amountSpinner.getValue();
 
-            RecurringOrder order = leftSideModel.getValue(index);
-            order.setWeekday(dayIndex);
-            leftSideModel.updateRow(index);
-        });
+        if (index == -1) {
+            return;
+        }
 
-        // Set minimum amount on spinner (could be 1, but we want to display our error toast)
-        SpinnerNumberModel amountSpinnerModel = (SpinnerNumberModel) amountSpinner.getModel(); // Default model
-        amountSpinnerModel.setMinimum(0);
+        if (newAmount < 1) {
+            Toast.makeText(this, "Amount too low.", Toast.Style.ERROR).display();
+            return;
+        }
 
-        amountSpinner.addChangeListener(e -> {
-            int index = leftSideTable.getSelectedRow();
-            int newAmount = (int) amountSpinner.getValue();
+        RecurringOrder order = leftSideModel.getValue(index);
+        order.setAmount(newAmount);
+        leftSideModel.updateRow(index);
+    }
 
-            if (index == -1) {
-                return;
-            }
+    /**
+     * Called when the day combo box value has been changed.
+     */
+    private void onDayComboBoxSelected() {
+        int index = leftSideTable.getSelectedRow();
+        int dayIndex = dayComboBox.getSelectedIndex();
 
-            if (newAmount < 1) {
-                Toast.makeText(this, "Amount too low.", Toast.Style.ERROR).display();
-                return;
-            }
+        if (index == -1 || dayIndex == -1) {
+            return;
+        }
 
-            RecurringOrder order = leftSideModel.getValue(index);
-            order.setAmount(newAmount);
-            leftSideModel.updateRow(index);
-        });
+        RecurringOrder order = leftSideModel.getValue(index);
+        order.setWeekday(dayIndex);
+        leftSideModel.updateRow(index);
+    }
 
-        timeSpinner.addChangeListener(e -> {
-            int index = leftSideTable.getSelectedRow();
-            int newTime = getTimeSpinnerValue();
+    /**
+     * Called when a row on the right table has been selected.
+     *
+     * @param e The event data.
+     */
+    private void onRightSideTableSelected(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting()) {
+            return;
+        }
+        // Unselect other table
+        leftSideTable.clearSelection();
+    }
 
-            if (index == -1) {
-                return;
-            }
+    /**
+     * Called when a row on the left table has been selected.
+     *
+     * @param e The event data.
+     */
+    private void onLeftSideTableSelected(ListSelectionEvent e) {
+        int index = leftSideTable.getSelectedRow();
+        if (!e.getValueIsAdjusting() || index == -1) {
+            return;
+        }
+        // Unselect other table
+        rightSideTable.clearSelection();
+        RecurringOrder order = leftSideModel.getValue(index);
 
-            if (newTime < 0) {
-                Toast.makeText(this, "Invalid time.", Toast.Style.ERROR).display();
-                return;
-            }
-
-            RecurringOrder order = leftSideModel.getValue(index);
-            order.setRelativeTime(newTime);
-            leftSideModel.updateRow(index);
-        });
-        loadData();
+        dayComboBox.setSelectedIndex(order.getWeekday());
+        amountSpinner.setValue(order.getAmount());
+        timeSpinner.setValue(new Time(Timestamp.valueOf(DateUtil.convertRelativeTime(order.getRelativeTime())).getTime()));
     }
 
     public static void main(String[] args) {
@@ -201,32 +228,25 @@ public class EditSubscriptionDialog extends JDialog {
         leftSideTable.getTableHeader().setReorderingAllowed(false);
     }
 
-    /*~
+    /**
      * Called when OK button is pressed.
      * Creates a new Subscription with attributes from user input
      */
-    /*
     private void onOK() {
         Customer customer = (Customer) customerComboBox.getSelectedItem();
         Date startDate = ((SqlDateModel) fromDatePicker.getModel()).getValue();
         Date endDate = ((SqlDateModel) toDatePicker.getModel()).getValue();
 
-<<<<<<< HEAD
-        if (!SubscriptionFactory.(subscription, leftSideModel.getRowsClone())) {
+        subscription.setCustomerId(customer.getCustomerId());
+        subscription.setStartDate(startDate);
+        subscription.setEndDate(endDate);
+        subscription.setCost(cost);
+
+        if (!SubscriptionFactory.updateSubscription(subscription, leftSideModel.getRowsClone())) {
             JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
         }
-        //if (!SubscriptionFactory.updateSubscription(subscription, leftSideModel.getRowsClone())) {
-        //    JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
-=======
-        // TODO: Make factory method
-        //if (!SubscriptionFactory.(subscription, leftSideModel.getRowsClone())) {
-            JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
->>>>>>> baa36beaa09257df142526d642068cf9281f4a32
-        //}
         dispose();
     }
-    */
-
 
     /**
      * Called when add/remove button (arrow between tables) is pressed
@@ -256,7 +276,7 @@ public class EditSubscriptionDialog extends JDialog {
             if (existingRecurringOrder == null) {
                 // Create a new recurring order and add it
                 int relativeTime = DateUtil.convertToRelativeTime(DateUtil.convertDate((java.util.Date) timeSpinner.getModel().getValue()).toLocalTime());
-                RecurringOrder newOrder = new RecurringOrder(-1, dayComboBox.getSelectedIndex(), relativeTime,1, null, selectedFoodPackage);
+                RecurringOrder newOrder = new RecurringOrder(-1, dayComboBox.getSelectedIndex(), relativeTime, 1, null, selectedFoodPackage);
                 leftSideModel.addRow(newOrder);
 
             } else {
@@ -269,18 +289,18 @@ public class EditSubscriptionDialog extends JDialog {
         } else if (leftSideTable.getSelectedRow() > -1) {
             RecurringOrder selectedRecurringOrder = leftSideModel.getValue(leftSideTable.getSelectedRow());
 
-            cost -= selectedRecurringOrder.getFoodPackageCost();
-            costField.setText(cost + "");
-
-            if (selectedRecurringOrder.getAmount() > 1) {
+            if (selectedRecurringOrder.getAmount() > 0) {
                 // Decrement
                 selectedRecurringOrder.decrementAmount();
                 leftSideModel.updateRow(leftSideTable.getSelectedRow());
-            } else {
-                // Remove
-                leftSideModel.removeRow(leftSideTable.getSelectedRow());
-                leftSideTable.clearSelection();
+                cost -= selectedRecurringOrder.getFoodPackageCost();
+                costField.setText(cost + "");
             }
+//            else {
+//                // Remove
+//                leftSideModel.removeRow(leftSideTable.getSelectedRow());
+//                leftSideTable.clearSelection();
+//            }
         } else {
             Toast.makeText(this, "Select a row.", Toast.Style.ERROR).display();
         }
@@ -316,6 +336,9 @@ public class EditSubscriptionDialog extends JDialog {
         createTables();
     }
 
+    /**
+     * Initializes the time spinner (creates model etc.)
+     */
     private void initializeTimeSpinner() {
         SpinnerModel model = new SpinnerDateModel();
 
@@ -324,6 +347,9 @@ public class EditSubscriptionDialog extends JDialog {
         timeSpinner.setEditor(editor);
     }
 
+    /**
+     * Fills the combo boxes with values.
+     */
     public void fillComboBoxes() {
         // Fill customers
         ArrayList<Customer> customers = CustomerFactory.getAllCustomers();
@@ -332,7 +358,7 @@ public class EditSubscriptionDialog extends JDialog {
             customerComboBox.addItem(customer);
 
             // Set customer index if this is the selected customer.
-            if(subscription.getCustomerId() == customer.getCustomerId()) {
+            if (subscription.getCustomerId() == customer.getCustomerId()) {
                 customerIndex = i;
             }
         }
@@ -346,30 +372,20 @@ public class EditSubscriptionDialog extends JDialog {
         }
     }
 
+    /**
+     * Returns the relative time value of the time spinner.
+     *
+     * @return the relative time value of the time spinner.
+     */
     private int getTimeSpinnerValue() {
         return DateUtil.convertToRelativeTime(DateUtil.convertDate((java.util.Date) timeSpinner.getModel().getValue()).toLocalTime());
     }
 
     /**
-     * Compares a new recurring order time with all the existing ones.
+     * Returns the subscription being edited.
      *
-     * @param newWeekday      The weekday of the new order
-     * @param newRelativeTime The seconds after midnight of the new order
-     * @return If any order is set to be delivered within MIN_HOURS_BETWEEN_ORDERS hours of the new one, return false.
+     * @return the subscription being edited.
      */
-    private boolean isValidAdd(int newWeekday, int newRelativeTime) {
-        for (RecurringOrder recurringOrder : leftSideModel.getRowsClone()) {
-            if (recurringOrder.getWeekday() == newWeekday) {
-                LocalDateTime recurringOrderLocalTime = DateUtil.convertRelativeTime(recurringOrder.getRelativeTime());
-                LocalDateTime newRelativeLocalTime = DateUtil.convertRelativeTime(newRelativeTime);
-                if (ChronoUnit.HOURS.between(recurringOrderLocalTime, newRelativeLocalTime) < MIN_HOURS_BETWEEN_ORDERS) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     public Subscription getSubscription() {
         return subscription;
     }
