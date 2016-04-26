@@ -39,7 +39,9 @@ public class EditEmployeeDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(okButton);
         setLocationRelativeTo(getParent());
-
+        addActionListeners();
+    }
+    private void addActionListeners(){
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
         editEmployeeInfoCB.addActionListener(e -> setTextField());
@@ -68,7 +70,6 @@ public class EditEmployeeDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-
     public static void main(String[] args) {
         final int WIDTH = 500;
         final int HEIGHT = 300;

@@ -23,8 +23,6 @@ import java.awt.event.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -70,7 +68,7 @@ public class EditSubscriptionDialog extends JDialog {
         initializeTimeSpinner();
 
         // Add event listeners
-        addEventListeners();
+        addActionListeners();
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         // Set minimum amount on spinner (could be 1, but we want to display our error toast)
@@ -80,7 +78,7 @@ public class EditSubscriptionDialog extends JDialog {
         loadData();
     }
 
-    private void addEventListeners() {
+    private void addActionListeners() {
         // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         addWindowListener(new WindowAdapter() {

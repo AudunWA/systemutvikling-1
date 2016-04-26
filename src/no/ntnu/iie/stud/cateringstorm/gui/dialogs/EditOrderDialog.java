@@ -57,12 +57,16 @@ public class EditOrderDialog extends JDialog {
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
+        addActionListeners();
 
+
+        loadData();
+    }
+    private void addActionListeners(){
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
         addRemoveButton.addActionListener(e -> onAR());
-
-// call onCancel() when cross is clicked
+        // call onCancel() when cross is clicked
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
@@ -76,9 +80,7 @@ public class EditOrderDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        loadData();
     }
-
     public static void main(String[] args) {
         EditOrderDialog dialog = new EditOrderDialog(null);
         dialog.pack();
