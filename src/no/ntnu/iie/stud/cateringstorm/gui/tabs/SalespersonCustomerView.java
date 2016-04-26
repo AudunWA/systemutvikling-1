@@ -43,7 +43,7 @@ public class SalespersonCustomerView extends JPanel {
     public SalespersonCustomerView() {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
-
+        addActionListeners();
 
     }
     public void addActionListeners(){
