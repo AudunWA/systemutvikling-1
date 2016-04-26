@@ -21,7 +21,7 @@ public class IngredientDishFactory {
 
         int ingredientId = resultSet.getInt("ingredient_id");
         int dishId = resultSet.getInt("dish_id");
-        int quantity = resultSet.getInt("quantity");
+        double quantity = resultSet.getDouble("quantity");
         String unit = resultSet.getString("unit");
         Ingredient ingredient = IngredientFactory.getIngredient(ingredientId);
         Dish dish = DishFactory.getDish(dishId);
