@@ -8,9 +8,12 @@ import java.net.URL;
 import java.util.Scanner;
 
 /**
- * Created by Audun on 26.04.2016.
+ * Helper class for loading application resources.
  */
 public final class ResourceUtil {
+    /**
+     * The path of the map html file inside resources.
+     */
     private static final String MAP_PATH = "html/map.html";
 
     /**
@@ -74,7 +77,7 @@ public final class ResourceUtil {
      * @return The read string.
      */
     private static String convertStreamToString(InputStream stream) {
-        java.util.Scanner s = new Scanner(stream).useDelimiter("\\A");
+        Scanner s = new Scanner(stream).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";
     }
 }
