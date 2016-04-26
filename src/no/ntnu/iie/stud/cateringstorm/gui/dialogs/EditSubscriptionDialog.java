@@ -205,19 +205,21 @@ public class EditSubscriptionDialog extends JDialog {
      * Called when OK button is pressed.
      * Creates a new Subscription with attributes from user input
      */
-
     private void onOK() {
         Customer customer = (Customer) customerComboBox.getSelectedItem();
         Date startDate = ((SqlDateModel) fromDatePicker.getModel()).getValue();
         Date endDate = ((SqlDateModel) toDatePicker.getModel()).getValue();
 
-        // TODO: Make factory method
-        //if (!SubscriptionFactory.(subscription, leftSideModel.getRowsClone())) {
+        subscription.setCustomerId(customer.getCustomerId());
+        subscription.setStartDate(startDate);
+        subscription.setEndDate(endDate);
+        subscription.setCost(cost);
+
+        if (!SubscriptionFactory.updateSubscription(subscription, leftSideModel.getRowsClone())) {
             JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
-        //}
+        }
         dispose();
     }
-
 
     /**
      * Called when add/remove button (arrow between tables) is pressed
@@ -260,18 +262,18 @@ public class EditSubscriptionDialog extends JDialog {
         } else if (leftSideTable.getSelectedRow() > -1) {
             RecurringOrder selectedRecurringOrder = leftSideModel.getValue(leftSideTable.getSelectedRow());
 
-            cost -= selectedRecurringOrder.getFoodPackageCost();
-            costField.setText(cost + "");
-
-            if (selectedRecurringOrder.getAmount() > 1) {
+            if (selectedRecurringOrder.getAmount() > 0) {
                 // Decrement
                 selectedRecurringOrder.decrementAmount();
                 leftSideModel.updateRow(leftSideTable.getSelectedRow());
-            } else {
-                // Remove
-                leftSideModel.removeRow(leftSideTable.getSelectedRow());
-                leftSideTable.clearSelection();
+                cost -= selectedRecurringOrder.getFoodPackageCost();
+                costField.setText(cost + "");
             }
+//            else {
+//                // Remove
+//                leftSideModel.removeRow(leftSideTable.getSelectedRow());
+//                leftSideTable.clearSelection();
+//            }
         } else {
             Toast.makeText(this, "Select a row.", Toast.Style.ERROR).display();
         }

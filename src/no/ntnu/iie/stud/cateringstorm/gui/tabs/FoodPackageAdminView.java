@@ -8,6 +8,8 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,6 +28,8 @@ public class FoodPackageAdminView extends JPanel {
     private JCheckBox inactiveCheckBox;
     private JButton addButton;
     private JButton editButton;
+
+    private ArrayList<FoodPackage> foodpackageList;
 
     private FoodPackageTableModel tableModel;
 
@@ -49,6 +53,37 @@ public class FoodPackageAdminView extends JPanel {
                 searchButton.setEnabled(true);
             }
         });
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            public void searchDocument() {
+
+                ArrayList<FoodPackage> copy = new ArrayList<>();
+
+                for (int i = 0; i < foodpackageList.size(); i++) {
+                    if ((foodpackageList.get(i).getName()).toLowerCase().contains(searchField.getText().toLowerCase())) {
+                        copy.add(foodpackageList.get(i));
+
+                    }
+                }
+                tableModel.setRows(copy);
+
+            }
+        });
+
 
         FoodPackageTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
@@ -97,8 +132,9 @@ public class FoodPackageAdminView extends JPanel {
 
         if (dialog.getAddedNewValue()) {
             // Refresh data
-            refreshTable();
+            refresh();
             Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Food package updated.", Toast.Style.SUCCESS).display();
+
         }
     }
     /**
@@ -142,6 +178,7 @@ public class FoodPackageAdminView extends JPanel {
 
             tableModel.removeRow(selectedRow);
             JOptionPane.showMessageDialog(null, "Row is removed.");
+            refresh();
         }
     }
     /**
@@ -177,7 +214,15 @@ public class FoodPackageAdminView extends JPanel {
         createTable();
     }
 
-    private void refreshTable() {
-        tableModel.setRows(FoodPackageFactory.getAllFoodPackages());
+    private void refresh() {
+        if (inactiveCheckBox.isSelected()) {
+            foodpackageList = FoodPackageFactory.getActiveFoodPackages();
+        } else {
+            foodpackageList = FoodPackageFactory.getAllFoodPackages();
+        }
+        tableModel.setRows(foodpackageList);
+        Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Dishes refreshed").display();
+
     }
+
 }

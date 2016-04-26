@@ -25,7 +25,7 @@ public class AdminEmployeeView extends JPanel {
     private JButton addEmployeeButton;
     private JButton editEmployeeButton;
     private JButton removeButton;
-    private JCheckBox showInactiveEmployeeButton;
+    private JCheckBox showInactiveEmployeesCheckBox;
     private JTextField searchField;
     private EmployeeTableModel tableModel;
     private JTable adminEmployeeTable;
@@ -45,7 +45,7 @@ public class AdminEmployeeView extends JPanel {
         addEmployeeButton.addActionListener(e -> addEmployee());
         editEmployeeButton.addActionListener(e -> editEmployee(getSelectedEmployee()));
         removeButton.addActionListener(e -> removeEmployee(getSelectedEmployee()));
-        showInactiveEmployeeButton.addActionListener(e -> refresh());
+        showInactiveEmployeesCheckBox.addActionListener(e -> refresh());
 
         searchField.addMouseListener(new MouseAdapter() {
             @Override
@@ -182,13 +182,13 @@ public class AdminEmployeeView extends JPanel {
     }
 
     private void refresh() {
-        if (showInactiveEmployeeButton.isSelected()) {
-            tableModel.setRows(getAllEmployees());
+        if (showInactiveEmployeesCheckBox.isSelected()) {
+            employeeList = EmployeeFactory.getActiveEmployees();
         } else {
-            tableModel.setRows(getActiveEmployees());
+            employeeList = EmployeeFactory.getAllEmployees();
         }
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Employees refreshed").display();
-        employeeList = EmployeeFactory.getActiveEmployees();
+        tableModel.setRows(employeeList);
     }
 
 

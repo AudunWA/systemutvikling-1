@@ -39,7 +39,7 @@
               <text value="Remove employee"/>
             </properties>
           </component>
-          <component id="23034" class="javax.swing.JCheckBox" binding="showInactiveEmployeeButton">
+          <component id="23034" class="javax.swing.JCheckBox" binding="showInactiveEmployeesCheckBox">
             <constraints/>
             <properties>
               <text value="Show inactive employees"/>
