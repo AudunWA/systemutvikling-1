@@ -24,8 +24,8 @@ public class Order {
      * Constructs and initializes a FoodPackage with the specified details.
      * @param orderId
      * @param description
-     * @param deliveryDate
-     * @param orderDate
+     * @param deliveryTime
+     * @param orderTime
      * @param portions
      * @param priority
      * @param salespersonId
@@ -34,13 +34,13 @@ public class Order {
      * @param status
      * @param chauffeurId
      */
-    public Order(int orderId, String description, Timestamp deliveryDate, Timestamp orderDate, int portions, boolean priority, int salespersonId, Customer customer, int recurringOrderId, int status, int chauffeurId) {
+    public Order(int orderId, String description, Timestamp deliveryTime, Timestamp orderTime, int portions, boolean priority, int salespersonId, Customer customer, int recurringOrderId, int status, int chauffeurId) {
         this.orderId = orderId;
         this.customer = customer;
         this.recurringOrderId = recurringOrderId;
         this.description = description;
-        this.deliveryDate = deliveryDate;
-        this.orderDate = orderDate;
+        this.deliveryDate = deliveryTime;
+        this.orderDate = orderTime;
         this.portions = portions;
         this.priority = priority;
         this.status = status;
