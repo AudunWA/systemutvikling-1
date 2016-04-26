@@ -324,6 +324,7 @@ public class TimesheetView extends JPanel {
         checkLatestTimesheet();
         if (GlobalStorage.getLoggedInEmployee().getEmployeeType() == EmployeeType.ADMINISTRATOR) {
             showInactiveCB.setVisible(true);
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Customers refreshed.").display();
             if (showInactiveCB.isSelected()) {
                 tableModel.setRows(getTimesheetsByEmployeeId());
             } else {
