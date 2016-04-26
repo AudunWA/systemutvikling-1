@@ -36,7 +36,7 @@ public class EditFoodPackageDialog extends JDialog {
     private DishTableModel leftSideModel;
 
     private JTable rightSideTable;
-    private DishTableModel rightTableModel;
+    private DishTableModel rightSideModel;
 
     public EditFoodPackageDialog(FoodPackage foodPackage) {
         this.foodPackage = foodPackage;
@@ -91,8 +91,8 @@ public class EditFoodPackageDialog extends JDialog {
      */
     private void createTables() {
         // Available dishes (all active ones)
-        rightTableModel = new DishTableModel(DishFactory.getActiveDishes(), COLUMNS_AVAILABLE_DISHES);
-        rightSideTable = new JTable(rightTableModel);
+        rightSideModel = new DishTableModel(DishFactory.getActiveDishes(), COLUMNS_AVAILABLE_DISHES);
+        rightSideTable = new JTable(rightSideModel);
 
         // Current dishes
         leftSideModel = new DishTableModel(DishFactory.getDishes(foodPackage.getFoodPackageId()), COLUMNS_AVAILABLE_DISHES);
@@ -113,7 +113,7 @@ public class EditFoodPackageDialog extends JDialog {
         }
 
         if (rightSideTable.getSelectedRow() > -1) {
-            Dish rightSideSelectedDish = rightTableModel.getValue(rightSideTable.getSelectedRow());
+            Dish rightSideSelectedDish = rightSideModel.getValue(rightSideTable.getSelectedRow());
             Dish existingLeftSideDish = null;
 
             ArrayList<Dish> dishes = leftSideModel.getRowsClone();

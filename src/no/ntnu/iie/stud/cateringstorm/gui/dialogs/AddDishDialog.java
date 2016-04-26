@@ -46,22 +46,10 @@ public class AddDishDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(addButton);
 
-        addOrRemoveButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onAR();
-            }
-        });
+        addOrRemoveButton.addActionListener(e -> onAR());
+        cancelButton.addActionListener(e -> onCancel());
+        okButton.addActionListener(e -> onOk());
 
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOk();
-            }
-        });
         addedIngredientTable.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 return;

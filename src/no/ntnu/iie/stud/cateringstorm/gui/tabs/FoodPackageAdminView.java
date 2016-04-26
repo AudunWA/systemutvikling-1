@@ -8,6 +8,8 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -27,6 +29,8 @@ public class FoodPackageAdminView extends JPanel {
     private JButton addButton;
     private JButton editButton;
 
+    private ArrayList<FoodPackage> foodPackageList;
+
     private FoodPackageTableModel tableModel;
 
     public FoodPackageAdminView() {
@@ -41,6 +45,7 @@ public class FoodPackageAdminView extends JPanel {
         viewFoodPackage.addActionListener(e -> onView());
         searchButton.addActionListener(e -> search());
         removeFoodPackageButton.addActionListener(e -> onRemove());
+        inactiveCheckBox.addActionListener(e -> refresh());
 
         searchField.addMouseListener(new MouseAdapter() {
             @Override
@@ -49,6 +54,36 @@ public class FoodPackageAdminView extends JPanel {
                 searchButton.setEnabled(true);
             }
         });
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchDocument();
+            }
+
+            public void searchDocument() {
+
+                ArrayList<FoodPackage> copy = new ArrayList<>();
+
+                for (int i = 0; i < foodPackageList.size(); i++) {
+                    if ((foodPackageList.get(i).getName()).toLowerCase().contains(searchField.getText().toLowerCase())){
+                        copy.add(foodPackageList.get(i));
+                    }
+                }
+                tableModel.setRows(copy);
+
+            }
+        });
+
 
         FoodPackageTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
@@ -97,8 +132,9 @@ public class FoodPackageAdminView extends JPanel {
 
         if (dialog.getAddedNewValue()) {
             // Refresh data
-            refreshTable();
+            refresh();
             Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Food package updated.", Toast.Style.SUCCESS).display();
+
         }
     }
     /**
@@ -142,6 +178,7 @@ public class FoodPackageAdminView extends JPanel {
 
             tableModel.removeRow(selectedRow);
             JOptionPane.showMessageDialog(null, "Row is removed.");
+            refresh();
         }
     }
     /**
@@ -166,9 +203,9 @@ public class FoodPackageAdminView extends JPanel {
     }
 
     private void createTable() {
-        ArrayList<FoodPackage> foodpackageList = FoodPackageFactory.getActiveFoodPackages();
+        foodPackageList = FoodPackageFactory.getActiveFoodPackages();
         Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST, FoodPackageTableModel.COLUMN_ACTIVE}; // Columns can be changed
-        tableModel = new FoodPackageTableModel(foodpackageList, columns);
+        tableModel = new FoodPackageTableModel(foodPackageList, columns);
         FoodPackageTable = new JTable(tableModel);
         FoodPackageTable.setFillsViewportHeight(true);
     }
@@ -177,7 +214,15 @@ public class FoodPackageAdminView extends JPanel {
         createTable();
     }
 
-    private void refreshTable() {
-        tableModel.setRows(FoodPackageFactory.getAllFoodPackages());
+    private void refresh() {
+        if (inactiveCheckBox.isSelected()) {
+            foodPackageList = FoodPackageFactory.getAllFoodPackages();
+        } else {
+            foodPackageList = FoodPackageFactory.getActiveFoodPackages();
+        }
+        tableModel.setRows(foodPackageList);
+        Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Dishes refreshed").display();
+
     }
+
 }

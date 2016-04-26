@@ -35,11 +35,7 @@ public class ChefViewIngredientsDialog extends JDialog {
         ingredientLabel.setText("Ingredients for: " + dish.getName());
 
 
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        cancelButton.addActionListener(e -> onCancel());
 
 // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

@@ -88,6 +88,22 @@ public class Subscription {
     }
 
     /**
+     * Determines whether the subscription is active. An inactive subscription is practically considered a deleted one.
+     * @return true if the subscription is active, false otherwise.
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * Activates or inactivates this subscription. An inactive subscription is practically considered a deleted one.
+     * @param active If true, this subscription is active, otherwise it is inactive.
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    /**
      *  Returns the id of the connected customer.
      * @return the id of the connected customer.
      */
@@ -103,20 +119,8 @@ public class Subscription {
         this.customerId = customerId;
     }
 
-    /**
-     * Determines whether the subscription is active. An inactive subscription is practically considered a deleted one.
-     * @return true if the subscription is active, false otherwise.
-     */
-    public boolean isActive() {
-        return active;
-    }
-
-    /**
-     * Activates or inactivates this subscription. An inactive subscription is practically considered a deleted one.
-     * @param active If true, this subscription is active, otherwise it is inactive.
-     */
-    public void setActive(boolean active) {
-        this.active = active;
+    public String getCustomerName() {
+        return "TODO"; // TODO
     }
 
     /**

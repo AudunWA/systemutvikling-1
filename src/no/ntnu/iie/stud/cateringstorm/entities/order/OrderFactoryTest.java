@@ -62,7 +62,11 @@ public class OrderFactoryTest {
         Assert.assertNotEquals(test1.getStatus(), test2.getStatus());
         Assert.assertEquals(2, test2.getStatus());
     }
-
+    @Test
+    public void testGetAllOrdersChauffeur() throws Exception {
+        ArrayList<Order> orders = OrderFactory.getAllOrdersChauffeur();
+        Assert.assertNotNull(orders);
+    }
 
     // TODO: Maybe test this further
     @Test

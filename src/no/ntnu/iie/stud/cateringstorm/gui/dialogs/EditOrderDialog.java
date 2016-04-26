@@ -40,17 +40,8 @@ public class EditOrderDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(saveChangesButton);
 
-        saveChangesButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        saveChangesButton.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
 
 // call onCancel() when cross is clicked
         addWindowListener(new WindowAdapter() {

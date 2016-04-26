@@ -28,7 +28,11 @@ public class SalespersonSubscriptionView extends JPanel {
     private JButton searchButton;
     private JTextField searchField;
     private JButton newSubscriptionButton;
+    private JButton removeButton;
+    private JCheckBox inactiveCheckBox;
     private SubscriptionTableModel tableModel;
+
+    private ArrayList<Subscription> subscriptionList;
 
     public SalespersonSubscriptionView() {
         setLayout(new BorderLayout());
@@ -37,6 +41,8 @@ public class SalespersonSubscriptionView extends JPanel {
         refreshButton.addActionListener(e -> refresh());
         editOrderButton.addActionListener(e -> editSubscription(getSelectedSubscription()));
         newSubscriptionButton.addActionListener(e -> newSubscription());
+        removeButton.addActionListener(e -> removeSubscription());
+        inactiveCheckBox.addActionListener(e -> refresh() );
 
         statusBox.addActionListener(e -> {
             //setStatus();
@@ -122,6 +128,24 @@ public class SalespersonSubscriptionView extends JPanel {
     private void editSubscription(Subscription subscription) {
         // TODO?
     }
+    private void removeSubscription() {
+        int selectedRow = orderTable.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
+        if (dialogResult == 0) {
+            Subscription subscription = tableModel.getValue(selectedRow);
+            subscription.setActive(false);
+            SubscriptionFactory.updateSubscription(subscription);
+
+            tableModel.removeRow(selectedRow);
+            JOptionPane.showMessageDialog(null, "Row is removed.");
+        }
+        refresh();
+    }
 
     private void createUIComponents() {
         createTable();
@@ -131,7 +155,7 @@ public class SalespersonSubscriptionView extends JPanel {
 
     private void createTable() {
         Integer[] columns = new Integer[]{SubscriptionTableModel.COLUMN_ID, SubscriptionTableModel.COLUMN_START_DATE, SubscriptionTableModel.COLUMN_END_DATE, SubscriptionTableModel.COLUMN_CUSTOMER_ID, SubscriptionTableModel.COLUMN_COST, SubscriptionTableModel.COLUMN_ACTIVE};
-        tableModel = new SubscriptionTableModel(SubscriptionFactory.getAllSubscriptions(), columns);
+        tableModel = new SubscriptionTableModel(SubscriptionFactory.getActiveSubscriptions(), columns);
         orderTable = new JTable(tableModel);
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderPane = new JScrollPane(orderTable);
@@ -155,9 +179,31 @@ public class SalespersonSubscriptionView extends JPanel {
         searchField.setText(text);
         searchField.setEnabled(true);
     }
+    private void search() {
+        ArrayList<Subscription> newRows;
+        if (searchField.getText().trim().equals("")) {
+            if (inactiveCheckBox.isSelected()) {
+                newRows = SubscriptionFactory.getAllSubscriptions();
+            } else {
+                newRows = SubscriptionFactory.getActiveSubscriptions();
+            }
+        } else {
+            if (inactiveCheckBox.isSelected()) {
+                newRows = SubscriptionFactory.getAllSubscriptionsByQuery(searchField.getText());
+            } else {
+                newRows = SubscriptionFactory.getActiveSubscriptionsByQuery(searchField.getText());
+            }
+        }
+        tableModel.setRows(newRows);
+    }
 
     private void refresh() {
-        tableModel.setRows(SubscriptionFactory.getAllSubscriptions());
-        Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Subscriptions refreshed.").display();
+        if (inactiveCheckBox.isSelected()) {
+            subscriptionList = SubscriptionFactory.getAllSubscriptions();
+        } else {
+            subscriptionList = SubscriptionFactory.getActiveSubscriptions();
+        }
+        Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Customers refreshed.").display();
+        tableModel.setRows(subscriptionList);
     }
 }

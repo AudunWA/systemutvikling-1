@@ -2,6 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.entities.recurringorder;
 
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
+import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
@@ -14,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class handling database interaction, loading and generating RecurringOrder entity objects.
@@ -51,8 +53,40 @@ public final class RecurringOrderFactory {
 
     public static int goThroughRecurringOrders() {
         ArrayList<RecurringOrder> pending = getOrdersPendingCreation();
-        ArrayList<Order> createdOrders = OrderFactory.createOrdersForRecurringOrders(pending);
-        return createdOrders.size();
+        int size = -1;
+        if(pending!= null) {
+            ArrayList<Order> createdOrders = OrderFactory.createOrdersForRecurringOrders(pending);
+            size = createdOrders.size();
+        }
+        return size;
+    }
+
+    /**
+     * Gets all recurring orders of a subscription.
+     *
+     * @param subscriptionId The ID of the subscription.
+     * @return a list containing the recurring orders.
+     */
+    public static ArrayList<RecurringOrder> getRecurringOrders(int subscriptionId) {
+        ArrayList<RecurringOrder> recurringOrders = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM recurring_order WHERE subscription_id = ?")) {
+                statement.setInt(1, subscriptionId);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        recurringOrders.add(createRecurringOrderFromResultSet(result));
+                    }
+
+                }
+                return recurringOrders;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**

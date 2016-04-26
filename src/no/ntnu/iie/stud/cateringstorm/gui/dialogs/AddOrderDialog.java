@@ -58,23 +58,9 @@ public class AddOrderDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(addRemoveButton);
 
-        addRemoveButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onAR();
-            }
-        });
-
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOk();
-            }
-        });
-
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        addRemoveButton.addActionListener(e -> onAR());
+        okButton.addActionListener(e -> onOk());
+        cancelButton.addActionListener(e -> onCancel());
 
         customerComboBox.addMouseListener(new MouseAdapter() {
             @Override

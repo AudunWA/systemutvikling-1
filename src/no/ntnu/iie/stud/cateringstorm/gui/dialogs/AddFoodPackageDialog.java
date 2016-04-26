@@ -38,23 +38,9 @@ public class AddFoodPackageDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(addButton);
 
-        addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOk();
-            }
-        });
-
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-        addRemoveButton.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                onAR();
-            }
-        });
+        addButton.addActionListener(e -> onOk());
+        cancelButton.addActionListener(e -> onCancel());
+        addRemoveButton.addActionListener(e -> onAR());
 
         dishTable.getSelectionModel().addListSelectionListener(e -> {
 

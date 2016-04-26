@@ -41,23 +41,9 @@ public class ChefMakeOrderDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-
-        viewIngredientsButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onView();
-            }
-        });
+        okButton.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
+        viewIngredientsButton.addActionListener(e -> onView());
 
 // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
