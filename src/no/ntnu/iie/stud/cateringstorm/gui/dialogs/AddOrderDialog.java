@@ -22,10 +22,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.Time;
 import java.sql.Timestamp;
-<<<<<<< HEAD
-=======
 import java.time.LocalDate;
->>>>>>> b6193e0f7ee393bd269adfbe2db557f11ad50308
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
