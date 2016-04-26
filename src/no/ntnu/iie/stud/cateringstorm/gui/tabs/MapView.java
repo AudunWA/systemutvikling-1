@@ -9,10 +9,13 @@ import no.ntnu.iie.stud.cateringstorm.maps.MapBackend;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Coordinate;
+import no.ntnu.iie.stud.cateringstorm.util.ResourceUtil;
+import org.jfree.io.IOUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -24,20 +27,20 @@ import java.util.logging.Level;
  * Displays a map with driving routes for the chauffeur.
  */
 public class MapView extends JFrame {
-    private final String MAP_PATH = "html/map.html";
-
     private JPanel mainPanel;
     private JButton setDeliveredButton;
     private Browser browser;
 
     private ArrayList<Order> orders;
+    private boolean success;
 
     public MapView(ArrayList<Coordinate> route, ArrayList<Order> orders) {
         this.orders = orders;
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        //disableBrowserLogging();
+        disableBrowserLogging();
 
         browser = new Browser();
         BrowserView view = new BrowserView(browser);
@@ -54,7 +57,7 @@ public class MapView extends JFrame {
 
         setDeliveredButton.addActionListener(e -> setDelivered());
 
-        browser.loadHTML(getMapHTML());
+        browser.loadHTML(ResourceUtil.getMapHTML());
         mainPanel.add(view, BorderLayout.CENTER);
     }
 
@@ -131,10 +134,10 @@ public class MapView extends JFrame {
         }
 
         orders = OrderFactory.getAllAvailableOrdersForChauffeurTable();
+        success = true;
 
         setVisible(false);
         dispose();
-
     }
 
     /**
@@ -151,30 +154,7 @@ public class MapView extends JFrame {
         browser.executeJavaScript("map.setZoom(12)");
     }
 
-    /**
-     * Loads the map HTML from the project resources
-     *
-     * @return A String containing the HTML
-     */
-    private String getMapHTML() {
-        ClassLoader loader = getClass().getClassLoader();
-        if (loader == null) {
-            System.err.println("Could not get class loader!");
-            return null;
-        }
-
-        URL resource = loader.getResource(MAP_PATH);
-        if (resource == null) {
-            System.err.println("Could not get resource \"" + MAP_PATH + "\"");
-            return null;
-        }
-        try {
-            return new String(Files.readAllBytes(Paths.get(resource.toURI())));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public boolean isSuccess() {
+        return success;
     }
 }

@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="systemutvikling-1" default="all">
+  
+  
+  <property file="systemutvikling-1.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/ext/access-bridge-64.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.com.google.code.geocoder-java:geocoder-java:0.161.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/code/geocoder-java/geocoder-java/0.16/geocoder-java-0.16.jar"/>
+    <pathelement location="${path.variable.maven_repository}/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar"/>
+    <pathelement location="${path.variable.maven_repository}/commons-codec/commons-codec/1.2/commons-codec-1.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar"/>
+    <pathelement location="${path.variable.maven_repository}/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.jar"/>
+  </path>
+  
+  <path id="library.commons-codec:commons-codec:1.10.classpath">
+    <pathelement location="${path.variable.maven_repository}/commons-codec/commons-codec/1.10/commons-codec-1.10.jar"/>
+  </path>
+  
+  <path id="library.jxbrowser-6.3.classpath">
+    <pathelement location="${basedir}/lib/jxbrowser-6.3.jar"/>
+    <pathelement location="${basedir}/lib/jxbrowser-linux32-6.3.jar"/>
+    <pathelement location="${basedir}/lib/jxbrowser-linux64-6.3.jar"/>
+    <pathelement location="${basedir}/lib/jxbrowser-mac-6.3.jar"/>
+    <pathelement location="${basedir}/lib/jxbrowser-win-6.3.jar"/>
+  </path>
+  
+  <path id="library.license.classpath">
+    <pathelement location="${basedir}/lib/license.jar"/>
+  </path>
+  
+  <path id="library.mysql:mysql-connector-java:5.1.38.classpath">
+    <pathelement location="${path.variable.maven_repository}/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar"/>
+  </path>
+  
+  <path id="library.org.jdatepicker:jdatepicker:1.3.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/jdatepicker/jdatepicker/1.3.4/jdatepicker-1.3.4.jar"/>
+  </path>
+  
+  <path id="library.org.jfree:jfreechart:1.0.19.classpath">
+    <pathelement location="${path.variable.maven_repository}/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/jfree/jcommon/1.0.23/jcommon-1.0.23.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/jfree/jfreechart/1.0.19/jfreechart-1.0.19.jar"/>
+  </path>
+  
+  <path id="library.weblaf-complete-1.29.classpath">
+    <pathelement location="${basedir}/lib/weblaf-complete-1.29.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module systemutvikling-1 -->
+  
+  <dirname property="module.systemutvikling-1.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.systemutvikling-1" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.systemutvikling-1" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.systemutvikling-1" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.systemutvikling-1" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="systemutvikling-1.output.dir" value="${module.systemutvikling-1.basedir}/out/production/systemutvikling-1"/>
+  <property name="systemutvikling-1.testoutput.dir" value="${module.systemutvikling-1.basedir}/out/test/systemutvikling-1"/>
+  
+  <path id="systemutvikling-1.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="systemutvikling-1.module.production.classpath">
+    <path refid="${module.jdk.classpath.systemutvikling-1}"/>
+    <path refid="library.mysql:mysql-connector-java:5.1.38.classpath"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <path refid="library.commons-codec:commons-codec:1.10.classpath"/>
+    <path refid="library.org.jdatepicker:jdatepicker:1.3.4.classpath"/>
+    <path refid="library.org.jfree:jfreechart:1.0.19.classpath"/>
+    <path refid="library.jxbrowser-6.3.classpath"/>
+    <path refid="library.com.google.code.geocoder-java:geocoder-java:0.161.classpath"/>
+    <path refid="library.license.classpath"/>
+    <path refid="library.weblaf-complete-1.29.classpath"/>
+  </path>
+  
+  <path id="systemutvikling-1.runtime.production.module.classpath">
+    <pathelement location="${systemutvikling-1.output.dir}"/>
+    <path refid="library.mysql:mysql-connector-java:5.1.38.classpath"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <path refid="library.commons-codec:commons-codec:1.10.classpath"/>
+    <path refid="library.org.jdatepicker:jdatepicker:1.3.4.classpath"/>
+    <path refid="library.org.jfree:jfreechart:1.0.19.classpath"/>
+    <path refid="library.jxbrowser-6.3.classpath"/>
+    <path refid="library.com.google.code.geocoder-java:geocoder-java:0.161.classpath"/>
+    <path refid="library.license.classpath"/>
+    <path refid="library.weblaf-complete-1.29.classpath"/>
+  </path>
+  
+  <path id="systemutvikling-1.module.classpath">
+    <path refid="${module.jdk.classpath.systemutvikling-1}"/>
+    <pathelement location="${systemutvikling-1.output.dir}"/>
+    <path refid="library.mysql:mysql-connector-java:5.1.38.classpath"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <path refid="library.commons-codec:commons-codec:1.10.classpath"/>
+    <path refid="library.org.jdatepicker:jdatepicker:1.3.4.classpath"/>
+    <path refid="library.org.jfree:jfreechart:1.0.19.classpath"/>
+    <path refid="library.jxbrowser-6.3.classpath"/>
+    <path refid="library.com.google.code.geocoder-java:geocoder-java:0.161.classpath"/>
+    <path refid="library.license.classpath"/>
+    <path refid="library.weblaf-complete-1.29.classpath"/>
+  </path>
+  
+  <path id="systemutvikling-1.runtime.module.classpath">
+    <pathelement location="${systemutvikling-1.testoutput.dir}"/>
+    <pathelement location="${systemutvikling-1.output.dir}"/>
+    <path refid="library.mysql:mysql-connector-java:5.1.38.classpath"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <path refid="library.commons-codec:commons-codec:1.10.classpath"/>
+    <path refid="library.org.jdatepicker:jdatepicker:1.3.4.classpath"/>
+    <path refid="library.org.jfree:jfreechart:1.0.19.classpath"/>
+    <path refid="library.jxbrowser-6.3.classpath"/>
+    <path refid="library.com.google.code.geocoder-java:geocoder-java:0.161.classpath"/>
+    <path refid="library.license.classpath"/>
+    <path refid="library.weblaf-complete-1.29.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.systemutvikling-1">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.systemutvikling-1">
+    <patternset refid="excluded.from.module.systemutvikling-1"/>
+  </patternset>
+  
+  <path id="systemutvikling-1.module.sourcepath">
+    <dirset dir="${module.systemutvikling-1.basedir}">
+      <include name="src"/>
+      <include name="resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.systemutvikling-1" depends="compile.module.systemutvikling-1.production,compile.module.systemutvikling-1.tests" description="Compile module systemutvikling-1"/>
+  
+  <target name="compile.module.systemutvikling-1.production" depends="register.custom.compilers" description="Compile module systemutvikling-1; production classes">
+    <mkdir dir="${systemutvikling-1.output.dir}"/>
+    <javac2 destdir="${systemutvikling-1.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.systemutvikling-1}/javac">
+      <compilerarg line="${compiler.args.systemutvikling-1}"/>
+      <bootclasspath refid="systemutvikling-1.module.bootclasspath"/>
+      <classpath refid="systemutvikling-1.module.production.classpath"/>
+      <src refid="systemutvikling-1.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.systemutvikling-1"/>
+    </javac2>
+    
+    <copy todir="${systemutvikling-1.output.dir}">
+      <fileset dir="${module.systemutvikling-1.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.systemutvikling-1.basedir}/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.systemutvikling-1.tests" depends="register.custom.compilers,compile.module.systemutvikling-1.production" description="compile module systemutvikling-1; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.systemutvikling-1" description="cleanup module">
+    <delete dir="${systemutvikling-1.output.dir}"/>
+    <delete dir="${systemutvikling-1.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.systemutvikling-1" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.systemutvikling-1" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.systemutvikling-1:jar" value="${basedir}/out/artifacts/systemutvikling_1_jar"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.systemutvikling-1.jar" value="${artifacts.temp.dir}/systemutvikling-1.jar"/>
+  </target>
+  
+  <target name="artifact.systemutvikling-1:jar" depends="init.artifacts, compile.module.systemutvikling-1" description="Build &#39;systemutvikling-1:jar&#39; artifact">
+    <property name="artifact.temp.output.systemutvikling-1:jar" value="${artifacts.temp.dir}/systemutvikling_1_jar"/>
+    <mkdir dir="${artifact.temp.output.systemutvikling-1:jar}"/>
+    <jar destfile="${temp.jar.path.systemutvikling-1.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${systemutvikling-1.output.dir}"/>
+      <zipfileset src="${basedir}/lib/license.jar"/>
+      <zipfileset src="${basedir}/lib/jxbrowser-6.3.jar"/>
+      <zipfileset src="${basedir}/lib/jxbrowser-linux32-6.3.jar"/>
+      <zipfileset src="${basedir}/lib/jxbrowser-linux64-6.3.jar"/>
+      <zipfileset src="${basedir}/lib/jxbrowser-mac-6.3.jar"/>
+      <zipfileset src="${basedir}/lib/jxbrowser-win-6.3.jar"/>
+      <zipfileset src="${basedir}/lib/weblaf-complete-1.29.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/org/jfree/jfreechart/1.0.19/jfreechart-1.0.19.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/org/jfree/jcommon/1.0.23/jcommon-1.0.23.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/commons-codec/commons-codec/1.10/commons-codec-1.10.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/org/jdatepicker/jdatepicker/1.3.4/jdatepicker-1.3.4.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/com/google/code/geocoder-java/geocoder-java/0.16/geocoder-java-0.16.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.jar"/>
+      <zipfileset src="${path.variable.maven_repository}/commons-codec/commons-codec/1.2/commons-codec-1.2.jar"/>
+      <zipfileset src="${idea.home}/lib/junit-4.12.jar"/>
+      <zipfileset src="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.systemutvikling-1.jar}" tofile="${artifact.temp.output.systemutvikling-1:jar}/systemutvikling-1.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.systemutvikling-1:jar" description="Build all artifacts">
+    <mkdir dir="${artifact.output.systemutvikling-1:jar}"/>
+    <copy todir="${artifact.output.systemutvikling-1:jar}">
+      <fileset dir="${artifact.temp.output.systemutvikling-1:jar}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
