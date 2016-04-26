@@ -104,28 +104,21 @@ public class ChefOrderView extends JPanel {
     }
 
     private void createComboBox() {
-        String[] status = {"In production", "Ready for delivery"};
+        String[] status = {"Ready for production", "Ready for delivery"};
         statusBox = new JComboBox<>(status);
         statusBox.setSelectedIndex(0);
     }
 
     private void setStatus() {
-        orderList = OrderFactory.getAllOrders();
-        int choice = statusBox.getSelectedIndex();
-        int selectedRow = orderTable.getSelectedRow();
-        int statusColumn = 5;
-        boolean inProduction = choice > 0;
-        if (selectedRow > -1) {
-            Order order = tableModel.getValue(orderTable.getSelectedRow());
-            if (order.getStatus() < 2) {
-                orderTable.clearSelection();
-                orderTable.getModel().setValueAt((inProduction) ? "Ready for delivery" : "In production", selectedRow, statusColumn);
-                Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Orders status changed.", Toast.Style.SUCCESS).display();
-            } else {
-                Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "You cannot change this status.", Toast.Style.ERROR).display();
-                //JOptionPane.showMessageDialog(this, "Error, chef can't change this status");
-            }
+        int statusIndex = statusBox.getSelectedIndex();
+        int statusType = 0;
+        if (statusIndex == 0){
+            statusType = 1;
+        } else if (statusIndex == 1){
+            statusType = 0;
         }
+        OrderFactory.setOrderState(((Integer)orderTable.getValueAt(orderTable.getSelectedRow(),0)), statusType);
+        tableModel.setRows(OrderFactory.getAllOrdersChef());
     }
 
     private void viewOrder() {
