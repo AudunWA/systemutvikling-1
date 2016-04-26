@@ -36,17 +36,9 @@ public class AddIngredientDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(okButton);
 
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        okButton.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
 
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
 // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {

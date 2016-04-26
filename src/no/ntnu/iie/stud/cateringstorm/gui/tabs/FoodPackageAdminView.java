@@ -29,7 +29,7 @@ public class FoodPackageAdminView extends JPanel {
     private JButton addButton;
     private JButton editButton;
 
-    private ArrayList<FoodPackage> foodpackageList;
+    private ArrayList<FoodPackage> foodPackageList;
 
     private FoodPackageTableModel tableModel;
 
@@ -45,6 +45,7 @@ public class FoodPackageAdminView extends JPanel {
         viewFoodPackage.addActionListener(e -> onView());
         searchButton.addActionListener(e -> search());
         removeFoodPackageButton.addActionListener(e -> onRemove());
+        inactiveCheckBox.addActionListener(e -> refresh());
 
         searchField.addMouseListener(new MouseAdapter() {
             @Override
@@ -73,10 +74,9 @@ public class FoodPackageAdminView extends JPanel {
 
                 ArrayList<FoodPackage> copy = new ArrayList<>();
 
-                for (int i = 0; i < foodpackageList.size(); i++) {
-                    if ((foodpackageList.get(i).getName()).toLowerCase().contains(searchField.getText().toLowerCase())) {
-                        copy.add(foodpackageList.get(i));
-
+                for (int i = 0; i < foodPackageList.size(); i++) {
+                    if ((foodPackageList.get(i).getName()).toLowerCase().contains(searchField.getText().toLowerCase())){
+                        copy.add(foodPackageList.get(i));
                     }
                 }
                 tableModel.setRows(copy);
@@ -203,9 +203,9 @@ public class FoodPackageAdminView extends JPanel {
     }
 
     private void createTable() {
-        ArrayList<FoodPackage> foodpackageList = FoodPackageFactory.getActiveFoodPackages();
+        foodPackageList = FoodPackageFactory.getActiveFoodPackages();
         Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST, FoodPackageTableModel.COLUMN_ACTIVE}; // Columns can be changed
-        tableModel = new FoodPackageTableModel(foodpackageList, columns);
+        tableModel = new FoodPackageTableModel(foodPackageList, columns);
         FoodPackageTable = new JTable(tableModel);
         FoodPackageTable.setFillsViewportHeight(true);
     }
@@ -216,11 +216,11 @@ public class FoodPackageAdminView extends JPanel {
 
     private void refresh() {
         if (inactiveCheckBox.isSelected()) {
-            foodpackageList = FoodPackageFactory.getActiveFoodPackages();
+            foodPackageList = FoodPackageFactory.getAllFoodPackages();
         } else {
-            foodpackageList = FoodPackageFactory.getAllFoodPackages();
+            foodPackageList = FoodPackageFactory.getActiveFoodPackages();
         }
-        tableModel.setRows(foodpackageList);
+        tableModel.setRows(foodPackageList);
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Dishes refreshed").display();
 
     }

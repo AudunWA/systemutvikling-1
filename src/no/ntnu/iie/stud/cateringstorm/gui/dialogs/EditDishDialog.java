@@ -60,10 +60,8 @@ public class EditDishDialog extends JDialog {
         getRootPane().setDefaultButton(okButton);
 
         okButton.addActionListener(e -> onOK());
-
         cancelButton.addActionListener(e -> onCancel());
-
-        addRemoveButton.addActionListener((e1 -> onAR()));
+        addRemoveButton.addActionListener((e -> onAR()));
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

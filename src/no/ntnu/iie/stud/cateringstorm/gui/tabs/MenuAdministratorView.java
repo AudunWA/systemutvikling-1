@@ -51,6 +51,7 @@ public class MenuAdministratorView extends JPanel {
         editDishButton.addActionListener(e -> onEdit());
         refreshButton.addActionListener(e -> refresh());
         removeDishButton.addActionListener(e -> onRemove());
+        inactiveCheckBox.addActionListener(e -> refresh());
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -211,9 +212,9 @@ public class MenuAdministratorView extends JPanel {
 
     private void refresh() {
         if (inactiveCheckBox.isSelected()) {
-            dishList = DishFactory.getActiveDishes();
-        } else {
             dishList = DishFactory.getAllDishes();
+        } else {
+            dishList = DishFactory.getActiveDishes();
         }
         tableModel.setRows(dishList);
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Dishes refreshed").display();

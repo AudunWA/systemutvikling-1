@@ -45,9 +45,8 @@ public class EditTimesheetDialog extends JDialog {
         getRootPane().setDefaultButton(okButton);
 
         setSpinners();
-        okButton.addActionListener(e -> {
-            onOK();
-        });
+        okButton.addActionListener(e -> onOK());
+
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 

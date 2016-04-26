@@ -43,17 +43,8 @@ public class AddEmployeeDialog extends JDialog {
 
         addedNewValue = false;
 
-        saveButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        saveButton.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
 
 
 // call onCancel() when cross is clicked
