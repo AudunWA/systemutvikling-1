@@ -48,7 +48,7 @@
           <text value="From date:"/>
         </properties>
       </component>
-      <component id="a8810" class="org.jdatepicker.impl.JDatePickerImpl" binding="fromDate" custom-create="true">
+      <component id="a8810" class="org.jdatepicker.impl.JDatePickerImpl" binding="fromDatePicker" custom-create="true">
         <constraints>
           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -182,7 +182,7 @@
           <text value="To date:"/>
         </properties>
       </component>
-      <component id="d91b2" class="org.jdatepicker.impl.JDatePickerImpl" binding="toDate" custom-create="true">
+      <component id="d91b2" class="org.jdatepicker.impl.JDatePickerImpl" binding="toDatePicker" custom-create="true">
         <constraints>
           <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

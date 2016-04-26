@@ -273,16 +273,21 @@ public final class EmployeeFactory {
  GROUP BY employee_id DESC;*/
 
     /**
-     *
+     * Returns sales this year by a selected employee. Only completed(delivered) sales
+     * are registered. Year can be freely selected.
      * @param employeeId The id of the selected employee.
      * @return int.
      */
-    public static int getSalesThisYear(int employeeId){
+    public static int getSalesThisYear(int employeeId, java.sql.Date year){
         int sales = 0;
         try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT employee_id, COUNT(*) sum FROM _order o JOIN employee e ON(o.salesperson_id = e.employee_id) WHERE year(o.delivery_time) = year(CURDATE()) AND o.status = 2 AND employee_id = ?\n" +
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "SELECT employee_id, COUNT(*) sum FROM _order o JOIN employee e ON(o.salesperson_id = e.employee_id)" +
+                    " WHERE year(o.delivery_time) = year(?)" +
+                    " AND o.status = 2 AND employee_id = ?\n" +
                     " GROUP BY employee_id DESC LIMIT 1")) {
-                statement.setInt(1, employeeId);
+                statement.setDate(1,year);
+                statement.setInt(2, employeeId);
                 statement.executeQuery();
 
                 try (ResultSet result = statement.getResultSet()) {

@@ -9,8 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Factory class handling loading and generating of Customer entity objects
- * Created by Chris on 17.03.2016.
+ * Factory class handling loading and generating of Customer entity objects.
  */
 public final class CustomerFactory {
 

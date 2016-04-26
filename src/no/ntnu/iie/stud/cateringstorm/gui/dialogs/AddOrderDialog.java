@@ -214,8 +214,11 @@ public class AddOrderDialog extends JDialog {
                 JOptionPane.showMessageDialog(this, "Please enter a valid portion amount.");
                 return;
             }
+            boolean priority = false;
 
-            boolean priority = priorityBox.isSelected();
+            if (priorityBox.isSelected()){
+                priority = true;
+            }
 
             Date temp = (Date) dateSelect.getModel().getValue();
             if (temp == null) {

@@ -9,9 +9,10 @@ import org.junit.Test;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
- * Created by EliasBrattli on 21/04/2016.
+ * JUnit test class for IngredientDishFactory.
  */
 //TODO: Finish this class after Factory is completed
 public class IngredientDishFactoryTest {
@@ -28,11 +29,11 @@ public class IngredientDishFactoryTest {
 
     }
 
-    @Test
+   /* @Test
     public void testAddIngredientToNewDish() throws Exception {
 
-    }
-
+    }*/
+    // TODO: Write unit tests.
     @Test
     public void testGetAllIngredientDishes() throws Exception {
 
@@ -42,4 +43,21 @@ public class IngredientDishFactoryTest {
     public void testRemoveIngredientFromDish() throws Exception {
 
     }
+    @Test
+    public void testCreateDish() throws Exception {
+
+    }
+    @Test
+    public void testGetAllIngredientDishesInOrder() throws Exception {
+
+    }
+    @Test
+    public void testRemoveAllIngredientFromDish() throws Exception {
+
+    }
+    @Test
+    public void testGetAllIngredientsInDish() throws Exception {
+
+    }
+
 }

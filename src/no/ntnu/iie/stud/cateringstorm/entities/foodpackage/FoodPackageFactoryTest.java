@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
- * Created by Audun on 16.03.2016.
+ * JUnit test class for FoodPackageFactory.
  */
 public class FoodPackageFactoryTest {
 
