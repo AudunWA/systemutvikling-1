@@ -9,6 +9,7 @@ import no.ntnu.iie.stud.cateringstorm.entities.subscription.Subscription;
 import no.ntnu.iie.stud.cateringstorm.entities.subscription.SubscriptionFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.RecurringOrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.SubscriptionTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.DateUtil;
 import no.ntnu.iie.stud.cateringstorm.gui.util.SimpleDateFormatter;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
@@ -31,6 +32,8 @@ import java.util.Properties;
  */
 
 public class EditSubscriptionDialog extends JDialog {
+    //private static final Integer[] COLUMNS_AVAILABLE_DISHES = {SubscriptionTableModel.COLUMN, SubscriptionTableModel.COLUMN_DESCRIPTION}
+
     private static final int MIN_HOURS_BETWEEN_ORDERS = 1;
     private JPanel mainPanel;
     private JButton okButton;
@@ -43,15 +46,16 @@ public class EditSubscriptionDialog extends JDialog {
     private JTextField costField;
     private JSpinner amountSpinner;
     private JSpinner timeSpinner;
-    private JTable availablePackagesTable;
+    private JTable rightSideTable;
     private FoodPackageTableModel availabelpackagesModel;
-    private JTable selectedPackagesTable;
+    private JTable leftSideTable;
     private RecurringOrderTableModel selectedPackagesModel;
     private double cost;
     private ArrayList<FoodPackage> foodList; // TODO: Replace with table model methods
     private Subscription subscription;
 
     public EditSubscriptionDialog(Subscription subscription) {
+
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
@@ -79,13 +83,13 @@ public class EditSubscriptionDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        selectedPackagesTable.getSelectionModel().addListSelectionListener(e -> {
-            int index = selectedPackagesTable.getSelectedRow();
+        leftSideTable.getSelectionModel().addListSelectionListener(e -> {
+            int index = leftSideTable.getSelectedRow();
             if (!e.getValueIsAdjusting() || index == -1) {
                 return;
             }
             // Unselect other table
-            availablePackagesTable.clearSelection();
+            rightSideTable.clearSelection();
             RecurringOrder order = selectedPackagesModel.getValue(index);
 
             dayComboBox.setSelectedIndex(order.getWeekday());
@@ -93,16 +97,16 @@ public class EditSubscriptionDialog extends JDialog {
             timeSpinner.setValue(new Time(Timestamp.valueOf(DateUtil.convertRelativeTime(order.getRelativeTime())).getTime()));
         });
 
-        availablePackagesTable.getSelectionModel().addListSelectionListener(e -> {
+        rightSideTable.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 return;
             }
             // Unselect other table
-            selectedPackagesTable.clearSelection();
+            leftSideTable.clearSelection();
         });
 
         dayComboBox.addActionListener(e -> {
-            int index = selectedPackagesTable.getSelectedRow();
+            int index = leftSideTable.getSelectedRow();
             int dayIndex = dayComboBox.getSelectedIndex();
 
             if (index == -1 || dayIndex == -1) {
@@ -119,7 +123,7 @@ public class EditSubscriptionDialog extends JDialog {
         amountSpinnerModel.setMinimum(0);
 
         amountSpinner.addChangeListener(e -> {
-            int index = selectedPackagesTable.getSelectedRow();
+            int index = leftSideTable.getSelectedRow();
             int newAmount = (int) amountSpinner.getValue();
 
             if (index == -1) {
@@ -137,7 +141,7 @@ public class EditSubscriptionDialog extends JDialog {
         });
 
         timeSpinner.addChangeListener(e -> {
-            int index = selectedPackagesTable.getSelectedRow();
+            int index = leftSideTable.getSelectedRow();
             int newTime = getTimeSpinnerValue();
 
             if (index == -1) {
@@ -161,41 +165,45 @@ public class EditSubscriptionDialog extends JDialog {
         dialog.setVisible(true);
         System.exit(0);
     }
+    /*
     private void loadData() {
         customerComboBox.setSelectedIndex(subscription.getCustomerId());
         costField.setText(subscription.getCost());
         activeCheckbox.setSelected();
     }
+    */
 
-    /**
+    /*~
      * Called when OK button is pressed.
      * Creates a new Subscription with attributes from user input
      */
+
     private void onOK() {
         Customer customer = (Customer) customerComboBox.getSelectedItem();
         java.sql.Date startDate = new java.sql.Date(((Date) fromDate.getModel().getValue()).getTime());
         java.sql.Date endDate = new java.sql.Date(((Date) toDate.getModel().getValue()).getTime());
 
-        if (!SubscriptionFactory.updateSubscription(subscription, leftSideModel.getRowsClone())) {
+        if (!SubscriptionFactory.(subscription, leftSideModel.getRowsClone())) {
             JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
         }
         dispose();
     }
+
 
     /**
      * Called when add/remove button (arrow between tables) is pressed
      */
     private void onAR() {
         // Check if both tables are selected
-        if (availablePackagesTable.getSelectedRow() > -1 && selectedPackagesTable.getSelectedRow() > -1) {
+        if (rightSideTable.getSelectedRow() > -1 && leftSideTable.getSelectedRow() > -1) {
             JOptionPane.showMessageDialog(this, "Both tables selected. Error.");
-            availablePackagesTable.clearSelection();
-            selectedPackagesTable.clearSelection();
+            rightSideTable.clearSelection();
+            leftSideTable.clearSelection();
             return;
         }
 
-        if (availablePackagesTable.getSelectedRow() > -1) {
-            FoodPackage selectedFoodPackage = foodList.get(availablePackagesTable.getSelectedRow());
+        if (rightSideTable.getSelectedRow() > -1) {
+            FoodPackage selectedFoodPackage = foodList.get(rightSideTable.getSelectedRow());
             RecurringOrder existingRecurringOrder = null;
             int existingRecurringOrderIndex = -1;
             ArrayList<RecurringOrder> recurringOrders = selectedPackagesModel.getRowsClone();
@@ -220,8 +228,8 @@ public class EditSubscriptionDialog extends JDialog {
             }
             cost += selectedFoodPackage.getCost();
             costField.setText("Cost: " + cost);
-        } else if (selectedPackagesTable.getSelectedRow() > -1) {
-            RecurringOrder selectedRecurringOrder = selectedPackagesModel.getValue(selectedPackagesTable.getSelectedRow());
+        } else if (leftSideTable.getSelectedRow() > -1) {
+            RecurringOrder selectedRecurringOrder = selectedPackagesModel.getValue(leftSideTable.getSelectedRow());
 
             cost -= selectedRecurringOrder.getFoodPackageCost();
             costField.setText("Cost: " + cost);
@@ -229,11 +237,11 @@ public class EditSubscriptionDialog extends JDialog {
             if (selectedRecurringOrder.getAmount() > 1) {
                 // Decrement
                 selectedRecurringOrder.decrementAmount();
-                selectedPackagesModel.updateRow(selectedPackagesTable.getSelectedRow());
+                selectedPackagesModel.updateRow(leftSideTable.getSelectedRow());
             } else {
                 // Remove
-                selectedPackagesModel.removeRow(selectedPackagesTable.getSelectedRow());
-                selectedPackagesTable.clearSelection();
+                selectedPackagesModel.removeRow(leftSideTable.getSelectedRow());
+                leftSideTable.clearSelection();
             }
         } else {
             Toast.makeText(this, "Select a row.", Toast.Style.ERROR).display();
@@ -247,6 +255,17 @@ public class EditSubscriptionDialog extends JDialog {
 // add your code here if necessary
         dispose();
     }
+    /*
+    private void createTables() {
+        // Available dishes (all active ones)
+        rightTableModel = new SubscriptionTableModel(FoodPackageFactory.getActiveFoodPackages(), COLUMNS_AVAILABLE_DISHES);
+        rightSideTable = new JTable(rightTableModel);
+
+        // Current dishes
+        leftSideModel = new SubscriptionTableModel(SubscriptionFactory.getSubscription(subscription.getSubscriptionId()), COLUMNS_AVAILABLE_DISHES);
+        leftSideTable = new JTable(leftSideModel);
+    }
+    */
 
     private void createUIComponents() {
         // Create date pickers
@@ -304,13 +323,13 @@ public class EditSubscriptionDialog extends JDialog {
         foodList = FoodPackageFactory.getAllFoodPackages();
         Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST};
         availabelpackagesModel = new FoodPackageTableModel(foodList, columns);
-        availablePackagesTable = new JTable(availabelpackagesModel);
-        availablePackagesTable.getTableHeader().setReorderingAllowed(false);
+        rightSideTable = new JTable(availabelpackagesModel);
+        rightSideTable.getTableHeader().setReorderingAllowed(false);
 
         Integer[] addedColumns = new Integer[]{RecurringOrderTableModel.COLUMN_FOOD_PACKAGE_NAME, RecurringOrderTableModel.COLUMN_AMOUNT, RecurringOrderTableModel.COLUMN_FOOD_PACKAGE_COST, RecurringOrderTableModel.COLUMN_WEEKDAY, RecurringOrderTableModel.COLUMN_RELATIVE_TIME};
         selectedPackagesModel = new RecurringOrderTableModel(new ArrayList<>(), addedColumns);
-        selectedPackagesTable = new JTable(selectedPackagesModel);
-        selectedPackagesTable.getTableHeader().setReorderingAllowed(false);
+        leftSideTable = new JTable(selectedPackagesModel);
+        leftSideTable.getTableHeader().setReorderingAllowed(false);
     }
 
     /**

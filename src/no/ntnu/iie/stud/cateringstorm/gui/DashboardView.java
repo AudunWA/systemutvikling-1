@@ -12,8 +12,6 @@ import java.net.URL;
 /**
  * The main view of the application.
  * Displayed after successful login, and contains all main subviews for specific employees.
- * Created by Audun on 31.03.2016.
- * Hei
  */
 public class DashboardView extends JFrame {
     private static final String WINDOW_TITLE = "Catering Storm Dashboard";

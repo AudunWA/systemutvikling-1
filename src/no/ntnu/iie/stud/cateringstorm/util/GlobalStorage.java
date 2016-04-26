@@ -4,7 +4,6 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 
 /**
  * Public class for storing variables accesible to the whole system
- * Created by EliasBrattli on 14/04/2016.
  */
 public final class GlobalStorage {
     private static Employee loggedInEmployee;

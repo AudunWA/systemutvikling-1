@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 /**
  * Orderview for chefs. Chefs are able to edit contents of the order.
- * Created by Audun on 10.03.2016.
  */
 public class ChefOrderView extends JPanel {
     private JPanel mainPanel;

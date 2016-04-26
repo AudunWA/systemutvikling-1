@@ -7,8 +7,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 /**
- * Contains utility methods for date and time.
- * Created by Audun on 14.04.2016.
+ * Contains utility methods for date and time..
  */
 public final class DateUtil {
     public static String[] WEEKDAYS = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};

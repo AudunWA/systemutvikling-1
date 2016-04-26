@@ -11,7 +11,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
- * Created by kenan on 07.04.2016.
+ * A GUI window which gives you additional info over a selected foodpackage
  */
 public class FoodPackageInfoView extends JFrame {
     private JPanel mainPanel;

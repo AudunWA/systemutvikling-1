@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * GUI for extracting and printing a shopping list over low supplies for the Chef
+ */
 public class ChefShoppingList extends JPanel {
     private JPanel contentPane;
     private JButton goShoppingButton;

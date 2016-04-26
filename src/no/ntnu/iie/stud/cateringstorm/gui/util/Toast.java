@@ -11,7 +11,6 @@ import java.awt.geom.RoundRectangle2D;
 /**
  * Not our code, retrieved from https://github.com/schnie/android-toasts-for-swing/
  * Displays a small text popup (The code has been modified for our use)
- * Created by Audun on 19.04.2016.
  */
 
 

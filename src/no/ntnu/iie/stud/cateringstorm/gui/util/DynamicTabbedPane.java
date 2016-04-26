@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Extension of JTabbedPane which dynamically loads tabs as they are used
- * Created by Audun on 15.04.2016.
+ * Extension of JTabbedPane which dynamically loads tabs as they are used.
  */
 public class DynamicTabbedPane extends JTabbedPane {
     private ArrayList<Class<Component>> classes;
