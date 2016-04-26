@@ -1,8 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.entities.employee;
 
 /**
- * The base class for all employee
- * Created by Audun on 10.03.2016.
+ * The base class for all employees.
  */
 public enum EmployeeType {
     EMPLOYEE(0),

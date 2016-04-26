@@ -23,11 +23,11 @@ public class Timesheet {
 
     /**
      * Constructs and initializes a time sheet with the specified details
-     * @param timesheetId
-     * @param employeeId
-     * @param fromTime
-     * @param toTime
-     * @param active
+     * @param timesheetId The ID of this time sheet.
+     * @param employeeId The ID of the employee owning the time sheet.
+     * @param fromTime The start time of the time sheet.
+     * @param toTime The end time of the time sheet.
+     * @param active Whether the time sheet is active or inactive.
      */
     public Timesheet(int timesheetId, int employeeId, Timestamp fromTime, Timestamp toTime, boolean active) {
         this.timesheetId = timesheetId;
@@ -38,56 +38,56 @@ public class Timesheet {
     }
 
     /**
-     *
-     * @return
+     * Returns the id of this time sheet.
+     * @return the id of this time sheet.
      */
     public int getTimesheetId() {
         return timesheetId;
     }
 
     /**
-     *
-     * @return
+     * Returns the id of the employee.
+     * @return the id of the employee.
      */
     public int getEmployeeId() {
         return employeeId;
     }
 
     /**
-     *
-     * @return
+     * Returns the start time of this time sheet.
+     * @return the start time of this time sheet.
      */
     public Timestamp getFromTime() {
         return fromTime;
     }
 
     /**
-     *
-     * @param fromTime
+     * Sets the start time of the work day.
+     * @param fromTime The new start time.
      */
     public void setFromTime(Timestamp fromTime) {
         this.fromTime = fromTime;
     }
 
     /**
-     *
-     * @return
+     * Returns the end time of this time sheet.
+     * @return the end time of this time sheet.
      */
     public Timestamp getToTime() {
         return toTime;
     }
 
     /**
-     *
-     * @param toTime
+     * Sets the end time of this time sheet.
+     * @param toTime The new end time.
      */
     public void setToTime(Timestamp toTime) {
         this.toTime = toTime;
     }
 
     /**
-     *
-     * @return
+     * Returns a string representation of the start time.
+     * @return a string representation of the start time.
      */
     public String getFromTimeString() {
         Timestamp time = getFromTime();
@@ -96,8 +96,8 @@ public class Timesheet {
     }
 
     /**
-     *
-     * @return
+     * Returns a string representation of the end time.
+     * @return a string representation of the end time.
      */
     public String getToTimeString() {
         Timestamp time = getToTime();
@@ -109,24 +109,24 @@ public class Timesheet {
     }
 
     /**
-     *
-     * @return
+     * Determines whether the employee is active. An inactive employee is practically considered a deleted one.
+     * @return true if the employee is active, false otherwise.
      */
     public boolean isActive() {
         return active;
     }
 
     /**
-     *
-     * @param active
+     * Activates or inactivates this employee. An inactive employee is practically considered a deleted one.
+     * @param active If true, this employee is active, otherwise this employee is inactive.
      */
     public void setActive(boolean active) {
         this.active = active;
     }
 
     /**
-     *
-     * @return
+     * Returns a string representation of this time sheet.
+     * @return a string representation of this time sheet.
      */
     @Override
     public String toString() {

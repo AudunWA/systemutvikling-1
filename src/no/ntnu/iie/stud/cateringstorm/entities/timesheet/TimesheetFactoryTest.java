@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * Created by EliasBrattli on 14/04/2016.
+ * JUnit test class for TimesheetFactory
  */
 public class TimesheetFactoryTest {
 
@@ -64,7 +64,7 @@ public class TimesheetFactoryTest {
     public void testGetLatestTimeSheet() throws Exception {
         LocalDateTime testDate = LocalDateTime.now().withNano(0);
         Timesheet sheet = TimesheetFactory.createTimesheet(3, Timestamp.valueOf(testDate), Timestamp.valueOf(testDate.plusSeconds(1)), true),
-                latestTimesheet = TimesheetFactory.getLatestTimeSheet(sheet.getEmployeeId());
+        latestTimesheet = TimesheetFactory.getLatestTimeSheet(sheet.getEmployeeId());
         Assert.assertNotNull(latestTimesheet);
         Assert.assertEquals(sheet.getEmployeeId(), latestTimesheet.getEmployeeId());
         Assert.assertEquals(sheet.getFromTime(), latestTimesheet.getFromTime());
