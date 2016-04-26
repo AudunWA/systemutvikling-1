@@ -13,6 +13,9 @@ NTNU Project imported from private GitLab repository.
 - Import the SQL/Database/CateringStormDatabase.sql schema
 - Run the SQL/Database/insert.sql query file
 
+### Configuration file
+- Edit the config/app.properties to your needs (including MySQL credentials)
+
 ### Running
 Run systemutvikling-1.jar, log in with default admin user:
 - Username: chechter

@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.database;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,9 +16,9 @@ public final class Database {
     private static final MysqlDataSource dataSource = new MysqlDataSource();
 
     static {
-        dataSource.setUrl("jdbc:mysql://mysql.stud.iie.ntnu.no:3306/g_tdat1006_t6");
-        dataSource.setUser("g_tdat1006_t6");
-        dataSource.setPassword("1YdfqApg");
+        dataSource.setUrl(GlobalStorage.getProperties().getProperty("mysql.url"));
+        dataSource.setUser(GlobalStorage.getProperties().getProperty("mysql.user"));
+        dataSource.setPassword(GlobalStorage.getProperties().getProperty("mysql.password"));
     }
 
     /***
