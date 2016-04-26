@@ -46,7 +46,9 @@ public class AddDishDialog extends JDialog {
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(addButton);
-
+        addActionListeners();
+    }
+    private void addActionListeners(){
         addOrRemoveButton.addActionListener(e -> onAR());
         cancelButton.addActionListener(e -> onCancel());
         okButton.addActionListener(e -> onOk());
@@ -80,7 +82,6 @@ public class AddDishDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-
     public static void main(String[] args) {
         final int WIDTH = 700;
         final int HEIGHT = 600;

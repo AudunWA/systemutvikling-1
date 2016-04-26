@@ -46,6 +46,7 @@ public class AddCustomerDialog extends JDialog {
         // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+
     public static void main(String[] args) {
         final int WIDTH = 320;
         final int HEIGHT = 400;

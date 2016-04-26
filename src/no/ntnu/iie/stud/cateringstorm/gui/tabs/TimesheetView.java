@@ -194,10 +194,11 @@ public class TimesheetView extends JPanel {
             EditTimesheetDialog dialog = new EditTimesheetDialog(loggedInEmployeeId, timesheet);
             dialog.pack();
             dialog.setSize(WIDTH, HEIGHT);
+            dialog.setLocationRelativeTo(dialog.getParent());
             dialog.setVisible(true);
             dialog.setTitle("Edit timesheet");
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            dialog.setLocationRelativeTo(this);// TODO: Fix centering
+            refresh();
         }
     }
 

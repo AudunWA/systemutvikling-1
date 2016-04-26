@@ -45,6 +45,9 @@ public class RegisterTimesheetDialog extends JDialog {
         getRootPane().setDefaultButton(okButton);
         setSpinners();
         timesheets = TimesheetFactory.getActiveTimesheetsByEmployee(loggedInEmployeeId);
+        addActionListeners();
+    }
+    private void addActionListeners(){
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
 
@@ -53,23 +56,18 @@ public class RegisterTimesheetDialog extends JDialog {
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                                  onCancel();
-                              }
+                onCancel();
+            }
         });
 
         // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                                                 onCancel();
-                                             }
+                onCancel();
+            }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-
-    /**
-     * Test method
-     *
-     * @param args
-     */
+    //Test method
     public static void main(String[] args) {
         final int HEIGHT = 400, WIDTH = 400;
         GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));

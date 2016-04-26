@@ -41,6 +41,11 @@ public class EditEmployeeDialog extends JDialog {
         getRootPane().setDefaultButton(saveButton);
         setLocationRelativeTo(getParent());
 
+        addActionListeners();
+        loadData();
+        pack();
+    }
+    private void addActionListeners(){
         saveButton.addActionListener(e -> onSavePressed());
         cancelButton.addActionListener(e -> onCancel());
 
@@ -54,11 +59,7 @@ public class EditEmployeeDialog extends JDialog {
 
         // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-        loadData();
-        pack();
     }
-
     public static void main(String[] args) {
         final int WIDTH = 500;
         final int HEIGHT = 300;

@@ -150,6 +150,7 @@ public class AdminEmployeeView extends JPanel {
                 JOptionPane.showMessageDialog(null, "Please select a row in the employee table.");
             }
         }
+        refresh();
     }
     /**
      * De-activates the selected row in the database

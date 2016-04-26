@@ -15,13 +15,6 @@ public class Main {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
-        // Makes the GUI same style as current OS :)
-        //try {
-        //    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        //} catch (Exception e) {
-        //    System.out.println("Failed to set OS GUI style, now using default style.");
-        //}
-
         WebLookAndFeel.install();
 
         LoginView loginVIew = new LoginView();

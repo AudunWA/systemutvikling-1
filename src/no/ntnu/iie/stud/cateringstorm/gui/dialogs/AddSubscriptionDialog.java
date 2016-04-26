@@ -59,6 +59,11 @@ public class AddSubscriptionDialog extends JDialog {
         fillComboBoxes();
         initializeTimeSpinner();
 
+        addActionListeners();
+        addChangeListeners();
+
+    }
+    private void addActionListeners(){
         // Add event listeners
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
@@ -113,7 +118,9 @@ public class AddSubscriptionDialog extends JDialog {
             order.setWeekday(dayIndex);
             selectedPackagesModel.updateRow(index);
         });
+    }
 
+    private void addChangeListeners(){
         // Set minimum amount on spinner (could be 1, but we want to display our error toast)
         SpinnerNumberModel amountSpinnerModel = (SpinnerNumberModel) amountSpinner.getModel(); // Default model
         amountSpinnerModel.setMinimum(0);
@@ -154,7 +161,6 @@ public class AddSubscriptionDialog extends JDialog {
             selectedPackagesModel.updateRow(index);
         });
     }
-
     public static void main(String[] args) {
         AddSubscriptionDialog dialog = new AddSubscriptionDialog();
         dialog.pack();
