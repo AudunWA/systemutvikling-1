@@ -23,16 +23,7 @@ public class AddEmployeeDialog extends JDialog {
     private JTextField phoneField;
     private JTextField emailField;
     private JTextField passwordField;
-    private JTextField employeeTypeField;
-    private JPanel textPanel;
-    private JLabel forenameLabel;
-    private JLabel surnameLabel;
-    private JLabel phoneLabel;
-    private JLabel emailLabel;
     private JComboBox<String> typeComboBox;
-    private JLabel usernameLabel;
-    private JLabel passwordLabel;
-    private JLabel employeeTypeLabel;
     private boolean addedNewValue;
 
     public AddEmployeeDialog() {
@@ -56,11 +47,8 @@ public class AddEmployeeDialog extends JDialog {
         });
 
 // call onCancel() on ESCAPE
-        mainPanel.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        pack();
     }
 
     public static void main(String[] args) {
@@ -127,7 +115,7 @@ public class AddEmployeeDialog extends JDialog {
             return;
         }
 
-        Employee employee = EmployeeFactory.createEmployee(username, password, surname, forename, address, phone, email, employeeType, EmployeeFactory.getSalaryByType(employeeType.getType()), EmployeeFactory.getCommissionByType(employeeType.getType()));
+        Employee employee = EmployeeFactory.createEmployee(username, password, forename,surname, address, phone, email, employeeType, EmployeeFactory.getSalaryByType(employeeType.getType()), EmployeeFactory.getCommissionByType(employeeType.getType()));
         addedNewValue = true;
         if (employee == null) {
             JOptionPane.showMessageDialog(this, "An error occurred, please try again.");

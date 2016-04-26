@@ -126,10 +126,6 @@ public class AdminEmployeeView extends JPanel {
      */
     private void addEmployee() {
         AddEmployeeDialog aeDialog = new AddEmployeeDialog();
-        aeDialog.pack();
-        final int WIDTH = 400;
-        final int HEIGHT = 400;
-        aeDialog.setSize(WIDTH, HEIGHT);
         aeDialog.setVisible(true);
         if (aeDialog.hasAddedNewValue()) {
             refresh();
@@ -159,15 +155,22 @@ public class AdminEmployeeView extends JPanel {
      * De-activates the selected row in the database
      */
     private void removeEmployee(Employee employee) {
-        int activeColumn = EmployeeTableModel.COLUMN_ACTIVE;
         int selectedRow = adminEmployeeTable.getSelectedRow();
-        if (employee != null) {
-            adminEmployeeTable.clearSelection();
-            adminEmployeeTable.getModel().setValueAt(false, selectedRow, activeColumn);
-            refresh();
-        } else {
-            JOptionPane.showMessageDialog(null, "Please select a row in the employee table.");
+        if (selectedRow == -1) {
+            return;
         }
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
+        if (dialogResult == 0) {
+            employee = tableModel.getValue(selectedRow);
+            employee.setActive(false);
+            EmployeeFactory.updateEmployee(employee);
+
+            tableModel.removeRow(selectedRow);
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Employee removed").display();
+        }
+        refresh();
     }
 
     private void createSearchField() {

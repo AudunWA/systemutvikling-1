@@ -116,6 +116,10 @@ public class SalespersonOrderView extends JPanel {
 
         aoDialog.setVisible(true);
         orderList = OrderFactory.getAllOrders();
+        if(aoDialog.getAddedNewValue()){
+            refresh();
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
+        }
     }
 
     private void editOrder(Order order) {

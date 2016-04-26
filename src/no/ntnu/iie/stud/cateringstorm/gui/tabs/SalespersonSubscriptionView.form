@@ -29,10 +29,10 @@
               <text value="Refresh"/>
             </properties>
           </component>
-          <component id="35650" class="javax.swing.JButton" binding="editOrderButton">
+          <component id="35650" class="javax.swing.JButton" binding="editSubscriptionButton">
             <constraints/>
             <properties>
-              <text value="Edit order"/>
+              <text value="Edit subscription"/>
             </properties>
           </component>
           <component id="5c894" class="javax.swing.JButton" binding="newSubscriptionButton" default-binding="true">
