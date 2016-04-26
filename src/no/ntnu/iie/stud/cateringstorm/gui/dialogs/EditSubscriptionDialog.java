@@ -162,9 +162,9 @@ public class EditSubscriptionDialog extends JDialog {
         System.exit(0);
     }
     private void loadData() {
-        customerComboBox.setSelectedIndex(subscription.getCustomerId());
-        costField.setText(subscription.getCost());
-        activeCheckbox.setSelected();
+        //customerComboBox.setSelectedIndex(subscription.getCustomerId());
+        //costField.setText(subscription.getCost());
+        //activeCheckbox.setSelected();
     }
 
     /**
@@ -176,9 +176,9 @@ public class EditSubscriptionDialog extends JDialog {
         java.sql.Date startDate = new java.sql.Date(((Date) fromDate.getModel().getValue()).getTime());
         java.sql.Date endDate = new java.sql.Date(((Date) toDate.getModel().getValue()).getTime());
 
-        if (!SubscriptionFactory.updateSubscription(subscription, leftSideModel.getRowsClone())) {
-            JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
-        }
+        //if (!SubscriptionFactory.updateSubscription(subscription, leftSideModel.getRowsClone())) {
+        //    JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
+        //}
         dispose();
     }
 
