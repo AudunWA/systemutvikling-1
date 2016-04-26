@@ -22,6 +22,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
@@ -239,15 +241,17 @@ public class AddOrderDialog extends JDialog {
                 JOptionPane.showMessageDialog(this, "Error the delivery date is before current date.");
                 return;
             }
-            long finalDate = fromDatePicker.getTime() + fromHourPicker.getTime();
 
-            Timestamp deliverDate = new Timestamp(finalDate);
+            LocalDate localDate = DateUtil.convertDate(fromDatePicker).toLocalDate();
+            LocalTime localTime = DateUtil.convertDate(fromHourPicker).toLocalTime();
+
+            Timestamp deliverTime = Timestamp.valueOf(localDate.atTime(localTime));
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
             ArrayList<Integer> test = new ArrayList<>();
             test.add(packageTable.getSelectedRow() + 1);
 
-            orders.add(new Order(0, description, deliverDate, currentTime, portions, priority, employee.getEmployeeId(), CustomerFactory.getCustomer(customerId), 0, 1, 0));
+            orders.add(new Order(0, description, deliverTime, currentTime, portions, priority, employee.getEmployeeId(), CustomerFactory.getCustomer(customerId), 0, 1, 0));
 
             ArrayList<Integer> packages = new ArrayList<>();
             for (int k = 0; k < addedList.size(); k++) {
