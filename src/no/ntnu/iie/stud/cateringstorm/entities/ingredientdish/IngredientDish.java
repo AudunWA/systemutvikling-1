@@ -10,9 +10,9 @@ public class IngredientDish {
     private final Ingredient ingredient;
     private final Dish dish;
     private final String unit;
-    private int quantity;
+    private double quantity;
 
-    public IngredientDish(Ingredient ingredient, Dish dish, int quantity, String unit) {
+    public IngredientDish(Ingredient ingredient, Dish dish, double quantity, String unit) {
         this.ingredient = ingredient;
         this.dish = dish;
         this.quantity = quantity;
@@ -27,11 +27,11 @@ public class IngredientDish {
         return dish;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 

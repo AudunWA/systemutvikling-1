@@ -33,6 +33,7 @@ public class AddDishDialog extends JDialog {
     private JTable addedIngredientTable;
     private JTable selectionIngredientTable;
     private JButton addOrRemoveButton;
+    private JTextField addOrRemoveText;
     private JSpinner addRemoveSpinner;
 
     private ArrayList<Ingredient> selectionList;
@@ -151,22 +152,26 @@ public class AddDishDialog extends JDialog {
      */
     public void onAR() {
 
-        if ((Integer) addRemoveSpinner.getValue() < 1) {
-            JOptionPane.showMessageDialog(this, "Please set a positive amount on the spinner");
+        Double aorValue;
+        String aorAmount = addOrRemoveText.getText();
+        try {
+            aorValue = Double.parseDouble(aorAmount);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Error. Please only input numbers in the text field");
             return;
         }
 
         boolean check = true;
 
         if (addedIngredientTable.getSelectedRow() > -1) {
-            if (addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() < (Integer) addRemoveSpinner.getValue() + 1) {
+            if (addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() < aorValue + 0.1) {
                 addedList.remove(addedIngredientTable.getSelectedRow());
             } else {
-                addedList.get(addedIngredientTable.getSelectedRow()).setQuantity(addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() - (Integer) addRemoveSpinner.getValue());
+                addedList.get(addedIngredientTable.getSelectedRow()).setQuantity(addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() - aorValue);
             }
         } else if (selectionIngredientTable.getSelectedRow() > -1) {
             //addedList.add()
-            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(selectionIngredientTable.getSelectedRow()).getIngredientId()), null, (Integer) addRemoveSpinner.getValue(), selectionList.get(selectionIngredientTable.getSelectedRow()).getUnit());
+            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(selectionIngredientTable.getSelectedRow()).getIngredientId()), null, aorValue, selectionList.get(selectionIngredientTable.getSelectedRow()).getUnit());
 
             for (int i = 0; i < addedList.size(); i++) {
                 if (addedList.get(i).getIngredient().getIngredientId() == ingDish.getIngredient().getIngredientId()) {

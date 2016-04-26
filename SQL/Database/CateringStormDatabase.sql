@@ -88,7 +88,7 @@ CREATE TABLE dish (
 CREATE TABLE ingredient_dish (
   ingredient_id INTEGER,
   dish_id       INTEGER,
-  quantity      INTEGER     NOT NULL,
+  quantity      DOUBLE      NOT NULL,
   unit          VARCHAR(30) NOT NULL,
   FOREIGN KEY (ingredient_id) REFERENCES ingredient (ingredient_id)
     ON UPDATE CASCADE,

@@ -40,6 +40,7 @@ public class EditDishDialog extends JDialog {
     private IngredientDishTableModel leftSideModel;
 
     private JTable rightSideTable;
+    private JTextField aorText;
     private JSpinner addRemoveSpinner;
     private IngredientTableModel rightTableModel;
 
@@ -180,9 +181,16 @@ public class EditDishDialog extends JDialog {
      * Adds or removes the selected row from the left side table
      */
     private void onAR() {
+        Double aorValue = 0.0;
+        String temp = aorText.getText();
+        try{
+            aorValue = Double.parseDouble(temp);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Error, please only put numbers in the text field");
+        }
 
-        if ((Integer)addRemoveSpinner.getValue() < 1) {
-            JOptionPane.showMessageDialog(this, "Please set a positive amount on the spinner");
+        if (aorValue < 1) {
+            JOptionPane.showMessageDialog(this, "Please set a positive amount in the text field");
             return;
             // Check if both tables are selected (shouldn't really happen, but we check anyways)
         }
@@ -194,17 +202,17 @@ public class EditDishDialog extends JDialog {
         }
 
         if (addedIngredientTable.getSelectedRow() > -1) {
-            if (addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() < (Integer) addRemoveSpinner.getValue() + 1) {
+            if (addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() < aorValue + 1) {
                 addedList.remove(addedIngredientTable.getSelectedRow());
             } else {
-                addedList.get(addedIngredientTable.getSelectedRow()).setQuantity(addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() - (Integer) addRemoveSpinner.getValue());
+                addedList.get(addedIngredientTable.getSelectedRow()).setQuantity(addedList.get(addedIngredientTable.getSelectedRow()).getQuantity() - aorValue);
             }
         }
 
         boolean check = true;
 
         if (rightSideTable.getSelectedRow() > -1) {
-            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(rightSideTable.getSelectedRow()).getIngredientId()),dish,(Integer)addRemoveSpinner.getValue(),selectionList.get(rightSideTable.getSelectedRow()).getUnit());
+            IngredientDish ingDish = new IngredientDish(IngredientFactory.getIngredient(selectionList.get(rightSideTable.getSelectedRow()).getIngredientId()),dish,aorValue,selectionList.get(rightSideTable.getSelectedRow()).getUnit());
 
             for (int i = 0; i <addedList.size(); i++){
                 if (addedList.get(i).getIngredient().getIngredientId() == ingDish.getIngredient().getIngredientId()){

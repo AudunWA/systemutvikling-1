@@ -29,7 +29,7 @@ public class IngredientDishFactory {
         return new IngredientDish(ingredient, dish, quantity, unit);
     }
 
-    public static boolean addIngredientToDish(int ingredientId, int dishId, int quantity, String unit) {
+    public static boolean addIngredientToDish(int ingredientId, int dishId, double quantity, String unit) {
 
         try (Connection connection = Database.getConnection()) {
             // Add the ingredient itself and get ID
@@ -37,7 +37,7 @@ public class IngredientDishFactory {
 
                 statement.setInt(1, ingredientId);
                 statement.setInt(2, dishId);
-                statement.setInt(3, quantity);
+                statement.setDouble(3, quantity);
                 statement.setString(4, unit);
 
                 int affectedRows = statement.executeUpdate();
@@ -88,7 +88,7 @@ public class IngredientDishFactory {
                     for (IngredientDish ingDish : ingredientDishes) {
                         statement.setInt(1, ingDish.getIngredient().getIngredientId());
                         statement.setInt(2, generatedId);
-                        statement.setInt(3, ingDish.getQuantity());
+                        statement.setDouble(3, ingDish.getQuantity());
                         statement.setString(4, ingDish.getUnit());
                         statement.addBatch();
                         returnList.add(new IngredientDish(IngredientFactory.getIngredient(ingDish.getIngredient().getIngredientId()), tempDish, ingDish.getQuantity(), ingDish.getUnit()));
