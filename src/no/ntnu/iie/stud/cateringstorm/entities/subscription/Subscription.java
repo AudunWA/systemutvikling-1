@@ -64,64 +64,64 @@ public class Subscription {
     }
 
     /**
-     *
-     * @param endDate
+     * Sets the end date of this subscription.
+     * @param endDate The new end date.
      */
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
     /**
-     *
-     * @return
+     *  Returns the price of this subscription.
+     * @return the price of this subscription.
      */
     public double getCost() {
         return cost;
     }
 
     /**
-     *
-     * @param cost
+     * Sets the cost of this subscription.
+     * @param cost The new price.
      */
     public void setCost(double cost) {
         this.cost = cost;
     }
 
     /**
-     *
-     * @return
+     *  Returns the id of the connected customer.
+     * @return the id of the connected customer.
      */
     public int getCustomerId() {
         return customerId;
     }
 
     /**
-     *
-     * @param customerId
+     *  Sets the customer id.
+     * @param customerId The new customer id.
      */
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
     /**
-     *
-     * @return
+     * Determines whether the subscription is active. An inactive subscription is practically considered a deleted one.
+     * @return true if the subscription is active, false otherwise.
      */
     public boolean isActive() {
         return active;
     }
 
     /**
-     *
-     * @param active
+     * Activates or inactivates this subscription. An inactive subscription is practically considered a deleted one.
+     * @param active If true, this subscription is active, otherwise it is inactive.
      */
     public void setActive(boolean active) {
         this.active = active;
     }
 
     /**
-     *
-     * @return
+     *  Returns a string representation of this subscription.
+     * @return a string representation of this subscription.
      */
     @Override
     public String toString() {

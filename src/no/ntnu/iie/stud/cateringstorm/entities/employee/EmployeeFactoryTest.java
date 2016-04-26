@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 /**
- * Created by Audun on 11.03.2016.
+ * JUnit Test class for EmployeeFactory
  */
 public class EmployeeFactoryTest {
 
