@@ -24,6 +24,10 @@ public class SubscriptionTableModel extends EntityTableModel<Subscription> {
     public SubscriptionTableModel(ArrayList<Subscription> rows, Integer[] columns) {
         super(rows, columns);
     }
+    @Override
+    public boolean isCellEditable(int rowIndex,int columnIndex){
+        return getColumnType(columnIndex) == COLUMN_ACTIVE;
+    }
 
     @Override
     public String getColumnName(int column) {
