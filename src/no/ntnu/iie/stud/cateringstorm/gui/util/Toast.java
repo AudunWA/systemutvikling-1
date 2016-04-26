@@ -26,6 +26,7 @@ public class Toast extends JDialog {
     private final int WINDOW_RADIUS = 15;
     private final int CHARACTER_LENGTH_MULTIPLIER = 7;
     private final int DISTANCE_FROM_PARENT_BOTTOM = 100;
+    private final double DISTANCE_PERCENT_FROM_PARENT_BOTTOM = 0.2;
     private Component mOwner;
     private String mText;
     private int mDuration;
@@ -156,8 +157,12 @@ public class Toast extends JDialog {
 
     private Point getToastLocation() {
         Point ownerLoc = mOwner.getLocation();
+        int parentSizeY = mOwner.getHeight();
         int x = (int) (ownerLoc.getX() + ((mOwner.getWidth() - this.getWidth()) / 2));
-        int y = (int) (ownerLoc.getY() + (mOwner.getHeight() - this.getHeight()) - DISTANCE_FROM_PARENT_BOTTOM);
+        //int y = (int) (ownerLoc.getY() + (mOwner.getHeight() - this.getHeight()) - DISTANCE_FROM_PARENT_BOTTOM);
+
+        int percent = (int)(parentSizeY * DISTANCE_PERCENT_FROM_PARENT_BOTTOM);
+        int y = (int) (ownerLoc.getY() + (mOwner.getHeight() - this.getHeight()) - percent);
         return new Point(x, y);
     }
 
