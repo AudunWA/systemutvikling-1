@@ -132,6 +132,7 @@ public class MenuAdministratorView extends JPanel {
 
         EditDishDialog dialog = new EditDishDialog(dish);
         dialog.pack();
+        dialog.setLocationRelativeTo(dialog.getParent());
         dialog.setVisible(true);
 
         if (dialog.getAddedNewValue()) {
@@ -146,6 +147,7 @@ public class MenuAdministratorView extends JPanel {
     private void onAdd() {
         AddDishDialog dialog = new AddDishDialog();
         dialog.pack();
+        dialog.setLocationRelativeTo(dialog.getParent());
         dialog.setVisible(true);
         dishList = DishFactory.getActiveDishes();
     }
