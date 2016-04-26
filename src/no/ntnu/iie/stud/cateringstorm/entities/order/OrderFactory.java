@@ -169,7 +169,7 @@ public final class OrderFactory {
                 try (ResultSet resultPreUpdate = statement.getResultSet()) {
                     while (resultPreUpdate.next()) {
                         Order order = createOrderFromResultSet(resultPreUpdate, connection);
-                        if ((order.getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
+                        if ((order.getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 3 * 3600000))) == -1) {
                             try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
                                 statementUpdate.setInt(1, order.getOrderId());
                                 statementUpdate.execute();
