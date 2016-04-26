@@ -105,7 +105,6 @@ public class SalespersonOrderView extends JPanel {
     }
 
     private void addOrder(Employee employee) {
-        // TODO: Open AddOrderDialog
         AddOrderDialog aoDialog = new AddOrderDialog(employee);
         final int WIDTH = 1000;
         final int HEIGHT = 400;
