@@ -36,8 +36,8 @@ public class FoodPackageAdminView extends JPanel {
     public FoodPackageAdminView() {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
-
         addActionListeners();
+        addDocumentListener();
     }
     private void addActionListeners(){
         addButton.addActionListener(e -> onAdd());
@@ -56,6 +56,12 @@ public class FoodPackageAdminView extends JPanel {
                 //refreshButton.setEnabled(true);
             }
         });
+
+        foodPackageTable.getSelectionModel().addListSelectionListener(e -> {
+            //Get index from selected row
+        });
+    }
+    private void addDocumentListener(){
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -83,11 +89,6 @@ public class FoodPackageAdminView extends JPanel {
                 }
                 tableModel.setRows(copy);
             }
-        });
-
-
-        foodPackageTable.getSelectionModel().addListSelectionListener(e -> {
-            //Get index from selected row
         });
     }
     // Test method

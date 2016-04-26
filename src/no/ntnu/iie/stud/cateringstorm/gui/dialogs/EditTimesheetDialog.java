@@ -39,6 +39,7 @@ public class EditTimesheetDialog extends JDialog {
     public EditTimesheetDialog(int loggedInEmployeeId, Timesheet selectedTimesheet) {
         this.loggedInEmployeeId = loggedInEmployeeId;
         this.selectedTimesheet = selectedTimesheet;
+        setTitle("Edit time sheet");
         timesheets = TimesheetFactory.getActiveTimesheetsByEmployee(loggedInEmployeeId);
         setContentPane(mainPanel);
         setModal(true);

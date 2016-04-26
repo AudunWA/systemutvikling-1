@@ -34,7 +34,7 @@ public class EditEmployeeDialog extends JDialog {
 
     public EditEmployeeDialog(Employee employee) {
         this.employee = employee;
-
+        setTitle("Edit an employee");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);

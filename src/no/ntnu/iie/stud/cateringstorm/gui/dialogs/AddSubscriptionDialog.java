@@ -51,6 +51,7 @@ public class AddSubscriptionDialog extends JDialog {
     private Subscription subscription;
 
     public AddSubscriptionDialog() {
+        setTitle("Add subscription");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);

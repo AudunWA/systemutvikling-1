@@ -52,7 +52,7 @@ public class EditOrderDialog extends JDialog {
 
     public EditOrderDialog(Order order) {
         this.order = order;
-
+        setTitle("Edit order");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(mainPanel);
         setModal(true);
