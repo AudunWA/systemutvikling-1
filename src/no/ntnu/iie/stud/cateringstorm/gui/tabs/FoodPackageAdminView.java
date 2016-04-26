@@ -20,11 +20,11 @@ import java.util.ArrayList;
  */
 public class FoodPackageAdminView extends JPanel {
     private JPanel mainPanel;
-    private JTable FoodPackageTable;
+    private JTable foodPackageTable;
     private JButton viewFoodPackage;
     private JButton removeFoodPackageButton;
     private JTextField searchField;
-    private JButton searchButton;
+    private JButton refreshButton;
     private JCheckBox inactiveCheckBox;
     private JButton addButton;
     private JButton editButton;
@@ -43,15 +43,17 @@ public class FoodPackageAdminView extends JPanel {
         addButton.addActionListener(e -> onAdd());
         editButton.addActionListener(e -> onEdit());
         viewFoodPackage.addActionListener(e -> onView());
-        searchButton.addActionListener(e -> search());
+        refreshButton.addActionListener(e -> refresh());
         removeFoodPackageButton.addActionListener(e -> onRemove());
         inactiveCheckBox.addActionListener(e -> refresh());
-
+        foodPackageTable.getSelectionModel().addListSelectionListener(e -> {
+            //Get index from selected row
+        });
         searchField.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 setSearchField("");
-                searchButton.setEnabled(true);
+                //refreshButton.setEnabled(true);
             }
         });
         searchField.getDocument().addDocumentListener(new DocumentListener() {
@@ -80,12 +82,11 @@ public class FoodPackageAdminView extends JPanel {
                     }
                 }
                 tableModel.setRows(copy);
-
             }
         });
 
 
-        FoodPackageTable.getSelectionModel().addListSelectionListener(e -> {
+        foodPackageTable.getSelectionModel().addListSelectionListener(e -> {
             //Get index from selected row
         });
     }
@@ -119,7 +120,7 @@ public class FoodPackageAdminView extends JPanel {
      * Opens the EditFoodPackage GUI Dialog
      */
     private void onEdit() {
-        int selectedRow = FoodPackageTable.getSelectedRow();
+        int selectedRow = foodPackageTable.getSelectedRow();
         if (selectedRow == -1) {
             return;
         }
@@ -141,7 +142,7 @@ public class FoodPackageAdminView extends JPanel {
      * Opens the FoodPackageInfoView GUI
      */
     private void onView() {
-        int selectedRow = FoodPackageTable.getSelectedRow();
+        int selectedRow = foodPackageTable.getSelectedRow();
         if (selectedRow == -1) {
             return;
         }
@@ -164,7 +165,7 @@ public class FoodPackageAdminView extends JPanel {
      * Removes the selected row by change its active status in the database
      */
     private void onRemove() {
-        int selectedRow = FoodPackageTable.getSelectedRow();
+        int selectedRow = foodPackageTable.getSelectedRow();
         if (selectedRow == -1) {
             return;
         }
@@ -206,8 +207,8 @@ public class FoodPackageAdminView extends JPanel {
         foodPackageList = FoodPackageFactory.getActiveFoodPackages();
         Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST, FoodPackageTableModel.COLUMN_ACTIVE}; // Columns can be changed
         tableModel = new FoodPackageTableModel(foodPackageList, columns);
-        FoodPackageTable = new JTable(tableModel);
-        FoodPackageTable.setFillsViewportHeight(true);
+        foodPackageTable = new JTable(tableModel);
+        foodPackageTable.setFillsViewportHeight(true);
     }
 
     private void createUIComponents() {
@@ -222,7 +223,7 @@ public class FoodPackageAdminView extends JPanel {
         }
         tableModel.setRows(foodPackageList);
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Dishes refreshed").display();
-
+        setSearchField("Search customer names.");
     }
 
 }
