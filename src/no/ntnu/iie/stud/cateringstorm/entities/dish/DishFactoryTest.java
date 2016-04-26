@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 /**
- * Unit test class for DishFactory.
+ * JUnit test class for DishFactory.
  */
 public class DishFactoryTest {
 

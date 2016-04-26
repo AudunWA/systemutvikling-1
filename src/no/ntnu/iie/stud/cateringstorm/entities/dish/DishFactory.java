@@ -17,7 +17,7 @@ public final class DishFactory {
     /**
      * Creates a Dish object from result
      *
-     * @param result
+     * @param result The result from resultset produced from PreparedStatement
      * @return Dish
      * @throws SQLException
      */

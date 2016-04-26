@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 /**
- * All methods: @throws Exception
+ * JUnit test class for CustomerFactory.
  */
 public class CustomerFactoryTest {
 

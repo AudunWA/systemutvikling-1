@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 /**
- * JUnit Test class for EmployeeFactory
+ * JUnit Test class for EmployeeFactory.
  */
 public class EmployeeFactoryTest {
 
@@ -67,7 +67,7 @@ public class EmployeeFactoryTest {
 
 
         int result = EmployeeFactory.editEmployeeStatus(test.getEmployeeId(), false);
-        Assert.assertEquals(result, 1);
+        Assert.assertEquals(1,result);
         test = EmployeeFactory.getEmployee(test.getUsername());
         Assert.assertTrue(!test.isActive());
     }
@@ -80,7 +80,7 @@ public class EmployeeFactoryTest {
         int result = EmployeeFactory.updateEmployee(test);
         Assert.assertEquals(1, result);
         test = EmployeeFactory.getEmployee(test.getUsername());
-        Assert.assertEquals(test.getAddress(), newAddress);
+        Assert.assertEquals(newAddress,test.getAddress());
     }
     @Test
     public void testGetSalarySoFar() throws Exception {
@@ -88,5 +88,11 @@ public class EmployeeFactoryTest {
         double salary = EmployeeFactory.getSalarySoFar(employee.getEmployeeId(),new Date(System.currentTimeMillis()));
         Assert.assertNotNull(salary);
     }
-
+    @Test
+    public void testGetSalesThisYear() throws Exception {
+        Employee employee = EmployeeFactory.getEmployee("drammen");
+        int sales = EmployeeFactory.getSalesThisYear(employee.getEmployeeId(),new Date(System.currentTimeMillis()));
+        Assert.assertNotNull(sales);
+        Assert.assertNotEquals(-1,sales);
+    }
 }

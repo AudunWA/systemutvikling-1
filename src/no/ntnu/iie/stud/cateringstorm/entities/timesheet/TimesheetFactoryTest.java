@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * JUnit test class for TimesheetFactory
+ * JUnit test class for TimesheetFactory.
  */
 public class TimesheetFactoryTest {
 
