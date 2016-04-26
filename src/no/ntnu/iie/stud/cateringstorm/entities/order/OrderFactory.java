@@ -3,6 +3,7 @@ package no.ntnu.iie.stud.cateringstorm.entities.order;
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
+import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrder;
 
 import java.sql.*;
@@ -219,7 +220,7 @@ public final class OrderFactory {
                         orders.add(createOrderFromResultSet(result, connection));
 
                     }
-                   // System.out.println("Orders new:"+orders);
+                    // System.out.println("Orders new:"+orders);
                 }
             }
             return orders;
@@ -406,15 +407,16 @@ public final class OrderFactory {
 
     /**
      * Runs an INSERT query to create a customer in the database.
-     * @param description The description of the order.
-     * @param deliveryTime When the order is set to be delivered.
-     * @param portions How many portions of the order.
-     * @param priority Whether this order is priority or not.
-     * @param salespersonId If -1 inserts NULL, otherwise value.
-     * @param customerId The ID of the customer.
-     * @param chauffeurId If -1 inserts NULL, otherwise value.
+     *
+     * @param description      The description of the order.
+     * @param deliveryTime     When the order is set to be delivered.
+     * @param portions         How many portions of the order.
+     * @param priority         Whether this order is priority or not.
+     * @param salespersonId    If -1 inserts NULL, otherwise value.
+     * @param customerId       The ID of the customer.
+     * @param chauffeurId      If -1 inserts NULL, otherwise value.
      * @param recurringOrderId If -1 inserts NULL, otherwise value.
-     * @param packageId A list of all food packages used.
+     * @param packageId        A list of all food packages used.
      * @return Order The created order.
      */
     public static Order createOrder(String description, Timestamp deliveryTime, int portions, boolean priority,
@@ -429,20 +431,21 @@ public final class OrderFactory {
 
     /**
      * Runs an INSERT query to create a customer in the database.
-     * @param connection The database connection to use.
-     * @param description The description of the order.
-     * @param deliveryTime When the order is set to be delivered.
-     * @param portions How many portions of the order.
-     * @param priority Whether this order is priority or not.
-     * @param salespersonId If -1 inserts NULL, otherwise value.
-     * @param customerId The ID of the customer.
-     * @param chauffeurId If -1 inserts NULL, otherwise value.
+     *
+     * @param connection       The database connection to use.
+     * @param description      The description of the order.
+     * @param deliveryTime     When the order is set to be delivered.
+     * @param portions         How many portions of the order.
+     * @param priority         Whether this order is priority or not.
+     * @param salespersonId    If -1 inserts NULL, otherwise value.
+     * @param customerId       The ID of the customer.
+     * @param chauffeurId      If -1 inserts NULL, otherwise value.
      * @param recurringOrderId If -1 inserts NULL, otherwise value.
-     * @param packageId A list of all food packages used.
+     * @param packageId        A list of all food packages used.
      * @return Order The created order.
      */
     private static Order createOrder(Connection connection, String description, Timestamp deliveryTime, int portions, boolean priority,
-                                    int salespersonId, int customerId, int chauffeurId, int recurringOrderId, ArrayList<Integer> packageId) throws SQLException {
+                                     int salespersonId, int customerId, int chauffeurId, int recurringOrderId, ArrayList<Integer> packageId) throws SQLException {
         Customer customer = CustomerFactory.getCustomer(customerId);
         if (customer == null) {
             return null;
@@ -683,5 +686,65 @@ public final class OrderFactory {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean updateAllOrderComponents(int orderId, boolean priority, String description, int portions, Timestamp deliveryDate, ArrayList<FoodPackage> packages) {
+
+        if (packages == null) {
+            throw new IllegalArgumentException("dishes cannot be null.");
+        }
+
+        try (Connection connection = Database.getConnection()) {
+            // Start transaction
+            connection.setAutoCommit(false);
+
+            try {
+                // Update the food package itself
+                try (PreparedStatement statement = connection.prepareStatement("UPDATE _order SET description = ?, portions = ?, priority = ?, delivery_time = ? WHERE _order_id = ?")) {
+                    statement.setString(1, description);
+                    statement.setInt(2, portions);
+                    statement.setBoolean(3, priority);
+                    statement.setTimestamp(4, deliveryDate);
+                    statement.setInt(5, orderId);
+
+                    int affectedRows = statement.executeUpdate();
+                    if (affectedRows == 0) {
+                        connection.rollback();
+                        connection.setAutoCommit(true);
+                        return false; // No rows inserted
+                    }
+                }
+
+                // Delete all existing dishes for this food package
+                try (PreparedStatement statement = connection.prepareStatement("DELETE FROM _order_food_package WHERE _order_id = ?")) {
+                    statement.setInt(1, orderId);
+                    statement.executeUpdate();
+                }
+
+                // Add the dishes to the package
+                try (PreparedStatement statement = connection.prepareStatement("INSERT INTO _order_food_package VALUES (?, ?)")) {
+                    for (FoodPackage fp : packages) {
+                        statement.setInt(1, orderId);
+                        statement.setInt(2, fp.getFoodPackageId());
+                        statement.addBatch();
+                    }
+                    statement.executeBatch();
+                }
+            } catch (SQLException e) {
+                connection.rollback();
+                connection.setAutoCommit(true);
+                throw e;
+            }
+
+            // All good, commit all
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        // All good, return true
+        return true;
     }
 }

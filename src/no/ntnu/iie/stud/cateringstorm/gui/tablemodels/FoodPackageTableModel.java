@@ -21,6 +21,10 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
         super(rows, columns);
     }
 
+    @Override
+    public boolean isCellEditable(int rowIndex,int columnIndex){
+        return getColumnType(columnIndex) == COLUMN_ACTIVE;
+    }
     /**
      * Gives a description for each selected column
      * @param column
@@ -45,9 +49,9 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
 
     /**
      * Gives selected value of an entity
-     * @param rowIndex
-     * @param columnIndex
-     * @return Object Selected value
+     * @param rowIndex Index of the row.
+     * @param columnIndex Column of the row.
+     * @return Object Selected value.
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -75,6 +79,7 @@ public class FoodPackageTableModel extends EntityTableModel<FoodPackage> {
         // Column containing status is only one to be edited.
         if (columnType == COLUMN_ACTIVE) {
             entity.setActive((Boolean) aValue);
+
             FoodPackageFactory.updateFoodPackage(entity);
             fireTableCellUpdated(rowIndex, columnIndex);
         } else {
