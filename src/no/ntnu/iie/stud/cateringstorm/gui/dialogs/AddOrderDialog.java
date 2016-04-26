@@ -28,6 +28,7 @@ import java.util.Properties;
 
 public class AddOrderDialog extends JDialog {
     private Employee employee;
+    private boolean addedNewValue;
 
     private JPanel mainPanel;
     private JButton addRemoveButton;
@@ -47,6 +48,7 @@ public class AddOrderDialog extends JDialog {
     private JTable packageTable;
     private JTable addedTable;
     private JButton okButton;
+    private JSpinner timeSpinner;
 
     private ArrayList<FoodPackage> addedList;
     private ArrayList<Order> orders = new ArrayList<>();
@@ -206,16 +208,18 @@ public class AddOrderDialog extends JDialog {
                 priority = true;
             }
 
-            Date temp = (Date) dateSelect.getModel().getValue();
-            if (temp == null) {
+            Date fromDatePicker = (Date) dateSelect.getModel().getValue();
+            Date fromHourPicker = (Date) timeSpinner.getModel().getValue();
+            if (fromDatePicker == null) {
                 JOptionPane.showMessageDialog(this, "Please fill in a delivery date.");
                 return;
-            } else if (!temp.after(new Date(System.currentTimeMillis()))) {
+            } else if (!fromDatePicker.after(new Date(System.currentTimeMillis()))) {
                 JOptionPane.showMessageDialog(this, "Error the delivery date is before current date.");
                 return;
             }
+            long finalDate = fromDatePicker.getTime() + fromHourPicker.getTime();
 
-            Timestamp deliverDate = new Timestamp(temp.getTime());
+            Timestamp deliverDate = new Timestamp(finalDate);
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
             ArrayList<Integer> test = new ArrayList<>();
@@ -240,6 +244,7 @@ public class AddOrderDialog extends JDialog {
             if (order != null) {
                 JOptionPane.showMessageDialog(this, "Add successful");
                 addedList = new ArrayList<>();
+                addedNewValue = true;
                 ((EntityTableModel) addedTable.getModel()).setRows(addedList);
                 dispose();
             } else {
@@ -301,5 +306,8 @@ public class AddOrderDialog extends JDialog {
         addedTable = new JTable(addedObjects);
         packageTable.getTableHeader().setReorderingAllowed(false);
 
+    }
+    public boolean getAddedNewValue() {
+        return addedNewValue;
     }
 }

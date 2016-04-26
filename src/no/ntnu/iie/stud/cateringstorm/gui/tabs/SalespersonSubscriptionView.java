@@ -3,6 +3,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 import no.ntnu.iie.stud.cateringstorm.entities.subscription.Subscription;
 import no.ntnu.iie.stud.cateringstorm.entities.subscription.SubscriptionFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddSubscriptionDialog;
+import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditSubscriptionDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.SubscriptionTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 
@@ -21,7 +22,7 @@ public class SalespersonSubscriptionView extends JPanel {
     private JPanel mainPanel;
     private JScrollPane orderPane;
     private JButton viewButton;
-    private JButton editOrderButton;
+    private JButton editSubscriptionButton;
     private JComboBox<String> statusBox;
     private JTable orderTable;
     private JButton refreshButton;
@@ -39,7 +40,7 @@ public class SalespersonSubscriptionView extends JPanel {
         add(mainPanel, BorderLayout.CENTER);
 
         refreshButton.addActionListener(e -> refresh());
-        editOrderButton.addActionListener(e -> editSubscription(getSelectedSubscription()));
+        editSubscriptionButton.addActionListener(e -> editSubscription(getSelectedSubscription()));
         newSubscriptionButton.addActionListener(e -> newSubscription());
         removeButton.addActionListener(e -> removeSubscription());
         inactiveCheckBox.addActionListener(e -> refresh() );
@@ -126,7 +127,14 @@ public class SalespersonSubscriptionView extends JPanel {
     }
 
     private void editSubscription(Subscription subscription) {
-        // TODO?
+        EditSubscriptionDialog esDialog = new EditSubscriptionDialog(subscription);
+        final int WIDTH = 1300;
+        final int HEIGHT = 600;
+        esDialog.pack();
+        esDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        esDialog.setSize(WIDTH, HEIGHT);
+        esDialog.setLocationRelativeTo(null);
+        esDialog.setVisible(true);
     }
     private void removeSubscription() {
         int selectedRow = orderTable.getSelectedRow();

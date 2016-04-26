@@ -101,7 +101,7 @@ public class SalespersonOrderView extends JPanel {
     }
 
     private Order getSelectedOrder() {
-        return tableModel.getValue(orderTable.getSelectedRow());
+        return OrderFactory.getOrder((Integer)tableModel.getValueAt(orderTable.getSelectedRow(), 0));
     }
 
     private void addOrder(Employee employee) {
@@ -116,9 +116,14 @@ public class SalespersonOrderView extends JPanel {
 
         aoDialog.setVisible(true);
         orderList = OrderFactory.getAllOrders();
+        if(aoDialog.getAddedNewValue()){
+            refresh();
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
+        }
     }
 
     private void editOrder(Order order) {
+        System.out.println(order);
         if (order != null) {
             EditOrderDialog eoDialog = new EditOrderDialog(order);
             final int WIDTH = 300;
