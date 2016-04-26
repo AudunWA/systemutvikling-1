@@ -189,7 +189,7 @@ public class EditSubscriptionDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        EditSubscriptionDialog dialog = new EditSubscriptionDialog(SubscriptionFactory.getSubscription(2));
+        EditSubscriptionDialog dialog = new EditSubscriptionDialog(SubscriptionFactory.getSubscription(1));
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

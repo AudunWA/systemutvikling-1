@@ -19,10 +19,9 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- * Gives you options for adding, editing and removing customers
+ * Gives you options for adding, editing and removing customers.
  */
 
-// TODO: Implement email, phone and address verification, and checking that names do not contain numbers and such!
 public class SalespersonCustomerView extends JPanel {
     private static final Integer[] COLUMNS = new Integer[]{CustomerTableModel.COLUMN_SURNAME, CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVE}; // Columns can be changed
     private static final Integer[] ADMIN_COLUMNS = new Integer[]{CustomerTableModel.COLUMN_CUSTOMER_ID, CustomerTableModel.COLUMN_SURNAME, CustomerTableModel.COLUMN_FORENAME, CustomerTableModel.COLUMN_ADDRESS, CustomerTableModel.COLUMN_PHONE, CustomerTableModel.COLUMN_EMAIL, CustomerTableModel.COLUMN_ACTIVE}; // Columns can be changed
@@ -45,6 +44,9 @@ public class SalespersonCustomerView extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
+
+    }
+    public void addActionListeners(){
         addButton.addActionListener(e -> addCustomer());
         editButton.addActionListener(e -> editCustomer(getSelectedCustomer()));
         removeButton.addActionListener(e -> removeCustomer(getSelectedCustomer()));
@@ -92,7 +94,6 @@ public class SalespersonCustomerView extends JPanel {
             //Get index from selected row
         });
     }
-
     public static void main(String[] args) {
         // Window dimensions
         final int WIDTH = 1200;
@@ -143,8 +144,10 @@ public class SalespersonCustomerView extends JPanel {
         acDialog.setVisible(true);
         if (acDialog.hasAddedNewValue()) {
             refresh();
+        }else{
+        Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Customer was not added.", Toast.Style.ERROR).display();
         }
-        customerList = CustomerFactory.getActiveCustomers();
+        //customerList = CustomerFactory.getActiveCustomers();
     }
 
     //Method opening a dialog for editing selected customer
@@ -152,13 +155,15 @@ public class SalespersonCustomerView extends JPanel {
         if (customer != null) {
             EditCustomerDialog ecDialog = new EditCustomerDialog(customer);
             final int WIDTH = 300;
-            final int HEIGHT = 200;
+            final int HEIGHT = 400;
             ecDialog.pack();
             ecDialog.setSize(WIDTH, HEIGHT);
             ecDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             ecDialog.setVisible(true);
             if (ecDialog.getAddedNewValue()) {
                 refresh();
+            }else{
+                Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Customer was not edited.", Toast.Style.ERROR).display();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Please select a row in the customer table");

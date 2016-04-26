@@ -23,7 +23,8 @@ import java.util.Date;
 public class StorageView extends JPanel {
     private JPanel mainPanel;
     private JTable ingredientTable;
-    private JButton incrementButton;
+    private JButton incrementSupplyButton;
+
     private JButton addIngredientButton;
     private JTextField searchField;
     private JButton refreshButton;
@@ -35,9 +36,25 @@ public class StorageView extends JPanel {
     public StorageView() {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
-
+        addDocumentListener();
+        addActionListeners();
+    }
+    private void addActionListeners(){
         addIngredientButton.addActionListener(e -> onIngredientAddClick());
-        incrementButton.addActionListener(e -> onIncrementClick());
+        incrementSupplyButton.addActionListener(e -> onIncrementClick());
+        searchField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                searchField.setText("");
+            }
+        });
+
+        refreshButton.addActionListener(e -> {
+            refresh();
+        });
+    }
+    private void addDocumentListener(){
+
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -69,21 +86,46 @@ public class StorageView extends JPanel {
 
             }
         });
-
-        searchField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                searchField.setText("");
-            }
-        });
-
-
-        refreshButton.addActionListener(e -> {
-            ingredientList = IngredientFactory.getAllIngredients();
-            tableModel.setRows(ingredientList);
-        });
     }
+    /*private void addIngredient(){
+        AddIngredientDialog dialog = new AddIngredientDialog();
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        if (dialog.getAddedNewValue()) {
+            //FIXME toast gives nullpointer
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Ingredient added.", Toast.LENGTH_SHORT, Toast.Style.SUCCESS).display();
 
+            ingredientList = IngredientFactory.getAllIngredients();
+
+            // Refresh data
+            tableModel.setRows(IngredientFactory.getAllIngredients());
+        } else {
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Ingredient add failed.", Toast.LENGTH_SHORT, Toast.Style.ERROR).display();
+        }
+    }*/
+   /* private void incrementSupply(){
+        int selectedRow = ingredientTable.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        Ingredient ingredient = tableModel.getValue(selectedRow);
+        ingredient.incrementAmount();
+        int affectedRows = IngredientFactory.updateIngredientAmount(ingredient.getIngredientId(), ingredient.getAmount());
+
+        if (affectedRows == 1) {
+            tableModel.setRow(selectedRow, ingredient);
+        } else {
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Supply was not incremented", Toast.Style.ERROR).display();
+        }
+    }*/
+    private void refresh() {
+        ingredientList = IngredientFactory.getAllIngredients();
+        tableModel.setRows(ingredientList);
+        Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Storage refreshed.").display();
+
+    }
     /**
      * Called when increment button has been pressed.
      * Increments supply of selected ingredient by value defined by a text field.
