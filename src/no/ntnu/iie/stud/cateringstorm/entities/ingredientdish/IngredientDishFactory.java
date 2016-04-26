@@ -49,6 +49,8 @@ public class IngredientDishFactory {
         }
     }
 
+    private static Dish tempDish;
+
     public static ArrayList<IngredientDish> createDish(ArrayList<IngredientDish> ingredientDishes, String name, String description, int dishType, boolean active) {
 
         int generatedId;
@@ -72,6 +74,7 @@ public class IngredientDishFactory {
                     try (ResultSet result = statement.getGeneratedKeys()) {
                         if (result.next()) {
                             generatedId = result.getInt(1);
+                            tempDish = new Dish(generatedId, name, description, dishType, active);
                         } else {
                             connection.rollback();
                             connection.setAutoCommit(true);
@@ -88,7 +91,7 @@ public class IngredientDishFactory {
                         statement.setInt(3, ingDish.getQuantity());
                         statement.setString(4, ingDish.getUnit());
                         statement.addBatch();
-                        returnList.add(new IngredientDish(IngredientFactory.getIngredient(ingDish.getIngredient().getIngredientId()), DishFactory.getDish(generatedId), ingDish.getQuantity(), ingDish.getUnit()));
+                        returnList.add(new IngredientDish(IngredientFactory.getIngredient(ingDish.getIngredient().getIngredientId()), tempDish, ingDish.getQuantity(), ingDish.getUnit()));
                     }
                     statement.executeBatch();
                 }
@@ -185,7 +188,7 @@ public class IngredientDishFactory {
         return temp;
     }
 
-    public static boolean RemoveIngredientFromDish(int ingredientId, int dishId) {
+    public static boolean removeIngredientFromDish(int ingredientId, int dishId) {
 
         ArrayList<IngredientDish> ingDishList = getAllIngredientDishes();
         boolean exists = false;
@@ -211,7 +214,7 @@ public class IngredientDishFactory {
     }
 
     //TO BE USED BEFORE ADDING NEW DISHES
-    public static boolean RemoveAllIngredientFromDish(int dishId) {
+    public static boolean removeAllIngredientFromDish(int dishId) {
 
         try (Connection connection = Database.getConnection()) {
             // Add the ingredient itself and get ID

@@ -7,7 +7,6 @@ import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDish;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDishFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientDishTableModel;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 
@@ -145,7 +144,7 @@ public class EditDishDialog extends JDialog {
             dish.setActive(isActive);
 
 
-            IngredientDishFactory.RemoveAllIngredientFromDish(dish.getDishId());
+            IngredientDishFactory.removeAllIngredientFromDish(dish.getDishId());
 
 
             for (int i = 0; i < addedList.size(); i++) {

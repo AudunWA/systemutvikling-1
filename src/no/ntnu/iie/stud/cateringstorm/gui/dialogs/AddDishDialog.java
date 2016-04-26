@@ -134,10 +134,10 @@ public class AddDishDialog extends JDialog {
         }
         description = dishDescription.getText();
         type = dishType.getSelectedIndex() + 1;
-        if ((activeStatus.getSelectedItem()).equals("Active")) {
-            active = false;
-        } else {
+        if (activeStatus.getSelectedIndex() == 0){
             active = true;
+        } else {
+            active = false;
         }
 
         String Joutput = "The following ingredients have been added to the dish: " + name + "\n";
