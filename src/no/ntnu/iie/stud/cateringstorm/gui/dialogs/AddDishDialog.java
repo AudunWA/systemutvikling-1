@@ -22,7 +22,6 @@ public class AddDishDialog extends JDialog {
     private JButton cancelButton;
     private JTextField dishName;
     private JTextField dishDescription;
-    private JComboBox activeStatus;
     private JComboBox dishType;
     private JLabel dishNameLabel;
     private JLabel dishDescriptionLabel;
@@ -33,6 +32,7 @@ public class AddDishDialog extends JDialog {
     private JTable selectionIngredientTable;
     private JButton addOrRemoveButton;
     private JTextField addOrRemoveText;
+    private JCheckBox activeCheckBox;
     private JSpinner addRemoveSpinner;
 
     private ArrayList<Ingredient> selectionList;
@@ -47,6 +47,7 @@ public class AddDishDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(addButton);
         addActionListeners();
+        loadData();
     }
     private void addActionListeners(){
         addOrRemoveButton.addActionListener(e -> onAR());
@@ -91,19 +92,15 @@ public class AddDishDialog extends JDialog {
         System.exit(0);
 
     }
+    private void loadData() {
+        activeCheckBox.setSelected(true);
+    }
 
     private void createComboBoxType() {
         Object[] status = {"Appetizer", "Main course", "Dessert"};
 
         dishType = new JComboBox(status);
         dishType.setSelectedIndex(0);
-    }
-
-    private void createComboBoxActiveStatus() {
-        Object[] status = {"Active", "Not active"};
-
-        activeStatus = new JComboBox(status);
-        activeStatus.setSelectedIndex(0);
     }
 
     /**
@@ -115,7 +112,7 @@ public class AddDishDialog extends JDialog {
         String name;
         String description;
         int type;
-        boolean active;
+        boolean isActive;
 
         name = dishName.getText();
         if (name.equals("")) {
@@ -124,15 +121,11 @@ public class AddDishDialog extends JDialog {
         }
         description = dishDescription.getText();
         type = dishType.getSelectedIndex() + 1;
-        if (activeStatus.getSelectedIndex() == 0){
-            active = true;
-        } else {
-            active = false;
-        }
+        isActive = activeCheckBox.isSelected();
 
         String Joutput = "The following ingredients have been added to the dish: " + name + "\n";
 
-        for (IngredientDish ingredientDishes : IngredientDishFactory.createDish(addedList, name, description, type, active)) {
+        for (IngredientDish ingredientDishes : IngredientDishFactory.createDish(addedList, name, description, type, isActive)) {
             Joutput += "Ingredient: " + ingredientDishes.getIngredient().getName() + " " + ingredientDishes.getQuantity() + ingredientDishes.getUnit() + ".\n";
         }
 
@@ -207,7 +200,6 @@ public class AddDishDialog extends JDialog {
 
     private void createUIComponents() {
         createComboBoxType();
-        createComboBoxActiveStatus();
         createTables();
     }
 }

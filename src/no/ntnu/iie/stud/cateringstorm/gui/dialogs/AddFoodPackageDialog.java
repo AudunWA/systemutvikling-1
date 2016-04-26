@@ -38,6 +38,7 @@ public class AddFoodPackageDialog extends JDialog {
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(addButton);
+        loadData();
 
         addButton.addActionListener(e -> onOk());
         cancelButton.addActionListener(e -> onCancel());
@@ -166,6 +167,11 @@ public class AddFoodPackageDialog extends JDialog {
 // add your code here if necessary
         dispose();
     }
+
+    private void loadData() {
+        isActive.setSelected(true);
+    }
+
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
