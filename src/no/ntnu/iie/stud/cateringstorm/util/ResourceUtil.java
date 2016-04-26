@@ -2,6 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.util;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -20,7 +21,7 @@ public final class ResourceUtil {
      * Helper class for setting the application icon.
      * @param frame The window to set the icon for.
      */
-    public static void setApplicationIcon(JFrame frame) {
+    public static void setApplicationIcon(Window frame) {
         ClassLoader loader = ResourceUtil.class.getClassLoader();
         if (loader == null) {
             System.err.println("Could not get class loader!");

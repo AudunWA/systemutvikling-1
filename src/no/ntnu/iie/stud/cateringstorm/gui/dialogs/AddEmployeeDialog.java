@@ -4,6 +4,8 @@ package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
+import no.ntnu.iie.stud.cateringstorm.util.InputUtil;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -88,32 +90,47 @@ public class AddEmployeeDialog extends JDialog {
         EmployeeType employeeType = EmployeeType.getEmployeeType(selectedIndex);
 
         if (username.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in a username.");
+            Toast.makeText(this, "Please fill in a username.", Toast.Style.ERROR).display();
             return;
         }
 
         if (forename.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in a forename");
+            Toast.makeText(this, "Please fill in a forename", Toast.Style.ERROR).display();
             return;
         }
 
         if (surname.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in a surname");
+            Toast.makeText(this, "Please fill in a surname", Toast.Style.ERROR).display();
             return;
         }
 
         if (address.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in an address.");
+            Toast.makeText(this, "Please fill in an address.", Toast.Style.ERROR).display();
             return;
         }
 
         if (phone.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in a phone number.");
+            Toast.makeText(this, "Please fill in a phone number.", Toast.Style.ERROR).display();
             return;
         }
 
         if (email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in an email.");
+            Toast.makeText(this, "Please fill in an email.", Toast.Style.ERROR).display();
+            return;
+        }
+
+        if(!InputUtil.isValidPhoneNumber(phone)) {
+            Toast.makeText(this, "Invalid phone number.", Toast.Style.ERROR).display();
+            return;
+        }
+
+        if(!InputUtil.isValidEmail(email)) {
+            Toast.makeText(this, "Invalid email address.", Toast.Style.ERROR).display();
+            return;
+        }
+
+        if(!InputUtil.isValidStreetAddress(address)) {
+            Toast.makeText(this, "Invalid address.", Toast.Style.ERROR).display();
             return;
         }
 

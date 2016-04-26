@@ -144,6 +144,7 @@ public class SalespersonCustomerView extends JPanel {
         acDialog.pack();
         final int WIDTH = 350, HEIGHT = 500;
         acDialog.setSize(WIDTH, HEIGHT);
+        acDialog.setLocationRelativeTo(acDialog.getParent());
         acDialog.setVisible(true);
         if (acDialog.hasAddedNewValue()) {
             refresh();
