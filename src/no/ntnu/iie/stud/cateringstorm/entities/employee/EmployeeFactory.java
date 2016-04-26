@@ -268,30 +268,40 @@ public final class EmployeeFactory {
     }
 
     public static int getCommissionByType(int employeeType){
-        switch (employeeType){
-            case 5:
-                return 11;
-            default:
-                return 0;
+        int commission = 0;
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT commission FROM employee_type WHERE type_id = ?")) {
+                statement.setInt(1, employeeType);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    if (result.next()) {
+                        commission = result.getInt("commission");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return commission;
     }
 
     public static double getSalaryByType(int employeeType){
-        switch (employeeType){
-            case 1:
-                return 235.99;
-            case 2:
-                return 235.99;
-            case 3:
-                return 235.99;
-            case 4:
-                return 277.29;
-            case 5:
-                return 106.19;
-            case 6:
-                return 206.49;
-            default:
-                return -1.0;
+        double salary = 0.0;
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM employee_type WHERE type_id = ?")) {
+                statement.setInt(1, employeeType);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    if (result.next()) {
+                        salary = result.getDouble("salary");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return salary;
     }
 }
