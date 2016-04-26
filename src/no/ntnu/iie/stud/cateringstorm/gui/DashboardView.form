@@ -9,7 +9,9 @@
     <children>
       <tabbedpane id="2f66f" class="no.ntnu.iie.stud.cateringstorm.gui.util.DynamicTabbedPane" binding="tabPane">
         <constraints border-constraint="Center"/>
-        <properties/>
+        <properties>
+          <tabPlacement value="1"/>
+        </properties>
         <border type="none"/>
         <children/>
       </tabbedpane>
