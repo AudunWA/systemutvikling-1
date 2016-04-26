@@ -124,7 +124,6 @@ public class StorageView extends JPanel {
         ingredientList = IngredientFactory.getAllIngredients();
         tableModel.setRows(ingredientList);
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Storage refreshed.").display();
-
     }
     /**
      * Called when increment button has been pressed.

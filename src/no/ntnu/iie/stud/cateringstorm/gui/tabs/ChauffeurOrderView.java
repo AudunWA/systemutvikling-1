@@ -154,6 +154,13 @@ public class ChauffeurOrderView extends JPanel {
         mapView.setVisible(true);
 
         startDeliveryButton.setEnabled(true);
+
+        // Reset states
+        if(!mapView.isSuccess()) {
+            for (Order ayy : helpTable) {
+                OrderFactory.setOrderState(ayy.getOrderId(), 0);
+            }
+        }
     }
 
     private void createComboBox() {
