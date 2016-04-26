@@ -211,10 +211,15 @@ public class EditSubscriptionDialog extends JDialog {
         Date startDate = ((SqlDateModel) fromDatePicker.getModel()).getValue();
         Date endDate = ((SqlDateModel) toDatePicker.getModel()).getValue();
 
+        subscription.setCustomerId(customer.getCustomerId());
+        subscription.setStartDate(startDate);
+        subscription.setEndDate(endDate);
+        subscription.setCost(cost);
+
         // TODO: Make factory method
-        //if (!SubscriptionFactory.(subscription, leftSideModel.getRowsClone())) {
+        if (!SubscriptionFactory.updateSubscription(subscription, leftSideModel.getRowsClone())) {
             JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
-        //}
+        }
         dispose();
     }
 
@@ -260,18 +265,18 @@ public class EditSubscriptionDialog extends JDialog {
         } else if (leftSideTable.getSelectedRow() > -1) {
             RecurringOrder selectedRecurringOrder = leftSideModel.getValue(leftSideTable.getSelectedRow());
 
-            cost -= selectedRecurringOrder.getFoodPackageCost();
-            costField.setText(cost + "");
-
-            if (selectedRecurringOrder.getAmount() > 1) {
+            if (selectedRecurringOrder.getAmount() > 0) {
                 // Decrement
                 selectedRecurringOrder.decrementAmount();
                 leftSideModel.updateRow(leftSideTable.getSelectedRow());
-            } else {
-                // Remove
-                leftSideModel.removeRow(leftSideTable.getSelectedRow());
-                leftSideTable.clearSelection();
+                cost -= selectedRecurringOrder.getFoodPackageCost();
+                costField.setText(cost + "");
             }
+//            else {
+//                // Remove
+//                leftSideModel.removeRow(leftSideTable.getSelectedRow());
+//                leftSideTable.clearSelection();
+//            }
         } else {
             Toast.makeText(this, "Select a row.", Toast.Style.ERROR).display();
         }
