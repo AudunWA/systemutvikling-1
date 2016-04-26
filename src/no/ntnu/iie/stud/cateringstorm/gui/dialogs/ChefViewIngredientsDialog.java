@@ -28,6 +28,7 @@ public class ChefViewIngredientsDialog extends JDialog {
 
     public ChefViewIngredientsDialog(Dish dish) {
         this.dish = dish;
+        setTitle("Ingredients");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);

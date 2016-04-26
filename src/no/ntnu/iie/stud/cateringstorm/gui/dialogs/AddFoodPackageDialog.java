@@ -34,6 +34,7 @@ public class AddFoodPackageDialog extends JDialog {
 
 
     public AddFoodPackageDialog() {
+        setTitle("Add a food package");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(addButton);

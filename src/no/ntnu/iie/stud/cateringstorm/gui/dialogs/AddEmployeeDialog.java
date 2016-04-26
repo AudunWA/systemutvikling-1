@@ -27,6 +27,7 @@ public class AddEmployeeDialog extends JDialog {
     private boolean addedNewValue;
 
     public AddEmployeeDialog() {
+        setTitle("Add an employee");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(saveButton);

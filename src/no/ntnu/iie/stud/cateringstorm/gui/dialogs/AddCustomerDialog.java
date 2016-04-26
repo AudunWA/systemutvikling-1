@@ -22,6 +22,7 @@ public class AddCustomerDialog extends JDialog {
     private boolean addedNewValue;
 
     public AddCustomerDialog() {
+        setTitle("Add a customer");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(saveButton);// Consider not using this for safety reasons

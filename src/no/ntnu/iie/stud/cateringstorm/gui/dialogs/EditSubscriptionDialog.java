@@ -61,6 +61,7 @@ public class EditSubscriptionDialog extends JDialog {
 
     public EditSubscriptionDialog(Subscription subscription) {
         this.subscription = subscription;
+        setTitle("Edit subscription");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);

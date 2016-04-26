@@ -40,6 +40,7 @@ public class EditFoodPackageDialog extends JDialog {
 
     public EditFoodPackageDialog(FoodPackage foodPackage) {
         this.foodPackage = foodPackage;
+        setTitle("Edit food package");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);

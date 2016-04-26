@@ -36,7 +36,7 @@ public class ChefMakeOrderDialog extends JDialog {
 
     public ChefMakeOrderDialog(Order order) {
         this.order = order;
-
+        setTitle("Make order");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
