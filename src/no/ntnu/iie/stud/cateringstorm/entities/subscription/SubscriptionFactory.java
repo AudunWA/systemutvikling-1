@@ -69,11 +69,11 @@ public final class SubscriptionFactory {
     /**
      * Method creates a subscription inserting it to database
      *
-     * @param startDate
-     * @param endDate
-     * @param customer
-     * @param cost
-     * @param orders
+     * @param startDate The start date of the subscription.
+     * @param endDate The end date of the subscription.
+     * @param customer The customer connected to the subscription.
+     * @param cost The cost of the subsctiption.
+     * @param orders A list of the recurring orders connected to the subscription.
      * @return Subscription
      */
     public static Subscription createSubscription(Date startDate, Date endDate, Customer customer, double cost, ArrayList<RecurringOrder> orders) {

@@ -88,6 +88,7 @@ public class EmployeeFactoryTest {
         double salary = EmployeeFactory.getSalarySoFar(employee.getEmployeeId(),new Date(System.currentTimeMillis()));
         Assert.assertNotNull(salary);
     }
+    //Valid data must be inserted to database. This test fails unless valid orders exist.
     @Test
     public void testGetSalesThisYear() throws Exception {
         Employee employee = EmployeeFactory.getEmployee("drammen");

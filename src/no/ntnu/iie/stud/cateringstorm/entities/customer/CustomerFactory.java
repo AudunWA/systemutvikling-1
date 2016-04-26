@@ -17,7 +17,7 @@ public final class CustomerFactory {
     /**
      * Creates a customer from a result set.
      * @param result The result set.
-     * @return Customer The customer.
+     * @return the created customer.
      * @throws SQLException
      */
     public static Customer createCustomerFromResultSet(ResultSet result) throws SQLException {
@@ -34,9 +34,9 @@ public final class CustomerFactory {
     }
 
     /**
-     * Gets a single customer by ID
+     * Gets a single customer by ID.
      * @param customerId The ID of the customer.
-     * @return Customer
+     * @return the selected customer.
      */
     public static Customer getCustomer(int customerId) {
         try (Connection connection = Database.getConnection()) {
@@ -48,10 +48,10 @@ public final class CustomerFactory {
     }
 
     /**
-     * Gets a single customer by ID
+     * Gets a single customer by ID.
      * @param customerId The ID of the customer.
      * @param connection The connection to use.
-     * @return Customer
+     * @return the selected customer.
      */
     public static Customer getCustomer(int customerId, Connection connection) {
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM customer WHERE customer_id = ?")) {
@@ -70,9 +70,9 @@ public final class CustomerFactory {
     }
 
     /**
-     * Creates an Arraylist containing all customers
+     * Creates an Arraylist containing all customers.
      *
-     * @return ArrayList<Customer>
+     * @return an ArrayList with all customers in database table.
      */
     public static ArrayList<Customer> getAllCustomers() {
         ArrayList<Customer> customers = new ArrayList<>();
@@ -96,9 +96,9 @@ public final class CustomerFactory {
     }
 
     /**
-     * Returns customers with column "Active" = true
+     * Returns customers with column "active" = true.
      *
-     * @return ArrayList<Customer>
+     * @return an ArrayList with all active customers.
      */
     public static ArrayList<Customer> getActiveCustomers() {
         ArrayList<Customer> customers = new ArrayList<>();
@@ -121,9 +121,9 @@ public final class CustomerFactory {
     }
 
     /**
-     * Finds customers by name
+     * Finds customers by name.
      *
-     * @return An ArrayList containing all customers matching search
+     * @return An ArrayList containing all customers matching search.
      */
     public static ArrayList<Customer> getCustomersByQuery(String searchQuery) {
 

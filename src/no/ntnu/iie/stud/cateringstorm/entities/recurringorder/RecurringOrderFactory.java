@@ -53,15 +53,19 @@ public final class RecurringOrderFactory {
 
     public static int goThroughRecurringOrders() {
         ArrayList<RecurringOrder> pending = getOrdersPendingCreation();
-        ArrayList<Order> createdOrders = OrderFactory.createOrdersForRecurringOrders(pending);
-        return createdOrders.size();
+        int size = -1;
+        if(pending!= null) {
+            ArrayList<Order> createdOrders = OrderFactory.createOrdersForRecurringOrders(pending);
+            size = createdOrders.size();
+        }
+        return size;
     }
 
     /**
      * Gets all recurring orders of a subscription.
      *
      * @param subscriptionId The ID of the subscription.
-     * @return A list containing the recurring orders.
+     * @return a list containing the recurring orders.
      */
     public static ArrayList<RecurringOrder> getRecurringOrders(int subscriptionId) {
         ArrayList<RecurringOrder> recurringOrders = new ArrayList<>();
