@@ -132,11 +132,8 @@ public class SalespersonOrderView extends JPanel {
             eoDialog.setSize(WIDTH, HEIGHT);
             eoDialog.setLocationRelativeTo(eoDialog.getParent());
             eoDialog.setVisible(true);
-<<<<<<< HEAD
 
-=======
             refresh();
->>>>>>> 91e62fc3c35212aeadf6a4d8d89e72cab2abdc33
         } else {
             JOptionPane.showMessageDialog(this, "Please select a row in order table");
         }
