@@ -20,6 +20,7 @@ import java.util.Date;
  */
 public class ChauffeurOrderView extends JPanel {
     private static ArrayList<Order> orderList = new ArrayList<>();
+    private static ArrayList<Order> helpTable = new ArrayList<>();
     private JPanel mainPanel;
     private JTable orderTable;
     private JButton refreshButton;
@@ -114,7 +115,7 @@ public class ChauffeurOrderView extends JPanel {
         }
 
         ArrayList<String> addresses = OrderFactory.getAllAvailableDeliveryAddresses();
-        ArrayList<Order> helpTable = OrderFactory.getAllAvailableOrdersChauffeur();
+        helpTable = OrderFactory.getAllAvailableOrdersChauffeur();
 
         if (helpTable.size() < amount) {
             JOptionPane.showMessageDialog(this, "This amount of orders is not available at this moment");
