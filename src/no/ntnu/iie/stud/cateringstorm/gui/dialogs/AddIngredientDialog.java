@@ -32,6 +32,7 @@ public class AddIngredientDialog extends JDialog {
     private JDatePickerImpl expireDatePicker;
 
     public AddIngredientDialog() {
+        setTitle("Add an ingredient");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);

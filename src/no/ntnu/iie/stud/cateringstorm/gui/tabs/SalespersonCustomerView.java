@@ -44,7 +44,7 @@ public class SalespersonCustomerView extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
         addActionListeners();
-
+        addDocumentListener();
     }
     public void addActionListeners(){
         addButton.addActionListener(e -> addCustomer());
@@ -52,6 +52,18 @@ public class SalespersonCustomerView extends JPanel {
         removeButton.addActionListener(e -> removeCustomer(getSelectedCustomer()));
         refreshButton.addActionListener(e -> refresh());
         showInactiveCB.addActionListener(e -> refresh());
+
+        searchField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setSearchField("");
+            }
+        });
+        customerTable.getSelectionModel().addListSelectionListener(e -> {
+            //Get index from selected row
+        });
+    }
+    private void addDocumentListener(){
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -84,15 +96,6 @@ public class SalespersonCustomerView extends JPanel {
             }
         });
 
-        searchField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                setSearchField("");
-            }
-        });
-        customerTable.getSelectionModel().addListSelectionListener(e -> {
-            //Get index from selected row
-        });
     }
     public static void main(String[] args) {
         // Window dimensions

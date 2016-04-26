@@ -34,6 +34,7 @@ public class EditCustomerDialog extends JDialog {
 
     public EditCustomerDialog(Customer customer) {
         this.customer = customer;
+        setTitle("Edit customer");
         setTextFields();
         setContentPane(mainPanel);
         setModal(true);

@@ -56,6 +56,7 @@ public class AddOrderDialog extends JDialog {
 
     public AddOrderDialog(Employee employee) {
         this.employee = employee;
+        setTitle("Add an order");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(addRemoveButton);

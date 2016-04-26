@@ -38,6 +38,7 @@ public class RegisterTimesheetDialog extends JDialog {
 
     public RegisterTimesheetDialog(int loggedInEmployeeId) {
         this.loggedInEmployeeId = loggedInEmployeeId;
+        setTitle("Register new time sheet");
         registered = false;
         setContentPane(mainPanel);
         setModal(true);

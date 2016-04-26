@@ -16,6 +16,7 @@ import java.util.ArrayList;
  */
 
 public class AddDishDialog extends JDialog {
+
     private JPanel mainPanel;
     private JButton addButton;
     private JButton cancelButton;
@@ -25,9 +26,7 @@ public class AddDishDialog extends JDialog {
     private JComboBox dishType;
     private JLabel dishNameLabel;
     private JLabel dishDescriptionLabel;
-
     private JButton okButton;
-
     private JScrollPane addedIngredientPane;
     private JScrollPane selectionIngredientPane;
     private JTable addedIngredientTable;
@@ -43,6 +42,7 @@ public class AddDishDialog extends JDialog {
 
 
     public AddDishDialog() {
+        setTitle("Add a dish");
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(addButton);
