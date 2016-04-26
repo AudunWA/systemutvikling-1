@@ -35,7 +35,6 @@ public class ChefShoppingList extends JPanel {
         refreshButton.addActionListener(e -> {
             refresh();
         });
-
     }
 
     private void refresh(){

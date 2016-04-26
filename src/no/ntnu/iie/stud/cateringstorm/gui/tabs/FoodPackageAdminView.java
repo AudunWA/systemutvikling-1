@@ -116,6 +116,7 @@ public class FoodPackageAdminView extends JPanel {
         AddFoodPackageDialog dialog = new AddFoodPackageDialog();
         dialog.pack();
         dialog.setVisible(true);
+        refresh();
     }
     /**
      * Opens the EditFoodPackage GUI Dialog
