@@ -23,6 +23,7 @@ import java.awt.event.*;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -242,6 +243,8 @@ public class AddOrderDialog extends JDialog {
                 JOptionPane.showMessageDialog(this, "Error the delivery date is before current date.");
                 return;
             }
+            
+
             LocalDate localDate = DateUtil.convertDate(fromDatePicker).toLocalDate();
             LocalTime localTime = DateUtil.convertDate(fromHourPicker).toLocalTime();
 

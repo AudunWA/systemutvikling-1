@@ -205,6 +205,8 @@ public class Order {
             return "In production";
         } else if (getStatus() == 4) {
             return "Being delivered";
+        } else if (getStatus() == 5) {
+            return "Canceled";
         } else {
             return "Removed";
         }

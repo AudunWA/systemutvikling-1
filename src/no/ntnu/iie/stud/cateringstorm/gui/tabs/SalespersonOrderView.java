@@ -126,8 +126,8 @@ public class SalespersonOrderView extends JPanel {
         System.out.println(order);
         if (order != null) {
             EditOrderDialog eoDialog = new EditOrderDialog(order);
-            final int WIDTH = 300;
-            final int HEIGHT = 200;
+            final int WIDTH = 800;
+            final int HEIGHT = 500;
             eoDialog.pack();
             eoDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             eoDialog.setSize(WIDTH, HEIGHT);
@@ -164,18 +164,22 @@ public class SalespersonOrderView extends JPanel {
 
     // FIXME: Check trouble with wrongly selected indexes in combobox
     private void setStatus() {
-        int choice = statusBox.getSelectedIndex();
-        int selectedRow = orderTable.getSelectedRow();
-        int statusColumn = 7;
-        boolean active = choice < 1;
-        if (selectedRow > -1) {
-            if (orderList.get(selectedRow).getStatus() != 2 && orderList.get(selectedRow).getStatus() != 0) {
-                orderTable.clearSelection();
-                orderTable.getModel().setValueAt((active) ? "Activate" : "Removed", selectedRow, statusColumn);
+
+        if (orderTable.getSelectedRow() > -1) {
+            int id = (Integer) orderTable.getValueAt(orderTable.getSelectedRow(), 0);
+            int status = OrderFactory.getOrder(id).getStatus();
+
+            if (status != 2 && status != 4){
+                if (statusBox.getSelectedIndex() == 0 && status == 5) {
+                    OrderFactory.setOrderState(id, 1);
+                } else if (statusBox.getSelectedIndex() == 1){
+                    OrderFactory.setOrderState(id, 5);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Salesperson can't change this status");
+                JOptionPane.showMessageDialog(this, "Can't change this order status");
             }
         }
+        tableModel.setRows(OrderFactory.getAllOrders());
     }
 
     private void createSearchField() {
