@@ -48,6 +48,7 @@ public class AddOrderDialog extends JDialog {
     private JTable packageTable;
     private JTable addedTable;
     private JButton okButton;
+    private JSpinner timeSpinner;
 
     private ArrayList<FoodPackage> addedList;
     private ArrayList<Order> orders = new ArrayList<>();
@@ -207,16 +208,18 @@ public class AddOrderDialog extends JDialog {
                 priority = true;
             }
 
-            Date temp = (Date) dateSelect.getModel().getValue();
-            if (temp == null) {
+            Date fromDatePicker = (Date) dateSelect.getModel().getValue();
+            Date fromHourPicker = (Date) timeSpinner.getModel().getValue();
+            if (fromDatePicker == null) {
                 JOptionPane.showMessageDialog(this, "Please fill in a delivery date.");
                 return;
-            } else if (!temp.after(new Date(System.currentTimeMillis()))) {
+            } else if (!fromDatePicker.after(new Date(System.currentTimeMillis()))) {
                 JOptionPane.showMessageDialog(this, "Error the delivery date is before current date.");
                 return;
             }
+            long finalDate = fromDatePicker.getTime() + fromHourPicker.getTime();
 
-            Timestamp deliverDate = new Timestamp(temp.getTime());
+            Timestamp deliverDate = new Timestamp(finalDate);
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
             ArrayList<Integer> test = new ArrayList<>();
