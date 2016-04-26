@@ -10,14 +10,23 @@ import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EntityTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.util.DateUtil;
 import no.ntnu.iie.stud.cateringstorm.gui.util.SimpleDateFormatter;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.Time;
 import java.sql.Timestamp;
+<<<<<<< HEAD
+=======
+import java.time.LocalDate;
+>>>>>>> b6193e0f7ee393bd269adfbe2db557f11ad50308
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
@@ -30,6 +39,7 @@ public class AddOrderDialog extends JDialog {
     private Employee employee;
     private boolean addedNewValue;
 
+    private OrderTableModel selectedPackagesModel;
     private JPanel mainPanel;
     private JButton addRemoveButton;
     private JButton cancelButton;
@@ -60,6 +70,7 @@ public class AddOrderDialog extends JDialog {
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(addRemoveButton);
+        initializeTimeSpinner();
 
         addRemoveButton.addActionListener(e -> onAR());
         okButton.addActionListener(e -> onOk());
@@ -93,7 +104,6 @@ public class AddOrderDialog extends JDialog {
         });
 
         addedTable.getSelectionModel().addListSelectionListener(e -> {
-
         });
 
         descriptionText.addMouseListener(new MouseAdapter() {
@@ -119,6 +129,23 @@ public class AddOrderDialog extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        timeSpinner.addChangeListener(e -> {
+            int index = addedTable.getSelectedRow();
+            int newTime = getTimeSpinnerValue();
+
+            if (index == -1) {
+                return;
+            }
+
+            if (newTime < 0) {
+                Toast.makeText(this, "Invalid time.", Toast.Style.ERROR).display();
+                return;
+            }
+
+            Order order = selectedPackagesModel.getValue(index);
+            selectedPackagesModel.updateRow(index);
+        });
     }
 
     public static void main(String[] args) {
@@ -218,15 +245,19 @@ public class AddOrderDialog extends JDialog {
                 JOptionPane.showMessageDialog(this, "Error the delivery date is before current date.");
                 return;
             }
+            LocalTime test = LocalTime.from(fromHourPicker.toInstant());
             long finalDate = fromDatePicker.getTime() + fromHourPicker.getTime();
 
-            Timestamp deliverDate = new Timestamp(finalDate);
+            LocalDate localDate = DateUtil.convertDate(fromDatePicker).toLocalDate();
+            LocalTime localTime = DateUtil.convertDate(fromHourPicker).toLocalTime();
+
+            Timestamp deliverTime = Timestamp.valueOf(localDate.atTime(localTime));
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
             ArrayList<Integer> test = new ArrayList<>();
             test.add(packageTable.getSelectedRow() + 1);
 
-            orders.add(new Order(0, description, deliverDate, currentTime, portions, priority, employee.getEmployeeId(), CustomerFactory.getCustomer(customerId), 0, 1, 0));
+            orders.add(new Order(0, description, deliverTime, currentTime, portions, priority, employee.getEmployeeId(), CustomerFactory.getCustomer(customerId), 0, 1, 0));
 
             ArrayList<Integer> packages = new ArrayList<>();
             for (int k = 0; k < addedList.size(); k++) {
@@ -238,7 +269,7 @@ public class AddOrderDialog extends JDialog {
                 return;
             }
 
-            Order order = OrderFactory.createOrder(description, deliverDate, portions,
+            Order order = OrderFactory.createOrder(description, deliverTime, portions,
                     priority, employee.getEmployeeId(),
                     customerId, -1, -1, packages);
 
@@ -261,6 +292,13 @@ public class AddOrderDialog extends JDialog {
 // add your code here if necessary
         dispose();
     }
+    private void initializeTimeSpinner() {
+        SpinnerModel model = new SpinnerDateModel();
+
+        timeSpinner.setModel(model);
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
+        timeSpinner.setEditor(editor);
+    }
 
     private void refreshComboBox() {
         for (int i = 0; i < CustomerFactory.getAllCustomers().size(); i++) {
@@ -274,6 +312,9 @@ public class AddOrderDialog extends JDialog {
         for (int i = 0; i < CustomerFactory.getAllCustomers().size(); i++) {
             customerComboBox.addItem(new String(CustomerFactory.getCustomer(i + 1).getSurname()) + ", " + CustomerFactory.getCustomer(i + 1).getForename());
         }
+    }
+    private int getTimeSpinnerValue() {
+        return DateUtil.convertToRelativeTime(DateUtil.convertDate((Date) timeSpinner.getModel().getValue()).toLocalTime());
     }
 
     public void createUIComponents() {
