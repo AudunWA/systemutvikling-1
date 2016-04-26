@@ -150,6 +150,7 @@ public class MenuAdministratorView extends JPanel {
         dialog.setLocationRelativeTo(dialog.getParent());
         dialog.setVisible(true);
         dishList = DishFactory.getActiveDishes();
+        refresh();
     }
 
     public static void main(String[] args) {
