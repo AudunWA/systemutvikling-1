@@ -199,9 +199,9 @@ public class SalespersonSubscriptionView extends JPanel {
 
     private void refresh() {
         if (inactiveCheckBox.isSelected()) {
-            subscriptionList = SubscriptionFactory.getActiveSubscriptions();
-        } else {
             subscriptionList = SubscriptionFactory.getAllSubscriptions();
+        } else {
+            subscriptionList = SubscriptionFactory.getActiveSubscriptions();
         }
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Customers refreshed.").display();
         tableModel.setRows(subscriptionList);

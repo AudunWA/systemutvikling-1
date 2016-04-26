@@ -183,9 +183,9 @@ public class AdminEmployeeView extends JPanel {
 
     private void refresh() {
         if (showInactiveEmployeesCheckBox.isSelected()) {
-            employeeList = EmployeeFactory.getActiveEmployees();
-        } else {
             employeeList = EmployeeFactory.getAllEmployees();
+        } else {
+            employeeList = EmployeeFactory.getActiveEmployees();
         }
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Employees refreshed").display();
         tableModel.setRows(employeeList);
