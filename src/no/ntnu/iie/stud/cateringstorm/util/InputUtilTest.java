@@ -1,6 +1,5 @@
 package no.ntnu.iie.stud.cateringstorm.util;
 
-import jdk.internal.util.xml.impl.Input;
 import org.junit.Assert;
 import org.junit.Test;
 

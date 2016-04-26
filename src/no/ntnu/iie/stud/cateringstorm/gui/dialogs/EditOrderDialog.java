@@ -10,7 +10,6 @@ import no.ntnu.iie.stud.cateringstorm.gui.util.SimpleDateFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
-import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.event.*;

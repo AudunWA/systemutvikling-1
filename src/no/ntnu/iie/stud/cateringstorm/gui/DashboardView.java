@@ -1,6 +1,5 @@
 package no.ntnu.iie.stud.cateringstorm.gui;
 
-import no.ntnu.iie.stud.cateringstorm.Main;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.tabs.*;
@@ -8,7 +7,6 @@ import no.ntnu.iie.stud.cateringstorm.gui.util.DynamicTabbedPane;
 import no.ntnu.iie.stud.cateringstorm.util.ResourceUtil;
 
 import javax.swing.*;
-import java.net.URL;
 
 /**
  * The main view of the application.

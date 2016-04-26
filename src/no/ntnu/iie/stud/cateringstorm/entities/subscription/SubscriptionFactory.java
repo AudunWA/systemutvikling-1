@@ -3,8 +3,6 @@ package no.ntnu.iie.stud.cateringstorm.entities.subscription;
 import no.ntnu.iie.stud.cateringstorm.database.Database;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
 import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
-import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
-import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrder;
 
 import java.sql.*;

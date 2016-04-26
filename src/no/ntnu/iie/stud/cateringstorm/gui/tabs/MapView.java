@@ -5,21 +5,14 @@ import com.teamdev.jxbrowser.chromium.LoggerProvider;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
-import no.ntnu.iie.stud.cateringstorm.maps.MapBackend;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Coordinate;
+import no.ntnu.iie.stud.cateringstorm.maps.MapBackend;
 import no.ntnu.iie.stud.cateringstorm.util.ResourceUtil;
-import org.jfree.io.IOUtils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Level;
 

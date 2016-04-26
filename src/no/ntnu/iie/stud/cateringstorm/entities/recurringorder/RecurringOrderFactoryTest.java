@@ -7,8 +7,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
-
 /**
  * JUnit test class from RecurringOrderFactory
  */

@@ -7,7 +7,9 @@ import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.DishTableModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 /**

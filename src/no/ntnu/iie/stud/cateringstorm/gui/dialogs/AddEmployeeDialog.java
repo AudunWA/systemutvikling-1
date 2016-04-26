@@ -8,7 +8,9 @@ import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import no.ntnu.iie.stud.cateringstorm.util.InputUtil;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * GUI Dialog for adding an Employee to the database

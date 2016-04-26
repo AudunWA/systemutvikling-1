@@ -8,8 +8,6 @@ import org.junit.Test;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
-
 /**
  * JUnit test class for RecurringOrder.
  */

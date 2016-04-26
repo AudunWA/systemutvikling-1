@@ -7,7 +7,6 @@ import no.ntnu.iie.stud.cateringstorm.gui.util.DateUtil;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**

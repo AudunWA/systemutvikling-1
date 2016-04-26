@@ -20,9 +20,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;

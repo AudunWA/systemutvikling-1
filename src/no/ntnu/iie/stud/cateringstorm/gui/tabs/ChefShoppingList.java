@@ -2,13 +2,11 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.Ingredient;
 import no.ntnu.iie.stud.cateringstorm.entities.ingredient.IngredientFactory;
-import no.ntnu.iie.stud.cateringstorm.entities.ingredientdish.IngredientDishFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.IngredientTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
 /**

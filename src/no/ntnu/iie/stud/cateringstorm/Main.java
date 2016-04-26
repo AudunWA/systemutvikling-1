@@ -3,10 +3,6 @@ package no.ntnu.iie.stud.cateringstorm;
 import com.alee.laf.WebLookAndFeel;
 import no.ntnu.iie.stud.cateringstorm.gui.LoginView;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.io.IOException;
-
 public class Main {
 
     /**

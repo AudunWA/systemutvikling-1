@@ -3,13 +3,13 @@ package no.ntnu.iie.stud.cateringstorm.gui.dialogs;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EmployeeTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import no.ntnu.iie.stud.cateringstorm.util.InputUtil;
 
 import javax.swing.*;
-import java.awt.event.*;
-import java.util.ArrayList;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * GUI Dialog for editing an existing employee in the database

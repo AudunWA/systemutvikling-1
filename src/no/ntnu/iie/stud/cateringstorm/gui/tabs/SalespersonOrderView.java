@@ -4,7 +4,6 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
 import no.ntnu.iie.stud.cateringstorm.entities.order.OrderFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddOrderDialog;
-import no.ntnu.iie.stud.cateringstorm.gui.dialogs.AddSubscriptionDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.dialogs.EditOrderDialog;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.OrderTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;

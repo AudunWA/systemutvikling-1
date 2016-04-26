@@ -1,8 +1,6 @@
 package no.ntnu.iie.stud.cateringstorm.entities.recurringorder;
 
 import no.ntnu.iie.stud.cateringstorm.database.Database;
-import no.ntnu.iie.stud.cateringstorm.entities.customer.Customer;
-import no.ntnu.iie.stud.cateringstorm.entities.dish.Dish;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.order.Order;
@@ -15,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class handling database interaction, loading and generating RecurringOrder entity objects.

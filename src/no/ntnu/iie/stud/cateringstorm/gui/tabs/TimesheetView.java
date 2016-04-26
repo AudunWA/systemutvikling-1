@@ -11,10 +11,7 @@ import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import javax.swing.*;
-import javax.swing.table.TableCellEditor;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
