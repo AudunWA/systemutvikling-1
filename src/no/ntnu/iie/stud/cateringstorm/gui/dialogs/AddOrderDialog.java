@@ -245,8 +245,6 @@ public class AddOrderDialog extends JDialog {
                 JOptionPane.showMessageDialog(this, "Error the delivery date is before current date.");
                 return;
             }
-            long finalDate = fromDatePicker.getTime() + fromHourPicker.getTime();
-
             LocalDate localDate = DateUtil.convertDate(fromDatePicker).toLocalDate();
             LocalTime localTime = DateUtil.convertDate(fromHourPicker).toLocalTime();
 
