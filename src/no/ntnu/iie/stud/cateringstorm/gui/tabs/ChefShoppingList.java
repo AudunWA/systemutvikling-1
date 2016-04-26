@@ -89,7 +89,6 @@ public class ChefShoppingList extends JPanel {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         createTable();
 
     }

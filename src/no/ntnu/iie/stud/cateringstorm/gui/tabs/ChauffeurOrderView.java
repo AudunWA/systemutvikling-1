@@ -194,8 +194,4 @@ public class ChauffeurOrderView extends JPanel {
         }
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
     }
-
-    private void getReadyOrders() {
-        // TODO: Implement method loading orders with status "ready for delivery", changing status to "being delivered"
-    }
 }

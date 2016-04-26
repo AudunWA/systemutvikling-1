@@ -146,8 +146,6 @@ public class RegisterTimesheetDialog extends JDialog {
         return new Timestamp(((Date) toSpinner.getModel().getValue()).getTime());
     }
 
-    // TODO: Check if any date selected has already got a timesheet registered, as we want no double saving.
-
     /**
      * Called when ok buttons is pressed
      * Registers a new timesheet for the selected employee

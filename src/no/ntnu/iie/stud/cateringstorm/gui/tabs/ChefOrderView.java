@@ -171,7 +171,6 @@ public class ChefOrderView extends JPanel {
     }
 
     private void refresh() {
-        //  TODO: Implement a method updating table for new orders, and removing changed orders from table.
         tableModel.setRows(getChefArray());
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
     }

@@ -192,45 +192,6 @@ public final class OrderFactory {
     }
 
     /**
-     * TODO: Remove if not used at deadline
-     *
-     * @return ArrayList<Order>
-     */
-    public static ArrayList<Order> getAllOrdersChauffeur() {
-        ArrayList<Order> orders = new ArrayList<>();
-        try (Connection connection = Database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM `_order` NATURAL JOIN customer WHERE (status = 0) && delivery_time > NOW() ORDER BY delivery_time")) {
-                statement.executeQuery();
-
-                try (ResultSet resultPreUpdate = statement.getResultSet()) {
-                    while (resultPreUpdate.next()) {
-                        Order order = createOrderFromResultSet(resultPreUpdate, connection);
-                        //System.out.println("Order from resultset: "+order);
-                        if ((order.getDeliveryDate().compareTo(new Date(System.currentTimeMillis() + 2 * 86400000))) == -1) {
-                            try (PreparedStatement statementUpdate = connection.prepareStatement("UPDATE _order SET priority = 1 WHERE _order_id = ?")) {
-                                statementUpdate.setInt(1, order.getOrderId());
-                                statementUpdate.execute();
-                            }
-                        }
-                    }
-                }
-                statement.executeQuery();
-                try (ResultSet result = statement.getResultSet()) {
-                    while (result.next()) {
-                        orders.add(createOrderFromResultSet(result, connection));
-
-                    }
-                    // System.out.println("Orders new:"+orders);
-                }
-            }
-            return orders;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
      * Sending all available orders to chauffeur
      *
      * @return ArrayList<Order>

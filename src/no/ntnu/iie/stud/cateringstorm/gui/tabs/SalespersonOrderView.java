@@ -87,7 +87,6 @@ public class SalespersonOrderView extends JPanel {
         });
     }
 
-    // FIXME: Add possibility to expand mainFrame for table
     public static void main(String[] args) {
         // Window dimensions
         final int WIDTH = 1300;
@@ -105,7 +104,6 @@ public class SalespersonOrderView extends JPanel {
     }
 
     private void addOrder(Employee employee) {
-        // TODO: Open AddOrderDialog
         AddOrderDialog aoDialog = new AddOrderDialog(employee);
         final int WIDTH = 1000;
         final int HEIGHT = 400;
@@ -142,7 +140,6 @@ public class SalespersonOrderView extends JPanel {
     }
 
     private void createUIComponents() {
-        // TODO: Custom initialization of UI components here
         createTable();
         createComboBox();
         createSearchField();
@@ -164,7 +161,6 @@ public class SalespersonOrderView extends JPanel {
         statusBox.setSelectedIndex(0);
     }
 
-    // FIXME: Check trouble with wrongly selected indexes in combobox
     private void setStatus() {
 
         if (orderTable.getSelectedRow() > -1) {
@@ -199,6 +195,5 @@ public class SalespersonOrderView extends JPanel {
         tableModel.setRows(OrderFactory.getAllOrders());
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Orders refreshed.").display();
         orderList = OrderFactory.getAllOrders();
-        // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
     }
 }

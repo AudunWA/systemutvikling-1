@@ -174,9 +174,6 @@ public class AddFoodPackageDialog extends JDialog {
 
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
-
-
         dishList = DishFactory.getAllDishes();
         Integer[] columns = new Integer[]{DishTableModel.COLUMN_NAME, DishTableModel.COLUMN_DESCRIPTION};
         DishTableModel table = new DishTableModel(dishList, columns);

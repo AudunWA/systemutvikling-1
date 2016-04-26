@@ -252,7 +252,6 @@ public class TimesheetView extends JPanel {
      * @See clockIn()
      */
     private void clockOut(Timesheet sheet) {
-        // TODO: Use current time, register to-time
         if (sheet != null) {
             int result = TimesheetFactory.updateTimesheet(sheet);
             if (result == 1) {

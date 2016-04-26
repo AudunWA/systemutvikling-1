@@ -59,7 +59,6 @@ public class HomeView extends JPanel {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         createImage();
     }
 }

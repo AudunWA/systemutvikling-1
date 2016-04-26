@@ -180,7 +180,6 @@ public class MenuAdministratorView extends JPanel {
     }
 
     private void createUIComponents() {
-        // TODO: Custom initialization of UI components here
         createTable();
     }
 

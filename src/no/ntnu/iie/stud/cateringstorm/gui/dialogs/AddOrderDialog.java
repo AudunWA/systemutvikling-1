@@ -331,7 +331,6 @@ public class AddOrderDialog extends JDialog {
 
         createComboBox();
 
-        //TODO make the combo box open add new customer when selected
         customerComboBox.addItem("New customer");
 
         foodList = FoodPackageFactory.getAllFoodPackages();

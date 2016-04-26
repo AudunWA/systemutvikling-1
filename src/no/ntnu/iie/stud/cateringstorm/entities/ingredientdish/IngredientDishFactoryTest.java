@@ -16,7 +16,6 @@ import java.util.ArrayList;
 /**
  * JUnit test class for IngredientDishFactory.
  */
-//TODO: Finish this class after Factory is completed
 public class IngredientDishFactoryTest {
 
     @Test

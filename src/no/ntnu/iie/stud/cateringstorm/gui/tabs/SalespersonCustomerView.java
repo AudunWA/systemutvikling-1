@@ -175,11 +175,9 @@ public class SalespersonCustomerView extends JPanel {
     }
 
     private void removeCustomer(Customer customer) {
-        // TODO: Implement a method setting customer status to "Not active"
         int activeColumn = CustomerTableModel.COLUMN_ACTIVETEXT;
         int selectedRow = customerTable.getSelectedRow();
         if (customer != null) {
-            // TODO: Fill code here
             customerTable.clearSelection();
             customerTable.getModel().setValueAt(false, selectedRow, activeColumn);
             refresh();

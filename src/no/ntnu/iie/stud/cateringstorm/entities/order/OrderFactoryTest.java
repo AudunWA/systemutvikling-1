@@ -11,7 +11,6 @@ import java.util.HashMap;
 /**
  * Created by Audun on 11.03.2016.
  */
-// FIXME: Inspect methods, fix echterbugs and use asserts in every test
 public class OrderFactoryTest {
 
     @Test
@@ -25,7 +24,7 @@ public class OrderFactoryTest {
         Assert.assertNotNull(orders);
         for (int i = 0; i < orders.size(); i++) {
             Assert.assertNotNull(orders.get(i));
-            Assert.assertTrue(orders.get(i) instanceof Order);//FIXME: Redundant?
+            Assert.assertTrue(orders.get(i) instanceof Order);
         }
     }
 
@@ -62,13 +61,7 @@ public class OrderFactoryTest {
         Assert.assertNotEquals(test1.getStatus(), test2.getStatus());
         Assert.assertEquals(2, test2.getStatus());
     }
-    @Test
-    public void testGetAllOrdersChauffeur() throws Exception {
-        ArrayList<Order> orders = OrderFactory.getAllOrdersChauffeur();
-        Assert.assertNotNull(orders);
-    }
 
-    // TODO: Maybe test this further
     @Test
     public void testGetSalesForPeriod() throws Exception {
         HashMap<LocalDate, Double> sales = OrderFactory.getSalesForPeriod(LocalDate.now().minusDays(7), LocalDate.now());

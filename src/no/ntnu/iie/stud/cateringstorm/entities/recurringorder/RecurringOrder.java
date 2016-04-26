@@ -151,7 +151,6 @@ public class RecurringOrder {
      * @return The next delivery time of this order.
      */
     public Timestamp getDeliveryTime() {
-        // TODO: Needs unit test
         LocalDate nextDate = DateUtil.getNextDateOfDay(DayOfWeek.of(weekday + 1)); // We store Monday = 0, not 1
         return Timestamp.valueOf(nextDate.atTime(LocalTime.ofSecondOfDay(relativeTime)));
     }

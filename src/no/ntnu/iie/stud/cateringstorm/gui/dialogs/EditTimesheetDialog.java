@@ -94,7 +94,6 @@ public class EditTimesheetDialog extends JDialog {
     }
 
     public void createUIComponents() {
-        // TODO: Insert UI components
         createJDatePanel();
     }
 

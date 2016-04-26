@@ -268,7 +268,7 @@ public final class DishFactory {
                     for (Ingredient ingredient : ingredients) {
                         statement.setInt(1, ingredient.getIngredientId());
                         statement.setInt(2, generatedId);
-                        statement.setDouble(3, ingredient.getAmount()); // TODO: Not right, right?
+                        statement.setDouble(3, ingredient.getAmount());
                     }
                     statement.executeBatch();
                 }
