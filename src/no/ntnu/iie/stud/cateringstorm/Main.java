@@ -28,17 +28,4 @@ public class Main {
         loginVIew.setVisible(true);
         loginVIew.setLocationRelativeTo(null);
     }
-
-    public static void setApplicationIcon(JFrame frame) {
-        ClassLoader loader = frame.getClass().getClassLoader();
-        if (loader == null) {
-            System.err.println("Could not get class loader!");
-        } else {
-            try {
-                frame.setIconImage(ImageIO.read(loader.getResourceAsStream("icons/food-apple.png")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

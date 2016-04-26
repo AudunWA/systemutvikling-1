@@ -2,6 +2,7 @@ package no.ntnu.iie.stud.cateringstorm.gui.tabs;
 
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
+import no.ntnu.iie.stud.cateringstorm.util.ResourceUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,9 +28,8 @@ public class HomeView extends JPanel {
     }
 
     private void createImage() {
-
         image = new JPanel(true);
-        image.add(new JLabel(new ImageIcon("CSChefTekst.png")));
+        image.add(new JLabel(ResourceUtil.getIconResource("CSChefTekst.png")));
     }
 
     private void createUIComponents() {
