@@ -18,13 +18,39 @@ public class HomeView extends JPanel {
     private JLabel welcomeLabel;
     private JPanel image;
     private JLabel salaryLabel;
+    private JLabel employeeTypeLabel;
 
     public HomeView() {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
         welcomeLabel.setText(welcomeLabel.getText().replace("%name%", GlobalStorage.getLoggedInEmployee().getForename()));
+        employeeTypeLabel.setText("Your are " + getEmployeeTypeString() + ".");
         salaryLabel.setText("Salary so far (2016): " + EmployeeFactory.getSalarySoFar(GlobalStorage.getLoggedInEmployee().getEmployeeId(), Date.valueOf(LocalDate.now())) + ",- NOK");
+    }
+
+    /**
+     Returns a string representation of the logged in employee's employee type. Used for displaying it for the employee.
+     * @return a string representation of the logged in employee's employee type.
+     */
+    private String getEmployeeTypeString() {
+        switch (GlobalStorage.getLoggedInEmployee().getEmployeeType()) {
+
+            case EMPLOYEE:
+                return "an employee";
+            case CHEF:
+                return "a chef";
+            case CHAUFFEUR:
+                return "a chauffeur";
+            case NUTRITION_EXPERT:
+                return "a nutrition expert";
+            case ADMINISTRATOR:
+                return "an administrator";
+            case SALESPERSON:
+                return "a salesperson";
+            default:
+                return "nothing, sorry.";
+        }
     }
 
     private void createImage() {
