@@ -12,8 +12,7 @@ import javax.swing.*;
 * Chef : 235.99 /hr | 400 000 / yr
 * */
 /**
- * Class for  database entity "employee".
- *
+ * Java representation of database entity "employee".
  */
 public class Employee {
 
@@ -286,11 +285,4 @@ public class Employee {
                 '}';
     }
 
-    // Old toString (manually made)
-    /*@Override
-    public String toString() {
-        return "Employee ID: " + employeeId + "\nUsername: " + username + "\nForename: " + forename
-                + "\nSurname: " + surname + "\nAddress: " + address + "\nPhone number: " + phoneNumber + "\nEmail: " + email
-                + "\nType: " + employeeType;
-    }*/
 }

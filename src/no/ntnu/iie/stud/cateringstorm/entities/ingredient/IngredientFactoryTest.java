@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
- * Created by Chris on 30.03.2016.
+ * JUnit test class for IngredientFactory.
  */
 public class IngredientFactoryTest {
 
