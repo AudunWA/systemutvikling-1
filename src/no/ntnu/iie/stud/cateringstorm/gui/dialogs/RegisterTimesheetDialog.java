@@ -44,12 +44,9 @@ public class RegisterTimesheetDialog extends JDialog {
         getRootPane().setDefaultButton(okButton);
         setSpinners();
         timesheets = TimesheetFactory.getActiveTimesheetsByEmployee(loggedInEmployeeId);
-        okButton.addActionListener(e -> {
-            onOK();
-        });
-        cancelButton.addActionListener(e -> {
-            onCancel();
-        });
+        okButton.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
+        
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 

@@ -40,17 +40,9 @@ public class EditEmployeeDialog extends JDialog {
         getRootPane().setDefaultButton(okButton);
         setLocationRelativeTo(getParent());
 
-        okButton.addActionListener(e -> {
-            onOK();
-        });
-
-        cancelButton.addActionListener(e -> {
-            onCancel();
-        });
-
-        editEmployeeInfoCB.addActionListener(e -> {
-            setTextField();
-        });
+        okButton.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
+        editEmployeeInfoCB.addActionListener(e -> setTextField());
 
         inputField.addMouseListener(new MouseAdapter() {
             @Override

@@ -34,15 +34,10 @@ public class EditCustomerDialog extends JDialog {
         getRootPane().setDefaultButton(saveButton);//Consider not using this for safety reasons
         setLocationRelativeTo(getParent());
 
-        saveButton.addActionListener(e -> {
-            onOK();
-        });
-        cancelButton.addActionListener(e -> {
-            onCancel();
-        });
-        choiceBox.addActionListener(e -> {
-            setTextField();
-        });
+        saveButton.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
+        choiceBox.addActionListener(e -> setTextField());
+
         inputField.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
