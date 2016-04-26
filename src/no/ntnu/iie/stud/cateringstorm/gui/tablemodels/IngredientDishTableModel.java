@@ -76,7 +76,7 @@ public class IngredientDishTableModel extends EntityTableModel<IngredientDish> {
             case COLUMN_DISH_ID:
                 return int.class;
             case COLUMN_QUANTITY:
-                return int.class;
+                return double.class;
             case COLUMN_UNIT:
                 return String.class;
             case COLUMN_INGREDIENT_NAME:
