@@ -146,7 +146,10 @@ public class MenuAdministratorView extends JPanel {
      */
     private void onAdd() {
         AddDishDialog dialog = new AddDishDialog();
+        final int WIDTH = 600;
+        final int HEIGHT = 400;
         dialog.pack();
+        dialog.setSize(WIDTH, HEIGHT);
         dialog.setLocationRelativeTo(dialog.getParent());
         dialog.setVisible(true);
         dishList = DishFactory.getActiveDishes();
