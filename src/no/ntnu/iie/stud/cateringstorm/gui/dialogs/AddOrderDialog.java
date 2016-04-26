@@ -241,7 +241,8 @@ public class AddOrderDialog extends JDialog {
                 return;
             } else if (!fromDatePicker.after(new Date(System.currentTimeMillis()))) {
                 JOptionPane.showMessageDialog(this, "Error the delivery date is before current date.");
-                return;
+                //return;
+                // ^Temporarily disabled for showcase
             }
             
 
