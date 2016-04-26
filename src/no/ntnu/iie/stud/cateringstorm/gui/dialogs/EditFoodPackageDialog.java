@@ -44,11 +44,13 @@ public class EditFoodPackageDialog extends JDialog {
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
+        addActionListeners();
 
+    }
+    private void addActionListeners(){
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
         addRemoveButton.addActionListener(e -> onAR());
-
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -56,13 +58,10 @@ public class EditFoodPackageDialog extends JDialog {
                 onCancel();
             }
         });
-
         // call onCancel() on ESCAPE
         mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
         loadData();
     }
-
     public static void main(String[] args) {
         final int height = 700;
         final int width = 600;

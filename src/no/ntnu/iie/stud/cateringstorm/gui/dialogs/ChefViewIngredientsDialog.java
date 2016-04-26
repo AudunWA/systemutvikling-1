@@ -11,7 +11,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
- * GUI Dialog for getting a pop-up window view of ingredients in an order
+ * GUI Dialog for getting a pop-up window view of ingredients in an order.
  */
 
 public class ChefViewIngredientsDialog extends JDialog {
@@ -35,7 +35,9 @@ public class ChefViewIngredientsDialog extends JDialog {
 
         ingredientLabel.setText("Ingredients for: " + dish.getName());
 
-
+        addActionListeners();
+    }
+    private void addActionListeners(){
         cancelButton.addActionListener(e -> onCancel());
 
 // call onCancel() when cross is clicked
@@ -53,7 +55,6 @@ public class ChefViewIngredientsDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-
     public static void main(String[] args) {
         ChefViewIngredientsDialog dialog = new ChefViewIngredientsDialog(DishFactory.getDish(2));
         dialog.pack();
