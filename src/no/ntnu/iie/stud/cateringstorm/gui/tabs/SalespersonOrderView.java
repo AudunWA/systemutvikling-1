@@ -163,7 +163,6 @@ public class SalespersonOrderView extends JPanel {
         statusBox.setSelectedIndex(0);
     }
 
-    // FIXME: Check trouble with wrongly selected indexes in combobox
     private void setStatus() {
 
         if (orderTable.getSelectedRow() > -1) {
