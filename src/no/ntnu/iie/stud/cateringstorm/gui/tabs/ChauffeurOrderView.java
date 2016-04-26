@@ -19,8 +19,8 @@ import java.util.Date;
  * Represents GUI with overview of orders for the chauffeur
  */
 public class ChauffeurOrderView extends JPanel {
-    private static ArrayList<Order> orderList = new ArrayList<>();
-    private static ArrayList<Order> helpTable = new ArrayList<>();
+    private static ArrayList<Order> orderList = new ArrayList<>(),
+    helpTable = new ArrayList<>();
     private JPanel mainPanel;
     private JTable orderTable;
     private JButton refreshButton;
@@ -32,12 +32,13 @@ public class ChauffeurOrderView extends JPanel {
     public ChauffeurOrderView() {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
-
+        addActionListeners();
+    }
+    private void addActionListeners(){
         refreshButton.addActionListener(e -> refresh());
         statusBox.addActionListener(e -> setStatus());
         startDeliveryButton.addActionListener(e -> makeDelivery());
     }
-
     private static JTable getNewRenderedTable(final JTable table) {
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
@@ -98,7 +99,6 @@ public class ChauffeurOrderView extends JPanel {
     }
 
     private void createUIComponents() {
-        // TODO: Custom initialization of UI components here
         createTable();
         createComboBox();
     }
@@ -123,15 +123,14 @@ public class ChauffeurOrderView extends JPanel {
             return;
         }
 
-
         while (addresses.size() > amount) {
             addresses.remove(addresses.size() - 1);
             helpTable.remove(helpTable.size() - 1);
         }
 
-        for (Order ayy : helpTable) {
-            OrderFactory.setOrderState(ayy.getOrderId(), 4);
-            OrderFactory.setDeliveryStart(ayy.getOrderId());
+        for (Order order : helpTable) {
+            OrderFactory.setOrderState(order.getOrderId(), 4);
+            OrderFactory.setDeliveryStart(order.getOrderId());
         }
 
         ArrayList<Coordinate> addressToPoint = new ArrayList<>();
@@ -157,10 +156,11 @@ public class ChauffeurOrderView extends JPanel {
 
         // Reset states
         if(!mapView.isSuccess()) {
-            for (Order ayy : helpTable) {
-                OrderFactory.setOrderState(ayy.getOrderId(), 0);
+            for (Order order : helpTable) {
+                OrderFactory.setOrderState(order.getOrderId(), 0);
             }
         }
+        refresh();
     }
 
     private void createComboBox() {
@@ -183,7 +183,6 @@ public class ChauffeurOrderView extends JPanel {
     }
 
     private void refresh() {
-        // TODO: Implement method refresh() removing changed rows(delivered ones) and checking for new ones coming from the kitchen
         orderList = OrderFactory.getAllAvailableOrdersForChauffeurTable();
         tableModel.setRows(orderList);
         for (int i = 0; i < orderList.size(); i++) {

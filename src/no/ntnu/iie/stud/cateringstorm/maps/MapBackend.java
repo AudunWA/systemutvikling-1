@@ -11,6 +11,7 @@ import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Coordinate;
+import no.ntnu.iie.stud.cateringstorm.util.GlobalStorage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,9 +22,8 @@ import java.util.Random;
 public class MapBackend {
     /**
      * The location of Healthy Catering LTD.
-     * TODO: Add to a configuration file?
      */
-    private static final Coordinate HOME_LOCATION = addressToPoint("Elgesetergate 1, Trondheim, Norway");
+    private static final Coordinate HOME_LOCATION = addressToPoint(GlobalStorage.getProperties().getProperty("map.home"));
 
     public static void main(String[] args) {
 
@@ -50,22 +50,8 @@ public class MapBackend {
         pointList.add(plass1);
         pointList.add(plass2);
 
-        /*for (double[] ayy : pointList){
-            System.out.println(ayy[1] + " " + ayy[0] + "     ");
-        }*/
-
-        /*for (double[] ayy : createFastestRoute(pointList)){
-            System.out.println(ayy[1] + " " + ayy[0] + "     ");
-        }*/
-
-        /*for (double[] ayy : getRandomList(pointList)) {
-            System.out.println(ayy[1] + " " + ayy[0] + "     ");
-        }*/
-
-        //System.out.println(getTotalDistanceList(getRandomList(pointList)));
-
-        for (Coordinate ayy : getShortestRoute(addressList)) {
-            System.out.println(ayy);
+        for (Coordinate coordinate : getShortestRoute(addressList)) {
+            System.out.println(coordinate);
         }
     }
 
@@ -90,8 +76,6 @@ public class MapBackend {
 
         double latitude = results.get(0).getGeometry().getLocation().getLat().doubleValue();
         double longitude = results.get(0).getGeometry().getLocation().getLng().doubleValue();
-
-        //System.out.println("Place: " + address + " At:   Latitude: " + latitude + " Longitude: " + longitude);
 
         return new Coordinate(latitude, longitude);
     }

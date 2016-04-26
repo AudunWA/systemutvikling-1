@@ -18,6 +18,9 @@
         <element id="library" level="project" name="org.jfree:jfreechart:1.0.19" />
         <element id="library" level="project" name="weblaf-complete-1.29" />
       </element>
+      <element id="directory" name="config">
+        <element id="file-copy" path="$PROJECT_DIR$/config/app.properties" />
+      </element>
     </root>
   </artifact>
 </component>
