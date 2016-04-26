@@ -1,6 +1,7 @@
 package no.ntnu.iie.stud.cateringstorm.gui.tablemodels;
 
 import no.ntnu.iie.stud.cateringstorm.entities.subscription.Subscription;
+import no.ntnu.iie.stud.cateringstorm.entities.subscription.SubscriptionFactory;
 
 import java.util.ArrayList;
 
@@ -24,9 +25,26 @@ public class SubscriptionTableModel extends EntityTableModel<Subscription> {
     public SubscriptionTableModel(ArrayList<Subscription> rows, Integer[] columns) {
         super(rows, columns);
     }
+
     @Override
     public boolean isCellEditable(int rowIndex,int columnIndex){
         return getColumnType(columnIndex) == COLUMN_ACTIVE;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        int columnType = getColumnType(columnIndex);
+        Subscription entity = getValue(rowIndex);
+        // Column containing status is only one to be edited.
+        if (columnType == COLUMN_ACTIVE) {
+            entity.setActive((Boolean) aValue);
+
+            SubscriptionFactory.updateSubscription(entity);
+            fireTableCellUpdated(rowIndex, columnIndex);
+        } else {
+            //Empty void, nothing happens
+            super.setValueAt(aValue, rowIndex, columnIndex);
+        }
     }
 
     @Override
