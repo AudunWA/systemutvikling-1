@@ -64,7 +64,7 @@ public class EditSubscriptionDialog extends JDialog {
         initializeTimeSpinner();
 
         // Add event listeners
-        okButton.addActionListener(e -> onOK());
+        //okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
         addRemoveButton.addActionListener(e -> onAR());
 
@@ -177,23 +177,21 @@ public class EditSubscriptionDialog extends JDialog {
      * Called when OK button is pressed.
      * Creates a new Subscription with attributes from user input
      */
-
+    /*
     private void onOK() {
         Customer customer = (Customer) customerComboBox.getSelectedItem();
         java.sql.Date startDate = new java.sql.Date(((Date) fromDate.getModel().getValue()).getTime());
         java.sql.Date endDate = new java.sql.Date(((Date) toDate.getModel().getValue()).getTime());
 
-<<<<<<< HEAD
         if (!SubscriptionFactory.(subscription, leftSideModel.getRowsClone())) {
             JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
         }
-=======
         //if (!SubscriptionFactory.updateSubscription(subscription, leftSideModel.getRowsClone())) {
         //    JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
         //}
->>>>>>> 1426402c018cc4c717a46f205681937b0ece1f2c
         dispose();
     }
+    */
 
 
     /**

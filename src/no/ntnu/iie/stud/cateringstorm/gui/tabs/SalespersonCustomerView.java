@@ -199,13 +199,12 @@ public class SalespersonCustomerView extends JPanel {
     }
 
     private void refresh() {
-
         if (showInactiveCB.isSelected()) {
-            tableModel.setRows(getAllCustomers());
+            customerList = CustomerFactory.getActiveCustomers();
         } else {
-            tableModel.setRows(getActiveCustomers());
+            customerList = CustomerFactory.getAllCustomers();
         }
         Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Customers refreshed.").display();
-        customerList = CustomerFactory.getActiveCustomers();
+        tableModel.setRows(customerList);
     }
 }

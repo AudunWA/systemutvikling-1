@@ -134,6 +134,88 @@ public final class SubscriptionFactory {
         Subscription subscription = new Subscription(generatedId, startDate, endDate, cost, customer.getCustomerId(), true);
         return subscription;
     }
+    /**
+     * Creates an arraylist of the active subscriptions in the SQL table subscriptions
+     *
+     * @return ArrayList<Subscription>
+     */
+    public static ArrayList<Subscription> getActiveSubscriptions() {
+        ArrayList<Subscription> foodPackages = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM subscription WHERE active = TRUE")) {
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+
+                        foodPackages.add(createSubscriptionFromResultSet(result));
+                    }
+
+                }
+                return foodPackages;
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    /**
+     * Gets all subscriptions with name matching a query.
+     *
+     * @return An ArrayList containing all subscription matched.
+     */
+    public static ArrayList<Subscription> getAllSubscriptionsByQuery(String searchQuery) {
+        ArrayList<Subscription> subscription = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM subscription WHERE customer_name LIKE ?")) {
+                statement.setString(1, '%' + searchQuery + '%');
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        subscription.add(createSubscriptionFromResultSet(result));
+                    }
+
+                }
+                return subscription;
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets all active foodpackes with name matching a query.
+     *
+     * @return An ArrayList containing all subscriptions matched.
+     */
+    public static ArrayList<Subscription> getActiveSubscriptionsByQuery(String searchQuery) {
+        ArrayList<Subscription> subscriptions = new ArrayList<>();
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM subscription WHERE name LIKE ? AND active = TRUE")) {
+                statement.setString(1, '%' + searchQuery + '%');
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    while (result.next()) {
+                        subscriptions.add(createSubscriptionFromResultSet(result));
+                    }
+
+                }
+                return subscriptions;
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     /**
      * @param result
@@ -154,5 +236,27 @@ public final class SubscriptionFactory {
         }
 
         return new Subscription(subscriptionId, startDate, endDate, cost, customerId, active);
+    }
+    /**
+     * Runs an UPDATE-query of a subscription, with all its columns.
+     *
+     * @param subscription The subscription to update
+     * @return An integer representing affected rows
+     */
+    public static int updateSubscription(Subscription subscription) {
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE subscription SET start_date = ?, end_date = ?, cost = ?, active = ? WHERE subscription_id = ?")) {
+                statement.setDate(1, subscription.getStartDate());
+                statement.setDate(2, subscription.getEndDate());
+                statement.setDouble(3, subscription.getCost());
+                statement.setBoolean(4, subscription.isActive());
+                statement.setInt(5, subscription.getSubscriptionId());
+
+                return statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
