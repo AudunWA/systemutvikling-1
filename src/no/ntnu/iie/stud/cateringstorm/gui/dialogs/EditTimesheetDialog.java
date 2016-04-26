@@ -44,8 +44,10 @@ public class EditTimesheetDialog extends JDialog {
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
-
         setSpinners();
+        addActionListeners();
+    }
+    private void addActionListeners(){
         okButton.addActionListener(e -> onOK());
 
         // call onCancel() when cross is clicked
@@ -64,7 +66,6 @@ public class EditTimesheetDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-
     public static void main(String[] args) {
         final int HEIGHT = 400, WIDTH = 400;
         GlobalStorage.setLoggedInEmployee(EmployeeFactory.getEmployee("chechter"));

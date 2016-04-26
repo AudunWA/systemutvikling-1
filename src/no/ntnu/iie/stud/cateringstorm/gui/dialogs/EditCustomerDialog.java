@@ -9,7 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * GUI Dialog for editing an existing customer in the database
+ * GUI Dialog for editing an existing customer in the database.
  */
 
 public class EditCustomerDialog extends JDialog {

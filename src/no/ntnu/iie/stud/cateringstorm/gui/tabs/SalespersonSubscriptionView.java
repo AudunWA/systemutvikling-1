@@ -123,6 +123,7 @@ public class SalespersonSubscriptionView extends JPanel {
             Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Subscription not created.", Toast.Style.ERROR).display();
         } else {
             Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Subscription created.", Toast.Style.SUCCESS).display();
+            refresh();
         }
     }
 
@@ -135,6 +136,7 @@ public class SalespersonSubscriptionView extends JPanel {
         esDialog.setSize(WIDTH, HEIGHT);
         esDialog.setLocationRelativeTo(null);
         esDialog.setVisible(true);
+        refresh();
     }
     private void removeSubscription() {
         int selectedRow = orderTable.getSelectedRow();

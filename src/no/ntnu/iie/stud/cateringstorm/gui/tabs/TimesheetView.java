@@ -198,6 +198,7 @@ public class TimesheetView extends JPanel {
             dialog.setVisible(true);
             dialog.setTitle("Edit timesheet");
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            refresh();
         }
     }
 

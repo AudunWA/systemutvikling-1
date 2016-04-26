@@ -40,7 +40,16 @@ public class ChefMakeOrderDialog extends JDialog {
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
+        addActionListeners();
+    }
 
+    public static void main(String[] args) {
+        ChefMakeOrderDialog dialog = new ChefMakeOrderDialog(OrderFactory.getOrder(1));
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+    private void addActionListeners(){
         okButton.addActionListener(e -> onOK());
         cancelButton.addActionListener(e -> onCancel());
         viewIngredientsButton.addActionListener(e -> onView());
@@ -60,14 +69,6 @@ public class ChefMakeOrderDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-
-    public static void main(String[] args) {
-        ChefMakeOrderDialog dialog = new ChefMakeOrderDialog(OrderFactory.getOrder(1));
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
-
     /**
      * Called when view button is pressed
      */
