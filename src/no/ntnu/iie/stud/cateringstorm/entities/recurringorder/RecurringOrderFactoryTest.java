@@ -1,6 +1,11 @@
 package no.ntnu.iie.stud.cateringstorm.entities.recurringorder;
 
+import no.ntnu.iie.stud.cateringstorm.entities.subscription.Subscription;
+import no.ntnu.iie.stud.cateringstorm.entities.subscription.SubscriptionFactory;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -16,6 +21,8 @@ public class RecurringOrderFactoryTest {
 
     @Test
     public void testGetRecurringOrders() throws Exception {
-
+        Subscription subscription = SubscriptionFactory.getSubscription(1);// We assume subscription #1 exists.
+        ArrayList<RecurringOrder> factoryOrders = RecurringOrderFactory.getRecurringOrders(subscription.getSubscriptionId());
+        Assert.assertNotNull(factoryOrders);
     }
 }
