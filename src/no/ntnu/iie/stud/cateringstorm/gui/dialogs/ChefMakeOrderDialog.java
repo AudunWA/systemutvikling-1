@@ -140,9 +140,9 @@ public class ChefMakeOrderDialog extends JDialog {
         dishList = new ArrayList<>();
 
         for (int i = 0; i < packagesId.size(); i++) {
-            for (int k = 0; k < DishFactory.getDishes(i+1).size(); k++) {
-                dishList.add(DishFactory.getDishes(i+1).get(k));
-                System.out.println(DishFactory.getDishes(i+1).get(k));
+            for (int k = 0; k < DishFactory.getDishes(packagesId.get(i)).size(); k++) {
+                dishList.add(DishFactory.getDishes(packagesId.get(i)).get(k));
+                System.out.println(DishFactory.getDishes(packagesId.get(i)).get(k));
             }
         }
 
