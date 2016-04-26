@@ -4,6 +4,8 @@ import no.ntnu.iie.stud.cateringstorm.entities.employee.Employee;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.employee.EmployeeType;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.EmployeeTableModel;
+import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
+import no.ntnu.iie.stud.cateringstorm.util.InputUtil;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -16,44 +18,33 @@ import java.util.ArrayList;
 
 public class EditEmployeeDialog extends JDialog {
     private JPanel mainPanel;
-    private JPanel textPanel;
-    private JTextField inputField;
-    private JPanel cbPanel;
-    private JComboBox editEmployeeInfoCB;
-    private JLabel infoLabel;
-    private JPanel buttonPanel;
-    private JButton okButton;
+    private JButton saveButton;
     private JButton cancelButton;
-    private JLabel selectEmployeeType;
-    private JCheckBox activeCheckBox;
-    private JComboBox editEmployeeTypeCB;
+    private JTextField usernameField;
+    private JTextField forenameField;
+    private JTextField surnameField;
+    private JTextField addressField;
+    private JTextField phoneField;
+    private JTextField emailField;
+    private JTextField passwordField;
+    private JComboBox<String> typeComboBox;
 
     private Employee employee;
     private boolean addedNewValue;
-    private EmployeeTableModel tableModel;
+    private static final String PASSWORD_DUMMY = "dummyPassword";
 
     public EditEmployeeDialog(Employee employee) {
         this.employee = employee;
         setTitle("Edit an employee");
         setContentPane(mainPanel);
         setModal(true);
-        getRootPane().setDefaultButton(okButton);
+        getRootPane().setDefaultButton(saveButton);
         setLocationRelativeTo(getParent());
 
-        okButton.addActionListener(e -> onOK());
+        saveButton.addActionListener(e -> onSavePressed());
         cancelButton.addActionListener(e -> onCancel());
-        editEmployeeInfoCB.addActionListener(e -> setTextField());
 
-        inputField.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (inputField.isEnabled()) {
-                    emptyTextField(inputField.getText());
-                }
-            }
-        });
-
-// call onCancel() when cross is clicked
+        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -61,12 +52,11 @@ public class EditEmployeeDialog extends JDialog {
             }
         });
 
-// call onCancel() on ESCAPE
-        mainPanel.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        // call onCancel() on ESCAPE
+        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        loadData();
+        pack();
     }
 
     public static void main(String[] args) {
@@ -81,52 +71,85 @@ public class EditEmployeeDialog extends JDialog {
     }
 
     /**
-     * Called when ok button is called
+     * Called when save button is called
      * Updates and saves the changes to the existing Employee
      */
-    private void onOK() {
-        final int COLUMN_USERNAME = 0;
-        final int COLUMN_FORENAME = 1;
-        final int COLUMN_SURNAME = 2;
-        final int COLUMN_ADDRESS = 3;
-        final int COLUMN_PHONE = 4;
-        final int COLUMN_EMAIL = 5;
-
+    private void onSavePressed() {
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure?", "", dialogButton);
 
         if (dialogResult == 0) {
-            String input = inputField.getText();
-            if (input.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please enter a value.");
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+            String forename = forenameField.getText();
+            String surname = surnameField.getText();
+            String address = addressField.getText();
+            String phone = phoneField.getText();
+            String email = emailField.getText();
+            int selectedIndex = typeComboBox.getSelectedIndex();
+
+            EmployeeType employeeType = EmployeeType.getEmployeeType(selectedIndex);
+
+            if (username.isEmpty()) {
+                Toast.makeText(this, "Please fill in a username.", Toast.Style.ERROR).display();
                 return;
             }
-            switch (getChoice()) {
 
-                case COLUMN_USERNAME:
-                    employee.setUsername(input);
-                    break;
-                case COLUMN_FORENAME:
-                    employee.setForename(input);
-                    break;
-                case COLUMN_SURNAME:
-                    employee.setSurname(input);
-                    break;
-                case COLUMN_ADDRESS:
-                    employee.setAddress(input);
-                    break;
-                case COLUMN_PHONE:
-                    employee.setPhoneNumber(input);
-                    break;
-                case COLUMN_EMAIL:
-                    employee.setEmail(input);
-                    break;
-
-                default:
-                    return;
+            if (forename.isEmpty()) {
+                Toast.makeText(this, "Please fill in a forename", Toast.Style.ERROR).display();
+                return;
             }
 
-            employee.setEmployeeType(getEmployeeType());
+            if (surname.isEmpty()) {
+                Toast.makeText(this, "Please fill in a surname", Toast.Style.ERROR).display();
+                return;
+            }
+
+            if (address.isEmpty()) {
+                Toast.makeText(this, "Please fill in an address.", Toast.Style.ERROR).display();
+                return;
+            }
+
+            if (phone.isEmpty()) {
+                Toast.makeText(this, "Please fill in a phone number.", Toast.Style.ERROR).display();
+                return;
+            }
+
+            if (email.isEmpty()) {
+                Toast.makeText(this, "Please fill in an email.", Toast.Style.ERROR).display();
+                return;
+            }
+
+            if(!InputUtil.isValidPhoneNumber(phone)) {
+                Toast.makeText(this, "Invalid phone number.", Toast.Style.ERROR).display();
+                return;
+            }
+
+            if(!InputUtil.isValidEmail(email)) {
+                Toast.makeText(this, "Invalid email address.", Toast.Style.ERROR).display();
+                return;
+            }
+
+            if(!InputUtil.isValidStreetAddress(address)) {
+                Toast.makeText(this, "Invalid address.", Toast.Style.ERROR).display();
+                return;
+            }
+
+            employee.setForename(forename);
+            employee.setSurname(surname);
+            employee.setPhoneNumber(phone);
+            employee.setEmail(email);
+            employee.setUsername(username);
+            employee.setAddress(address);
+
+            if(employee.getEmployeeType() != EmployeeType.ADMINISTRATOR) {
+                // Not admin, can change type
+                employee.setEmployeeType(employeeType);
+            }
+            if(!passwordField.getText().equals(PASSWORD_DUMMY)) {
+                // Changed password
+                // TODO: Update password
+            }
 
             int updatedId = EmployeeFactory.updateEmployee(employee);
             if (updatedId != 1) {
@@ -142,6 +165,7 @@ public class EditEmployeeDialog extends JDialog {
 
         dispose();
     }
+
     /**
      * Called when cancel button, escape or the cross is pressed
      */
@@ -149,132 +173,34 @@ public class EditEmployeeDialog extends JDialog {
         dispose();
     }
 
-    private void setTextField() {
-        final int COLUMN_USERNAME = 0;
-        final int COLUMN_FORENAME = 1;
-        final int COLUMN_SURNAME = 2;
-        final int COLUMN_ADDRESS = 3;
-        final int COLUMN_PHONE = 4;
-        final int COLUMN_EMAIL = 5;
+    private void loadData() {
+        forenameField.setText(employee.getForename());
+        surnameField.setText(employee.getSurname());
+        phoneField.setText(employee.getPhoneNumber());
+        emailField.setText(employee.getEmail());
+        usernameField.setText(employee.getUsername());
+        passwordField.setText(PASSWORD_DUMMY);
+        addressField.setText(employee.getAddress());
+        typeComboBox.setSelectedIndex(employee.getEmployeeType().getType());
 
-        switch (getChoice()) {
-            case COLUMN_USERNAME:
-                inputField.setText("Enter new username");
-                inputField.setEnabled(true);
-                break;
-            case COLUMN_FORENAME:
-                inputField.setText("Enter new forename");
-                inputField.setEnabled(true);
-                break;
-            case COLUMN_SURNAME:
-                inputField.setText("Enter new surname");
-                inputField.setEnabled(true);
-                break;
-            case COLUMN_ADDRESS:
-                inputField.setText("Enter new address");
-                inputField.setEnabled(true);
-                break;
-            case COLUMN_PHONE:
-                inputField.setText("Enter new phone number");
-                inputField.setEnabled(true);
-                break;
-            case COLUMN_EMAIL:
-                inputField.setText("Enter new email");
-                inputField.setEnabled(true);
-                break;
-
-            default:
-                inputField.setText("Please choose a value in the combobox below");
-        }
-
-    }
-
-    private int getChoice() {
-        return editEmployeeInfoCB.getSelectedIndex();
-    }
-
-    private void emptyTextField(String text) {
-        if (inputField.getText().equals(text)) {
-            inputField.setText("");
+        // Disable role selection if user being edited is admin
+        if(employee.getEmployeeType() == EmployeeType.ADMINISTRATOR) {
+            typeComboBox.setEnabled(false);
         }
     }
 
-    private void createComboBox() {
-        ArrayList<Employee> employeeList = EmployeeFactory.getAllEmployees();
-        Integer[] columns = new Integer[]{EmployeeTableModel.COLUMN_USERNAME, EmployeeTableModel.COLUMN_FORENAME, EmployeeTableModel.COLUMN_SURNAME, EmployeeTableModel.COLUMN_ADDRESS, EmployeeTableModel.COLUMN_PHONE, EmployeeTableModel.COLUMN_EMAIL, EmployeeTableModel.COLUMN_EMPLOYEE_TYPE, EmployeeTableModel.COLUMN_ACTIVE};
-        tableModel = new EmployeeTableModel(employeeList, columns);
-        Object[] choices = new Object[tableModel.getColumnCount()];
+    private void createComboBoxType() {
+        String[] status = {"General employee", "Chef", "Chauffeur", "Nutrition Expert", "Administrator", "Salesperson"};
 
-        int tmp = 0;
-        int unwantedColumn1 = 6, unwantedColumn2 = 7, unwantedColumn3 = 8;
-        for (int i = 0; i < 8; i++) {
-            if (i != unwantedColumn1 && i != unwantedColumn2 && i != unwantedColumn3) {
-                choices[tmp] = tableModel.getColumnName(i);
-                tmp++;
-            }
-        }
-        editEmployeeInfoCB = new JComboBox(choices);
-        editEmployeeInfoCB.setSelectedIndex(0);
-    }
-
-    private void createComboBox2() {
-        Object[] choices = {"Employee", "Nutrition expert", "Salesperson", "Chauffeur", "Chef", "Administrator"};
-
-        editEmployeeTypeCB = new JComboBox(choices);
-        editEmployeeTypeCB.setSelectedIndex(0);
-    }
-
-    private int getChoice2() {
-        return editEmployeeTypeCB.getSelectedIndex();
-    }
-
-    private EmployeeType getEmployeeType() {
-        final int COLUMN_EMPLOYEE = 0;
-        final int COLUMN_NUTRITION_EXPERT = 1;
-        final int COLUMN_SALESPERSON = 2;
-        final int COLUMN_CHAUFFEUR = 3;
-        final int COLUMN_CHEF = 4;
-        final int COLUMN_ADMINISTRATOR = 5;
-
-        switch (getChoice2()) {
-            case COLUMN_EMPLOYEE:
-                return EmployeeType.EMPLOYEE;
-            case COLUMN_NUTRITION_EXPERT:
-                return EmployeeType.NUTRITION_EXPERT;
-            case COLUMN_SALESPERSON:
-                return EmployeeType.SALESPERSON;
-            case COLUMN_CHAUFFEUR:
-                return EmployeeType.CHAUFFEUR;
-            case COLUMN_CHEF:
-                return EmployeeType.CHEF;
-            case COLUMN_ADMINISTRATOR:
-                return EmployeeType.ADMINISTRATOR;
-
-            default:
-                return EmployeeType.EMPLOYEE;
-        }
-    }
-
-    private void createCheckBox() {
-
-    }
-
-    private void createTextField() {
-        inputField = new JTextField(20);
-        inputField.setText("Choose a value in a combobox below");
-        inputField.setEnabled(false);
-        add(inputField);
-    }
-
-    private void createUIComponents() {
-        createComboBox();
-        createComboBox2();
-        createCheckBox();
-        createTextField();
+        typeComboBox = new JComboBox<>(status);
+        typeComboBox.setSelectedIndex(0);
     }
 
     public boolean getAddedNewValue() {
         return addedNewValue;
     }
 
+    private void createUIComponents() {
+        createComboBoxType();
+    }
 }
