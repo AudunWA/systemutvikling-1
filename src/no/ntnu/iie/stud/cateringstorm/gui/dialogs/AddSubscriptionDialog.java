@@ -48,7 +48,6 @@ public class AddSubscriptionDialog extends JDialog {
     private JTable selectedPackagesTable;
     private RecurringOrderTableModel selectedPackagesModel;
     private double cost;
-    private ArrayList<FoodPackage> foodList; // TODO: Replace with table model methods
     private Subscription subscription;
 
     public AddSubscriptionDialog() {
@@ -188,7 +187,7 @@ public class AddSubscriptionDialog extends JDialog {
         }
 
         if (availablePackagesTable.getSelectedRow() > -1) {
-            FoodPackage selectedFoodPackage = foodList.get(availablePackagesTable.getSelectedRow());
+            FoodPackage selectedFoodPackage = availabelpackagesModel.getValue(availablePackagesTable.getSelectedRow());
             RecurringOrder existingRecurringOrder = null;
             int existingRecurringOrderIndex = -1;
             ArrayList<RecurringOrder> recurringOrders = selectedPackagesModel.getRowsClone();
@@ -294,9 +293,8 @@ public class AddSubscriptionDialog extends JDialog {
     }
 
     public void createPackageSelectionTable() {
-        foodList = FoodPackageFactory.getAllFoodPackages();
         Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST};
-        availabelpackagesModel = new FoodPackageTableModel(foodList, columns);
+        availabelpackagesModel = new FoodPackageTableModel(FoodPackageFactory.getAllFoodPackages(), columns);
         availablePackagesTable = new JTable(availabelpackagesModel);
         availablePackagesTable.getTableHeader().setReorderingAllowed(false);
 

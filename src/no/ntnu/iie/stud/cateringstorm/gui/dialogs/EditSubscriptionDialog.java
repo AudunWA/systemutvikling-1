@@ -5,26 +5,27 @@ import no.ntnu.iie.stud.cateringstorm.entities.customer.CustomerFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackage;
 import no.ntnu.iie.stud.cateringstorm.entities.foodpackage.FoodPackageFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrder;
+import no.ntnu.iie.stud.cateringstorm.entities.recurringorder.RecurringOrderFactory;
 import no.ntnu.iie.stud.cateringstorm.entities.subscription.Subscription;
 import no.ntnu.iie.stud.cateringstorm.entities.subscription.SubscriptionFactory;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.FoodPackageTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.RecurringOrderTableModel;
-import no.ntnu.iie.stud.cateringstorm.gui.tablemodels.SubscriptionTableModel;
 import no.ntnu.iie.stud.cateringstorm.gui.util.DateUtil;
 import no.ntnu.iie.stud.cateringstorm.gui.util.SimpleDateFormatter;
 import no.ntnu.iie.stud.cateringstorm.gui.util.Toast;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
+import org.jdatepicker.impl.SqlDateModel;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Properties;
 
 /**
@@ -39,23 +40,27 @@ public class EditSubscriptionDialog extends JDialog {
     private JButton okButton;
     private JButton cancelButton;
     private JButton addRemoveButton;
-    private JDatePickerImpl fromDate;
-    private JDatePickerImpl toDate;
     private JComboBox<String> dayComboBox;
     private JComboBox<Customer> customerComboBox;
     private JTextField costField;
     private JSpinner amountSpinner;
     private JSpinner timeSpinner;
     private JTable rightSideTable;
-    private FoodPackageTableModel availabelpackagesModel;
+    private FoodPackageTableModel rightSideModel;
     private JTable leftSideTable;
-    private RecurringOrderTableModel selectedPackagesModel;
+    private RecurringOrderTableModel leftSideModel;
     private double cost;
-    private ArrayList<FoodPackage> foodList; // TODO: Replace with table model methods
     private Subscription subscription;
+    private int customerIndex; // Used on load time
+
+    private JDatePickerImpl fromDatePicker;
+    private SqlDateModel fromDateModel;
+
+    private JDatePickerImpl toDatePicker;
+    private SqlDateModel toDateModel;
 
     public EditSubscriptionDialog(Subscription subscription) {
-
+        this.subscription = subscription;
         setContentPane(mainPanel);
         setModal(true);
         getRootPane().setDefaultButton(okButton);
@@ -77,11 +82,7 @@ public class EditSubscriptionDialog extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        mainPanel.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        mainPanel.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         leftSideTable.getSelectionModel().addListSelectionListener(e -> {
             int index = leftSideTable.getSelectedRow();
@@ -90,7 +91,7 @@ public class EditSubscriptionDialog extends JDialog {
             }
             // Unselect other table
             rightSideTable.clearSelection();
-            RecurringOrder order = selectedPackagesModel.getValue(index);
+            RecurringOrder order = leftSideModel.getValue(index);
 
             dayComboBox.setSelectedIndex(order.getWeekday());
             amountSpinner.setValue(order.getAmount());
@@ -113,9 +114,9 @@ public class EditSubscriptionDialog extends JDialog {
                 return;
             }
 
-            RecurringOrder order = selectedPackagesModel.getValue(index);
+            RecurringOrder order = leftSideModel.getValue(index);
             order.setWeekday(dayIndex);
-            selectedPackagesModel.updateRow(index);
+            leftSideModel.updateRow(index);
         });
 
         // Set minimum amount on spinner (could be 1, but we want to display our error toast)
@@ -135,9 +136,9 @@ public class EditSubscriptionDialog extends JDialog {
                 return;
             }
 
-            RecurringOrder order = selectedPackagesModel.getValue(index);
+            RecurringOrder order = leftSideModel.getValue(index);
             order.setAmount(newAmount);
-            selectedPackagesModel.updateRow(index);
+            leftSideModel.updateRow(index);
         });
 
         timeSpinner.addChangeListener(e -> {
@@ -153,25 +154,52 @@ public class EditSubscriptionDialog extends JDialog {
                 return;
             }
 
-            RecurringOrder order = selectedPackagesModel.getValue(index);
+            RecurringOrder order = leftSideModel.getValue(index);
             order.setRelativeTime(newTime);
-            selectedPackagesModel.updateRow(index);
+            leftSideModel.updateRow(index);
         });
+        loadData();
     }
 
     public static void main(String[] args) {
-        AddSubscriptionDialog dialog = new AddSubscriptionDialog();
+        EditSubscriptionDialog dialog = new EditSubscriptionDialog(SubscriptionFactory.getSubscription(2));
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
     }
-    /*
+
+    /**
+     * Fills up the components with data from the food package.
+     * Table data is not loaded here, but in createTables().
+     */
     private void loadData() {
-        //customerComboBox.setSelectedIndex(subscription.getCustomerId());
-        //costField.setText(subscription.getCost());
-        //activeCheckbox.setSelected();
+        // Set date picker model values
+        fromDateModel.setValue(subscription.getStartDate());
+        toDateModel.setValue(subscription.getEndDate());
+
+        // Everything else
+        cost = subscription.getCost();
+        costField.setText(subscription.getCost() + "");
+        customerComboBox.setSelectedIndex(customerIndex);
     }
-    */
+
+    /**
+     * Initializes and fills the tables with appropriate data
+     */
+    private void createTables() {
+        Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST};
+        Integer[] addedColumns = new Integer[]{RecurringOrderTableModel.COLUMN_FOOD_PACKAGE_NAME, RecurringOrderTableModel.COLUMN_AMOUNT, RecurringOrderTableModel.COLUMN_FOOD_PACKAGE_COST, RecurringOrderTableModel.COLUMN_WEEKDAY, RecurringOrderTableModel.COLUMN_RELATIVE_TIME};
+
+        // Available dishes (all active ones)
+        rightSideModel = new FoodPackageTableModel(FoodPackageFactory.getAllFoodPackages(), columns);
+        rightSideTable = new JTable(rightSideModel);
+        rightSideTable.getTableHeader().setReorderingAllowed(false);
+
+        // Current dishes
+        leftSideModel = new RecurringOrderTableModel(RecurringOrderFactory.getRecurringOrders(subscription.getSubscriptionId()), addedColumns);
+        leftSideTable = new JTable(leftSideModel);
+        leftSideTable.getTableHeader().setReorderingAllowed(false);
+    }
 
     /*~
      * Called when OK button is pressed.
@@ -180,18 +208,13 @@ public class EditSubscriptionDialog extends JDialog {
 
     private void onOK() {
         Customer customer = (Customer) customerComboBox.getSelectedItem();
-        java.sql.Date startDate = new java.sql.Date(((Date) fromDate.getModel().getValue()).getTime());
-        java.sql.Date endDate = new java.sql.Date(((Date) toDate.getModel().getValue()).getTime());
+        Date startDate = ((SqlDateModel) fromDatePicker.getModel()).getValue();
+        Date endDate = ((SqlDateModel) toDatePicker.getModel()).getValue();
 
-<<<<<<< HEAD
-        if (!SubscriptionFactory.(subscription, leftSideModel.getRowsClone())) {
+        // TODO: Make factory method
+        //if (!SubscriptionFactory.(subscription, leftSideModel.getRowsClone())) {
             JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
-        }
-=======
-        //if (!SubscriptionFactory.updateSubscription(subscription, leftSideModel.getRowsClone())) {
-        //    JOptionPane.showMessageDialog(this, "Dish was not updated, please try again later.");
         //}
->>>>>>> 1426402c018cc4c717a46f205681937b0ece1f2c
         dispose();
     }
 
@@ -209,10 +232,10 @@ public class EditSubscriptionDialog extends JDialog {
         }
 
         if (rightSideTable.getSelectedRow() > -1) {
-            FoodPackage selectedFoodPackage = foodList.get(rightSideTable.getSelectedRow());
+            FoodPackage selectedFoodPackage = rightSideModel.getValue(rightSideTable.getSelectedRow());
             RecurringOrder existingRecurringOrder = null;
             int existingRecurringOrderIndex = -1;
-            ArrayList<RecurringOrder> recurringOrders = selectedPackagesModel.getRowsClone();
+            ArrayList<RecurringOrder> recurringOrders = leftSideModel.getRowsClone();
             for (int i = 0; i < recurringOrders.size(); i++) {
                 RecurringOrder recurringOrder = recurringOrders.get(i);
                 if (recurringOrder.getFoodPackageId() == selectedFoodPackage.getFoodPackageId()) {
@@ -223,30 +246,30 @@ public class EditSubscriptionDialog extends JDialog {
             }
             if (existingRecurringOrder == null) {
                 // Create a new recurring order and add it
-                int relativeTime = DateUtil.convertToRelativeTime(DateUtil.convertDate((Date) timeSpinner.getModel().getValue()).toLocalTime());
+                int relativeTime = DateUtil.convertToRelativeTime(DateUtil.convertDate((java.util.Date) timeSpinner.getModel().getValue()).toLocalTime());
                 RecurringOrder newOrder = new RecurringOrder(-1, dayComboBox.getSelectedIndex(), relativeTime,1, null, selectedFoodPackage);
-                selectedPackagesModel.addRow(newOrder);
+                leftSideModel.addRow(newOrder);
 
             } else {
                 // Increment existing with one
                 existingRecurringOrder.incrementAmount();
-                selectedPackagesModel.updateRow(existingRecurringOrderIndex);
+                leftSideModel.updateRow(existingRecurringOrderIndex);
             }
             cost += selectedFoodPackage.getCost();
-            costField.setText("Cost: " + cost);
+            costField.setText(cost + "");
         } else if (leftSideTable.getSelectedRow() > -1) {
-            RecurringOrder selectedRecurringOrder = selectedPackagesModel.getValue(leftSideTable.getSelectedRow());
+            RecurringOrder selectedRecurringOrder = leftSideModel.getValue(leftSideTable.getSelectedRow());
 
             cost -= selectedRecurringOrder.getFoodPackageCost();
-            costField.setText("Cost: " + cost);
+            costField.setText(cost + "");
 
             if (selectedRecurringOrder.getAmount() > 1) {
                 // Decrement
                 selectedRecurringOrder.decrementAmount();
-                selectedPackagesModel.updateRow(leftSideTable.getSelectedRow());
+                leftSideModel.updateRow(leftSideTable.getSelectedRow());
             } else {
                 // Remove
-                selectedPackagesModel.removeRow(leftSideTable.getSelectedRow());
+                leftSideModel.removeRow(leftSideTable.getSelectedRow());
                 leftSideTable.clearSelection();
             }
         } else {
@@ -261,22 +284,11 @@ public class EditSubscriptionDialog extends JDialog {
 // add your code here if necessary
         dispose();
     }
-    /*
-    private void createTables() {
-        // Available dishes (all active ones)
-        rightTableModel = new SubscriptionTableModel(FoodPackageFactory.getActiveFoodPackages(), COLUMNS_AVAILABLE_DISHES);
-        rightSideTable = new JTable(rightTableModel);
-
-        // Current dishes
-        leftSideModel = new SubscriptionTableModel(SubscriptionFactory.getSubscription(subscription.getSubscriptionId()), COLUMNS_AVAILABLE_DISHES);
-        leftSideTable = new JTable(leftSideModel);
-    }
-    */
 
     private void createUIComponents() {
         // Create date pickers
-        UtilDateModel model1 = new UtilDateModel();
-        UtilDateModel model2 = new UtilDateModel();
+        fromDateModel = new SqlDateModel();
+        toDateModel = new SqlDateModel();
 
         // Dunno
         Properties p = new Properties();
@@ -284,17 +296,15 @@ public class EditSubscriptionDialog extends JDialog {
         p.put("text.month", "Month");
         p.put("text.year", "Year");
 
-        JDatePanelImpl pane1 = new JDatePanelImpl(model1, p);
-        JDatePanelImpl pane2 = new JDatePanelImpl(model2, p);
-        fromDate = new JDatePickerImpl(pane1, new SimpleDateFormatter());
-        toDate = new JDatePickerImpl(pane2, new SimpleDateFormatter());
-
-        createPackageSelectionTable();
+        JDatePanelImpl fromPanel = new JDatePanelImpl(fromDateModel, p);
+        JDatePanelImpl toPanel = new JDatePanelImpl(toDateModel, p);
+        fromDatePicker = new JDatePickerImpl(fromPanel, new SimpleDateFormatter());
+        toDatePicker = new JDatePickerImpl(toPanel, new SimpleDateFormatter());
 
         costField = new JTextField();
-        costField.setText("Cost: ");
         costField.setEditable(false);
 
+        createTables();
     }
 
     private void initializeTimeSpinner() {
@@ -308,8 +318,14 @@ public class EditSubscriptionDialog extends JDialog {
     public void fillComboBoxes() {
         // Fill customers
         ArrayList<Customer> customers = CustomerFactory.getAllCustomers();
-        for (Customer customer : customers) {
+        for (int i = 0; i < customers.size(); i++) {
+            Customer customer = customers.get(i);
             customerComboBox.addItem(customer);
+
+            // Set customer index if this is the selected customer.
+            if(subscription.getCustomerId() == customer.getCustomerId()) {
+                customerIndex = i;
+            }
         }
 
         // Lazy lambda, handles correct name rendering
@@ -322,20 +338,7 @@ public class EditSubscriptionDialog extends JDialog {
     }
 
     private int getTimeSpinnerValue() {
-        return DateUtil.convertToRelativeTime(DateUtil.convertDate((Date) timeSpinner.getModel().getValue()).toLocalTime());
-    }
-
-    public void createPackageSelectionTable() {
-        foodList = FoodPackageFactory.getAllFoodPackages();
-        Integer[] columns = new Integer[]{FoodPackageTableModel.COLUMN_NAME, FoodPackageTableModel.COLUMN_COST};
-        availabelpackagesModel = new FoodPackageTableModel(foodList, columns);
-        rightSideTable = new JTable(availabelpackagesModel);
-        rightSideTable.getTableHeader().setReorderingAllowed(false);
-
-        Integer[] addedColumns = new Integer[]{RecurringOrderTableModel.COLUMN_FOOD_PACKAGE_NAME, RecurringOrderTableModel.COLUMN_AMOUNT, RecurringOrderTableModel.COLUMN_FOOD_PACKAGE_COST, RecurringOrderTableModel.COLUMN_WEEKDAY, RecurringOrderTableModel.COLUMN_RELATIVE_TIME};
-        selectedPackagesModel = new RecurringOrderTableModel(new ArrayList<>(), addedColumns);
-        leftSideTable = new JTable(selectedPackagesModel);
-        leftSideTable.getTableHeader().setReorderingAllowed(false);
+        return DateUtil.convertToRelativeTime(DateUtil.convertDate((java.util.Date) timeSpinner.getModel().getValue()).toLocalTime());
     }
 
     /**
@@ -346,7 +349,7 @@ public class EditSubscriptionDialog extends JDialog {
      * @return If any order is set to be delivered within MIN_HOURS_BETWEEN_ORDERS hours of the new one, return false.
      */
     private boolean isValidAdd(int newWeekday, int newRelativeTime) {
-        for (RecurringOrder recurringOrder : selectedPackagesModel.getRowsClone()) {
+        for (RecurringOrder recurringOrder : leftSideModel.getRowsClone()) {
             if (recurringOrder.getWeekday() == newWeekday) {
                 LocalDateTime recurringOrderLocalTime = DateUtil.convertRelativeTime(recurringOrder.getRelativeTime());
                 LocalDateTime newRelativeLocalTime = DateUtil.convertRelativeTime(newRelativeTime);
