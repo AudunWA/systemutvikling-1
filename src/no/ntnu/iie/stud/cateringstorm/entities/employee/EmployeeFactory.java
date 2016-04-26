@@ -215,7 +215,7 @@ public final class EmployeeFactory {
 
     /**
      * Returns salary so far selected year for a selected employee.
-     * @param employeeId
+     * @param employeeId The id of the selected employee
      * @return double
      */
     public static double getSalarySoFar(int employeeId, java.sql.Date year){
@@ -244,8 +244,8 @@ public final class EmployeeFactory {
         return -1.;
     }
     /**
-     * @param employee
-     * @return statement.executeUpdate
+     * @param employee The selected employee.
+     * @return int.
      */
     public static int updateEmployee(Employee employee) {
         try (Connection connection = Database.getConnection()) {
@@ -267,6 +267,36 @@ public final class EmployeeFactory {
         }
     }
 
+    /*SELECT employee_id, COUNT(*) sum FROM _order o JOIN employee e ON(o.salesperson_id = e.employee_id) WHERE year(o.delivery_time) = year(CURDATE()) AND o.status = 2
+ GROUP BY employee_id DESC;*/
+    /*SELECT employee_id, COUNT(*) sum FROM _order o JOIN employee e ON(o.salesperson_id = e.employee_id) WHERE year(o.delivery_time) = year(CURDATE()) AND o.status = 2 AND employee_id = ?
+ GROUP BY employee_id DESC;*/
+
+    /**
+     *
+     * @param employeeId The id of the selected employee.
+     * @return int.
+     */
+    public static int getSalesThisYear(int employeeId){
+        int sales = 0;
+        try (Connection connection = Database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT employee_id, COUNT(*) sum FROM _order o JOIN employee e ON(o.salesperson_id = e.employee_id) WHERE year(o.delivery_time) = year(CURDATE()) AND o.status = 2 AND employee_id = ?\n" +
+                    " GROUP BY employee_id DESC LIMIT 1")) {
+                statement.setInt(1, employeeId);
+                statement.executeQuery();
+
+                try (ResultSet result = statement.getResultSet()) {
+                    if (result.next()) {
+                        sales = result.getInt("sum");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return sales;
+    }
     public static int getCommissionByType(int employeeType){
         int commission = 0;
         try (Connection connection = Database.getConnection()) {
@@ -282,6 +312,7 @@ public final class EmployeeFactory {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return -1;
         }
         return commission;
     }
@@ -301,6 +332,7 @@ public final class EmployeeFactory {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return -1.;
         }
         return salary;
     }
