@@ -23,10 +23,11 @@ import java.util.Date;
 public class StorageView extends JPanel {
     private JPanel mainPanel;
     private JTable ingredientTable;
-    private JButton incrementSupply;
+    private JButton incrementButton;
     private JButton addIngredientButton;
     private JTextField searchField;
     private JButton refreshButton;
+    private JTextField incrementValueField;
     private IngredientTableModel tableModel;
 
     private ArrayList<Ingredient> ingredientList;
@@ -35,22 +36,8 @@ public class StorageView extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        addIngredientButton.addActionListener(e -> {
-            AddIngredientDialog dialog = new AddIngredientDialog();
-            dialog.pack();
-            dialog.setVisible(true);
-            dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            if (dialog.getAddedNewValue()) {
-                //FIXME toast gives nullpointer
-                Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Ingredient added.", Toast.LENGTH_SHORT, Toast.Style.SUCCESS).display();
-                ingredientList = IngredientFactory.getAllIngredients();
-
-                // Refresh data
-                tableModel.setRows(IngredientFactory.getAllIngredients());
-            } else {
-                Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Ingredient add failed.", Toast.LENGTH_SHORT, Toast.Style.ERROR).display();
-            }
-        });
+        addIngredientButton.addActionListener(e -> onIngredientAddClick());
+        incrementButton.addActionListener(e -> onIncrementClick());
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -90,27 +77,61 @@ public class StorageView extends JPanel {
             }
         });
 
-        incrementSupply.addActionListener(e -> {
-            int selectedRow = ingredientTable.getSelectedRow();
-            if (selectedRow == -1) {
-                return;
-            }
-
-            Ingredient ingredient = tableModel.getValue(selectedRow);
-            ingredient.incrementAmount();
-            int affectedRows = IngredientFactory.updateIngredientAmount(ingredient.getIngredientId(), ingredient.getAmount());
-
-            if (affectedRows == 1) {
-                tableModel.setRow(selectedRow, ingredient);
-            } else {
-                // TODO: Log error?
-            }
-        });
 
         refreshButton.addActionListener(e -> {
             ingredientList = IngredientFactory.getAllIngredients();
             tableModel.setRows(ingredientList);
         });
+    }
+
+    /**
+     * Called when increment button has been pressed.
+     * Increments supply of selected ingredient by value defined by a text field.
+     */
+    private void onIncrementClick() {
+        int selectedRow = ingredientTable.getSelectedRow();
+        if (selectedRow == -1) {
+            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "No ingredient selected.").display();
+            return;
+        }
+
+        double incrementValue;
+        try {
+            incrementValue = Double.parseDouble(incrementValueField.getText().replace(',', '.'));
+        } catch(NumberFormatException e) {
+            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Invalid incrementation.", Toast.Style.ERROR).display();
+            return;
+        }
+
+        Ingredient ingredient = tableModel.getValue(selectedRow);
+        ingredient.setAmount(ingredient.getAmount() + incrementValue);
+        int affectedRows = IngredientFactory.updateIngredientAmount(ingredient.getIngredientId(), ingredient.getAmount());
+
+        if (affectedRows == 1) {
+            tableModel.setRow(selectedRow, ingredient);
+        } else {
+            Toast.makeText((JFrame)SwingUtilities.getWindowAncestor(this), "Incrementation failed.", Toast.Style.ERROR).display();
+        }
+    }
+
+    /**
+     * Called when the add ingredient button has been pressed.
+     * Displays an AddIngredientDialog.
+     */
+    private void onIngredientAddClick() {
+        AddIngredientDialog dialog = new AddIngredientDialog();
+        dialog.pack();
+        dialog.setVisible(true);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        if (dialog.getAddedNewValue()) {
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Ingredient added.", Toast.LENGTH_SHORT, Toast.Style.SUCCESS).display();
+            ingredientList = IngredientFactory.getAllIngredients();
+
+            // Refresh data
+            tableModel.setRows(IngredientFactory.getAllIngredients());
+        } else {
+            Toast.makeText((JFrame) SwingUtilities.getWindowAncestor(this), "Ingredient add failed.", Toast.LENGTH_SHORT, Toast.Style.ERROR).display();
+        }
     }
 
     public static void main(String[] args) {
@@ -122,20 +143,24 @@ public class StorageView extends JPanel {
         frame.setLocationRelativeTo(null);
     }
 
+    /**
+     * Used to create a custom table renderer.
+     * @param table The table which should have the renderer.
+     * @return The same table.
+     */
     private static JTable getNewRenderedTable(final JTable table) {
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table,
                                                            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
 
                 if (((Date) table.getValueAt(row, 3)).before(new Date(System.currentTimeMillis() + 86400000 * 2))) {
                     setBackground(new Color(200, 100, 100));
                 } else if (((Date) table.getValueAt(row, 3)).before(new Date(System.currentTimeMillis() + 86400000 * 10))) {
                     setBackground(Color.ORANGE);
                 } else {
-                    setBackground(table.getBackground());
-                    setForeground(table.getForeground());
+                    return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
                 }
 
                 return this;
